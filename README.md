@@ -1,66 +1,94 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+1. Tutorial video playlists link:
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Laravel 10 Beginners Course (Twitter Clone Project)
+Yelo Code
+https://youtube.com/playlist?list=PLqDySLfPKRn5d7WbN9R0yJA9IRgx-XBlU&si=VHXr1anKT-9_Ixoc
 
-## About Laravel
+Vite in Laravel Project
+Igor Babko
+https://youtube.com/playlist?list=PLXDouhCU5r6qDa_0O8_4T7o5mDg9pMRMo&si=RrDN1qw7DrS8eVMJ
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Laravel Livewire 3 course (Beginners)
+Yelo Code
+https://youtube.com/playlist?list=PLqDySLfPKRn543NM_fTrJRdhjBgsogzSC&si=aDO1T8HquKY4H9XP
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Larevel Jetstream Tutorials
+Yelo Code
+https://youtube.com/playlist?list=PLqDySLfPKRn4G-Qark0-RAF6ga43-6TEL&si=F2-aZfUApi6IWloh
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Filament 3 course for beginners
+Yelo Code
+https://youtube.com/playlist?list=PLqDySLfPKRn6fgrrdg4_SmsSxWzVlUQJo&si=ymmk1fYC63E1IfiL
 
-## Learning Laravel
+Build Blog with Laravel, Livewire and Filament 3 Course (2023)
+Yelo Code
+https://youtube.com/playlist?list=PLqDySLfPKRn5cEn5H2djYJNcmlaYWz-L3&si=NncLimaAtxfUXxcy
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Tailwind CSS Tutorial
+Net Ninja
+https://youtube.com/playlist?list=PL4cUxeGkcC9gpXORlEHjc5bgnIi5HEGhw&si=hrdmIUwPhIZ5yeP6
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2. Github Reference:
+https://github.com/yelocode/laravel-blog-project
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. Documentation Reference:
+Bootstrap icon - https://icons.getbootstrap.com/
+Hero icon - https://heroicons.com/outline
+Laravel - https://laravel.com/docs/11.x/readme
+Livewire 3 - https://livewire.laravel.com/docs/quickstart
+Laravel Mongodb Package - https://www.mongodb.com/docs/drivers/php/laravel-mongodb/current/usage-examples/find/
+TailwindCss - https://tailwindcss.com/docs/installation
+Alpinejs - https://alpinejs.dev/directives/data
+Laravel Jetstream - https://jetstream.laravel.com/introduction.html
+Laravel Filament - https://filamentphp.com/docs/3.x/panels/installation
+VS Code Shortcut - https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf  
 
-## Laravel Sponsors
+4. List of commands:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Installing dependencies:
+composer install
+npm install
 
-### Premium Partners
+Version checking:
+php artisan --version (to check laravel version)
+php -v (to check php version)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+PHPUnit files testing:
+e.g. vendor/bin/phpunit tests/Unit/ExampleTest.php
 
-## Contributing
+npm run dev - to apply CSS styling to the website
+php artisan serve - to run the server and view the website in a browser
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+php artisan route:list
 
-## Code of Conduct
+php artisan make:test UserTest
+php artisan make:model TestModel
+php artisan make:seeder TestSeeder
+php artisan make:provider CustomServiceProvider
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+php artisan db:seed --class=SurahTableSeeder
 
-## Security Vulnerabilities
+git remote -v
+git remote remove origin
+git remote add origin https://github.com/Amirul1411/QuranNexus.git
+git push -u origin main
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+5. User accounts:
 
-## License
+Test User - testuser@gmail.com - user1234
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+6. VS Code Shorcuts
+
+'Ctrl + Shift + F' - Search a text in all files inside the project directory
+'Ctrl + F' - Search a text in the currently open file inside the project directory
+'Ctrl + P' - Quick open a file
+
+7. !!Important Notes!!
+
+vendor folder will not be pushed to github. You must perform the changes manually in order for the system to work.
+
+![alt text](dev_img\image-1.png)
+Make sure to use the correct Model package inside User.php as shown in the image
+
+![alt text](dev_img\image.png)
+Make sure to comment out these line of code inside DatabaseStore.php
