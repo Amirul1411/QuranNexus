@@ -66,6 +66,9 @@ php artisan make:model TestModel
 php artisan make:seeder TestSeeder
 php artisan make:provider CustomServiceProvider
 
+php artisan migrate:status
+php artisan migrate:rollback
+
 php artisan db:seed --class=SurahTableSeeder
 
 git remote -v
