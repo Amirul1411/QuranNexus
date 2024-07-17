@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'sqlite'),
+    'default' => env('DB_CONNECTION', 'mongodb'),
 
     /*
     |--------------------------------------------------------------------------
@@ -30,6 +30,12 @@ return [
     */
 
     'connections' => [
+
+        'mongodb' => [
+            'driver' => 'mongodb',
+            'dsn' => env('DB_URI', 'mongodb+srv://aidil:Re2OU81mz5W3WGNc@quranic.smuf3ns.mongodb.net/quran_database?retryWrites=true&w=majority'),
+            'database' => env('DB_DATABASE', 'quran_database'),
+        ],
 
         'sqlite' => [
             'driver' => 'sqlite',
