@@ -65,10 +65,13 @@ php artisan make:test UserTest
 php artisan make:model TestModel
 php artisan make:seeder TestSeeder
 php artisan make:provider CustomServiceProvider
+php artisan make:filament-user
+php artisan make:filament-resource
 
 php artisan migrate:status
 php artisan migrate:rollback
 
+php artisan db:seed
 php artisan db:seed --class=SurahTableSeeder
 
 git remote -v
@@ -78,7 +81,9 @@ git push -u origin main
 
 5. User accounts:
 
-Test User - testuser@gmail.com - user1234
+Test User  - testuser@gmail.com  - user1234
+Test Editor - testeditor@gmail.com - editor1234
+Test Admin - testadmin@gmail.com - admin1234
 
 6. VS Code Shorcuts
 

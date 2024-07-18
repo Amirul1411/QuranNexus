@@ -3,6 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use MongoDB\Laravel\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -10,7 +13,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     use HasApiTokens;
     use HasFactory;
@@ -28,6 +31,19 @@ class User extends Authenticatable
         self::ROLE_EDITOR => 'Editor',
         self::ROLE_USER => 'User',
     ];
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->can('view-admin', User::class);
+    }
+
+    public function isAdmin(){
+        return $this->role === self::ROLE_ADMIN;
+    }
+
+    public function isEditor(){
+        return $this->role === self::ROLE_EDITOR;
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -71,7 +87,13 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'created_at' => 'datetime',
             'password' => 'hashed',
         ];
     }
+
+    // public function scopeId($query)
+    // {
+    //     return $query->count()+1;
+    // }
 }
