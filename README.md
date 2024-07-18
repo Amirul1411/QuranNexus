@@ -85,13 +85,3 @@ Test User - testuser@gmail.com - user1234
 'Ctrl + Shift + F' - Search a text in all files inside the project directory
 'Ctrl + F' - Search a text in the currently open file inside the project directory
 'Ctrl + P' - Quick open a file
-
-7. !!Important Notes!!
-
-vendor folder will not be pushed to github. You must perform the changes manually in order for the system to work.
-
-![alt text](dev_img\image-1.png)
-Make sure to use the correct Model package inside User.php as shown in the image
-
-![alt text](dev_img\image.png)
-Make sure to comment out these line of code inside DatabaseStore.php
