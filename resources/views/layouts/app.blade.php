@@ -1,26 +1,27 @@
+@props(['title'])
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <title> {{ isset($title) ? $title . ' | ' : '' }}{{ config('app.name', '') }}</title>
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/scss/app.scss', 'resources/js/app.js'])
 
-        <!-- Styles -->
-        @livewireStyles
-    </head>
-    <body class="font-sans antialiased">
-        <x-banner />
+    <!-- Styles -->
+    @livewireStyles
+</head>
 
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+<body class="font-sans antialiased">
+    <x-banner />
+
+    @include('layouts.partials.header')
+
+    {{-- <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             @livewire('navigation-menu')
 
             <!-- Page Heading -->
@@ -31,15 +32,24 @@
                     </div>
                 </header>
             @endif
+        </div> --}}
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
+    <!-- Page Heading -->
+    @if (isset($header))
+        <header>
+                {{ $header }}
+        </header>
+    @endif
 
-        @stack('modals')
+    <!-- Page Content -->
+    <main class="container flex flex-grow px-5 mx-auto">
+        {{ $slot }}
+    </main>
 
-        @livewireScripts
-    </body>
+    @include('layouts.partials.footer')
+
+    @stack('modals')
+    @livewireScripts
+</body>
+
 </html>

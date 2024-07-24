@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+{{-- <nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -232,6 +232,33 @@
                     @endif
                 @endif
             </div>
+        </div>
+    </div>
+</nav> --}}
+
+<nav class="px-6 py-3 bg-transparent absolute top-0 left-0 right-0">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between ">
+        <div id="nav-left" class="flex items-center">
+            <a href="{{ route('home') }}">
+                <x-application-mark class="block w-7"/>
+            </a>
+            <div class="ml-10 top-menu">
+                <div class="flex space-x-4">
+                    <x-nav-link class="{{ Route::is('home') ? 'text-white' : 'text-black' }}" href="{{ route('home') }}" :active="request()->routeIs('home')">
+                        {{ __('menu.home') }}
+                    </x-nav-link>
+                    <x-nav-link class="{{ Route::is('home') ? 'text-white' : 'text-black' }}" href="#" :active="request()->routeIs('posts.index')">
+                        {{ __('menu.contact') }}
+                    </x-nav-link>
+                </div>
+            </div>
+        </div>
+        <div id="nav-right" class="flex items-center md:space-x-6">
+            @auth
+                @include('layouts.partials.header-right-auth')
+            @else
+                @include('layouts.partials.header-right-guest')
+            @endauth
         </div>
     </div>
 </nav>

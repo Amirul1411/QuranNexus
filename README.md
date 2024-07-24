@@ -61,12 +61,15 @@ php artisan serve - to run the server and view the website in a browser
 
 php artisan route:list
 
+php artisan make:controller HomeController
 php artisan make:test UserTest
 php artisan make:model TestModel
 php artisan make:seeder TestSeeder
 php artisan make:provider CustomServiceProvider
 php artisan make:filament-user
 php artisan make:filament-resource
+php artisan make:policy
+php artisan make:view home
 
 php artisan migrate:status
 php artisan migrate:rollback

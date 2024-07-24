@@ -1,1 +1,30 @@
+$footer-color: mix(#0A2625, #67D6CA, 100%);
+$button-color: mix(#78C2AD, #FFFFFF, 100%);
 
+.header-image {
+    background-image: url("/resources/images/header-image.png");
+    background-size: cover;
+    height: 768px;
+}
+
+.home-recitation{
+    background-color: #78C2AD;
+    border: 2px solid #C0C0C0;
+}
+
+.btn-color{
+    background-color: $button-color;
+}
+
+.btn-color-outline{
+    border-color: $button-color;
+    color: $button-color;
+}
+
+.footer {
+    height: 500px;
+    background-color: $footer-color;
+    .footer-copyright{
+        height: 40px;
+    }
+}
