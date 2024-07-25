@@ -10,4 +10,10 @@ return [
     'register' => 'Register',
     'logout' => 'Log out',
     'contact' => 'Contact',
+    'services' => 'Services',
+    'surah_list' => 'Surah List',
+    'tajweed' => 'Tajweed',
+    'irab' => 'I\'rab',
+    'resources' => 'Resources',
+    'api_documentation' => 'API Documentation',
 ];

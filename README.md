@@ -24,6 +24,10 @@ Build Blog with Laravel, Livewire and Filament 3 Course (2023)
 Yelo Code
 https://youtube.com/playlist?list=PLqDySLfPKRn5cEn5H2djYJNcmlaYWz-L3&si=NncLimaAtxfUXxcy
 
+Laravel Rest API
+Envato Tuts
+https://youtu.be/YGqCZjdgJJk?si=vtO2odiZzUtRSeC1
+
 Tailwind CSS Tutorial
 Net Ninja
 https://youtube.com/playlist?list=PL4cUxeGkcC9gpXORlEHjc5bgnIi5HEGhw&si=hrdmIUwPhIZ5yeP6
@@ -63,12 +67,15 @@ php artisan route:list
 
 php artisan make:controller HomeController
 php artisan make:test UserTest
+php artisan make:livewire SurahList
 php artisan make:model TestModel
+php artisan make:model TestModel --all
 php artisan make:seeder TestSeeder
 php artisan make:provider CustomServiceProvider
 php artisan make:filament-user
 php artisan make:filament-resource
-php artisan make:policy
+php artisan make:policy UserPolicy
+php artisan make:resource SurahResource
 php artisan make:view home
 
 php artisan migrate:status

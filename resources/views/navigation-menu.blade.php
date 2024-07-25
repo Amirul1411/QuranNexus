@@ -240,16 +240,73 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between ">
         <div id="nav-left" class="flex items-center">
             <a href="{{ route('home') }}">
-                <x-application-mark class="block w-7"/>
+                <x-application-mark class="block w-7" />
             </a>
             <div class="ml-10 top-menu">
                 <div class="flex space-x-4">
-                    <x-nav-link class="{{ Route::is('home') ? 'text-white' : 'text-black' }}" href="{{ route('home') }}" :active="request()->routeIs('home')">
+                    <x-nav-link class="{{ Route::is('home') ? 'text-white' : 'text-black' }}" href="{{ route('home') }}"
+                        :active="request()->routeIs('home')">
                         {{ __('menu.home') }}
                     </x-nav-link>
-                    <x-nav-link class="{{ Route::is('home') ? 'text-white' : 'text-black' }}" href="#" :active="request()->routeIs('posts.index')">
+                    <x-nav-link class="{{ Route::is('home') ? 'text-white' : 'text-black' }}" href="#"
+                        :active="request()->routeIs('posts.index')">
                         {{ __('menu.contact') }}
                     </x-nav-link>
+
+                    <!-- Services Dropdown -->
+                    <x-dropdown align="right" width="48">
+                        <x-slot name="trigger">
+                            <x-nav-link class="{{ Route::is('home') ? 'text-white' : 'text-black' }}" href="#"
+                                :active="request()->routeIs('posts.index')">
+                                {{ __('menu.services') }}
+                                <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M5.23 7.21a.75.75 0 011.06 0L10 10.94l3.71-3.73a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.23 8.27a.75.75 0 010-1.06z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            </x-nav-link>
+                        </x-slot>
+
+                        <x-slot name="content">
+                            <!-- Dropdown content -->
+                            <x-dropdown-link href="{{ route('surah-list') }}">
+                                {{ __('menu.surah_list') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link href="#">
+                                {{ __('menu.tajweed') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link href="#">
+                                {{ __('menu.irab') }}
+                            </x-dropdown-link>
+                        </x-slot>
+                    </x-dropdown>
+                    <!-- End Services Dropdown -->
+
+                    <!-- Resources Dropdown -->
+                    <x-dropdown align="right" width="48">
+                        <x-slot name="trigger">
+                            <x-nav-link class="{{ Route::is('home') ? 'text-white' : 'text-black' }}" href="#"
+                                :active="request()->routeIs('posts.index')">
+                                {{ __('menu.resources') }}
+                                <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M5.23 7.21a.75.75 0 011.06 0L10 10.94l3.71-3.73a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.23 8.27a.75.75 0 010-1.06z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            </x-nav-link>
+                        </x-slot>
+
+                        <x-slot name="content">
+                            <!-- Dropdown content -->
+                            <x-dropdown-link href="#">
+                                {{ __('menu.api_documentation') }}
+                            </x-dropdown-link>
+                        </x-slot>
+                    </x-dropdown>
+                    <!-- End Resources Dropdown -->
+
                 </div>
             </div>
         </div>

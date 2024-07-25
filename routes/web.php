@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SurahController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -10,6 +11,8 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', '/Home');
 
 Route::get('/Home', HomeController::class)->name('home');
+
+Route::get('/SurahList', SurahController::class)->name('surah-list');
 
 Route::middleware([
     'auth:sanctum',
