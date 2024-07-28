@@ -4,20 +4,43 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http; // Import the HTTP client
+use App\Http\Controllers\Api\V1\APISurahController;
+use App\Models\Surah;
 
 class SurahController extends Controller
 {
-    public function __invoke(Request $request)
+    public function index()
     {
-        // Make an HTTP GET request to the API endpoint
-        $response = Http::get('http://127.0.0.1:8000/api/v1/surahs');
+        $apiController = new APISurahController();
+        $response = $apiController->index();
+        $surahs = $response->toArray();
 
-        // Decode the JSON response
-        $surahs = $response->json();
+        return view('surah-list', [
+            'surahs' => $surahs,
+        ]);
+    }
 
-        dd($surahs);
+    public function show(Surah $surah)
+    {
 
-        return view('surah-list');
+        // If you want to use an internal API call to fetch Surah data
+        $apiController = new APISurahController();
+        $surahResource = $apiController->show($surah);
+
+        // $surah = $apiController->show($surahId)->getData();
+
+        // Or fetch directly from the database if appropriate
+        // $surah = Surah::find($surahId);
+
+        if (!$surahResource) {
+            abort(404, 'Surah not found');
+        }
+
+        $surahModel = $surahResource->resource;
+
+        // Pass data to the view
+        return view('recitation', [
+            'surah' => $surahModel,
+        ]);
     }
 }

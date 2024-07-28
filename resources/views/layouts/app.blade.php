@@ -16,7 +16,7 @@
     @livewireStyles
 </head>
 
-<body class="font-sans antialiased">
+<body class="font-sans antialiased {{ !Route::is('home') && !Route::is('contact') ?  'background' : 'bg-gray-100'}}">
     <x-banner />
 
     @include('layouts.partials.header')

@@ -1,3 +1,3 @@
 <x-app-layout title="Surah List">
-    @livewire('surah-list')
+    @livewire('surah-list', [ 'surahs' => $surahs ])
 </x-app-layout>

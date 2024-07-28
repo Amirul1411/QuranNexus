@@ -1,6 +1,14 @@
 $footer-color: mix(#0A2625, #67D6CA, 100%);
 $button-color: mix(#78C2AD, #FFFFFF, 100%);
 
+.aya-side-menu-color{
+    color: #A5F38A;
+}
+
+.background{
+    background-color: #2D6360;
+}
+
 .header-image {
     background-image: url("/resources/images/header-image.png");
     background-size: cover;

@@ -270,7 +270,7 @@
 
                         <x-slot name="content">
                             <!-- Dropdown content -->
-                            <x-dropdown-link href="{{ route('surah-list') }}">
+                            <x-dropdown-link href="{{ route('surah.index') }}">
                                 {{ __('menu.surah_list') }}
                             </x-dropdown-link>
                             <x-dropdown-link href="#">
