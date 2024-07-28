@@ -13,7 +13,7 @@ class SurahPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->isAdmin() || $user->isEditor();
     }
 
     /**
@@ -21,7 +21,7 @@ class SurahPolicy
      */
     public function view(User $user, Surah $surah): bool
     {
-        //
+        return $user->isAdmin() || $user->isEditor();
     }
 
     /**
@@ -29,7 +29,7 @@ class SurahPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->isAdmin() || $user->isEditor();
     }
 
     /**
@@ -37,7 +37,7 @@ class SurahPolicy
      */
     public function update(User $user, Surah $surah): bool
     {
-        //
+        return $user->isAdmin() || $user->isEditor();
     }
 
     /**
@@ -45,7 +45,7 @@ class SurahPolicy
      */
     public function delete(User $user, Surah $surah): bool
     {
-        //
+        return $user->isAdmin() || $user->isEditor();
     }
 
     /**
@@ -53,7 +53,7 @@ class SurahPolicy
      */
     public function restore(User $user, Surah $surah): bool
     {
-        //
+        return $user->isAdmin() || $user->isEditor();
     }
 
     /**
@@ -61,6 +61,6 @@ class SurahPolicy
      */
     public function forceDelete(User $user, Surah $surah): bool
     {
-        //
+        return $user->isAdmin() || $user->isEditor();
     }
 }

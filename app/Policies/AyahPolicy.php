@@ -13,7 +13,7 @@ class AyahPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->isAdmin() || $user->isEditor();
     }
 
     /**
@@ -21,7 +21,7 @@ class AyahPolicy
      */
     public function view(User $user, Ayah $ayah): bool
     {
-        //
+        return $user->isAdmin() || $user->isEditor();
     }
 
     /**
@@ -29,7 +29,7 @@ class AyahPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->isAdmin() || $user->isEditor();
     }
 
     /**
@@ -37,7 +37,7 @@ class AyahPolicy
      */
     public function update(User $user, Ayah $ayah): bool
     {
-        //
+        return $user->isAdmin() || $user->isEditor();
     }
 
     /**
@@ -45,7 +45,7 @@ class AyahPolicy
      */
     public function delete(User $user, Ayah $ayah): bool
     {
-        //
+        return $user->isAdmin() || $user->isEditor();
     }
 
     /**
@@ -53,7 +53,7 @@ class AyahPolicy
      */
     public function restore(User $user, Ayah $ayah): bool
     {
-        //
+        return $user->isAdmin() || $user->isEditor();
     }
 
     /**
@@ -61,6 +61,6 @@ class AyahPolicy
      */
     public function forceDelete(User $user, Ayah $ayah): bool
     {
-        //
+        return $user->isAdmin() || $user->isEditor();
     }
 }
