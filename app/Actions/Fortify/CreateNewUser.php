@@ -27,7 +27,7 @@ class CreateNewUser implements CreatesNewUsers
         ])->validate();
 
         return User::create([
-            '_id' => getNextSequenceValue('user_id'),
+            '_id' => (string) getNextSequenceValue('user_id'),
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),

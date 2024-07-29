@@ -3,13 +3,13 @@
         <div class="header-image">
             <div class="container mx-auto pt-5">
                 <div class="flex flex-col absolute left-96 top-80">
-                    <h1 class="text-left text-white text-5xl w-96 font-serif">{{ __('home.home_header_title') }}</h1>
+                    <h1 class="text-left text-white text-5xl w-96 font-serif">{{ __('home.header_title') }}</h1>
                     <div class="flex justify-end my-7">
-                        <p class="text-sm text-white  w-80 text-justify font-serif">{{ __('home.home_header_subtitle') }}
+                        <p class="text-sm text-white  w-80 text-justify font-serif">{{ __('home.header_subtitle') }}
                         </p>
                     </div>
                     <div class="flex justify-end">
-                        <button class="font-serif text-black bg-white rounded-lg font-bold mt-3 relative w-52 py-1">{{ __('home.home_header_button') }}</button>
+                        <button class="font-serif text-black bg-white rounded-lg font-bold mt-3 relative w-52 py-1">{{ __('home.header_button') }}</button>
                     </div>
                 </div>
             </div>

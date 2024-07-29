@@ -4,6 +4,7 @@ namespace App\Filament\Resources\SurahResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\ToggleButtons;
@@ -24,7 +25,7 @@ class AyahRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                TextInput::make('text')
+                Textarea::make('text')
                 ->required(),
                 Toggle::make('isVerified')
                 ->label('Is Verified'),

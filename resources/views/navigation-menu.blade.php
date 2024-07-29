@@ -248,7 +248,7 @@
                         :active="request()->routeIs('home')">
                         {{ __('menu.home') }}
                     </x-nav-link>
-                    <x-nav-link class="{{ Route::is('home') ? 'text-white' : 'text-black' }}" href="#"
+                    <x-nav-link class="{{ Route::is('home') ? 'text-white' : 'text-black' }}" href="{{ route('contact') }}"
                         :active="request()->routeIs('posts.index')">
                         {{ __('menu.contact') }}
                     </x-nav-link>

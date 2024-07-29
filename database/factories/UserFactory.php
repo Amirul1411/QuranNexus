@@ -27,7 +27,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            '_id' => getNextSequenceValue('user_id'),
+            '_id' => (string) getNextSequenceValue('user_id'),
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             // 'email_verified_at' => now(),
