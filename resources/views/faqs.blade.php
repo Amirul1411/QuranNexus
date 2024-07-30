@@ -1,7 +1,7 @@
 <x-app-layout title="FAQs" backgroundImage="background-image">
     <x-slot name="header" class="">
-        <div class="flex flex-col mt-40 gap-8 ms-36">
-            <p class="text-5xl font-serif font-bold w-1/2">{{ __('faqs.header_title') }}</p>
+        <div class="flex flex-col mt-40 gap-4 ms-36">
+            <p class="text-5xl font-serif font-bold w-1/2 mb-8">{{ __('faqs.header_title') }}</p>
             <p class="text-base font-serif font-semibold  w-1/2">{{ __('faqs.header_subtitle_1') }}</p>
             <p class="text-base font-serif font-semibold  w-1/2 text-gray-500">{{ __('faqs.header_subtitle_2') }}</p>
         </div>
