@@ -9,9 +9,18 @@ $button-color: mix(#78C2AD, #FFFFFF, 100%);
     background-color: #2D6360;
 }
 
+.contact-form-button-color{
+    background-color: #8DFD98;
+    background-color: #3AFFDC;
+}
+
+.background-image{
+    background-image: url("/resources/images/background-image.png");
+    background-size: cover;
+}
+
 .header-image {
     background-image: url("/resources/images/header-image.png");
-    background-size: cover;
     height: 768px;
 }
 

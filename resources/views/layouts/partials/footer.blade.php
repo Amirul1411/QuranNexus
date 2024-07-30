@@ -14,7 +14,7 @@
         <div class="grid grid-cols-5 gap-2 mt-4">
             <p class="font-bold mx-5 text-gray-500">Sign in</p>
             <p class="font-bold mx-5 text-gray-500">Developer Use</p>
-            <p class="font-bold mx-5 text-gray-500">FAQs</p>
+            <a href="{{ route('faqs') }}" class="font-bold mx-5 text-gray-500">FAQs</a>
         </div>
         <div class="grid grid-cols-5 gap-2 mt-4">
             <p class="font-bold mx-5 text-gray-500">About Us</p>

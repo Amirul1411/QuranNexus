@@ -16,6 +16,14 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                'light-green': '#8DFD98',
+                'light-green-teal' : '#5EFEBE',
+                'teal': '#3AFFDC',
+            },
+            gradientColorStopPositions: {
+                56: '56%',
+              }
         },
     },
 

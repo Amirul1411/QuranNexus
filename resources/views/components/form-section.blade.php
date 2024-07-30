@@ -1,31 +1,33 @@
-@props(['submit', 'formStyle' => null, 'titleHidden' => false, 'buttonStyle' => null, 'buttonJustifyEnd' => true])
+@props([
+    'submit',
+    'darkBg' => 'dark:bg-gray-800',
+    'buttonJustify' => 'justify-end',
+    'shadow' => 'shadow',
+    'grid' => 'md:grid md:grid-cols-3 md:gap-6'
+])
 
-<div {{ $attributes->merge(['class' => 'md:grid md:grid-cols-3 md:gap-6']) }}>
-    @unless($titleHidden)
+<div {{ $attributes->merge(['class' =>  $grid ]) }}>
+    @if (isset($title) && isset($description))
         <x-section-title>
             <x-slot name="title">{{ $title }}</x-slot>
             <x-slot name="description">{{ $description }}</x-slot>
         </x-section-title>
-    @endunless
+    @endif
 
     <div class="mt-5 md:mt-0 md:col-span-2">
         <form wire:submit="{{ $submit }}">
-            <div class=" {{ $formStyle }} px-4 py-5 bg-white dark:bg-gray-800 sm:p-6 shadow {{ isset($actions) ? 'sm:rounded-tl-md sm:rounded-tr-md' : 'sm:rounded-md' }}">
+            <div
+                class=" {{ $darkBg }} {{ $shadow }} px-4 py-5 bg-white sm:p-6 {{ isset($actions) ? 'sm:rounded-tl-md sm:rounded-tr-md' : 'sm:rounded-md' }}">
                 <div class="grid grid-cols-6 gap-6">
                     {{ $form }}
                 </div>
             </div>
 
             @if (isset($actions))
-                @if ($buttonJustifyEnd)
-                    <div class="{{ $buttonStyle }} flex items-center justify-end px-4 py-3 bg-gray-50 dark:bg-gray-800 text-end sm:px-6 shadow sm:rounded-bl-md sm:rounded-br-md">
-                        {{ $actions }}
-                    </div>
-                @else
-                    <div class="{{ $buttonStyle }} flex items-center justify-start px-4 py-3 bg-gray-50 dark:bg-gray-800 text-end sm:px-6 shadow sm:rounded-bl-md sm:rounded-br-md">
-                        {{ $actions }}
-                    </div>
-                @endif
+                <div
+                    class="{{ $buttonJustify }} {{ $darkBg }} {{ $shadow }} flex items-center px-4 py-3 bg-gray-50 text-end sm:px-6 sm:rounded-bl-md sm:rounded-br-md">
+                    {{ $actions }}
+                </div>
             @endif
         </form>
     </div>

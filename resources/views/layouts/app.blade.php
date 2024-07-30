@@ -1,4 +1,4 @@
-@props(['title'])
+@props(['title', 'backgroundImage' => null])
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -16,7 +16,7 @@
     @livewireStyles
 </head>
 
-<body class="font-sans antialiased {{ !Route::is('home') && !Route::is('contact') ?  'background' : 'bg-gray-100'}}">
+<body class="font-sans antialiased {{ !Route::is('home') && !Route::is('contact') &&  !Route::is('faqs') ?  'background' : 'bg-gray-100'}}">
     <x-banner />
 
     @include('layouts.partials.header')
@@ -42,7 +42,7 @@
     @endif
 
     <!-- Page Content -->
-    <main class="container flex flex-grow px-5 mx-auto">
+    <main class=" {{ $backgroundImage }} container flex flex-grow px-5 mx-auto">
         {{ $slot }}
     </main>
 

@@ -1,6 +1,6 @@
 <x-app-layout title="Home Page">
     <x-slot name="header">
-        <div class="header-image">
+        <div class="header-image bg-cover">
             <div class="container mx-auto pt-5">
                 <div class="flex flex-col absolute left-96 top-80">
                     <h1 class="text-left text-white text-5xl w-96 font-serif">{{ __('home.header_title') }}</h1>
