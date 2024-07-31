@@ -1,4 +1,4 @@
-<div>
+<div class="mx-32">
     <div class="flex justify-center mt-20 py-20">
         <div class="w-full max-w-md">
             <form action="#" class="flex justify-center">
@@ -41,7 +41,7 @@
             @foreach ($surahs as $surah)
                 <div class="w-1/3 p-5">
                     <div wire:click="redirectToRecitation({{ $surah['_id'] }})"
-                        class="flex items-center bg-black text-center p-5 rounded-md cursor-pointer">
+                        class="h-20 flex items-center bg-black text-center p-5 rounded-md cursor-pointer">
                         <div class="w-1/5 relative">
                             <span class="relative flex justify-center items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-diamond-fill text-gray-600" viewBox="0 0 16 16">

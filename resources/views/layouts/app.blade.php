@@ -16,7 +16,8 @@
     @livewireStyles
 </head>
 
-<body class="font-sans antialiased {{ !Route::is('home') && !Route::is('contact') &&  !Route::is('faqs') ?  'background' : 'bg-gray-100'}}">
+<body
+    class="font-sans antialiased {{ !Route::is('home') && !Route::is('contact') && !Route::is('faqs') ? 'background' : 'bg-gray-100' }}">
     <x-banner />
 
     @include('layouts.partials.header')
@@ -37,12 +38,16 @@
     <!-- Page Heading -->
     @if (isset($header))
         <header>
-                {{ $header }}
+            {{ $header }}
         </header>
     @endif
 
     <!-- Page Content -->
-    <main class=" {{ $backgroundImage }} container flex flex-grow px-5 mx-auto">
+    <main class=" {{ $backgroundImage }} container flex flex-grow mx-auto">
+        <!-- Side Menu -->
+        @if (isset($sideMenu))
+            {{ $sideMenu }}
+        @endif
         {{ $slot }}
     </main>
 

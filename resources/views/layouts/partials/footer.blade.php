@@ -1,22 +1,22 @@
 <div class="relative text-white py-8 footer">
-    <img class="w-7 mt-4 absolute left-60 top-32 transform -translate-x-1/2" src="{{ Vite::asset('resources/images/quran-nexus-logo-image.png') }}" alt="Quran Nexus Logo Image">
-    <div class="container mx-auto absolute left-96 top-32">
-        <div class="grid grid-cols-5 gap-2 mt-4">
+    <img class="w-7 absolute left-60 top-32 transform -translate-x-1/2" src="{{ Vite::asset('resources/images/quran-nexus-logo-image.png') }}" alt="Quran Nexus Logo Image">
+    <div class="container mx-auto absolute left-96 top-32 w-2/3">
+        <div class="grid grid-cols-3 gap-2 mt-4">
             <p class="font-bold mx-5">Create Free Account</p>
             <p class="font-bold mx-5">Resources</p>
             <p class="font-bold mx-5">Support</p>
         </div>
-        <div class="grid grid-cols-5 gap-2 mt-4 ">
+        <div class="grid grid-cols-3 gap-2 mt-4 ">
             <p class="font-bold mx-5 text-gray-500">Home</p>
             <p class="font-bold mx-5 text-gray-500">Services</p>
             <p class="font-bold mx-5 text-gray-500">Contact Us</p>
         </div>
-        <div class="grid grid-cols-5 gap-2 mt-4">
+        <div class="grid grid-cols-3 gap-2 mt-4">
             <p class="font-bold mx-5 text-gray-500">Sign in</p>
             <p class="font-bold mx-5 text-gray-500">Developer Use</p>
             <a href="{{ route('faqs') }}" class="font-bold mx-5 text-gray-500">FAQs</a>
         </div>
-        <div class="grid grid-cols-5 gap-2 mt-4">
+        <div class="grid grid-cols-3 gap-2 mt-4">
             <p class="font-bold mx-5 text-gray-500">About Us</p>
             <p class="font-bold mx-5 text-gray-500">Documentation</p>
             <p class="font-bold mx-5 text-gray-500">Need Help?</p>

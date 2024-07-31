@@ -1,5 +1,62 @@
-<div class="w-full">
-    <h3 class="text-right text-white font-bold text-4xl mt-32">{{ $surah->name }}</h3>
+<x-slot name="sideMenu">
+    <div class="recitation-side-menu mt-32">
+        <div class="bg-black rounded-full flex mx-5 my-5">
+            <input type="radio" class="hidden" name="options" id="option1" autocomplete="off" checked>
+            <label class="bg-gray-500 rounded-full px-5 cursor-pointer py-2 text-white font-serif flex items-center"
+                for="option1">
+                Surah</label>
+            <input type="radio" class="hidden" name="options" id="option2" autocomplete="off">
+            <label class="bg-transparent rounded-full px-5 py-2 cursor-pointer text-white font-serif flex items-center"
+                for="option2">
+                Juz</label>
+            <input type="radio" class="hidden" name="options" id="option3" autocomplete="off">
+            <label class="bg-transparent rounded-full px-5 py-2 cursor-pointer text-white font-serif flex items-center"
+                for="option2">
+                Page</label>
+        </div>
+        <div class="w-full max-w-md">
+            <form action="#" class="flex justify-center">
+                @csrf
+                <div class="relative w-full mx-5 my-5">
+                    <input type="text" class="form-control w-full rounded-full py-2 z-0" placeholder="Search"
+                        aria-label="Search" aria-describedby="button-addon2">
+                </div>
+            </form>
+        </div>
+        @foreach ($this->allSurahs as $surah)
+            <div>
+                {{ $surah->tname }}
+            </div>
+        @endforeach
+    </div>
+
+
+</x-slot>
+<div class="w-full mx-32">
+    <div class="flex justify-center my-3 mt-32">
+        <div class="bg-black rounded-full flex my-5">
+            <input type="radio" class="hidden" name="options" id="option1" autocomplete="off" checked>
+            <label class="bg-gray-500 rounded-full px-10 cursor-pointer py-2 text-white font-serif flex items-center"
+                for="option1"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor" class="size-6 mr-2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                </svg>
+                Ayat By Ayat</label>
+
+            <input type="radio" class="hidden" name="options" id="option2" autocomplete="off">
+            <label class="bg-transparent rounded-full px-10 py-2 cursor-pointer text-white font-serif flex items-center"
+                for="option2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                    class="size-6 mr-2">
+                    <path
+                        d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625Z" />
+                    <path
+                        d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.963-6.963Z" />
+                </svg>
+                Page By Page</label>
+        </div>
+    </div>
+    <h3 class="text-center text-white font-bold text-4xl mt-6 font-serif">{{ $surah->name }}</h3>
     <div class="flex justify-end items-center my-5">
         <span wire:click="displaySurahDetails({{ $surah->_id }})" class="mr-1 text-white cursor-pointer"><svg
                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
@@ -39,34 +96,12 @@
         </span>
     </p>
 
-    <div class="flex justify-center my-3">
-        <div class="bg-black rounded-full flex">
-            <input type="radio" class="hidden" name="options" id="option1" autocomplete="off" checked>
-            <label class="bg-gray-500 rounded-full px-10 cursor-pointer py-2 text-white font-serif flex items-center"
-                for="option1"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                    stroke-width="1.5" stroke="currentColor" class="size-6 mr-2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
-                </svg>
-                Ayat By Ayat</label>
 
-            <input type="radio" class="hidden" name="options" id="option2" autocomplete="off">
-            <label class="bg-transparent rounded-full px-10 py-2 cursor-pointer text-white font-serif flex items-center"
-                for="option2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                    class="size-6 mr-2">
-                    <path
-                        d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625Z" />
-                    <path
-                        d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.963-6.963Z" />
-                </svg>
-                Page By Page</label>
-        </div>
-    </div>
 
     <div class="h-auto">
-        @foreach ($ayah as $aya)
+        @foreach ($surah->ayah as $aya)
             @if ($aya->ayah_index == 1 && $aya->bismillah)
-                <p class="text-right text-white text-2xl my-10">
+                <p class="text-center text-white text-2xl font-serif">
                     {{ $aya->bismillah }}
                 </p>
             @endif
@@ -105,7 +140,7 @@
                     </svg>
                 </div>
                 <div class="w-11/12 my-3">
-                    <p class="text-right text-white text-2xl my-10">
+                    <p class="text-right text-white text-2xl my-10 font-serif">
                         {{ $aya->text }}
                         <span class="border rounded-full mr-3 text-2xl p-1 font-normal">
                             {{ $aya->ayah_index }}
