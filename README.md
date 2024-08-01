@@ -32,6 +32,10 @@ Tailwind CSS Tutorial
 Net Ninja
 https://youtube.com/playlist?list=PL4cUxeGkcC9gpXORlEHjc5bgnIi5HEGhw&si=hrdmIUwPhIZ5yeP6
 
+Alpine.js
+The Codeholic
+https://www.youtube.com/watch?v=5ILDMMLgX0E&list=WL&index=3&t=17s
+
 2. Github Reference:
 https://github.com/yelocode/laravel-blog-project
 
