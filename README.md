@@ -88,6 +88,7 @@ php artisan migrate:rollback
 php artisan db:seed
 php artisan db:seed --class=SurahTableSeeder
 
+Git commands:
 git remote -v
 git remote remove origin
 git remote add origin https://github.com/Amirul1411/QuranNexus.git

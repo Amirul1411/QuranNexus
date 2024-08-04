@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 
-<!--
-#
+
+<!-- #
 #  Quran Translation
 #  Name: Basmeih
 #  Translator: Abdullah Muhammad Basmeih
@@ -10,11 +10,11 @@
 #  ID: ms.basmeih
 #  Last Update: September 7, 2012
 #  Source: Tanzil.net
-#
--->
+# -->
 
 
-<quran>
+
+<quran name="Basmeih" translator="Abdullah Muhammad Basmeih" language="Malay">
 	<sura index="1" name="">
 		<aya index="1" text="Dengan nama Allah, Yang Maha Pemurah, lagi Maha Mengasihani."/>
 		<aya index="2" text="Segala puji tertentu bagi Allah, Tuhan yang memelihara dan mentadbirkan sekalian alam."/>

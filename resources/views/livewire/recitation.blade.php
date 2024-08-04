@@ -1,52 +1,21 @@
 <x-slot name="sideMenu">
-    <div class="recitation-side-menu mt-32">
-        <div class="bg-black rounded-full flex mx-5 my-5">
-            <input type="radio" class="hidden" name="options" id="option1" autocomplete="off" checked>
-            <label class="bg-gray-500 rounded-full px-5 cursor-pointer py-2 text-white font-serif flex items-center"
-                for="option1">
-                Surah</label>
-            <input type="radio" class="hidden" name="options" id="option2" autocomplete="off">
-            <label class="bg-transparent rounded-full px-5 py-2 cursor-pointer text-white font-serif flex items-center"
-                for="option2">
-                Juz</label>
-            <input type="radio" class="hidden" name="options" id="option3" autocomplete="off">
-            <label class="bg-transparent rounded-full px-5 py-2 cursor-pointer text-white font-serif flex items-center"
-                for="option2">
-                Page</label>
-        </div>
-        <div class="w-full max-w-md">
-            <form action="#" class="flex justify-center">
-                @csrf
-                <div class="relative w-full mx-5 my-5">
-                    <input type="text" class="form-control w-full rounded-full py-2 z-0" placeholder="Search"
-                        aria-label="Search" aria-describedby="button-addon2">
-                </div>
-            </form>
-        </div>
-        @foreach ($this->allSurahs as $surah)
-            <div>
-                {{ $surah->tname }}
-            </div>
-        @endforeach
-    </div>
-
-
+    @livewire('recitation-side-menu')
 </x-slot>
 <div class="w-full mx-32">
     <div class="flex justify-center my-3 mt-32">
-        <div class="bg-black rounded-full flex my-5">
-            <input type="radio" class="hidden" name="options" id="option1" autocomplete="off" checked>
-            <label class="bg-gray-500 rounded-full px-10 cursor-pointer py-2 text-white font-serif flex items-center"
-                for="option1"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+        <div x-data="{ activeOption: 'byAyat' }" class="bg-black rounded-full flex my-5">
+            <input type="radio" class="hidden" name="recitationPageLayoutOptions" id="byAyat" autocomplete="off" checked x-model="activeOption" value="byAyat">
+            <label :class="activeOption === 'byAyat' ? 'bg-gray-600' : 'bg-transparent'" class="hover:bg-gray-500 rounded-full px-10 cursor-pointer py-2 text-white font-serif flex items-center"
+                for="byAyat"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor" class="size-6 mr-2">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
                 </svg>
                 Ayat By Ayat</label>
 
-            <input type="radio" class="hidden" name="options" id="option2" autocomplete="off">
-            <label class="bg-transparent rounded-full px-10 py-2 cursor-pointer text-white font-serif flex items-center"
-                for="option2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+            <input type="radio" class="hidden" name="recitationPageLayoutOptions" id="byPage" autocomplete="off" x-model="activeOption" value="byPage">
+            <label :class="activeOption === 'byPage' ? 'bg-gray-600' : 'bg-transparent'" class="hover:bg-gray-500 rounded-full px-10 py-2 cursor-pointer text-white font-serif flex items-center"
+                for="byPage"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                     class="size-6 mr-2">
                     <path
                         d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625Z" />
@@ -170,7 +139,8 @@
                             viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                         </svg>
-                    </span></x-button>
+                    </span>
+                </x-button>
             @endif
         </div>
     </div>

@@ -22,16 +22,6 @@ class Recitation extends Component
       return redirect()->route('surah.show', ['surah' => (int) $surahId + 1]);
     }
 
-    #[Computed()]
-    public function allSurahs()
-    {
-        $apiController = new APISurahController();
-        $response = $apiController->index();
-        $allSurahs = $response->toArray();
-
-        return $allSurahs;
-    }
-
     public function render()
     {
         return view('livewire.recitation',[

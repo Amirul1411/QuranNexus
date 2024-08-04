@@ -12,6 +12,8 @@ class SurahList extends Component
 
     public $surahs;
 
+    public $search;
+
     public function redirectToRecitation($surahId)
     {
       return redirect()->route('surah.show', ['surah' => $surahId]);

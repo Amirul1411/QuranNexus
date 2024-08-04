@@ -3,7 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Ayah;
+use App\Models\Juz;
+use App\Models\Page;
 use App\Models\Surah;
+use App\Models\Translation;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -16,11 +19,18 @@ class CounterSeeder extends Seeder
      */
     public function run(): void
     {
+
+        // Delete all existing documents in the 'counters' collection
+        DB::collection('counters')->delete();
+
         // Insert initial documents for each collection counter
         DB::collection('counters')->insert([
             ['_id' => 'user_id', 'sequence_value' => User::count()],
             ['_id' => 'surah_id', 'sequence_value' => Surah::count()],
             ['_id' => 'ayah_id', 'sequence_value' => Ayah::count()],
+            ['_id' => 'page_id', 'sequence_value' => Page::count()],
+            ['_id' => 'juz_id', 'sequence_value' => Juz::count()],
+            ['_id' => 'translation_id', 'sequence_value' => Translation::count()],
             // Add more collections as needed
         ]);
     }
