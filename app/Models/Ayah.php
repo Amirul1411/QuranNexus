@@ -25,8 +25,8 @@ class Ayah extends Model
         return $this->belongsTo(Surah::class, 'surah_id', '_id');
     }
 
-    public function translations()
-    {
-        return $this->hasMany(Translation::class, 'ayah_index', 'ayah_index');
-    }
+    // public function translations()
+    // {
+    //     return $this->hasMany(Translation::class, 'ayah_index', 'ayah_index');
+    // }
 }

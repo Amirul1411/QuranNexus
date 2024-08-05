@@ -40,7 +40,7 @@ class APISurahController extends Controller
     public function show(Surah $surah)
     {
 
-        $surah->load('ayah');
+        $surah->load('ayahs');
 
         return new SurahResource($surah);
     }

@@ -17,4 +17,9 @@ class Page extends Model
         'surah_id',
         'ayah_id',
     ];
+
+    public function surah()
+    {
+        return $this->belongsTo(Surah::class, 'surah_id', '_id');
+    }
 }

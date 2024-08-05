@@ -21,6 +21,8 @@
     <x-banner />
 
     @include('layouts.partials.header')
+    {{-- @include('auth.login') --}}
+    {{-- @include('auth.register') --}}
 
     {{-- <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             @livewire('navigation-menu')

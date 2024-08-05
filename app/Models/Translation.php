@@ -24,13 +24,13 @@ class Translation extends Model
         'translation' => 'array',
     ];
 
-    public function surahs()
-    {
-        return $this->belongsTo(Surah::class, 'surah_id', '_id');
-    }
+    // public function surahs()
+    // {
+    //     return $this->belongsTo(Surah::class, 'surah_id', '_id');
+    // }
 
-    public function ayahs()
-    {
-        return $this->belongsTo(Ayah::class, 'ayah_index', 'ayah_index');
-    }
+    // public function ayahs()
+    // {
+    //     return $this->belongsTo(Ayah::class, 'ayah_index', 'ayah_index');
+    // }
 }

@@ -19,13 +19,18 @@ class Surah extends Model
         'ayas',
     ];
 
-    public function ayah()
+    public function ayahs()
     {
         return $this->hasMany(Ayah::class, 'surah_id', '_id');
     }
 
-    public function translations()
+    public function pages()
     {
-        return $this->hasMany(Translation::class, 'surah_id', '_id');
+        return $this->hasMany(Page::class, 'surah_id', '_id');
     }
+
+    // public function translations()
+    // {
+    //     return $this->hasMany(Translation::class, 'surah_id', '_id');
+    // }
 }

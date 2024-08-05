@@ -20,7 +20,7 @@ class SurahResource extends JsonResource
             'tname' => $this->tname,
             'ename' => $this->ename,
             'ayas' => $this->ayas,
-            'ayahs' => AyahResource::collection($this->whenLoaded('ayah')),
+            'ayahs' => AyahResource::collection($this->whenLoaded('ayahs')),
         ];
 
         // return parent::toArray($request);
