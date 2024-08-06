@@ -24,10 +24,10 @@ class Surah extends Model
         return $this->hasMany(Ayah::class, 'surah_id', '_id');
     }
 
-    public function pages()
-    {
-        return $this->hasMany(Page::class, 'surah_id', '_id');
-    }
+    // public function pages()
+    // {
+    //     return $this->hasMany(Page::class, 'surah_id', '_id');
+    // }
 
     // public function translations()
     // {

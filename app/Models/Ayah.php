@@ -13,6 +13,7 @@ class Ayah extends Model
 
     protected $fillable = [
         '_id',
+        'page_id',
         'surah_id',
         'ayah_index',
         'text',
@@ -23,6 +24,11 @@ class Ayah extends Model
     public function surah()
     {
         return $this->belongsTo(Surah::class, 'surah_id', '_id');
+    }
+
+    public function page()
+    {
+        return $this->belongsTo(Page::class, 'page_id', '_id');
     }
 
     // public function translations()

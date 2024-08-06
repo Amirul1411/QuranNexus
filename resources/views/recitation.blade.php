@@ -79,7 +79,7 @@
                 @livewire('recitation-by-ayah', [ 'surah' => $surah ])
             </template>
             <template x-if=" layout === 'byPage' ">
-                @livewire('recitation-by-page')
+                @livewire('recitation-by-page', [ 'surahId' => $surah->_id])
             </template>
         </div>
     </div>

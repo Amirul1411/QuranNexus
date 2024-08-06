@@ -12,8 +12,7 @@ class SurahController extends Controller
     public function index()
     {
         $apiController = new APISurahController();
-        $response = $apiController->index();
-        $surahs = $response->toArray();
+        $surahs = $apiController->index();
 
         return view('surah-list', [
             'surahs' => $surahs,

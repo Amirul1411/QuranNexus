@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\Attributes\Computed;
 use App\Http\Controllers\Api\V1\APISurahController;
+use App\Http\Controllers\PageController;
 use App\Models\Juz;
 use App\Models\Page;
 
@@ -25,7 +26,7 @@ class RecitationSideMenu extends Component
 
     public function redirectToPage($pageId)
     {
-      return;
+      return redirect()->route('page.show', ['page' => (int) $pageId]);;
     }
 
     #[Computed()]
@@ -46,7 +47,10 @@ class RecitationSideMenu extends Component
     #[Computed()]
     public function allPages()
     {
-        return Page::all();
+        $pageController = new PageController();
+        $allPages = $pageController->index();
+
+        return $allPages;
     }
 
     public function render()

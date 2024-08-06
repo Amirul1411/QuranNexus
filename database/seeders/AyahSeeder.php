@@ -14,38 +14,57 @@ class AyahSeeder extends Seeder
      */
     public function run(): void
     {
-        $filePath = resource_path('data\quran-data.xml');
-        $filePathAya = resource_path('data\quran-uthmani.xml');
+        $filePathAya = resource_path('data/quran-uthmani.xml');
+        $filePathPage = resource_path('data/quran-data.xml');
 
-        $xml = simplexml_load_file($filePath);
         $xmlAya = simplexml_load_file($filePathAya);
+        $xmlPage = simplexml_load_file($filePathPage);
 
-        foreach ($xml->suras->sura as $sura) {
-            foreach ($xmlAya->sura as $ayaSura) {
-                if ((int) $sura['index'] == (int) $ayaSura['index']) {
-                    foreach ($ayaSura->aya as $aya) {
-                        if ($aya['bismillah']) {
-                            DB::table('ayahs')->insert([
-                                '_id' => (string) getNextSequenceValue('ayah_id'),
-                                'surah_id' => (string) $sura['index'],
-                                'ayah_index' => (string) $aya['index'],
-                                'text' => (string) $aya['text'],
-                                'bismillah' => (string) $aya['bismillah'],
-                                'isVerified' => false,
-                            ]);
-                        } else {
-                            DB::table('ayahs')->insert([
-                                '_id' => (string) getNextSequenceValue('ayah_id'),
-                                'surah_id' => (string) $sura['index'],
-                                'ayah_index' => (string) $aya['index'],
-                                'text' => (string) $aya['text'],
-                                'bismillah' => '',
-                                'isVerified' => false,
-                            ]);
-                        }
-                    }
-                }
+        // Parse pages and create a lookup table
+        $pages = [];
+        foreach ($xmlPage->pages->page as $page) {
+            $pages[] = [
+                'index' => (int) $page['index'],
+                'sura' => (int) $page['sura'],
+                'aya' => (int) $page['aya'],
+            ];
+        }
+
+        foreach ($xmlAya->sura as $sura) {
+            foreach ($sura->aya as $aya) {
+                $suraIndex = (int) $sura['index'];
+                $ayaIndex = (int) $aya['index'];
+
+                $pageIndex = $this->getPageIndex($pages, $suraIndex, $ayaIndex);
+
+                DB::table('ayahs')->insert([
+                    '_id' => (string) getNextSequenceValue('ayah_id'),
+                    'page_id' => (string) $pageIndex,
+                    'surah_id' => (string) $suraIndex,
+                    'ayah_index' => (string) $ayaIndex,
+                    'bismillah' => isset($aya['bismillah']) ? (string) $aya['bismillah'] : null,
+                    'text' => (string) $aya['text'],
+                    'isVerified' => false,
+                ]);
             }
         }
+    }
+
+    /**
+     * Get the page index for a given sura and aya index.
+     */
+    private function getPageIndex(array $pages, int $suraIndex, int $ayaIndex)
+    {
+        $pageIndex = null;
+
+        // Traverse the pages in reverse order to find the first page that is less than or equal to the current ayah
+        for ($i = count($pages) - 1; $i >= 0; $i--) {
+            if ($pages[$i]['sura'] < $suraIndex || ($pages[$i]['sura'] == $suraIndex && $pages[$i]['aya'] <= $ayaIndex)) {
+                $pageIndex = $pages[$i]['index'];
+                break;
+            }
+        }
+
+        return $pageIndex;
     }
 }

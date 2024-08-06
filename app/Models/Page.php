@@ -18,8 +18,16 @@ class Page extends Model
         'ayah_id',
     ];
 
-    public function surah()
+    public function ayahs()
     {
-        return $this->belongsTo(Surah::class, 'surah_id', '_id');
+        return $this->hasMany(Ayah::class, 'page_id', '_id');
     }
+
+    // public function getPage(){
+    //     $surah = Surah::find($this->surahId);
+    //     $ayah = $surah->ayahs()->first();
+    //     $page = $ayah->page();
+
+    //     return $page;
+    // }
 }
