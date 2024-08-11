@@ -80,6 +80,7 @@ php artisan make:filament-user
 php artisan make:filament-resource
 php artisan make:policy UserPolicy
 php artisan make:resource SurahResource
+php artisan make:test JavaBridgeTest
 php artisan make:view home
 
 php artisan migrate:status
@@ -87,6 +88,8 @@ php artisan migrate:rollback
 
 php artisan db:seed
 php artisan db:seed --class=SurahTableSeeder
+
+php artisan test --filter=JavaBridgeTest
 
 Git commands:
 git remote -v

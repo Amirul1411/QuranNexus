@@ -5,24 +5,28 @@ namespace App\Livewire;
 use App\Http\Controllers\PageController;
 use Livewire\Component;
 use Livewire\Attributes\Computed;
-use App\Models\Page as PageModel;
+use App\Models\Page;
 use App\Models\Surah;
 
 class RecitationByPage extends Component
 {
 
-    public $surahId;
-
     public $page;
 
-    public function redirectToPage($pageId)
+    public function redirectToPreviousPage($pageId)
     {
-      return redirect()->route('page.show', ['page' => (int) $pageId - 1]);
+        dd($pageId);
+
+        $prevPageId = (int) $pageId - 1;
+        $this->page = Page::find($prevPageId);
+    //   return redirect()->route('page.show', ['page' => (int) $pageId - 1]);
     }
 
-    public function redirectToNextSurah($pageId)
+    public function redirectToNextPage($pageId)
     {
-      return redirect()->route('page.show', ['page' => (int) $pageId + 1]);
+        $nextPageId = (int) $pageId + 1;
+        $this->page = Page::find($nextPageId);
+    //   return redirect()->route('page.show', ['page' => (int) $pageId + 1]);
     }
 
     // #[Computed()]

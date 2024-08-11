@@ -25,8 +25,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             // JuzSeeder::class,
             // PageSeeder::class,
-            // SurahSeeder::class,
-            AyahSeeder::class,
+            SurahSeeder::class,
+            // AyahSeeder::class,
             // TranslationSeeder::class,
         ]);
     }
