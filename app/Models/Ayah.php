@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use MongoDB\Laravel\Eloquent\Model;
 
 class Ayah extends Model
@@ -24,6 +23,12 @@ class Ayah extends Model
     public function surah()
     {
         return $this->belongsTo(Surah::class, 'surah_id', '_id');
+    }
+
+    public function words()
+    {
+        return $this->hasMany(Word::class, 'ayah_index', 'ayah_index')
+        ->where('surah_id', $this->surah_id);;
     }
 
     public function page()

@@ -34,7 +34,7 @@ class SurahSeeder extends Seeder
         // Seed database from jQuranTree
 
         // Include the JavaBridge library
-        // require_once("http://localhost:8080/JavaBridge/java/Java.inc");
+        // require("http://localhost:8080/JavaBridge/java/Java.inc");
 
         // try {
         //     // Create an instance of the Document class
@@ -43,33 +43,26 @@ class SurahSeeder extends Seeder
         //     // Call the getChapters method
         //     $chaptersIterable = $document->getChapters();
 
-        //     $chaptersArray = [];
-        //         $iterator = $chaptersIterable->iterator(); // Assuming iterator() returns an iterator
+        //     if ($chaptersIterable instanceof \Java) {
+        //         $iterator = $chaptersIterable->iterator(); // Get an iterator
 
-        //         while ($iterator->hasNext()) {
+        //         while (java_is_true($iterator->hasNext())) { // Limiting to first 10 chapters for testing
         //             $chapter = $iterator->next();
-        //             $chaptersArray[] = $chapter;
-        //         }
 
-        //         // Process each Chapter object
-        //         foreach ($chaptersArray as $chapter) {
-        //             // Call getName() on each Chapter object
+        //             // Call getName() on each chapter
         //             $name = $chapter->getName();
-
-        //             // Assuming getName() returns a Java String object
-        //             $nameString = $name->toString(); // Convert Java String to PHP string
 
         //             DB::table('surahs')->insert([
         //                 '_id' => (string) getNextSequenceValue('surah_id'),
-        //                 'name' => (string) $nameString,
-        //                 // 'tname' => (string) $sura['tname'],
-        //                 // 'ename' => (string) $sura['ename'],
-        //                 // 'ayas' => (int) $sura['ayas'],
+        //                 'name' => (string) $name,
         //             ]);
         //         }
+
+        //     } else {
+        //         echo "The result from Java API is not an Iterable.";
+        //     }
         // } catch (\Exception $e) {
-        //     // Catch any exceptions thrown by the Java Bridge
-        //     echo "Error: " . $e->getMessage();
+        //     echo "Error accessing Java API: " . $e->getMessage();
         // }
     }
 }
