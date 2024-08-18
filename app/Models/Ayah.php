@@ -13,6 +13,7 @@ class Ayah extends Model
     protected $fillable = [
         '_id',
         'page_id',
+        'juz_id',
         'surah_id',
         'ayah_index',
         'text',
