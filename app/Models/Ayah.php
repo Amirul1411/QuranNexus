@@ -28,7 +28,7 @@ class Ayah extends Model
     public function words()
     {
         return $this->hasMany(Word::class, 'ayah_index', 'ayah_index')
-        ->where('surah_id', $this->surah_id);;
+        ->where('surah_id', $this->surah_id);
     }
 
     public function page()

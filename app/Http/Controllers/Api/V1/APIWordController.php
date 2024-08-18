@@ -8,7 +8,7 @@ use App\Http\Requests\StoreWordRequest;
 use App\Http\Requests\UpdateWordRequest;
 use App\Http\Resources\V1\WordResource;
 
-class WordController extends Controller
+class APIWordController extends Controller
 {
     /**
      * Display a listing of the resource.

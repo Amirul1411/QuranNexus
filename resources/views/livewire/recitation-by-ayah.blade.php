@@ -41,13 +41,14 @@
             <div class="w-11/12 my-3">
                 <p class="text-right text-white text-2xl my-10 font-serif">
                     {{ $aya->text }}
-                    <span class="border rounded-full mr-3 text-2xl p-1 font-normal">
+                    <span class="mr-3 text-2xl p-1 font-normal text-white">
+                        <img class="h-20 w-auto" src="https://static.qurancdn.com/images/w/common/2.png?v=1" alt="٢">
                         {{ $aya->ayah_index }}
                     </span>
                 </p>
                 {{-- <p class="text-white my-10">
                         {{ $aya->translate_mal }}
-                    </p> --}}
+                </p> --}}
             </div>
         </div>
     @endforeach

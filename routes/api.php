@@ -15,5 +15,5 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], f
     Route::apiResource('surahs', APISurahController::class);
     Route::apiResource('ayahs', APIAyahController::class);
     Route::apiResource('pages', APIPageController::class);
-    Route::apiResource('words', APIWordController::Class);
+    Route::apiResource('words', APIWordController::class);
 });

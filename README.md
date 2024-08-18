@@ -108,3 +108,13 @@ Test Admin - testadmin@gmail.com - admin1234
 'Ctrl + Shift + F' - Search a text in all files inside the project directory
 'Ctrl + F' - Search a text in the currently open file inside the project directory
 'Ctrl + P' - Quick open a file
+
+7. Quran Nexus GMail
+
+Email: qurannexus6236@gmail.com
+Password: QuranNexus2024
+
+8. Quran Nexus MongoDB
+
+Username: qurannexus6236
+Password: 2hhxH3PYYOI4uxa4

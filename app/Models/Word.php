@@ -20,6 +20,6 @@ class Word extends Model
     public function ayah()
     {
         return $this->belongsTo(Ayah::class, 'ayah_index', 'ayah_index')
-        ->where('surah_id', $this->surah_id);;
+        ->where('surah_id', $this->surah_id);
     }
 }

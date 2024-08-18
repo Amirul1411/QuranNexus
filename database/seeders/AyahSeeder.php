@@ -14,6 +14,7 @@ class AyahSeeder extends Seeder
      */
     public function run(): void
     {
+
         $filePathAya = resource_path('data/quran-uthmani.xml');
         $filePathPage = resource_path('data/quran-data.xml');
 
@@ -30,16 +31,28 @@ class AyahSeeder extends Seeder
             ];
         }
 
+        // Parse juzs and create a lookup table
+        $juzs = [];
+        foreach ($xmlPage->juzs->juz as $juz) {
+            $juzs[] = [
+                'index' => (int) $juz['index'],
+                'sura' => (int) $juz['sura'],
+                'aya' => (int) $juz['aya'],
+            ];
+        }
+
         foreach ($xmlAya->sura as $sura) {
             foreach ($sura->aya as $aya) {
                 $suraIndex = (int) $sura['index'];
                 $ayaIndex = (int) $aya['index'];
 
                 $pageIndex = $this->getPageIndex($pages, $suraIndex, $ayaIndex);
+                $juzIndex = $this->getJuzIndex($juzs, $suraIndex, $ayaIndex);
 
                 DB::table('ayahs')->insert([
                     '_id' => (string) getNextSequenceValue('ayah_id'),
                     'page_id' => (string) $pageIndex,
+                    'juz_id' => (string) $juzIndex,
                     'surah_id' => (string) $suraIndex,
                     'ayah_index' => (string) $ayaIndex,
                     'bismillah' => isset($aya['bismillah']) ? (string) $aya['bismillah'] : null,
@@ -66,5 +79,23 @@ class AyahSeeder extends Seeder
         }
 
         return $pageIndex;
+    }
+
+    /**
+     * Get the page index for a given sura and aya index.
+     */
+    private function getJuzIndex(array $juzs, int $suraIndex, int $ayaIndex)
+    {
+        $juzIndex = null;
+
+        // Traverse the juzs in reverse order to find the first page that is less than or equal to the current ayah
+        for ($i = count($juzs) - 1; $i >= 0; $i--) {
+            if ($juzs[$i]['sura'] < $suraIndex || ($juzs[$i]['sura'] == $suraIndex && $juzs[$i]['aya'] <= $ayaIndex)) {
+                $juzIndex = $juzs[$i]['index'];
+                break;
+            }
+        }
+
+        return $juzIndex;
     }
 }
