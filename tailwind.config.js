@@ -15,6 +15,10 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                surahnames: ['surahnames'],
+                basmalah: ['basmalah'],
+                UthmanicHafs: ['UthmanicHafs'],
+                BorderIslamic: ['BorderIslamic'],
             },
             colors: {
                 'light-green': '#8DFD98',

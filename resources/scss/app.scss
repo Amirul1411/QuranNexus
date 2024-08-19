@@ -1,6 +1,27 @@
 $footer-color: mix(#0A2625, #67D6CA, 100%);
 $button-color: mix(#78C2AD, #FFFFFF, 100%);
 
+
+@font-face {
+    font-family: BorderIslamic;
+    src: url("/public/fonts/BordersIslamic1444-lg6g5.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: surahnames;
+    src: url("/public/fonts/Quran karim 114.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: basmalah;
+    src: url("/public/fonts/Basmalah Ver01.otf") format('opentype');
+}
+
+@font-face {
+    font-family: UthmanicHafs;
+    src: url("/public/fonts/KfgqpcHafsUthmanicScriptRegular-nARZ1.ttf") format('truetype');
+}
+
 .aya-side-menu-color{
     color: #A5F38A;
 }

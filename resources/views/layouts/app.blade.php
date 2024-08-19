@@ -14,6 +14,7 @@
 
     <!-- Styles -->
     @livewireStyles
+
 </head>
 
 <body

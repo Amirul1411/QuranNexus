@@ -1,9 +1,9 @@
 <div>
     @foreach ($surah->ayahs as $aya)
         @if ($aya->ayah_index == 1 && $aya->bismillah)
-            <p class="text-center text-white text-2xl font-serif">
-                {{ $aya->bismillah }}
-            </p>
+            <div class="text-center text-white text-4xl font-basmalah h-24">
+                l
+            </div>
         @endif
         <div class="flex items-center text-white border-b-2 border-gray-200">
             <div class="w-1/12 my-5 aya-side-menu-color text-center flex flex-col justify-center items-center gap-3">
@@ -38,14 +38,13 @@
                         d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
                 </svg>
             </div>
-            <div class="w-11/12 my-3">
-                <p class="text-right text-white text-2xl my-10 font-serif">
-                    {{ $aya->text }}
-                    <span class="mr-3 text-2xl p-1 font-normal text-white">
-                        <img class="h-20 w-auto" src="https://static.qurancdn.com/images/w/common/2.png?v=1" alt="٢">
-                        {{ $aya->ayah_index }}
-                    </span>
-                </p>
+            <div class="w-11/12 my-3 flex items-center justify-end">
+                    <p class="text-right text-white text-2xl my-10 font-serif">
+                        {{ $aya->text }}
+                        <span class="text-3xl font-UthmanicHafs text-white">
+                            {{ mapAyahNumberToNumberIcon($aya->ayah_index) }}
+                        </span>
+                    </p>
                 {{-- <p class="text-white my-10">
                         {{ $aya->translate_mal }}
                 </p> --}}

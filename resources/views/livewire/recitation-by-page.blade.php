@@ -1,12 +1,16 @@
-<div>
+<div class="font-BorderIslamic text-white">
+    m 
     @foreach ($page->ayahs as $ayah)
         @if ($ayah->ayah_index == 1 && $ayah->bismillah)
-            <p class="text-center text-white text-2xl font-serif">
-                {{ $ayah->bismillah }}
-            </p>
+            <div class="text-center text-white text-4xl font-basmalah h-24">
+                l
+            </div>
         @endif
         <div class="text-right text-white font-serif text-2xl my-10 mx-1">{{ $ayah->text }}</div>
     @endforeach
+    <h3 class="text-center text-white text-lg font-serif">
+        {{ $page->_id }}
+    </h3>
     <div class="flex justify-center my-10 mx-auto">
         @if ($page->_id != 1)
             <x-button wire:click='redirectToPreviousPage({{ $page->_id }})'

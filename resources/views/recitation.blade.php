@@ -1,4 +1,4 @@
-<x-app-layout title="Surah List">
+<x-app-layout title="Recitation">
 
     <x-slot name="sideMenu">
         @livewire('recitation-side-menu')
@@ -35,10 +35,7 @@
 
         <div x-data="{ layout: 'byAyah' }" @set-page-layout.window="layout = $event.detail">
             <template x-if=" layout === 'byAyah' ">
-                <h3 class="text-center text-white font-bold text-4xl mt-6 font-serif">{{ $surah->name }}</h3>
-            </template>
-            <template x-if=" layout === 'byPage' ">
-                <h3 class="text-center text-white font-semibold text-xl mt-6 font-sans">Page {{ $page->id }}</h3>
+                <h3 class="text-center text-white font-normal text-9xl mt-6 font-surahnames">{{$surah->id}}</h3>
             </template>
         </div>
 
