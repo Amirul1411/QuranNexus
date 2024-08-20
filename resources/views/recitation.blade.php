@@ -35,7 +35,7 @@
 
         <div x-data="{ layout: 'byAyah' }" @set-page-layout.window="layout = $event.detail">
             <template x-if=" layout === 'byAyah' ">
-                <h3 class="text-center text-white font-normal text-9xl mt-6 font-surahnames">{{$surah->id}}</h3>
+                <h3 class="text-center text-white font-light text-9xl mt-6 font-surahnames">{{mapSurahNumberToSurahFont($surah->id)}}</h3>
             </template>
         </div>
 
