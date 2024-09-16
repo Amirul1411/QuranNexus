@@ -19,7 +19,7 @@
         <form action="#" class="flex justify-center">
             @csrf
             <div class="relative w-full mx-5 my-5">
-                <input type="text" class="form-control w-full rounded-full py-2 z-0" placeholder="Search"
+                <input type="text" wire:model.live.debounce.250ms="search" class="form-control w-full rounded-full py-2 z-0" placeholder="Search"
                     aria-label="Search" aria-describedby="button-addon2">
             </div>
         </form>
@@ -27,7 +27,7 @@
     <div class="overflow-y-auto h-3/4">
         <template x-if="activeOption === 'surah'">
             <div>
-                @foreach ($this->allSurahs as $surah)
+                @foreach ($this->surahs as $surah)
                     <div wire:click="redirectToSurah({{ $surah->id }})" class="text-white font-sans flex gap-5 mx-5 my-3 hover:cursor-pointer hover:bg-gray-500">
                         <div class="flex justify-center w-5">
                             {{ $surah->id }}
@@ -39,7 +39,7 @@
         </template>
         <template x-if="activeOption === 'juz'">
             <div>
-                @foreach ($this->allJuzs as $juz)
+                @foreach ($this->juzs as $juz)
                     <div wire:click="redirectToJuz({{ $juz->id }})" class="text-white font-sans flex gap-5 mx-5 my-3 hover:cursor-pointer hover:bg-gray-500">
                         <div class="ms-2 flex justify-center w-5">
                             Juz
@@ -51,7 +51,7 @@
         </template>
         <template x-if="activeOption === 'page'">
             <div>
-                @foreach ($this->allPages as $page)
+                @foreach ($this->pages as $page)
                     <div wire:click="redirectToPage({{ $page->id }})" class="text-white font-sans flex gap-5 mx-5 my-3 hover:cursor-pointer hover:bg-gray-500">
                         <div class="ms-4 flex justify-center w-5">
                             Page

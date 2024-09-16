@@ -19,8 +19,21 @@ $button-color: mix(#78C2AD, #FFFFFF, 100%);
 
 @font-face {
     font-family: UthmanicHafs;
-    src: url("/public/fonts/KfgqpcHafsUthmanicScriptRegular-nARZ1.ttf") format('truetype');
+    src: url("/public/fonts/UthmanicHafs1Ver18.ttf") format('truetype'),
+         url("/public/fonts/UthmanicHafs1Ver18.woff2") format('woff2');
 }
+
+@font-face {
+    font-family: IndoPak;
+    src: url("/public/fonts/indopak-nastaleeq-waqf-lazim-v4.2.1.ttf") format('truetype'),
+         url("/public/fonts/indopak-nastaleeq-waqf-lazim-v4.2.1.woff") format('woff'),
+         url("/public/fonts/indopak-nastaleeq-waqf-lazim-v4.2.1.woff2") format('woff2');
+}
+
+// @font-face {
+//     font-family: ayaNo;
+//     src: url("/public/fonts/KfgqpcHafsUthmanicScriptRegular-nARZ1.ttf") format('truetype');
+// }
 
 .aya-side-menu-color{
     color: #A5F38A;

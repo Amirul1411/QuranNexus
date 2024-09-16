@@ -8,6 +8,10 @@ class RecitationByAyah extends Component
 {
 
     public $surah;
+    
+    public $page;
+
+    public $juz;
 
     public function redirectToPreviousSurah($surahId)
     {

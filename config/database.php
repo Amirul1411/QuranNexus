@@ -33,8 +33,8 @@ return [
 
         'mongodb' => [
         'driver' => 'mongodb',
-        'dsn' => env('DB_URI', 'mongodb+srv://qurannexus6236:2hhxH3PYYOI4uxa4@qurannexus.jyb1l.mongodb.net/'),
-        'database' => env('DB_DATABASE', 'quran_nexus'),
+        'dsn' => env('DB_URI', 'mongodb+srv://aidil:Re2OU81mz5W3WGNc@quranic.smuf3ns.mongodb.net/'),
+        'database' => env('DB_DATABASE', 'quran_database'),
 ],
 
         'sqlite' => [

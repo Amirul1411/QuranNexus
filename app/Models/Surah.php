@@ -23,13 +23,9 @@ class Surah extends Model
         return $this->hasMany(Ayah::class, 'surah_id', '_id');
     }
 
-    // public function pages()
-    // {
-    //     return $this->hasMany(Page::class, 'surah_id', '_id');
-    // }
+    public function surahBookmarks()
+    {
+        return $this->belongsToMany(User::class, 'surah_bookmark')->withTimestamps();
+    }
 
-    // public function translations()
-    // {
-    //     return $this->hasMany(Translation::class, 'surah_id', '_id');
-    // }
 }

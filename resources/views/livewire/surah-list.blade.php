@@ -1,10 +1,10 @@
-<div class="mx-32">
+<div class="mx-32 w-full">
     <div class="flex justify-center mt-20 py-20">
         <div class="w-full max-w-md">
             <form action="#" class="flex justify-center">
                 @csrf
                 <div class="relative w-full">
-                    <input type="text" class="form-control w-full rounded-full pl-12 py-2 z-0"
+                    <input type="text" wire:model.live.debounce.250ms="search" class="form-control w-full rounded-full pl-12 py-2 z-0"
                         placeholder="What do you want to read?" aria-label="Search" aria-describedby="button-addon2">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 z-1">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

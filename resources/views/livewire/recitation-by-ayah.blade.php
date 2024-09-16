@@ -1,30 +1,15 @@
 <div>
-    @foreach ($surah->ayahs as $aya)
-        @if ($aya->ayah_index == 1 && $aya->bismillah)
+    @foreach ($surah->ayahs as $ayah)
+        @if ($ayah->ayah_index == 1 && $ayah->bismillah)
             <div class="text-center text-white text-4xl font-basmalah h-24">
                 l
             </div>
         @endif
         <div class="flex items-center text-white border-b-2 border-gray-200">
             <div class="w-1/12 my-5 aya-side-menu-color text-center flex flex-col justify-center items-center gap-3">
-                <p>{{ $surah->_id }}:{{ $aya->ayah_index }}</p>
-                @if ($aya->bookmarked)
-                    <svg wire:click='bookmarkAyah({{ $surah->_id }}, {{ $aya->ayah_index }})'
-                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                        class="size-6 cursor-pointer">
-                        <path fill-rule="evenodd"
-                            d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z"
-                            clip-rule="evenodd" />
-                    </svg>
-                @else
-                    <svg wire:click='bookmarkAyah({{ $surah->_id }}, {{ $aya->ayah_index }})'
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6 cursor-pointer">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
-                    </svg>
-                @endif
-                <span wire:click="displayAyahTafseer({{ $surah->_id }}, {{ $aya->ayah_index }})"
+                <p>{{ $surah->_id }}:{{ $ayah->ayah_index }}</p>
+                @livewire('bookmark', ['type' => 'ayah', 'item' => $ayah])
+                <span wire:click="displayAyahTafseer({{ $surah->_id }}, {{ $ayah->ayah_index }})"
                     class="cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                         fill="currentColor" class="size-5">
                         <path fill-rule="evenodd"
@@ -38,16 +23,25 @@
                         d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
                 </svg>
             </div>
-            <div class="w-11/12 my-3 flex items-center justify-end">
-                    <p class="text-right text-white text-2xl my-10 font-serif">
-                        {{ $aya->text }}
-                        <span class="text-3xl font-UthmanicHafs text-white">
-                            {{ mapAyahNumberToNumberIcon($aya->ayah_index) }}
-                        </span>
-                    </p>
-                {{-- <p class="text-white my-10">
-                        {{ $aya->translate_mal }}
+            <div class="w-11/12 my-3 flex flex-wrap items-center flex-row-reverse gap-2">
+                @foreach($ayah->words as $word)
+                    <div class="font-UthmanicHafs text-3xl">
+                        {{ $word->text }}
+                    </div>
+                    {{-- <img src="https://static.qurancdn.com/images/w/rq-color/{{ $word->surah_id }}/{{ $word->ayah_index }}/{{ $word->word_index }}.png?v=1" alt="{{ $word->text }}"> --}}
+                @endforeach
+                <span class="text-3xl font-UthmanicHafs text-white">
+                    {{ mapAyahNumberToNumberIcon($ayah->ayah_index) }}
+                </span>
+                {{-- <p class="text-right text-white text-2xl my-10 font-UthmanicHafs">
+                    {{ $aya->text }}
+                    <span class="text-3xl font-UthmanicHafs text-white">
+                        {{ mapAyahNumberToNumberIcon($aya->ayah_index) }}
+                    </span>
                 </p> --}}
+                <p class="text-white my-10">
+                        {{ $ayah->translations->text }}
+                </p>
             </div>
         </div>
     @endforeach

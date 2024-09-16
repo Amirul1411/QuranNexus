@@ -40,7 +40,6 @@ class SurahController extends Controller
         // Pass data to the view
         return view('recitation', [
             'surah' => $surahModel,
-            'page' => $surahModel->ayahs->first()->page,
         ]);
     }
 }

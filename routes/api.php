@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\V1\APIAyahController;
 use App\Http\Controllers\Api\V1\APIPageController;
 use App\Http\Controllers\Api\V1\APISurahController;
 use App\Http\Controllers\Api\V1\APIWordController;
+use App\Http\Controllers\Api\V1\APIJuzController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +17,5 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], f
     Route::apiResource('ayahs', APIAyahController::class);
     Route::apiResource('pages', APIPageController::class);
     Route::apiResource('words', APIWordController::class);
+    Route::apiResource('juzs', APIJuzController::class);
 });

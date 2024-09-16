@@ -18,6 +18,8 @@ export default {
                 surahnames: ['surahnames'],
                 basmalah: ['basmalah'],
                 UthmanicHafs: ['UthmanicHafs'],
+                IndoPak: ['IndoPak'],
+                ayaNo: ['ayaNo'],
                 BorderIslamic: ['BorderIslamic'],
             },
             colors: {

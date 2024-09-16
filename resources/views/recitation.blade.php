@@ -35,48 +35,41 @@
 
         <div x-data="{ layout: 'byAyah' }" @set-page-layout.window="layout = $event.detail">
             <template x-if=" layout === 'byAyah' ">
-                <h3 class="text-center text-white font-light text-9xl mt-6 font-surahnames">{{mapSurahNumberToSurahFont($surah->id)}}</h3>
+                @if (Route::is('surah.show'))
+                    <h3 class="text-center text-white font-light text-9xl mt-6 font-surahnames">{{mapSurahNumberToSurahFont($surah->id)}}</h3>
+                @endif
             </template>
         </div>
 
-        <div class="flex justify-end items-center my-5">
-            <span wire:click="displaySurahDetails({{ $surah->_id }})" class="mr-1 text-white cursor-pointer"><svg
-                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
-                    <path fill-rule="evenodd"
-                        d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-7-4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM9 9a.75.75 0 0 0 0 1.5h.253a.25.25 0 0 1 .244.304l-.459 2.066A1.75 1.75 0 0 0 10.747 15H11a.75.75 0 0 0 0-1.5h-.253a.25.25 0 0 1-.244-.304l.459-2.066A1.75 1.75 0 0 0 9.253 9H9Z"
-                        clip-rule="evenodd" />
-                </svg>
-            </span>
-            <p wire:click="displaySurahDetails({{ $surah->_id }})" class="text-white cursor-pointer">Surah Info</p>
-        </div>
-        <div class="flex justify-end items-center my-5 text-white">
-            <span class="mr-1 cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                    fill="currentColor" class="size-5">
-                    <path
-                        d="M6.3 2.84A1.5 1.5 0 0 0 4 4.11v11.78a1.5 1.5 0 0 0 2.3 1.27l9.344-5.891a1.5 1.5 0 0 0 0-2.538L6.3 2.841Z" />
-                </svg>
-            </span>
-            <p class="cursor-pointer">Play Audio</p>
-        </div>
-        <p class="flex justify-end mr-1 text-white">
-            <span>
-                @if ($surah->bookmarked)
-                    <svg wire:click='toggleBookmarkSurah({{ $surah->_id }})' xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24" fill="currentColor" class="size-6 cursor-pointer">
+        @if (Route::is('surah.show'))
+            <div class="flex justify-end items-center my-5">
+                <span wire:click="displaySurahDetails({{ $surah->_id }})" class="mr-1 text-white cursor-pointer"><svg
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
                         <path fill-rule="evenodd"
-                            d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z"
+                            d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-7-4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM9 9a.75.75 0 0 0 0 1.5h.253a.25.25 0 0 1 .244.304l-.459 2.066A1.75 1.75 0 0 0 10.747 15H11a.75.75 0 0 0 0-1.5h-.253a.25.25 0 0 1-.244-.304l.459-2.066A1.75 1.75 0 0 0 9.253 9H9Z"
                             clip-rule="evenodd" />
                     </svg>
-                @else
-                    <svg wire:click='toggleBookmarkSurah({{ $surah->_id }})' xmlns="http://www.w3.org/2000/svg"
-                        fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                        class="size-6 cursor-pointer">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+                </span>
+                <p wire:click="displaySurahDetails({{ $surah->_id }})" class="text-white cursor-pointer">Surah Info</p>
+            </div>
+            <div class="flex justify-end items-center my-5 text-white">
+                <span class="mr-1 cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                        fill="currentColor" class="size-5">
+                        <path
+                            d="M6.3 2.84A1.5 1.5 0 0 0 4 4.11v11.78a1.5 1.5 0 0 0 2.3 1.27l9.344-5.891a1.5 1.5 0 0 0 0-2.538L6.3 2.841Z" />
                     </svg>
-                @endif
-            </span>
-        </p>
+                </span>
+                <p class="cursor-pointer">Play Audio</p>
+            </div>
+        @endif
+
+        <div class="flex justify-end mr-1 text-white">
+            @if (Route::is('surah.show'))
+                @livewire('bookmark', ['type' => 'surah', 'item' => $surah])
+            @elseif(Route::is('page.show'))
+                @livewire('bookmark', ['type' => 'page', 'item' => $page])
+            @endif
+        </div>
 
 
 
@@ -85,7 +78,7 @@
                 @livewire('recitation-by-ayah', [ 'surah' => $surah ])
             </template>
             <template x-if=" layout === 'byPage' ">
-                @livewire('recitation-by-page', [ 'page' => $page])
+                @livewire('recitation-by-page', [ 'page' => $surah->ayahs->first()->page])
             </template>
         </div>
     </div>

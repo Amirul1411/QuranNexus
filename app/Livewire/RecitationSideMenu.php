@@ -8,11 +8,12 @@ use App\Http\Controllers\Api\V1\APISurahController;
 use App\Http\Controllers\PageController;
 use App\Models\Juz;
 use App\Models\Page;
+use App\Models\Surah;
 
 class RecitationSideMenu extends Component
 {
 
-    public $search;
+    public $search='';
 
     public function redirectToSurah($surahId)
     {
@@ -21,36 +22,53 @@ class RecitationSideMenu extends Component
 
     public function redirectToJuz($juzId)
     {
-      return;
+      return redirect()->route('juz.show', ['juz' => (int) $juzId]);
     }
 
     public function redirectToPage($pageId)
     {
-      return redirect()->route('page.show', ['page' => (int) $pageId]);;
+      return redirect()->route('page.show', ['page' => (int) $pageId]);
     }
 
     #[Computed()]
-    public function allSurahs()
+    public function surahs()
     {
-        $apiController = new APISurahController();
-        $allSurahs = $apiController->index();
+        if($this->search === ''){
+            $surahs = Surah::all();
+        }else{
+            // General search across multiple fields
+            $surahs = Surah::where(function ($query) {
+                    $query->where('tname', 'like', '%' . $this->search . '%')
+                        ->orWhere('ename', 'like', '%' . $this->search . '%')
+                        ->orWhere('_id', $this->search);
+                })->get();
+        }
 
-        return $allSurahs;
+        return $surahs;
     }
 
     #[Computed()]
-    public function allJuzs()
+    public function juzs()
     {
-        return Juz::all();
+        if($this->search === ''){
+            $juzs = Juz::all();
+        }else{
+            $juzs = Juz::where('_id', $this->search)->get();
+        }
+
+        return $juzs;
     }
 
     #[Computed()]
-    public function allPages()
+    public function pages()
     {
-        $pageController = new PageController();
-        $allPages = $pageController->index();
+        if($this->search === ''){
+            $pages = Page::all();
+        }else{
+            $pages = Page::where('_id', $this->search)->get();
+        }
 
-        return $allPages;
+        return $pages;
     }
 
     public function render()

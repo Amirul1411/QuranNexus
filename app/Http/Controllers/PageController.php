@@ -25,7 +25,7 @@ class PageController extends Controller
 
         $pageModel = $pageResource->resource;
 
-        return view('livewire.recitation-by-page','recitation', [
+        return view('recitation', [
             'page' => $pageModel,
         ]);
     }

@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Surah;
 use Livewire\Component;
+use Livewire\Attributes\Url;
 
 class SurahList extends Component
 {
@@ -12,7 +13,17 @@ class SurahList extends Component
 
     public $surahs;
 
-    public $search;
+    public $search = '';
+
+    public function updatedSearch()
+    {
+        // General search across multiple fields
+        $this->surahs = Surah::where(function ($query) {
+                $query->where('tname', 'like', '%' . $this->search . '%')
+                    ->orWhere('ename', 'like', '%' . $this->search . '%')
+                    ->orWhere('_id', $this->search);
+            })->get();
+    }
 
     public function redirectToRecitation($surahId)
     {

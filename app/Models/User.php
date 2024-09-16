@@ -98,4 +98,40 @@ class User extends Authenticatable implements FilamentUser
     // {
     //     return $query->count()+1;
     // }
+
+    // Define relationships for bookmarks
+    public function bookmarks()
+    {
+        return [
+            'surah' => $this->belongsToMany(Surah::class, 'surah_bookmark')->withTimestamps(),
+            'page' => $this->belongsToMany(Page::class, 'page_bookmark')->withTimestamps(),
+            'ayah' => $this->belongsToMany(Ayah::class, 'ayah_bookmark')->withTimestamps(),
+        ];
+    }
+
+    // General method to check if an item is bookmarked
+    public function hasBookmarked($type, $item)
+    {
+        $relationship = $this->bookmarks()[$type] ?? null;
+
+        if ($relationship) {
+            return $relationship->where($type . '_id', $item->_id)->exists();
+        }
+
+        return false;
+    }
+
+    // General method to add or remove bookmark
+    public function toggleBookmark($type, $item)
+    {
+        $relationship = $this->bookmarks()[$type] ?? null;
+
+        if ($relationship) {
+            if ($this->hasBookmarked($type, $item)) {
+                $relationship->detach($item);
+            } else {
+                $relationship->attach($item);
+            }
+        }
+    }
 }

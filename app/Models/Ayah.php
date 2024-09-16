@@ -37,8 +37,19 @@ class Ayah extends Model
         return $this->belongsTo(Page::class, 'page_id', '_id');
     }
 
-    // public function translations()
-    // {
-    //     return $this->hasMany(Translation::class, 'ayah_index', 'ayah_index');
-    // }
+    public function juz()
+    {
+        return $this->belongsTo(Juz::class, 'juz_id', '_id');
+    }
+
+    public function ayahBookmarks()
+    {
+        return $this->belongsToMany(User::class, 'ayah_bookmark')->withTimestamps();
+    }
+
+    public function translations()
+    {
+        return $this->hasOne(Translation::class, 'ayah_index', 'ayah_index')
+        ->where('surah_id', $this->surah_id);;
+    }
 }

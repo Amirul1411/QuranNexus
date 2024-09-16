@@ -11,12 +11,14 @@ use App\Models\Surah;
 class RecitationByPage extends Component
 {
 
+    public $surah;
+
     public $page;
+
+    public $juz;
 
     public function redirectToPreviousPage($pageId)
     {
-        dd($pageId);
-
         $prevPageId = (int) $pageId - 1;
         $this->page = Page::find($prevPageId);
     //   return redirect()->route('page.show', ['page' => (int) $pageId - 1]);

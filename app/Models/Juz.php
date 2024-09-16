@@ -15,4 +15,9 @@ class Juz extends Model
         'surah_id',
         'ayah_id',
     ];
+
+    public function ayahs()
+    {
+        return $this->hasMany(Ayah::class, 'juz_id', '_id');
+    }
 }
