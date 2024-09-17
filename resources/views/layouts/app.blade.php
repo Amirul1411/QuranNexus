@@ -40,9 +40,18 @@
 
     <!-- Page Heading -->
     @if (isset($header))
-        <header>
-            {{ $header }}
-        </header>
+        @if (Route::is('profile.show'))
+            <header class="mt-16">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    {{ $header }}
+                </div>
+            </header>
+        @else
+            <header>
+                {{ $header }}
+            </header>
+        @endif
+
     @endif
 
     <!-- Page Content -->

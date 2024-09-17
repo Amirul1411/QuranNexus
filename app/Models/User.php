@@ -18,7 +18,7 @@ class User extends Authenticatable implements FilamentUser
 {
     use HasApiTokens;
     use HasFactory;
-    // use HasProfilePhoto;
+    use HasProfilePhoto;
     use Notifiable;
     // use TwoFactorAuthenticatable;
 
@@ -99,39 +99,38 @@ class User extends Authenticatable implements FilamentUser
     //     return $query->count()+1;
     // }
 
-    // Define relationships for bookmarks
-    public function bookmarks()
+    public function addBookmark($type, $itemId)
     {
-        return [
-            'surah' => $this->belongsToMany(Surah::class, 'surah_bookmark')->withTimestamps(),
-            'page' => $this->belongsToMany(Page::class, 'page_bookmark')->withTimestamps(),
-            'ayah' => $this->belongsToMany(Ayah::class, 'ayah_bookmark')->withTimestamps(),
-        ];
+        if ($type === 'surah') {
+            $this->push('surah_bookmarks', $itemId);
+        } elseif ($type === 'page') {
+            $this->push('page_bookmarks', $itemId);
+        } elseif ($type === 'ayah') {
+            $this->push('ayah_bookmarks', $itemId);
+        }
     }
 
-    // General method to check if an item is bookmarked
-    public function hasBookmarked($type, $item)
+    public function removeBookmark($type, $itemId)
     {
-        $relationship = $this->bookmarks()[$type] ?? null;
+        if ($type === 'surah') {
+            $this->pull('surah_bookmarks', $itemId);
+        } elseif ($type === 'page') {
+            $this->pull('page_bookmarks', $itemId);
+        } elseif ($type === 'ayah') {
+            $this->pull('ayah_bookmarks', $itemId);
+        }
+    }
 
-        if ($relationship) {
-            return $relationship->where($type . '_id', $item->_id)->exists();
+    public function isBookmarked($type, $itemId)
+    {
+        if ($type === 'surah') {
+            return in_array($itemId, $this->surah_bookmarks ?? []);
+        } elseif ($type === 'page') {
+            return in_array($itemId, $this->page_bookmarks ?? []);
+        } elseif ($type === 'ayah') {
+            return in_array($itemId, $this->ayah_bookmarks ?? []);
         }
 
         return false;
-    }
-
-    // General method to add or remove bookmark
-    public function toggleBookmark($type, $item)
-    {
-        $relationship = $this->bookmarks()[$type] ?? null;
-
-        if ($relationship) {
-            if ($this->hasBookmarked($type, $item)) {
-                $relationship->detach($item);
-            } else {
-                $relationship->attach($item);
-            }
-        }
     }
 }

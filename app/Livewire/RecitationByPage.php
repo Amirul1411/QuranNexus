@@ -19,16 +19,12 @@ class RecitationByPage extends Component
 
     public function redirectToPreviousPage($pageId)
     {
-        $prevPageId = (int) $pageId - 1;
-        $this->page = Page::find($prevPageId);
-    //   return redirect()->route('page.show', ['page' => (int) $pageId - 1]);
+        return redirect()->route('page.show', ['page' => (int) $pageId - 1]);
     }
 
     public function redirectToNextPage($pageId)
     {
-        $nextPageId = (int) $pageId + 1;
-        $this->page = Page::find($nextPageId);
-    //   return redirect()->route('page.show', ['page' => (int) $pageId + 1]);
+        return redirect()->route('page.show', ['page' => (int) $pageId + 1]);
     }
 
     // #[Computed()]

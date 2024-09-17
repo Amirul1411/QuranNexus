@@ -1,5 +1,5 @@
 <div class="font-BorderIslamic text-white">
-    m 
+    m
     @foreach ($page->ayahs as $ayah)
         @if ($ayah->ayah_index == 1 && $ayah->bismillah)
             <div class="text-center text-white text-4xl font-basmalah h-24">
@@ -8,7 +8,7 @@
         @endif
         <div class="text-right text-white font-serif text-2xl my-10 mx-1">{{ $ayah->text }}</div>
     @endforeach
-    <h3 class="text-center text-white text-lg font-serif">
+    <h3 class="text-center text-white text-lg font-serif my-5">
         {{ $page->_id }}
     </h3>
     <div class="flex justify-center my-10 mx-auto">

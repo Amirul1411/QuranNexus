@@ -256,7 +256,7 @@
                     <!-- Services Dropdown -->
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
-                            <x-nav-link class="{{ Route::is('home') ? 'text-white' : 'text-black' }}" href="#"
+                            <x-nav-link class="{{ Route::is('home') ? 'text-white' : 'text-black' }}" href=""
                                 :active="request()->routeIs('posts.index')">
                                 {{ __('menu.services') }}
                                 <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
@@ -286,7 +286,7 @@
                     <!-- Resources Dropdown -->
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
-                            <x-nav-link class="{{ Route::is('home') ? 'text-white' : 'text-black' }}" href="#"
+                            <x-nav-link class="{{ Route::is('home') ? 'text-white' : 'text-black' }}" href=""
                                 :active="request()->routeIs('posts.index')">
                                 {{ __('menu.resources') }}
                                 <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"

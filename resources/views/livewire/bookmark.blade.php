@@ -1,5 +1,5 @@
 <div>
-    @if ( !Auth::guest() && Auth::user()->hasBookmarked($type, $item))
+    @if ( !Auth::guest() && Auth::user()->isBookmarked($type, $itemId))
         <!-- Bookmark Icon -->
         <svg wire:click='toggleBookmark()' xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24" fill="currentColor" class="size-6 cursor-pointer">

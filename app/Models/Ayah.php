@@ -42,11 +42,6 @@ class Ayah extends Model
         return $this->belongsTo(Juz::class, 'juz_id', '_id');
     }
 
-    public function ayahBookmarks()
-    {
-        return $this->belongsToMany(User::class, 'ayah_bookmark')->withTimestamps();
-    }
-
     public function translations()
     {
         return $this->hasOne(Translation::class, 'ayah_index', 'ayah_index')

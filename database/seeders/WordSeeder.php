@@ -2,9 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Ayah;
+use App\Models\Page;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class WordSeeder extends Seeder
 {
@@ -33,11 +36,51 @@ class WordSeeder extends Seeder
 
                     $token = $iterator->next();
 
+                    $ayah = Ayah::where('surah_id', (string) $token->getChapterNumber())
+                    ->where('ayah_index', (string) $token->getVerseNumber())
+                    ->first();
+
+                    $page = $ayah->page;
+
+                    // $tokenVerseKey = (string) $token->getChapterNumber() . ':' . (string) $token->getVerseNumber() . PHP_EOL;
+
+                    $response = Http::get('https://api.quran.com/api/v4/verses/by_page/' . $page->id . '?words=true');
+                    // $jsonContent = $response->json();
+                    // echo json_encode($jsonContent, JSON_PRETTY_PRINT);
+
+                    // Extract JSON data from the response
+                    $data = $response->json();
+
+                    // Loop through verses
+                    foreach ($data['verses'] as $verse) {
+                        // Access the verse_key property
+                        $verseKey = $verse['verse_key'];
+
+                        // Split the verse_key (e.g., "2:6") into surah_number and verse_number
+                        list($surahNumber, $verseNumber) = explode(':', $verseKey);
+
+                        // Loop through words within each verse
+                        foreach ($verse['words'] as $word) {
+                            // Access the position property
+                            $wordPosition = $word['position'];
+
+                            if( (string) $surahNumber === (string) $token->getChapterNumber() &&
+                                (string) $verseNumber === (string) $token->getVerseNumber() &&
+                                (string) $wordPosition === (string) $token->getTokenNumber()){
+
+                                $pageLineNumber = $word['line_number'];
+                                // echo 'Page Number: ' . $word['page_number'] . PHP_EOL;
+                                // echo 'Line Number: ' . $pageLineNumber . PHP_EOL;
+                            }
+                        }
+                    }
+
                     DB::table('words')->insert([
                         '_id' => (string) getNextSequenceValue('word_id'),
                         'surah_id' => (string) $token->getChapterNumber(),
                         'ayah_index' => (string) $token->getVerseNumber(),
                         'word_index' => (string) $token->getTokenNumber(),
+                        'line_number' => (int) $pageLineNumber,
                         'text' => (string) $token,
                     ]);
 

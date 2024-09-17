@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Ayah;
+use App\Models\Word;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\DB;
@@ -15,29 +16,15 @@ class generalTest extends TestCase
      */
     public function test_example(): void
 {
-    $allAyah = Ayah::all();
 
-    foreach ($allAyah as $ayah) {
+    $word = Word::where('surah_id', '1')
+                    ->where('ayah_index', '1')
+                    ->where('word_index', '1')
+                    ->first();
 
-        // Split the text property into words
-        $splittedAyah = explode(" ", $ayah->text);
+    echo $word->text;
 
-        // Loop through the words and insert each one into the test_words table
-        foreach ($splittedAyah as $index => $word) {
-
-            $index = $index+1;
-
-            DB::table('test_words')->insert([
-                // '_id' => (string) getNextSequenceValue('word_id'),
-                'surah_id' => (string) $ayah->surah_id,
-                'ayah_index' => (string) $ayah->ayah_index,
-                'word_index' => (string) $index,
-                'text' => (string) $word,
-            ]);
-        }
-    }
-
-    $this->assertNotEmpty($allAyah);
+    $this->assertNotEmpty($word);
 }
 
 }

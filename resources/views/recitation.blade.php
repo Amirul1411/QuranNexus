@@ -65,9 +65,9 @@
 
         <div class="flex justify-end mr-1 text-white">
             @if (Route::is('surah.show'))
-                @livewire('bookmark', ['type' => 'surah', 'item' => $surah])
+                @livewire('bookmark', ['type' => 'surah', 'itemId' => $surah->id])
             @elseif(Route::is('page.show'))
-                @livewire('bookmark', ['type' => 'page', 'item' => $page])
+                @livewire('bookmark', ['type' => 'page', 'itemId' => $page->id])
             @endif
         </div>
 
@@ -75,10 +75,22 @@
 
         <div x-data="{ layout: 'byAyah' }" @set-page-layout.window="layout = $event.detail" class="h-auto">
             <template x-if=" layout === 'byAyah' ">
-                @livewire('recitation-by-ayah', [ 'surah' => $surah ])
+                @if (Route::is('surah.show'))
+                    @livewire('recitation-by-ayah', [ 'surah' => $surah ])
+                @elseif (Route::is('page.show'))
+                    @livewire('recitation-by-ayah', [ 'page' => $page ])
+                @elseif (Route::is('juz.show'))
+                    @livewire('recitation-by-ayah', [ 'juz' => $juz ])
+                @endif
             </template>
             <template x-if=" layout === 'byPage' ">
-                @livewire('recitation-by-page', [ 'page' => $surah->ayahs->first()->page])
+                @if (Route::is('surah.show'))
+                    @livewire('recitation-by-page', [ 'page' => $surah->ayahs->first()->page])
+                @elseif(Route::is('page.show'))
+                    @livewire('recitation-by-page', [ 'page' => $page])
+                @elseif (Route::is('juz.show'))
+                    @livewire('recitation-by-page', [ 'page' => $juz->ayahs->first()->page])
+                @endif
             </template>
         </div>
     </div>
