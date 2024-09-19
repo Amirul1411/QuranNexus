@@ -9,7 +9,7 @@
                         </p>
                     </div>
                     <div class="flex justify-end">
-                        <button class="font-serif text-black bg-white rounded-lg font-bold mt-3 relative w-52 py-1">{{ __('home.header_button') }}</button>
+                        <a class="font-serif text-black bg-white rounded-lg font-bold mt-3 relative w-52 py-1 text-center" href="{{ route('surah.index') }}" >{{ __('home.header_button') }}</a>
                     </div>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                 <p class="pl-8 font-serif text-gray-600">
                     Detailed documentation to help you get started quickly and efficiently.
                 </p>
-                <button class="btn ml-8 border w-40 py-1">TRY NOW</button>
+                <button class="btn ml-8 border border-gray-300 w-40 py-1">TRY NOW</button>
             </div>
             <div class="w-full md:w-2/5">
                 <img src="{{ Vite::asset('resources/images/AI-image.png') }}" alt="AI Image">
@@ -75,19 +75,19 @@
                     translations.
                 </p>
                 <div class="flex justify-end m-5">
-                    <button class="btn w-40 ml-4 border border-black font-serif py-1">RECITE NOW</button>
+                    <a class="btn w-40 ml-4 border border-black font-serif py-1 text-center" href="{{ route('surah.index') }}">RECITE NOW</a>
                 </div>
             </div>
         </div>
         <div class="my-5 flex flex-col w-1/2 mx-auto home-ready">
             <h2 class="font-bold text-center text-3xl font-sans mb-8">Ready to get started?</h2>
             <div class="flex justify-center mx-auto my-1 gap-2">
-                <button class="btn-color rounded-full text-white px-5 py-1 font-sans">
+                <a class="btn-color rounded-full text-white px-5 py-1 font-sans" href="{{ route('register') }}">
                     Sign Up, It's Free
-                </button>
-                <button class="font-sans rounded-full px-5 py-1 border btn-color-outline hover:btn-color-outline-fill transition duration-300 ease-in-out">
+                </a>
+                <a class="font-sans rounded-full px-5 py-1 border btn-color-outline hover:btn-color-outline-fill transition duration-300 ease-in-out" href="{{ route('contact') }}">
                     Contact Us
-                </button>
+                </a>
             </div>
         </div>
     </div>

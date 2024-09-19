@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Ayah;
+use App\Models\Inquiry;
 use App\Models\Juz;
 use App\Models\Page;
 use App\Models\Surah;
@@ -33,6 +34,7 @@ class CounterSeeder extends Seeder
             ['_id' => 'page_id', 'sequence_value' => Page::count()],
             ['_id' => 'juz_id', 'sequence_value' => Juz::count()],
             ['_id' => 'translation_id', 'sequence_value' => Translation::count()],
+            ['_id' => 'inquiry_id', 'sequence_value' => Inquiry::count()],
             // Add more collections as needed
         ]);
     }

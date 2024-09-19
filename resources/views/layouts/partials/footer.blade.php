@@ -7,12 +7,12 @@
             <p class="font-bold mx-5">Support</p>
         </div>
         <div class="grid grid-cols-3 gap-2 mt-4 ">
-            <p class="font-bold mx-5 text-gray-500">Home</p>
+            <a class="font-bold mx-5 text-gray-500" href="{{ route('home') }}">Home</a>
             <p class="font-bold mx-5 text-gray-500">Services</p>
-            <p class="font-bold mx-5 text-gray-500">Contact Us</p>
+            <a class="font-bold mx-5 text-gray-500" href="{{ route('contact') }}">Contact Us</a>
         </div>
         <div class="grid grid-cols-3 gap-2 mt-4">
-            <p class="font-bold mx-5 text-gray-500">Sign in</p>
+            <a class="font-bold mx-5 text-gray-500" href="{{ route('login') }}">Sign in</a>
             <p class="font-bold mx-5 text-gray-500">Developer Use</p>
             <a href="{{ route('faqs') }}" class="font-bold mx-5 text-gray-500">FAQs</a>
         </div>

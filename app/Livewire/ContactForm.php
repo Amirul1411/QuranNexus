@@ -2,22 +2,35 @@
 
 namespace App\Livewire;
 
+use App\Models\Inquiry;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class ContactForm extends Component
 {
 
-    public $firstName;
+    public string $firstName;
 
-    public $lastName;
+    public string $lastName;
 
-    public $phone;
+    public string $phone;
 
-    public $email;
+    public string $email;
 
-    public $message;
+    public string $message;
 
     public function submitForm(){
+
+        DB::table('inquiries')->insert([
+            '_id' => (string) getNextSequenceValue('inquiry_id'),
+            'first_name' => (string) $this->firstName,
+            'last_name' => (string) $this->lastName,
+            'phone' => (string) $this->phone,
+            'email' => (string) $this->email,
+            'message' => (string) $this->message,
+        ]);
+
+        $this->reset(['firstName', 'lastName', 'phone', 'email', 'message']);
 
     }
 

@@ -14,6 +14,7 @@ class Word extends Model
         'surah_id',
         'ayah_index',
         'word_index',
+        'line_number',
         'text',
     ];
 

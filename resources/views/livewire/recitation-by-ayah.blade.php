@@ -66,7 +66,7 @@
         </div>
     @elseif (Route::is('page.show'))
         @foreach ($page->ayahs as $ayah)
-            @if ($ayah->ayah_index == 1 && $ayah->bismillah)
+            @if ($ayah->ayah_index == 1)
                 <h3 class="text-center text-white font-light text-9xl mt-6 font-surahnames">{{mapSurahNumberToSurahFont($ayah->surah->id)}}</h3>
                 @if ($ayah->bismillah)
                     <div class="text-center text-white text-4xl font-basmalah h-24">
@@ -111,7 +111,7 @@
             </div>
         @endforeach
 
-        <h3 class="text-center text-white text-lg font-serif my-5">
+        <h3 class="text-center text-white text-base font-sans my-5">
             {{ $page->_id }}
         </h3>
 
@@ -138,12 +138,12 @@
         </div>
     @elseif (Route::is('juz.show'))
 
-        <h3 class="text-center text-white text-lg font-serif my-5">
+        <h3 class="text-center text-white text-base font-sans my-5">
             Juz {{ $juz->_id }}
         </h3>
 
         @foreach ($juz->ayahs as $ayah)
-            @if ($ayah->ayah_index == 1 && $ayah->bismillah)
+            @if ($ayah->ayah_index == 1)
                 <h3 class="text-center text-white font-light text-9xl mt-6 font-surahnames">{{mapSurahNumberToSurahFont($ayah->surah->id)}}</h3>
                 @if ($ayah->bismillah)
                     <div class="text-center text-white text-4xl font-basmalah h-24">

@@ -87,7 +87,7 @@ php artisan migrate:status
 php artisan migrate:rollback
 
 php artisan db:seed
-php artisan db:seed --class=SurahTableSeeder
+php artisan db:seed --class=SurahSeeder
 
 php artisan test --filter=JavaBridgeTest
 

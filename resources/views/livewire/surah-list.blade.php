@@ -24,16 +24,18 @@
                 class=" {{ $selectedNavItem == 'all' ? 'border-b-2' : '' }} text-white cursor-pointer font-serif"
                 aria-current="page">All</a>
         </li>
-        <li class="nav-item">
-            <a wire:click="$set('selectedNavItem', 'recently_read')"
-                class=" {{ $selectedNavItem == 'recently_read' ? 'border-b-2' : '' }} text-white cursor-pointer font-serif">Recently
-                Read</a>
-        </li>
-        <li class="nav-item">
-            <a wire:click="$set('selectedNavItem', 'bookmarks')"
-                class=" {{ $selectedNavItem == 'bookmarks' ? 'border-b-2' : '' }} text-white cursor-pointer font-serif">Bookmarks
-            </a>
-        </li>
+        @if (Auth::user())
+            <li class="nav-item">
+                <a wire:click="$set('selectedNavItem', 'recently_read')"
+                    class=" {{ $selectedNavItem == 'recently_read' ? 'border-b-2' : '' }} text-white cursor-pointer font-serif">Recently
+                    Read</a>
+            </li>
+            <li class="nav-item">
+                <a wire:click="$set('selectedNavItem', 'bookmarks')"
+                    class=" {{ $selectedNavItem == 'bookmarks' ? 'border-b-2' : '' }} text-white cursor-pointer font-serif">Bookmarks
+                </a>
+            </li>
+        @endif
     </ul>
 
     @if ($selectedNavItem == 'all')

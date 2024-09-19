@@ -44,7 +44,7 @@ class WordSeeder extends Seeder
 
                     // $tokenVerseKey = (string) $token->getChapterNumber() . ':' . (string) $token->getVerseNumber() . PHP_EOL;
 
-                    $response = Http::get('https://api.quran.com/api/v4/verses/by_page/' . $page->id . '?words=true');
+                    $response = Http::timeout(60)->retry(3, 1000)->get('https://api.quran.com/api/v4/verses/by_page/' . $page->id . '?words=true');
                     // $jsonContent = $response->json();
                     // echo json_encode($jsonContent, JSON_PRETTY_PRINT);
 

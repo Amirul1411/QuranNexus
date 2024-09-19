@@ -27,21 +27,6 @@ class RecitationByPage extends Component
         return redirect()->route('page.show', ['page' => (int) $pageId + 1]);
     }
 
-    // #[Computed()]
-    // public function allPages()
-    // {
-    //     $pageController = new PageController();
-    //     $allPages = $pageController->index();
-
-    //     return $allPages;
-    // }
-
-    // #[Computed()]
-    // public function page()
-    // {
-    //     return PageModel->getPage($this->surahId);
-    // }
-
     public function render()
     {
         return view('livewire.recitation-by-page', [

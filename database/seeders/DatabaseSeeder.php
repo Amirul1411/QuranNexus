@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CounterSeeder::class,
             UserSeeder::class,
+            InquirySeeder::class,
             // JuzSeeder::class,
             // PageSeeder::class,
             // SurahSeeder::class,

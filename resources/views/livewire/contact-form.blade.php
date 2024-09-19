@@ -10,11 +10,11 @@
             <div class="col-span-6">
                 <div class="grid grid-cols-6 gap-4">
                     <div class="col-span-3">
-                        <x-input darkBorder="dark:border-gray-300" id="firstName" type="text" class="dark:bg-white mt-1 block w-full font-serif" wire:model="firstName" placeholder="First Name"/>
+                        <x-input darkBorder="dark:border-gray-300" darkText="text-black" id="firstName" type="text" class="dark:bg-white mt-1 block w-full font-serif" wire:model="firstName" placeholder="First Name"/>
                         <x-input-error for="firstName" class="mt-2" />
                     </div>
                     <div class="col-span-3">
-                        <x-input darkBorder="dark:border-gray-300" id="lastName" type="text" class="dark:bg-white mt-1 block w-full font-serif" wire:model="lastName" placeholder="Last Name"/>
+                        <x-input darkBorder="dark:border-gray-300" darkText="text-black" id="lastName" type="text" class="dark:bg-white mt-1 block w-full font-serif" wire:model="lastName" placeholder="Last Name"/>
                         <x-input-error for="lastName" class="mt-2" />
                     </div>
                 </div>
@@ -23,18 +23,18 @@
             <div class="col-span-6">
                 <div class="grid grid-cols-6 gap-4">
                     <div class="col-span-3">
-                        <x-input darkBorder="dark:border-gray-300" id="phone" type="text" class="dark:bg-white mt-1 block w-full font-serif" wire:model="phone" placeholder="Phone"/>
+                        <x-input darkBorder="dark:border-gray-300" darkText="text-black" id="phone" type="text" class="dark:bg-white mt-1 block w-full font-serif" wire:model="phone" placeholder="Phone"/>
                         <x-input-error for="phone" class="mt-2" />
                     </div>
                     <div class="col-span-3">
-                        <x-input darkBorder="dark:border-gray-300" id="email" type="email" class="dark:bg-white mt-1 block w-full font-serif" wire:model="email" placeholder="Email"/>
+                        <x-input darkBorder="dark:border-gray-300" darkText="text-black" id="email" type="email" class="dark:bg-white mt-1 block w-full font-serif" wire:model="email" placeholder="Email"/>
                         <x-input-error for="email" class="mt-2" />
                     </div>
                 </div>
             </div>
 
             <div class="col-span-6">
-                <textarea type='textarea' id="message" class="bg-white mt-1 block w-full font-serif h-40 border border-gray-300" wire:model="message" placeholder="Message"></textarea>
+                <textarea type='textarea' id="message" class="bg-white mt-1 block w-full font-serif h-40 border border-gray-300 text-black" wire:model="message" placeholder="Message"></textarea>
                 <x-input-error for="message" class="mt-2" />
             </div>
         </x-slot>

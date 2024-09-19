@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\SurahResource\Pages;
+namespace App\Filament\Resources\InquiryResource\Pages;
 
-use App\Filament\Resources\SurahResource;
+use App\Filament\Resources\InquiryResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-class ListSurahs extends ListRecords
+class ListInquiries extends ListRecords
 {
-    protected static string $resource = SurahResource::class;
+    protected static string $resource = InquiryResource::class;
 
     protected function getHeaderActions(): array
     {

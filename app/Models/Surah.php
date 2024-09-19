@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use MongoDB\Laravel\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Surah extends Model
 {
@@ -22,5 +23,4 @@ class Surah extends Model
     {
         return $this->hasMany(Ayah::class, 'surah_id', '_id');
     }
-
 }
