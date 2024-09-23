@@ -2,17 +2,17 @@
     <div class="bg-black rounded-full flex justify-center items-center mx-5 my-5">
         <input type="radio" class="hidden" name="recitationSideMenuOptions" id="surah" autocomplete="off" checked x-model="activeOption" value="surah">
         <label :class="activeOption === 'surah' ? 'bg-gray-600' : 'bg-transparent'" class="hover:bg-gray-500 w-full rounded-full px-5 cursor-pointer py-2 text-white font-serif text-center" for="surah">
-            Surah
+            {{ __('recitation.surah') }}
         </label>
 
         <input type="radio" class="hidden" name="recitationSideMenuOptions" id="juz" autocomplete="off" x-model="activeOption" value="juz">
         <label :class="activeOption === 'juz' ? 'bg-gray-600' : 'bg-transparent'" class="hover:bg-gray-500 w-full rounded-full px-5 py-2 cursor-pointer text-white font-serif text-center" for="juz">
-            Juz
+            {{ __('recitation.juz') }}
         </label>
 
         <input type="radio" class="hidden" name="recitationSideMenuOptions" id="page" autocomplete="off" x-model="activeOption" value="page">
         <label :class="activeOption === 'page' ? 'bg-gray-600' : 'bg-transparent'" class="hover:bg-gray-500 w-full rounded-full px-5 py-2 cursor-pointer text-white font-serif text-center" for="page">
-            Page
+            {{ __('recitation.page') }}
         </label>
     </div>
     <div class="w-full max-w-md">
@@ -42,7 +42,7 @@
                 @foreach ($this->juzs as $juz)
                     <div wire:click="redirectToJuz({{ $juz->id }})" class="text-white font-sans flex gap-5 mx-5 my-3 hover:cursor-pointer hover:bg-gray-500">
                         <div class="ms-2 flex justify-center w-5">
-                            Juz
+                            {{ __('recitation.juz') }}
                         </div>
                         <p>{{ $juz->id }}</p>
                     </div>
@@ -54,7 +54,7 @@
                 @foreach ($this->pages as $page)
                     <div wire:click="redirectToPage({{ $page->id }})" class="text-white font-sans flex gap-5 mx-5 my-3 hover:cursor-pointer hover:bg-gray-500">
                         <div class="ms-4 flex justify-center w-5">
-                            Page
+                            {{ __('recitation.page') }}
                         </div>
                         <p>{{ $page->id }}</p>
                     </div>

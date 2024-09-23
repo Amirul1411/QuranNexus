@@ -23,17 +23,16 @@
         <li class="nav-item">
             <a wire:click="$set('selectedNavItem', 'all')"
                 class=" {{ $selectedNavItem == 'all' ? 'border-b-2' : '' }} text-white cursor-pointer font-serif"
-                aria-current="page">All</a>
+                aria-current="page">{{ __('surah_list.all') }}</a>
         </li>
         @if (Auth::user())
             <li class="nav-item">
                 <a wire:click="$set('selectedNavItem', 'recently_read')"
-                    class=" {{ $selectedNavItem == 'recently_read' ? 'border-b-2' : '' }} text-white cursor-pointer font-serif">Recently
-                    Read</a>
+                    class=" {{ $selectedNavItem == 'recently_read' ? 'border-b-2' : '' }} text-white cursor-pointer font-serif">{{ __('surah_list.recently_read') }}</a>
             </li>
             <li class="nav-item">
                 <a wire:click="$set('selectedNavItem', 'bookmarks')"
-                    class=" {{ $selectedNavItem == 'bookmarks' ? 'border-b-2' : '' }} text-white cursor-pointer font-serif">Bookmarks
+                    class=" {{ $selectedNavItem == 'bookmarks' ? 'border-b-2' : '' }} text-white cursor-pointer font-serif">{{ __('surah_list.bookmarks') }}
                 </a>
             </li>
         @endif
@@ -69,9 +68,9 @@
         </div>
     @elseif ($selectedNavItem == 'recently_read')
         <div class="flex flex-col justify-center my-3">
-            @if ($this->recentlyReadSurah && count($this->recentlyReadSurah) > 0 )
+            @if ($this->recentlyReadSurah && count($this->recentlyReadSurah) > 0)
                 <div class="text-white text-start font-serif text-lg my-3">
-                    Surah
+                    {{ __('surah_list.surah') }}
                 </div>
                 <div class="flex flex-wrap justify-center">
                     @foreach ($this->recentlyReadSurah as $sura)
@@ -102,9 +101,9 @@
                     @endforeach
                 </div>
             @endif
-            @if ($this->recentlyReadJuz  && count($this->recentlyReadJuz) > 0 )
+            @if ($this->recentlyReadJuz && count($this->recentlyReadJuz) > 0)
                 <div class="text-white text-start font-serif text-lg my-3 border-t-2 border-gray-500 pt-3">
-                    Juz
+                    {{ __('surah_list.juz') }}
                 </div>
                 <div class="flex flex-wrap justify-center">
                     @foreach ($this->recentlyReadJuz as $juz)
@@ -121,27 +120,27 @@
             @endif
             @if ($this->recentlyReadPage && count($this->recentlyReadPage) > 0)
                 <div class="text-white text-start font-serif text-lg my-3 border-t-2 border-gray-500 pt-3">
-                    Page
+                    {{ __('surah_list.page') }}
                 </div>
                 <div class="flex flex-wrap justify-center">
                     @foreach ($this->recentlyReadPage as $page)
-                    <div class="w-1/3 p-5">
-                        <div wire:click="redirectToPage({{ $page->_id }}"
-                            class="h-20 flex items-center bg-black text-center p-5 rounded-md cursor-pointer">
-                            <div class="text-white w-full">
-                                <h5 class="font-bold text-xl font-serif">Page {{ $page->_id }}</h5>
+                        <div class="w-1/3 p-5">
+                            <div wire:click="redirectToPage({{ $page->_id }}"
+                                class="h-20 flex items-center bg-black text-center p-5 rounded-md cursor-pointer">
+                                <div class="text-white w-full">
+                                    <h5 class="font-bold text-xl font-serif">Page {{ $page->_id }}</h5>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     @endforeach
                 </div>
             @endif
         </div>
     @elseif ($selectedNavItem == 'bookmarks')
         <div class="flex flex-col justify-center my-3">
-            @if ($this->bookmarkedSurah && count($this->bookmarkedSurah) > 0 )
+            @if ($this->bookmarkedSurah && count($this->bookmarkedSurah) > 0)
                 <div class="text-white text-start font-serif text-lg my-3">
-                    Surah
+                    {{ __('surah_list.surah') }}
                 </div>
                 <div class="flex flex-wrap justify-center">
                     @foreach ($this->bookmarkedSurah as $sura)
@@ -173,9 +172,9 @@
                     @endforeach
                 </div>
             @endif
-            @if ($this->bookmarkedAyah && count($this->bookmarkedAyah) > 0 )
+            @if ($this->bookmarkedAyah && count($this->bookmarkedAyah) > 0)
                 <div class="text-white text-start font-serif text-lg my-3 border-t-2 border-gray-500 pt-3">
-                    Ayah
+                    {{ __('surah_list.ayah') }}
                 </div>
                 <div class="flex flex-wrap justify-center">
                     @foreach ($this->bookmarkedAyah as $aya)
@@ -208,20 +207,20 @@
                     @endforeach
                 </div>
             @endif
-            @if ($this->bookmarkedPage && count($this->bookmarkedPage) > 0 )
+            @if ($this->bookmarkedPage && count($this->bookmarkedPage) > 0)
                 <div class="text-white text-start font-serif text-lg my-3 border-t-2 border-gray-500 pt-3">
-                    Page
+                    {{ __('surah_list.page') }}
                 </div>
                 <div class="flex flex-wrap justify-center">
                     @foreach ($this->bookmarkedPage as $page)
                         <div class="w-1/3 p-5">
-                        <div wire:click="redirectToPage({{ $page->_id }}"
-                            class="h-20 flex items-center bg-black text-center p-5 rounded-md cursor-pointer">
-                            <div class="text-white w-full">
-                                <h5 class="font-bold text-xl font-serif">Page {{ $page->_id }}</h5>
+                            <div wire:click="redirectToPage({{ $page->_id }}"
+                                class="h-20 flex items-center bg-black text-center p-5 rounded-md cursor-pointer">
+                                <div class="text-white w-full">
+                                    <h5 class="font-bold text-xl font-serif">Page {{ $page->_id }}</h5>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     @endforeach
                 </div>
             @endif

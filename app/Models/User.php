@@ -206,9 +206,6 @@ class User extends Authenticatable implements FilamentUser
 
             // Update last recitation date
             $this->attributes['last_recitation_date'] = $today;
-        } else {
-            // Reset streak if no recitation is done today
-            $this->attributes['streak'] = 0;
         }
 
         // Save the updated recitation_times, streak, and last_recitation_date fields in MongoDB

@@ -4,7 +4,7 @@
         <x-slot name="form">
 
             <div class="col-span-3">
-                <p class="text-3xl text-gray-500 font-serif">Contact Us</p>
+                <p class="text-3xl text-gray-500 font-serif">{{ __('contact.contact_us') }}</p>
             </div>
 
             <div class="col-span-6">
@@ -43,7 +43,7 @@
 
     <x-slot name="actions">
         <x-button class="bg-gradient-to-r from-light-green via-light-green-teal via-56 to-teal font-serif font-medium">
-            Send Message
+            {{ __('contact.send_message') }}
         </x-button>
     </x-slot>
 </x-form-section>

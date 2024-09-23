@@ -29,7 +29,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
                     </svg>
-                    Ayat By Ayat</label>
+                    {{ __('recitation.ayat_by_ayat') }}</label>
 
                 <input type="radio" class="hidden" name="recitationPageLayoutOptions" id="byPage"
                     autocomplete="off" x-model="activeOption" value="byPage">
@@ -42,7 +42,7 @@
                         <path
                             d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.963-6.963Z" />
                     </svg>
-                    Page By Page</label>
+                    {{ __('recitation.page_by_page') }}</label>
             </div>
         </div>
 
@@ -64,7 +64,7 @@
                             clip-rule="evenodd" />
                     </svg>
                 </span>
-                <p wire:click="displaySurahDetails({{ $surah->_id }})" class="text-white cursor-pointer">Surah Info
+                <p wire:click="displaySurahDetails({{ $surah->_id }})" class="text-white cursor-pointer">{{ __('recitation.surah_info') }}
                 </p>
             </div>
             <div class="flex justify-end items-center my-5 text-white">
@@ -74,7 +74,7 @@
                             d="M6.3 2.84A1.5 1.5 0 0 0 4 4.11v11.78a1.5 1.5 0 0 0 2.3 1.27l9.344-5.891a1.5 1.5 0 0 0 0-2.538L6.3 2.841Z" />
                     </svg>
                 </span>
-                <p class="cursor-pointer">Play Audio</p>
+                <p class="cursor-pointer">{{ __('recitation.play_audio') }}</p>
             </div>
         @endif
 
