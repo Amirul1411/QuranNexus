@@ -54,7 +54,7 @@ class User extends Authenticatable implements FilamentUser
      *
      * @var array<int, string>
      */
-    protected $fillable = ['_id', 'name', 'email', 'password', 'role', 'recitation_times'];
+    protected $fillable = ['_id', 'name', 'email', 'password', 'role', 'recitation_times', 'recitation_streak', 'last_recitation_date'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -172,9 +172,17 @@ class User extends Authenticatable implements FilamentUser
     {
         $today = now()->startOfDay()->toDateString(); // Use date string for consistency
 
-        // Initialize recitation_times if it doesn't exist
+        // Initialize recitation_times and streak if they don't exist
         if (!isset($this->attributes['recitation_times'])) {
             $this->attributes['recitation_times'] = [];
+        }
+
+        if (!isset($this->attributes['streak'])) {
+            $this->attributes['streak'] = 0;
+        }
+
+        if (!isset($this->attributes['last_recitation_date'])) {
+            $this->attributes['last_recitation_date'] = null;
         }
 
         // Get the current time spent today, or default to 0
@@ -183,9 +191,31 @@ class User extends Authenticatable implements FilamentUser
         // Add the new session time to today's total
         $this->attributes['recitation_times'][$today] = $timeSpentToday + $minutes;
 
-        // Save the updated recitation_times field in MongoDB
+        // Check if at least 1 minute was spent on recitation today
+        if ($this->attributes['recitation_times'][$today] >= 1) {
+            $yesterday = now()->subDay()->startOfDay()->toDateString();
+
+            // Check if recitation was done yesterday
+            if ($this->attributes['last_recitation_date'] === $yesterday) {
+                // Increment streak
+                $this->attributes['streak'] += 1;
+            } else {
+                // Reset streak to 1 if recitation was missed the previous day
+                $this->attributes['streak'] = 1;
+            }
+
+            // Update last recitation date
+            $this->attributes['last_recitation_date'] = $today;
+        } else {
+            // Reset streak if no recitation is done today
+            $this->attributes['streak'] = 0;
+        }
+
+        // Save the updated recitation_times, streak, and last_recitation_date fields in MongoDB
         $this->update([
             'recitation_times' => $this->attributes['recitation_times'],
+            'streak' => $this->attributes['streak'],
+            'last_recitation_date' => $this->attributes['last_recitation_date'],
         ]);
     }
 }
