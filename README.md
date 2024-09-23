@@ -93,6 +93,8 @@ php artisan test --filter=JavaBridgeTest
 
 php artisan cleanup:recently-read
 php artisan schedule:run
+php artisan schedule:interrupt
+php artisan schedule:work
 
 Log commands:
 tail -f storage/logs/laravel.log

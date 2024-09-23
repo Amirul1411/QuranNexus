@@ -20,12 +20,4 @@ class Page extends Model
     {
         return $this->hasMany(Ayah::class, 'page_id', '_id');
     }
-
-    // public function getPage(){
-    //     $surah = Surah::find($this->surahId);
-    //     $ayah = $surah->ayahs()->first();
-    //     $page = $ayah->page();
-
-    //     return $page;
-    // }
 }

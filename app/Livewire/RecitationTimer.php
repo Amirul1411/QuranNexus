@@ -29,6 +29,8 @@ class RecitationTimer extends Component
         ]);
 
         Auth::user()->trackRecitationTime($timeSpentInMinutes);
+
+        $this->startTime = now();
     }
 
     public function render()

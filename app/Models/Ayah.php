@@ -45,6 +45,12 @@ class Ayah extends Model
     public function translations()
     {
         return $this->hasOne(Translation::class, 'ayah_index', 'ayah_index')
-        ->where('surah_id', $this->surah_id);;
+        ->where('surah_id', $this->surah_id);
+    }
+
+    public function audioRecitations()
+    {
+        return $this->hasOne(AudioRecitation::class, 'ayah_index', 'ayah_index')
+        ->where('surah_id', $this->surah_id);
     }
 }
