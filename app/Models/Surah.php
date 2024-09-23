@@ -16,6 +16,7 @@ class Surah extends Model
         'name',
         'tname',
         'ename',
+        'type',
         'ayas',
     ];
 

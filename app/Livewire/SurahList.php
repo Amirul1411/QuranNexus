@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Ayah;
+use App\Models\Juz;
 use App\Models\Page;
 use App\Models\Surah;
 use Illuminate\Support\Facades\Auth;
@@ -10,10 +11,8 @@ use Livewire\Component;
 use Livewire\Attributes\Url;
 use Livewire\Attributes\Computed;
 
-
 class SurahList extends Component
 {
-
     public $selectedNavItem = 'all';
 
     public $surahs;
@@ -24,38 +23,126 @@ class SurahList extends Component
     {
         // General search across multiple fields
         $this->surahs = Surah::where(function ($query) {
-                $query->where('tname', 'like', '%' . $this->search . '%')
-                    ->orWhere('ename', 'like', '%' . $this->search . '%')
-                    ->orWhere('_id', $this->search);
-            })->get();
+            $query
+                ->where('tname', 'like', '%' . $this->search . '%')
+                ->orWhere('ename', 'like', '%' . $this->search . '%')
+                ->orWhere('_id', $this->search);
+        })->get();
     }
 
     public function redirectToSurah($surahId)
     {
-      return redirect()->route('surah.show', ['surah' => $surahId]);
+        return redirect()->route('surah.show', ['surah' => $surahId]);
+    }
+
+    public function redirectToAyah($surahId, $ayahIndex)
+    {
+        return redirect()
+            ->route('surah.show', ['surah' => $surahId])
+            ->with('scrollToAyah', $surahId . '-' . $ayahIndex);
     }
 
     public function redirectToPage($pageId)
     {
-      return redirect()->route('page.show', ['page' => (int) $pageId]);
+        return redirect()->route('page.show', ['page' => (int) $pageId]);
     }
 
-    #[Computed()]
+    public function redirectToJuz($juzId)
+    {
+        return redirect()->route('juz.show', ['juz' => (int) $juzId]);
+    }
+
+    #[Computed]
     public function bookmarkedSurah()
     {
-        return Surah::find(Auth::user()->surah_bookmarks);
+        $bookmarks = Auth::user()->surah_bookmarks ?? [];
+        $surahs = Surah::find($bookmarks);
+
+        // Sort the surahs based on the order of the IDs in the bookmarks
+        return $surahs
+            ->sortByDesc(function ($surah) use ($bookmarks) {
+                return array_search($surah->_id, $bookmarks);
+            })
+            ->values();
     }
 
-    #[Computed()]
+    #[Computed]
     public function bookmarkedAyah()
     {
-        return Ayah::find(Auth::user()->ayah_bookmarks);
+        $bookmarks = Auth::user()->ayah_bookmarks ?? [];
+        $ayahs = Ayah::find($bookmarks);
+
+        // Sort the ayahs based on the order of the IDs in the bookmarks
+        return $ayahs
+            ->sortByDesc(function ($ayah) use ($bookmarks) {
+                return array_search($ayah->_id, $bookmarks);
+            })
+            ->values();
     }
 
-    #[Computed()]
+    #[Computed]
     public function bookmarkedPage()
     {
-        return Page::find(Auth::user()->page_bookmarks);
+        $bookmarks = Auth::user()->page_bookmarks ?? [];
+        $pages = Page::find($bookmarks);
+
+        // Sort the pages based on the order of the IDs in the bookmarks
+        return $pages
+            ->sortByDesc(function ($page) use ($bookmarks) {
+                return array_search($page->_id, $bookmarks);
+            })
+            ->values();
+    }
+
+    #[Computed]
+    public function recentlyReadSurah()
+    {
+        $recentlyRead = collect(Auth::user()->recently_read_surahs ?? [])
+        ->pluck('item_id')
+        ->toArray();
+
+        $surahs = Surah::find($recentlyRead);
+
+        // Sort the surahs based on the order of the IDs in recently_read_surahs
+        return $surahs
+            ->sortByDesc(function ($surah) use ($recentlyRead) {
+                return array_search($surah->_id, $recentlyRead);
+            })
+            ->values();
+    }
+
+    #[Computed]
+    public function recentlyReadJuz()
+    {
+        $recentlyRead = collect(Auth::user()->recently_read_juzs ?? [])
+        ->pluck('item_id')
+        ->toArray();
+
+        $juzs = Juz::find($recentlyRead);
+
+        // Sort the juzs based on the order of the IDs in recently_read_juzs
+        return $juzs
+            ->sortByDesc(function ($juz) use ($recentlyRead) {
+                return array_search($juz->_id, $recentlyRead);
+            })
+            ->values();
+    }
+
+    #[Computed]
+    public function recentlyReadPage()
+    {
+        $recentlyRead = collect(Auth::user()->recently_read_pages ?? [])
+        ->pluck('item_id')
+        ->toArray();
+
+        $pages = Page::find($recentlyRead);
+
+        // Sort the pages based on the order of the IDs in recently_read_pages
+        return $pages
+            ->sortByDesc(function ($page) use ($recentlyRead) {
+                return array_search($page->_id, $recentlyRead);
+            })
+            ->values();
     }
 
     public function render()

@@ -91,6 +91,13 @@ php artisan db:seed --class=SurahSeeder
 
 php artisan test --filter=JavaBridgeTest
 
+php artisan cleanup:recently-read
+php artisan schedule:run
+
+Log commands:
+tail -f storage/logs/laravel.log
+rm storage/logs/laravel.log
+
 Git commands:
 git remote -v
 git remote remove origin

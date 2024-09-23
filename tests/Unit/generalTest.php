@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Ayah;
+use App\Models\User;
 use App\Models\Word;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -17,14 +18,16 @@ class generalTest extends TestCase
     public function test_example(): void
 {
 
-    $word = Word::where('surah_id', '1')
-                    ->where('ayah_index', '1')
-                    ->where('word_index', '1')
-                    ->first();
+    // Fetch all users
+    $users = User::all();
 
-    echo $word->text;
-
-    $this->assertNotEmpty($word);
+    // Loop through each user and delete the recently read fields
+    foreach ($users as $user) {
+        $user->unset('recently_read_surahs');
+        $user->unset('recently_read_pages');
+        $user->unset('recently_read_juzs');
+        $user->save();
+    }
 }
 
 }

@@ -8,6 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title> {{ isset($title) ? $title . ' | ' : '' }}{{ config('app.name', '') }}</title>
+    <link rel="icon" type="image/png" href="{{ Vite::asset('resources/images/quran-nexus-logo-image.png') }}">
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/scss/app.scss', 'resources/js/app.js'])

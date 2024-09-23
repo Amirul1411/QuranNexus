@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use Carbon\Carbon;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -38,11 +39,13 @@ class User extends Authenticatable implements FilamentUser
         return $this->can('view-admin', User::class);
     }
 
-    public function isAdmin(){
+    public function isAdmin()
+    {
         return $this->role === self::ROLE_ADMIN;
     }
 
-    public function isEditor(){
+    public function isEditor()
+    {
         return $this->role === self::ROLE_EDITOR;
     }
 
@@ -51,34 +54,21 @@ class User extends Authenticatable implements FilamentUser
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        '_id',
-        'name',
-        'email',
-        'password',
-        'role',
-    ];
+    protected $fillable = ['_id', 'name', 'email', 'password', 'role', 'recitation_times'];
 
     /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-        'two_factor_recovery_codes',
-        'two_factor_secret',
-    ];
+    protected $hidden = ['password', 'remember_token', 'two_factor_recovery_codes', 'two_factor_secret'];
 
     /**
      * The accessors to append to the model's array form.
      *
      * @var array<int, string>
      */
-    protected $appends = [
-        'profile_photo_url',
-    ];
+    protected $appends = ['profile_photo_url'];
 
     /**
      * Get the attributes that should be cast.
@@ -132,5 +122,70 @@ class User extends Authenticatable implements FilamentUser
         }
 
         return false;
+    }
+
+    public function markAsRecentlyRead($type, $itemId)
+    {
+        $timestamp = now()->toDateTimeString(); // Use start of the day for clearing by day
+
+        if ($type === 'surah') {
+            $this->pull('recently_read_surahs', ['item_id' => $itemId]);
+            $this->push('recently_read_surahs', ['item_id' => $itemId, 'read_at' => $timestamp]);
+        } elseif ($type === 'page') {
+            $this->pull('recently_read_pages', ['item_id' => $itemId]);
+            $this->push('recently_read_pages', ['item_id' => $itemId, 'read_at' => $timestamp]);
+        } elseif ($type === 'juz') {
+            $this->pull('recently_read_juzs', ['item_id' => $itemId]);
+            $this->push('recently_read_juzs', ['item_id' => $itemId, 'read_at' => $timestamp]);
+        }
+    }
+
+    public function cleanOldRecentlyReadItems($type)
+    {
+        $currentMinute = now();
+
+        if ($type === 'surah' && !empty($this->recently_read_surahs)) {
+            $this->recently_read_surahs = collect($this->recently_read_surahs)
+                ->filter(function ($item) use ($currentMinute) {
+                    return Carbon::parse($item['read_at'])->greaterThan($currentMinute->subDays(1));
+                })
+                ->toArray();
+            $this->save();
+        } elseif ($type === 'page' && !empty($this->recently_read_pages)) {
+            $this->recently_read_pages = collect($this->recently_read_pages)
+                ->filter(function ($item) use ($currentMinute) {
+                    return Carbon::parse($item['read_at'])->greaterThan($currentMinute->subDays(1));
+                })
+                ->toArray();
+            $this->save();
+        } elseif ($type === 'juz' && !empty($this->recently_read_juzs)) {
+            $this->recently_read_juzs = collect($this->recently_read_juzs)
+                ->filter(function ($item) use ($currentMinute) {
+                    return Carbon::parse($item['read_at'])->greaterThan($currentMinute->subDays(1));
+                })
+                ->toArray();
+            $this->save();
+        }
+    }
+
+    public function trackRecitationTime($minutes)
+    {
+        $today = now()->startOfDay()->toDateString(); // Use date string for consistency
+
+        // Initialize recitation_times if it doesn't exist
+        if (!isset($this->attributes['recitation_times'])) {
+            $this->attributes['recitation_times'] = [];
+        }
+
+        // Get the current time spent today, or default to 0
+        $timeSpentToday = $this->attributes['recitation_times'][$today] ?? 0;
+
+        // Add the new session time to today's total
+        $this->attributes['recitation_times'][$today] = $timeSpentToday + $minutes;
+
+        // Save the updated recitation_times field in MongoDB
+        $this->update([
+            'recitation_times' => $this->attributes['recitation_times'],
+        ]);
     }
 }

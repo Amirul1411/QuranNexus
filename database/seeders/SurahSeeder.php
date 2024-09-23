@@ -27,6 +27,7 @@ class SurahSeeder extends Seeder
                 'name' => (string) $sura['name'],
                 'tname' => (string) $sura['tname'],
                 'ename' => (string) $sura['ename'],
+                'type' => (string) $sura['type'],
                 'ayas' => (int) $sura['ayas'],
             ]);
         }

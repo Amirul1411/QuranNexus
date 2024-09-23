@@ -58,6 +58,14 @@ class SurahResource extends Resource
                 ->sortable()
                 ->searchable()
                 ->label('Name Meaning'),
+                TextColumn::make('type')
+                ->sortable()
+                ->label('Type')
+                ->badge()
+                ->color(fn (string $state): string => match ($state) {
+                    'Meccan' => 'info',
+                    'Medinan' => 'success',
+                }),
                 TextColumn::make('ayas')
                 ->sortable()
                 ->label('Number of ayahs'),
