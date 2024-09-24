@@ -1,6 +1,6 @@
 <div class="flex justify-end items-center my-5 text-white">
     @if (Route::is('surah.show'))
-        <div wire:click="playAudioRecitation({{ $surah->ayahs }})" class="flex w-auto items-center">
+        <div wire:click="playAudioRecitation({{ $surah->ayahs }})" class="flex w-auto items-center cursor-pointer">
             <span class="mr-1 cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                     fill="currentColor" class="size-5">
                     <path
@@ -10,7 +10,7 @@
             <p class="cursor-pointer">{{ __('recitation.play_audio') }}</p>
         </div>
     @elseif (Route::is('page.show'))
-        <div wire:click="playAudioRecitation({{ $page->ayahs }})" class="flex w-auto items-center">
+        <div wire:click="playAudioRecitation({{ $page->ayahs }})" class="flex w-auto items-center cursor-pointer">
             <span class="mr-1 cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                     fill="currentColor" class="size-5">
                     <path
@@ -20,7 +20,7 @@
             <p class="cursor-pointer">{{ __('recitation.play_audio') }}</p>
         </div>
     @elseif (Route::is('juz.show'))
-        <div wire:click="playAudioRecitation({{ $juz->ayahs }})" class="flex w-auto items-center">
+        <div wire:click="playAudioRecitation({{ $juz->ayahs }})" class="flex w-auto items-center cursor-pointer">
             <span class="mr-1 cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                     fill="currentColor" class="size-5">
                     <path
@@ -30,15 +30,14 @@
             <p class="cursor-pointer">{{ __('recitation.play_audio') }}</p>
         </div>
     @endif
-
+    <!-- Display the audio player if audio files are present -->
+    @if (!empty($audioFiles))
+        <div>
+            @foreach ($audioFiles as $audioFile)
+                <audio controls>
+                    <source src="{{ asset($audioFile) }}" type="audio/mpeg" autoplay>
+                </audio>
+            @endforeach
+        </div>
+    @endif
 </div>
-<script>
-    window.addEventListener('play-audio', event => {
-        const audioFiles = event.detail.audioFiles;
-
-        audioFiles.forEach(audioFile => {
-            const audio = new Audio(audioFile);
-            audio.play();
-        });
-    });
-</script>

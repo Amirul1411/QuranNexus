@@ -17,5 +17,5 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-/resources/data/al-afasy-audio
+/public/Alafasy
 /resources/tools/QuranSplitter

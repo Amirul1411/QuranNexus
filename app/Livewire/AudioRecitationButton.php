@@ -13,22 +13,28 @@ class AudioRecitationButton extends Component
 
     public $juz;
 
+    public $audioFiles = [];
+
     public function playAudioRecitation($ayahs)
     {
-        // Fetch the audio recitation files for the ayahs
         $audioFiles = [];
 
         foreach ($ayahs as $ayahData) {
             $ayah = Ayah::find($ayahData['_id']);
 
-            // Check if the ayah has an associated audio file
             if ($ayah && $ayah->audioRecitations) {
+                if($ayah->ayah_index == '1'){
+                    $audioFiles[] = 'Alafasy/audhubillah.mp3';
+                    if($ayah->bismillah){
+                        $audioFiles[] = 'Alafasy/bismillah.mp3';
+                    }
+                }
                 $audioFiles[] = $ayah->audioRecitations->audio_file;
             }
-
         }
 
-        $this->dispatch('play-audio', ['audioFiles' => $audioFiles]);
+        // Store the audio files in the public property
+        $this->audioFiles = $audioFiles;
     }
 
     public function render()

@@ -199,6 +199,9 @@ class User extends Authenticatable implements FilamentUser
             if ($this->attributes['last_recitation_date'] === $yesterday) {
                 // Increment streak
                 $this->attributes['streak'] += 1;
+            } elseif($this->attributes['last_recitation_date'] === $today) {
+                // Maintain the streak
+                $this->attributes['streak'] = $this->attributes['streak'];
             } else {
                 // Reset streak to 1 if recitation was missed the previous day
                 $this->attributes['streak'] = 1;

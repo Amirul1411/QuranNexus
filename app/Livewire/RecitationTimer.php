@@ -25,7 +25,7 @@ class RecitationTimer extends Component
         Log::info('Track Time Spent:', [
             'startTime' => $this->startTime,
             'endTime' => $endTime,
-            'timeSpentInSeconds' => $timeSpentInMinutes,
+            'timeSpentInMinutes' => $timeSpentInMinutes,
         ]);
 
         Auth::user()->trackRecitationTime($timeSpentInMinutes);
