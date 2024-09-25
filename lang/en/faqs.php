@@ -12,7 +12,7 @@ return [
     'item_3_title' => 'Is Quran Nexus free to use?',
     'item_3_subtitle' => 'Yes, it is free to use without require any subscription. The APIs are also publicly available for developers to use in developing their own Quran applications.',
     'item_4_title' => 'Are the Quranic text on Quran Nexus verified?',
-    'item_4_subtitle' => 'We will collaborate with JAKIM to verify every Quranic text to ensure its authenticity.',
+    'item_4_subtitle' => 'We will collaborate with Jabatan Kemajuan Islam Malaysia (JAKIM) to verify every Quranic text to ensure its authenticity.',
     'item_5_title' => 'Does Quran Nexus have mobile app?',
     'item_5_subtitle' => 'Yes! Please visit the play store to download our mobile apps.',
     'item_6_title' => 'How do I report errors on Quran Nexus?',
