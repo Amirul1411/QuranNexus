@@ -30,14 +30,12 @@
             <p class="cursor-pointer">{{ __('recitation.play_audio') }}</p>
         </div>
     @endif
-    <!-- Display the audio player if audio files are present -->
-    @if (!empty($audioFiles))
+    <!-- Display the single audio player for the combined audio file -->
+    @if (!empty($audioFile))
         <div>
-            @foreach ($audioFiles as $audioFile)
-                <audio controls>
-                    <source src="{{ asset($audioFile) }}" type="audio/mpeg" autoplay>
-                </audio>
-            @endforeach
+            <audio controls>
+                <source src="{{ $audioFile }}" type="audio/mpeg" autoplay>
+            </audio>
         </div>
     @endif
 </div>
