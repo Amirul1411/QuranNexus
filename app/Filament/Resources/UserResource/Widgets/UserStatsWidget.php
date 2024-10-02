@@ -16,7 +16,7 @@ class UserStatsWidget extends BaseWidget
             Stat::make('Total Users', User::count()),
             Stat::make('Total Admins', User::where('role', User::ROLE_ADMIN)->count()),
             Stat::make('Total Editors', User::where('role', User::ROLE_EDITOR)->count()),
-            Stat::make('Longest Streak', User::max('streak')), // Get the longest streak from users
+            // Stat::make('Longest Streak', User::max('streak')), // Get the longest streak from users
         ];
     }
 }

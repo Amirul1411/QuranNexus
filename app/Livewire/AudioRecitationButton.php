@@ -20,9 +20,9 @@ class AudioRecitationButton extends Component
         $audioFiles = [];
         $outputFile = storage_path('app/public/combined_audio.mp3');
 
+        // Remove the existing file if it exists
         if (file_exists($outputFile)) {
-            $rmCommand = "rm \"$outputFile\"";
-            shell_exec($rmCommand);
+            unlink($outputFile);
         }
 
         foreach ($ayahs as $ayahData) {
@@ -51,11 +51,11 @@ class AudioRecitationButton extends Component
             file_put_contents($concatFile, $concatContent, LOCK_EX);
 
             // Run the FFmpeg command to concatenate the audio files
-            $ffmpegCommand = "ffmpeg -f concat -safe 0 -i \"$concatFile\" -c copy \"$outputFile\"";
+            $ffmpegCommand = "ffmpeg -f concat -safe 0 -i \"$concatFile\" -c:a libmp3lame -q:a 4 \"$outputFile\"";
             shell_exec($ffmpegCommand);
 
             // Store the path to the combined file
-            $this->audioFile = asset($outputFile);
+            $this->audioFile = asset('storage/combined_audio.mp3');
         }
     }
 

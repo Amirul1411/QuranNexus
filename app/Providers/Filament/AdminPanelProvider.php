@@ -44,7 +44,7 @@ class AdminPanelProvider extends PanelProvider
                 // Widgets\AccountWidget::class,
                 // Widgets\FilamentInfoWidget::class,
                 UserStatsWidget::class,
-                RecitationTimePerDay::class,
+                // RecitationTimePerDay::class,
                 LatestInquiriesWidget::class,
             ])
             ->middleware([
