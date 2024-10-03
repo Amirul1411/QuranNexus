@@ -106,7 +106,20 @@ git remote remove origin
 git remote add origin https://github.com/Amirul1411/QuranNexus.git
 git push -u origin main
 
+# Filter Alafasy folder from older commit
 git filter-repo --path-glob "public/Alafasy" --invert-paths --force
+
+# Initialize Git LFS (if you haven't already)
+git lfs install
+
+# Track all files in the public/audio/Alafasy directory
+git lfs track "public/audio/Alafasy/*"
+
+# Add the .gitattributes file to the staging area
+git add .gitattributes
+
+# Commit the .gitattributes file
+git commit -m "Track all files in public/audio/Alafasy folder with Git LFS"
 
 
 5. User accounts:
