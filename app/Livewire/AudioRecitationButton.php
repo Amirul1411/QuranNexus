@@ -30,9 +30,9 @@ class AudioRecitationButton extends Component
 
             if ($ayah && $ayah->audioRecitations) {
                 if ($ayah->ayah_index == '1') {
-                    $audioFiles[] = 'Alafasy/audhubillah.mp3';
+                    $audioFiles[] = 'Alafasy/mp3/audhubillah.mp3';
                     if ($ayah->bismillah) {
-                        $audioFiles[] = 'Alafasy/bismillah.mp3';
+                        $audioFiles[] = 'Alafasy/mp3/bismillah.mp3';
                     }
                 }
                 $audioFiles[] = $ayah->audioRecitations->audio_file;
@@ -44,7 +44,7 @@ class AudioRecitationButton extends Component
             $concatFile = storage_path('app/public/concat.txt');
             $concatContent = '';
             foreach ($audioFiles as $file) {
-                $concatContent .= "file '" . public_path($file) . "'\n";
+                $concatContent .= "file '" . public_path("audio/".$file) . "'\n";
             }
 
             // Write the file list to a temporary file

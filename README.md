@@ -121,7 +121,6 @@ git add .gitattributes
 # Commit the .gitattributes file
 git commit -m "Track all files in public/audio/Alafasy folder with Git LFS"
 
-
 5. User accounts:
 
 Test User  - testuser@gmail.com  - user1234
