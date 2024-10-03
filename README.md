@@ -106,6 +106,9 @@ git remote remove origin
 git remote add origin https://github.com/Amirul1411/QuranNexus.git
 git push -u origin main
 
+git filter-repo --path-glob "public/Alafasy" --invert-paths --force
+
+
 5. User accounts:
 
 Test User  - testuser@gmail.com  - user1234
