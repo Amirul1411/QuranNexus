@@ -43,6 +43,11 @@ class RecitationByAyah extends Component
         return redirect()->route('juz.show', ['juz' => (int) $juzId + 1]);
     }
 
+    public function displayAyahTafseer($tafseerId)
+    {
+        return redirect()->route('tafseer.show', ['tafseer' => $tafseerId]);
+    }
+
     public function render()
     {
         return view('livewire.recitation-by-ayah', [

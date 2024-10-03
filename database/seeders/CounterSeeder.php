@@ -8,6 +8,8 @@ use App\Models\Inquiry;
 use App\Models\Juz;
 use App\Models\Page;
 use App\Models\Surah;
+use App\Models\SurahInfo;
+use App\Models\Tafseer;
 use App\Models\Translation;
 use App\Models\User;
 use App\Models\Word;
@@ -31,8 +33,10 @@ class CounterSeeder extends Seeder
             ['_id' => 'user_id', 'sequence_value' => User::count()],
             ['_id' => 'inquiry_id', 'sequence_value' => Inquiry::count()],
             ['_id' => 'surah_id', 'sequence_value' => Surah::count()],
+            ['_id' => 'surah_info_id', 'sequence_value' => SurahInfo::count()],
             ['_id' => 'ayah_id', 'sequence_value' => Ayah::count()],
             ['_id' => 'word_id', 'sequence_value' => Word::count()],
+            ['_id' => 'tafseer_id', 'sequence_value' => Tafseer::count()],
             ['_id' => 'page_id', 'sequence_value' => Page::count()],
             ['_id' => 'juz_id', 'sequence_value' => Juz::count()],
             ['_id' => 'translation_id', 'sequence_value' => Translation::count()],

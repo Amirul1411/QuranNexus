@@ -24,4 +24,9 @@ class Surah extends Model
     {
         return $this->hasMany(Ayah::class, 'surah_id', '_id');
     }
+
+    public function surahInfo()
+    {
+        return $this->hasOne(SurahInfo::class, '_id', '_id');
+    }
 }

@@ -2,24 +2,19 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use MongoDB\Laravel\Eloquent\Model;
 
-class Translation extends Model
+class Tafseer extends Model
 {
-
     protected $connection = 'mongodb';
-    protected $collection = 'translations';
+    protected $collection = 'tafseer';
 
     protected $fillable = [
         '_id',
-        'name',
-        'translator',
-        'language',
-        'translation',
-    ];
-
-    protected $casts = [
-        'translation' => 'array',
+        'surah_id',
+        'ayah_index',
+        'html',
     ];
 
     public function ayah()

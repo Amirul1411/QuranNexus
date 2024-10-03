@@ -42,6 +42,12 @@ class Ayah extends Model
         return $this->belongsTo(Juz::class, 'juz_id', '_id');
     }
 
+    public function tafseer()
+    {
+        return $this->hasOne(Tafseer::class, 'ayah_index', 'ayah_index')
+        ->where('surah_id', $this->surah_id);
+    }
+
     public function translations()
     {
         return $this->hasOne(Translation::class, 'ayah_index', 'ayah_index')
