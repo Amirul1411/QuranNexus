@@ -14,5 +14,9 @@
             </div>
         </div>
     </x-slot>
-    <div class="text-white my-16 mx-40 text-justify">{!! $tafseer->html !!}</div>
+    @if ($htmlContent != '')
+        <div class="text-white my-16 mx-40 text-justify font-sans">{!! $htmlContent !!}</div>
+    @else
+        <div class="text-white my-16 mx-40 text-justify font-sans">Tafseer for this ayah is not found.</div>
+    @endif
 </x-app-layout>

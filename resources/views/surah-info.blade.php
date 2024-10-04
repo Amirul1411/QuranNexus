@@ -14,6 +14,6 @@
             </div>
         </div>
     </x-slot>
-    <div class="text-white my-16 mx-40 text-justify">{!! $surah_info->html !!}</div>
+    <div class="text-white my-16 mx-40 text-justify font-sans">{!! $htmlContent !!}</div>
 </x-app-layout>
 

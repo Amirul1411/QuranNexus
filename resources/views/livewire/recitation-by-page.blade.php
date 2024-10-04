@@ -60,7 +60,7 @@
                     </div>
                 @else
                     <div
-                        class="row-span-1 flex flex-wrap items-center flex-row-reverse gap-2 my-2 text-white justify-between w-2/3 mx-auto">
+                        class="row-span-1 flex flex-wrap items-center flex-row-reverse gap-2 my-2 text-white justify-between w-3/4 mx-auto">
                         @foreach ($words as $word)
                             <div class="font-UthmanicHafs text-3xl inline-block">
                                 {{ $word->text }}
