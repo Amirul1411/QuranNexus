@@ -36,8 +36,15 @@ class APITafseerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Tafseer $tafseer)
+    public function show($id)
     {
+        // Split the id string by colon (:)
+        [$surah_id, $ayah_index] = explode(':', $id);
+
+        // Now query the Word model using the surah_id, ayah_index, and word_index
+        $tafseer = Tafseer::where('surah_id', $surah_id)->where('ayah_index', $ayah_index)->firstOrFail();
+
+        // Return the Word resource
         return new TafseerResource($tafseer);
     }
 

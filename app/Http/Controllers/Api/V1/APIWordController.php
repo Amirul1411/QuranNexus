@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWordRequest;
 use App\Http\Requests\UpdateWordRequest;
 use App\Http\Resources\V1\WordResource;
+use Illuminate\Http\Request;
 
 class APIWordController extends Controller
 {
@@ -37,8 +38,15 @@ class APIWordController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Word $word)
+    public function show($id)
     {
+        // Split the id string by colon (:)
+        [$surah_id, $ayah_index, $word_index] = explode(':', $id);
+
+        // Now query the Word model using the surah_id, ayah_index, and word_index
+        $word = Word::where('surah_id', $surah_id)->where('ayah_index', $ayah_index)->where('word_index', $word_index)->firstOrFail();
+
+        // Return the Word resource
         return new WordResource($word);
     }
 
