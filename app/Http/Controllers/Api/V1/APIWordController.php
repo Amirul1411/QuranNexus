@@ -38,10 +38,10 @@ class APIWordController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($key)
     {
         // Split the id string by colon (:)
-        [$surah_id, $ayah_index, $word_index] = explode(':', $id);
+        [$surah_id, $ayah_index, $word_index] = explode(':', $key);
 
         // Now query the Word model using the surah_id, ayah_index, and word_index
         $word = Word::where('surah_id', $surah_id)->where('ayah_index', $ayah_index)->where('word_index', $word_index)->firstOrFail();
