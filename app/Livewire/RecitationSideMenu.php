@@ -4,8 +4,6 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Livewire\Attributes\Computed;
-use App\Http\Controllers\Api\V1\APISurahController;
-use App\Http\Controllers\PageController;
 use App\Models\Juz;
 use App\Models\Page;
 use App\Models\Surah;

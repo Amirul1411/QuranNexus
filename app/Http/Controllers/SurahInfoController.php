@@ -5,14 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Surah;
 use App\Models\SurahInfo;
-use Illuminate\Http\Request;
 
 class SurahInfoController extends Controller
 {
     public function show(SurahInfo $surahInfo)
     {
         $surah = Surah::find($surahInfo->id);
-        $surahInfo = SurahInfo::find($surahInfo->id);
 
         $htmlContent = $surahInfo->html;
 
