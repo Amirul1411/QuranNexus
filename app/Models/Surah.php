@@ -20,6 +20,11 @@ class Surah extends Model
         'ayas',
     ];
 
+    public function getIntIdAttribute()
+    {
+        return (int) $this->id;
+    }
+
     public function ayahs()
     {
         return $this->hasMany(Ayah::class, 'surah_id', '_id');

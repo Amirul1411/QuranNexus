@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\InquiryResource\Pages;
-use App\Filament\Resources\InquiryResource\RelationManagers;
-use App\Models\Inquiry;
+use App\Filament\Resources\PageResource\Pages;
+use App\Filament\Resources\PageResource\RelationManagers;
+use App\Models\Page;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -14,13 +14,13 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class InquiryResource extends Resource
+class PageResource extends Resource
 {
-    protected static ?string $model = Inquiry::class;
+    protected static ?string $model = Page::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-oval-left-ellipsis';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?int $navigationSort = 20;
+    protected static ?int $navigationSort = 60;
 
     public static function form(Form $form): Form
     {
@@ -37,22 +37,16 @@ class InquiryResource extends Resource
                 TextColumn::make('_id')
                 ->numeric()
                 ->sortable()
+                ->searchable()
                 ->label('Id'),
-                TextColumn::make('first_name')
+                TextColumn::make('first_ayah_tname')
+                ->searchable()
+                ->label('Surah Name'),
+                TextColumn::make('ayah_index')
+                ->numeric()
                 ->sortable()
-                ->label('First Name'),
-                TextColumn::make('last_name')
-                ->sortable()
-                ->label('Last Name'),
-                TextColumn::make('phone')
-                ->sortable()
-                ->label('Phone'),
-                TextColumn::make('email')
-                ->sortable()
-                ->label('Email'),
-                TextColumn::make('message')
-                ->sortable()
-                ->label('Message'),
+                ->searchable()
+                ->label('Ayah Index'),
             ])
             ->filters([
                 //
@@ -62,7 +56,7 @@ class InquiryResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -77,9 +71,9 @@ class InquiryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListInquiries::route('/'),
-            // 'create' => Pages\CreateInquiry::route('/create'),
-            // 'edit' => Pages\EditInquiry::route('/{record}/edit'),
+            'index' => Pages\ListPages::route('/'),
+            // 'create' => Pages\CreatePage::route('/create'),
+            // 'edit' => Pages\EditPage::route('/{record}/edit'),
         ];
     }
 }

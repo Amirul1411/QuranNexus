@@ -22,88 +22,44 @@ class SurahResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-book-open';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 30;
 
     public static function form(Form $form): Form
     {
-        return $form
-        ->schema([
-            TextInput::make('name')
-                ->required(),
-            TextInput::make('ename')
-                ->required(),
-            TextInput::make('tname')
-                ->required(),
-        ]);
+        return $form->schema([TextInput::make('name')->required(), TextInput::make('ename')->required(), TextInput::make('tname')->required()]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('_id')
-                ->numeric()
-                ->sortable()
-                ->searchable()
-                ->label('Id'),
-                TextColumn::make('name')
-                ->sortable()
-                ->searchable()
-                ->label('Arabic Name'),
-                TextColumn::make('tname')
-                ->sortable()
-                ->searchable()
-                ->label('Name'),
-                TextColumn::make('ename')
-                ->sortable()
-                ->searchable()
-                ->label('Name Meaning'),
-                TextColumn::make('type')
-                ->sortable()
-                ->label('Type')
-                ->badge()
-                ->color(fn (string $state): string => match ($state) {
-                    'Meccan' => 'info',
-                    'Medinan' => 'success',
-                }),
-                TextColumn::make('ayas')
-                ->sortable()
-                ->label('Number of ayahs'),
+                TextColumn::make('int_id')->numeric()->sortable()->searchable()->label('Id'),
+                TextColumn::make('name')->sortable()->searchable()->label('Arabic Name'),
+                TextColumn::make('tname')->sortable()->searchable()->label('Name'),
+                TextColumn::make('ename')->sortable()->searchable()->label('Name Meaning'),
+                TextColumn::make('type')->sortable()->label('Type')->badge()->color(
+                    fn(string $state): string => match ($state) {
+                        'Meccan' => 'info',
+                        'Medinan' => 'success',
+                    },
+                ),
+                TextColumn::make('ayas')->sortable()->label('Number of ayahs'),
             ])
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
+            ->actions([Tables\Actions\EditAction::make()])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     // Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ])
-            ->modifyQueryUsing(function (Builder $query) {
-                // Fetch all records and manually sort the '_id' as integer
-                $records = $query->get();
-
-                // Sort records by the '_id' field as an integer
-                $sortedRecords = $records->sortBy(function ($surah) {
-                    return (int) $surah->_id; // Cast '_id' to integer for sorting
-                });
-
-                // Get the sorted _id array
-                $sortedIds = $sortedRecords->pluck('_id')->toArray();
-
-                // Modify the query to get the records in the sorted order
-                return $query->whereIn('_id', $sortedIds);
-                    // ->orderByRaw('FIELD(_id, ' . implode(',', $sortedIds) . ')');
-            });
+            ]);
     }
+
 
     public static function getRelations(): array
     {
-        return [
-            AyahRelationManager::class,
-        ];
+        return [AyahRelationManager::class];
     }
 
     public static function getPages(): array
