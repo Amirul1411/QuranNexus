@@ -5,6 +5,8 @@ use App\Http\Controllers\Api\V1\APIPageController;
 use App\Http\Controllers\Api\V1\APISurahController;
 use App\Http\Controllers\Api\V1\APIWordController;
 use App\Http\Controllers\Api\V1\APIJuzController;
+use App\Http\Controllers\Api\V1\APISurahInfoController;
+use App\Http\Controllers\Api\V1\APITafseerController;
 use App\Http\Controllers\Api\V1\APITranslationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,4 +22,6 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], f
     Route::apiResource('words', APIWordController::class);
     Route::apiResource('juzs', APIJuzController::class);
     Route::apiResource('translations', APITranslationController::class);
+    Route::apiResource('surah_info', APISurahInfoController::class);
+    Route::apiResource('tafseer', APITafseerController::class);
 });

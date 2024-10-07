@@ -15,24 +15,24 @@ class APISurahController extends Controller
      */
     public function index()
     {
-        return Surah::all();
+        return SurahResource::collection(Surah::all());
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
+    // public function create()
+    // {
+    //     //
+    // }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreSurahRequest $request)
-    {
-        //
-    }
+    // public function store(StoreSurahRequest $request)
+    // {
+    //     //
+    // }
 
     /**
      * Display the specified resource.
@@ -48,24 +48,24 @@ class APISurahController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Surah $surah)
-    {
-        //
-    }
+    // public function edit(Surah $surah)
+    // {
+    //     //
+    // }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSurahRequest $request, Surah $surah)
-    {
-        //
-    }
+    // public function update(UpdateSurahRequest $request, Surah $surah)
+    // {
+    //     //
+    // }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Surah $surah)
-    {
-        //
-    }
+    // public function destroy(Surah $surah)
+    // {
+    //     //
+    // }
 }

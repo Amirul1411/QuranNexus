@@ -15,24 +15,24 @@ class APIWordController extends Controller
      */
     public function index()
     {
-        return Word::all();
+        return WordResource::collection(Word::all());
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
+    // public function create()
+    // {
+    //     //
+    // }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreWordRequest $request)
-    {
-        //
-    }
+    // public function store(StoreWordRequest $request)
+    // {
+    //     //
+    // }
 
     /**
      * Display the specified resource.
@@ -45,24 +45,24 @@ class APIWordController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Word $word)
-    {
-        //
-    }
+    // public function edit(Word $word)
+    // {
+    //     //
+    // }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateWordRequest $request, Word $word)
-    {
-        //
-    }
+    // public function update(UpdateWordRequest $request, Word $word)
+    // {
+    //     //
+    // }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Word $word)
-    {
-        //
-    }
+    // public function destroy(Word $word)
+    // {
+    //     //
+    // }
 }

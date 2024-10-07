@@ -16,24 +16,24 @@ class APITranslationController extends Controller
      */
     public function index()
     {
-        return Translation::all();
+        return TranslationResource::collection(Translation::all());
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
+    // public function create()
+    // {
+    //     //
+    // }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTranslationRequest $request)
-    {
-        //
-    }
+    // public function store(StoreTranslationRequest $request)
+    // {
+    //     //
+    // }
 
     /**
      * Display the specified resource.
@@ -46,24 +46,24 @@ class APITranslationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Translation $translation)
-    {
-        //
-    }
+    // public function edit(Translation $translation)
+    // {
+    //     //
+    // }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTranslationRequest $request, Translation $translation)
-    {
-        //
-    }
+    // public function update(UpdateTranslationRequest $request, Translation $translation)
+    // {
+    //     //
+    // }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Translation $translation)
-    {
-        //
-    }
+    // public function destroy(Translation $translation)
+    // {
+    //     //
+    // }
 }

@@ -3,20 +3,18 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreJuzRequest;
-use App\Http\Requests\UpdateJuzRequest;
-use App\Http\Resources\V1\JuzResource;
-use App\Models\Juz;
+use App\Http\Resources\V1\TafseerResource;
+use App\Models\Tafseer;
 use Illuminate\Http\Request;
 
-class APIJuzController extends Controller
+class APITafseerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return JuzResource::collection(Juz::all());
+        return TafseerResource::collection(Tafseer::all());
     }
 
     /**
@@ -30,7 +28,7 @@ class APIJuzController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    // public function store(StoreJuzRequest $request)
+    // public function store(StoreTafseerRequest $request)
     // {
     //     //
     // }
@@ -38,15 +36,15 @@ class APIJuzController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Juz $juz)
+    public function show(Tafseer $tafseer)
     {
-        return new JuzResource($juz);
+        return new TafseerResource($tafseer);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    // public function edit(Juz $juz)
+    // public function edit(Tafseer $tafseer)
     // {
     //     //
     // }
@@ -54,7 +52,7 @@ class APIJuzController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    // public function update(UpdateJuzRequest $request, Juz $juz)
+    // public function update(UpdateTafseerRequest $request, Tafseer $tafseer)
     // {
     //     //
     // }
@@ -62,7 +60,7 @@ class APIJuzController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    // public function destroy(Juz $juz)
+    // public function destroy(Tafseer $tafseer)
     // {
     //     //
     // }
