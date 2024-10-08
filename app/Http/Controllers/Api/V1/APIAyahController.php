@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAyahRequest;
 use App\Http\Requests\UpdateAyahRequest;
 use App\Http\Resources\V1\AyahResource;
+use Illuminate\Http\Request;
 
 class APIAyahController extends Controller
 {
@@ -37,8 +38,19 @@ class APIAyahController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Ayah $ayah)
+    public function show($key, Request $request)
     {
+        // Split the id string by colon (:)
+        [$surah_id, $ayah_index] = explode(':', $key);
+
+        // Now query the Word model using the surah_id and ayah_index
+        $ayah = Ayah::where('surah_id', $surah_id)->where('ayah_index', $ayah_index)->firstOrFail();
+
+        // Check if the 'ayahs' query parameter is present and set to 'true'
+        if ($request->query('words') === 'true') {
+            $ayah->load('words');
+        }
+
         return new AyahResource($ayah);
     }
 

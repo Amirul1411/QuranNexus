@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSurahRequest;
 use App\Http\Requests\UpdateSurahRequest;
 use App\Http\Resources\V1\SurahResource;
+use Illuminate\Http\Request;
 
 class APISurahController extends Controller
 {
@@ -37,10 +38,16 @@ class APISurahController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Surah $surah)
+    public function show(Surah $surah, Request $request)
     {
+        // Check if the 'ayahs' query parameter is present and set to 'true'
+        if ($request->query('ayahs') === 'true') {
+            $surah->load('ayahs');
+        }
 
-        $surah->load('ayahs');
+        if ($request->query('surah_info') === 'true') {
+            $surah->load('surahInfo');
+        }
 
         return new SurahResource($surah);
     }

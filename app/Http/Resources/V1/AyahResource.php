@@ -14,6 +14,17 @@ class AyahResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+
+        return [
+            'Id' => $this->_id,
+            'Surah Id' => $this->surah_id,
+            'Ayah Index' => $this->ayah_index,
+            'Page Id' => $this->page_id,
+            'Juz Id' => $this->juz_id,
+            'Bismillah' => $this->bismillah,
+            'Words' => WordResource::collection($this->whenLoaded('words')),
+        ];
+
+        // return parent::toArray($request);
     }
 }

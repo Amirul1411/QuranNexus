@@ -38,8 +38,14 @@ class APITranslationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Translation $translation)
+    public function show($key)
     {
+        // Split the id string by colon (:)
+        [$surah_id, $ayah_index] = explode(':', $key);
+
+        // Now query the Word model using the surah_id and ayah_index
+        $translation = Translation::where('surah_id', $surah_id)->where('ayah_index', $ayah_index)->firstOrFail();
+
         return new TranslationResource($translation);
     }
 

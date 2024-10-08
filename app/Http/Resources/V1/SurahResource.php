@@ -15,12 +15,13 @@ class SurahResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            '_id' => $this->_id,
-            'name' => $this->name,
-            'tname' => $this->tname,
-            'ename' => $this->ename,
-            'ayas' => $this->ayas,
-            'ayahs' => AyahResource::collection($this->whenLoaded('ayahs')),
+            'Id' => $this->_id,
+            'Arabic Name' => $this->name,
+            'Name' => $this->tname,
+            'Name Meaning' => $this->ename,
+            'Number of ayahs' => $this->ayas,
+            'Ayahs' => AyahResource::collection($this->whenLoaded('ayahs')),
+            'Surah Info' => new SurahInfoResource($this->whenLoaded('surahInfo')),
         ];
 
         // return parent::toArray($request);
