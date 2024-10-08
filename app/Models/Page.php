@@ -9,7 +9,7 @@ class Page extends Model
     protected $connection = 'mongodb';
     protected $collection = 'pages';
 
-    protected $fillable = ['_id', 'surah_id', 'ayah_id'];
+    protected $fillable = ['_id', 'surah_id', 'ayah_index'];
 
     public function getFirstAyahTnameAttribute()
     {

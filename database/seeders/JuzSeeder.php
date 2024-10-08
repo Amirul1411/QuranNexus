@@ -22,7 +22,7 @@ class JuzSeeder extends Seeder
             DB::table('juzs')->insert([
                 '_id' => (string) getNextSequenceValue('juz_id'),
                 'surah_id' => (string) $juz['sura'],
-                'ayah_id' => (string) $juz['aya'],
+                'ayah_index' => (string) $juz['aya'],
             ]);
         }
     }

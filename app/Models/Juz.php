@@ -13,7 +13,7 @@ class Juz extends Model
     protected $fillable = [
         '_id',
         'surah_id',
-        'ayah_id',
+        'ayah_index',
     ];
 
     public function ayahs()

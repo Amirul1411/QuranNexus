@@ -22,7 +22,7 @@ class PageSeeder extends Seeder
             DB::table('pages')->insert([
                 '_id' => (string) getNextSequenceValue('page_id'),
                 'surah_id' => (string) $page['sura'],
-                'ayah_id' => (string) $page['aya'],
+                'ayah_index' => (string) $page['aya'],
             ]);
         }
     }
