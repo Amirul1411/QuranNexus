@@ -71,6 +71,7 @@ class WordSeeder extends Seeder
                                 $pageLineNumber = $word['line_number'];
                                 // echo 'Page Number: ' . $word['page_number'] . PHP_EOL;
                                 // echo 'Line Number: ' . $pageLineNumber . PHP_EOL;
+                                break 2;
                             }
                         }
                     }
@@ -80,6 +81,9 @@ class WordSeeder extends Seeder
                         'surah_id' => (string) $token->getChapterNumber(),
                         'ayah_index' => (string) $token->getVerseNumber(),
                         'word_index' => (string) $token->getTokenNumber(),
+                        'ayah_key' => (string) $token->getChapterNumber().':'.$token->getVerseNumber(),
+                        'word_key' => (string) $token->getChapterNumber().':'.$token->getVerseNumber().':'.$token->getTokenNumber(),
+                        'page_id' => (string) $page->id,
                         'line_number' => (int) $pageLineNumber,
                         'text' => (string) $token,
                     ]);

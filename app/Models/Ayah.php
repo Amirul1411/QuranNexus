@@ -6,20 +6,10 @@ use MongoDB\Laravel\Eloquent\Model;
 
 class Ayah extends Model
 {
-
     protected $connection = 'mongodb';
     protected $collection = 'ayahs';
 
-    protected $fillable = [
-        '_id',
-        'page_id',
-        'juz_id',
-        'surah_id',
-        'ayah_index',
-        'text',
-        'bismillah',
-        'isVerified',
-    ];
+    protected $fillable = ['_id', 'page_id', 'juz_id', 'surah_id', 'ayah_index', 'ayah_key', 'text', 'bismillah', 'isVerified'];
 
     public function surah()
     {
@@ -28,8 +18,7 @@ class Ayah extends Model
 
     public function words()
     {
-        return $this->hasMany(Word::class, 'ayah_index', 'ayah_index')
-        ->where('surah_id', $this->surah_id);
+        return $this->hasMany(Word::class, 'ayah_key', 'ayah_key');
     }
 
     public function page()
@@ -44,19 +33,16 @@ class Ayah extends Model
 
     public function tafseer()
     {
-        return $this->hasOne(Tafseer::class, 'ayah_index', 'ayah_index')
-        ->where('surah_id', $this->surah_id);
+        return $this->hasOne(Tafseer::class, 'ayah_index', 'ayah_index')->where('surah_id', $this->surah_id);
     }
 
     public function translations()
     {
-        return $this->hasOne(Translation::class, 'ayah_index', 'ayah_index')
-        ->where('surah_id', $this->surah_id);
+        return $this->hasOne(Translation::class, 'ayah_index', 'ayah_index')->where('surah_id', $this->surah_id);
     }
 
     public function audioRecitations()
     {
-        return $this->hasOne(AudioRecitation::class, 'ayah_index', 'ayah_index')
-        ->where('surah_id', $this->surah_id);
+        return $this->hasOne(AudioRecitation::class, 'ayah_index', 'ayah_index')->where('surah_id', $this->surah_id);
     }
 }

@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             CounterSeeder::class,
-            UserSeeder::class,
+            // UserSeeder::class,
             InquirySeeder::class,
             // JuzSeeder::class,
             // PageSeeder::class,
@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             // SurahInfoSeeder::class,
             // AyahSeeder::class,
             // WordSeeder::class,
-            TafseerSeeder::class,
+            // TafseerSeeder::class,
             // TranslationSeeder::class,
             // AudioRecitationSeeder::class,
         ]);

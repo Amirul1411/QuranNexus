@@ -55,6 +55,7 @@ class AyahSeeder extends Seeder
                     'juz_id' => (string) $juzIndex,
                     'surah_id' => (string) $suraIndex,
                     'ayah_index' => (string) $ayaIndex,
+                    'ayah_key' => (string) $suraIndex.':'.$ayaIndex,
                     'bismillah' => isset($aya['bismillah']) ? (string) $aya['bismillah'] : null,
                     'text' => (string) $aya['text'],
                     'isVerified' => false,
