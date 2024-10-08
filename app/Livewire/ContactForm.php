@@ -3,7 +3,6 @@
 namespace App\Livewire;
 
 use App\Models\Inquiry;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class ContactForm extends Component
@@ -21,7 +20,7 @@ class ContactForm extends Component
 
     public function submitForm(){
 
-        DB::table('inquiries')->insert([
+        Inquiry::create([
             '_id' => (string) getNextSequenceValue('inquiry_id'),
             'first_name' => (string) $this->firstName,
             'last_name' => (string) $this->lastName,

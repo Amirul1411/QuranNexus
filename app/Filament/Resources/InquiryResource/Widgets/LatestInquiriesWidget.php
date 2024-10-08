@@ -19,7 +19,7 @@ class LatestInquiriesWidget extends BaseWidget
     {
         return $table
             ->query(
-                Inquiry::whereDate('created_at', '>', now()->subDays(10)->startOfDay())
+                Inquiry::whereDate('created_at', '>', now()->subDays(10)->startOfDay())->orderBy('created_at', 'desc')
             )
             ->columns([
                 TextColumn::make('first_name'),
