@@ -8,7 +8,7 @@ use App\Http\Controllers\Api\V1\APIJuzController;
 use App\Http\Controllers\Api\V1\APISurahInfoController;
 use App\Http\Controllers\Api\V1\APITafseerController;
 use App\Http\Controllers\Api\V1\APITranslationController;
-use App\Http\Controllers\V1\APIAudioRecitationController;
+use App\Http\Controllers\Api\V1\APIAudioRecitationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
