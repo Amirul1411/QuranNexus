@@ -28,7 +28,8 @@ class AudioRecitationSeeder extends Seeder
                 '_id' => (string) getNextSequenceValue('audio_id'),
                 'surah_id' => (string) $surahNumber,
                 'ayah_index' => (string) $verseNumber,
-                'audio_file' => (string) $audio['url'],
+                'ayah_key' => (string) $surahNumber.':'.$verseNumber,
+                'audio_url' => (string) $audio['url'],
             ]);
         }
     }

@@ -14,12 +14,12 @@ class AudioRecitation extends Model
         '_id',
         'surah_id',
         'ayah_index',
-        'audio_file',
+        'ayah_key',
+        'audio_url',
     ];
 
     public function ayah()
     {
-        return $this->belongsTo(Ayah::class, 'ayah_index', 'ayah_index')
-        ->where('surah_id', $this->surah_id);;
+        return $this->belongsTo(Ayah::class, 'ayah_key', 'ayah_key');
     }
 }

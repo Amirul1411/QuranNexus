@@ -23,6 +23,7 @@ class JuzSeeder extends Seeder
                 '_id' => (string) getNextSequenceValue('juz_id'),
                 'surah_id' => (string) $juz['sura'],
                 'ayah_index' => (string) $juz['aya'],
+                'ayah_key' => (string) $juz['sura'].':'.$juz['aya'],
             ]);
         }
     }

@@ -12,19 +12,14 @@ class Translation extends Model
 
     protected $fillable = [
         '_id',
-        'name',
-        'translator',
-        'language',
-        'translation',
-    ];
-
-    protected $casts = [
-        'translation' => 'array',
+        'surah_id',
+        'ayah_index',
+        'ayah_key',
+        'text',
     ];
 
     public function ayah()
     {
-        return $this->belongsTo(Ayah::class, 'ayah_index', 'ayah_index')
-        ->where('surah_id', $this->surah_id);
+        return $this->belongsTo(Ayah::class, 'ayah_key', 'ayah_key');
     }
 }

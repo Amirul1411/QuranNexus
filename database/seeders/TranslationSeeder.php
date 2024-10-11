@@ -40,6 +40,7 @@ class TranslationSeeder extends Seeder
                     '_id' => (string) getNextSequenceValue('translation_id'),
                     'surah_id' => (string) $sura['index'],
                     'ayah_index' => (string) $aya['index'],
+                    'ayah_key' => (string) $sura['index'].':'.$aya['index'],
                     'text' => (string) $aya['text'],
                 ]);
             }

@@ -14,6 +14,7 @@ class Juz extends Model
         '_id',
         'surah_id',
         'ayah_index',
+        'ayah_key',
     ];
 
     public function ayahs()

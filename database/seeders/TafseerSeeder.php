@@ -38,6 +38,7 @@ class TafseerSeeder extends Seeder
                 '_id' => (string) getNextSequenceValue('tafseer_id'),
                 'surah_id' => (string) $ayah->surah_id,
                 'ayah_index' => (string) $ayah->ayah_index,
+                'ayah_key' => (string) $ayah->surah_id.':'.$ayah->ayah_index,
                 'html' => (string) $html,
             ]);
         }

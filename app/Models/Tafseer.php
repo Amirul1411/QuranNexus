@@ -14,12 +14,12 @@ class Tafseer extends Model
         '_id',
         'surah_id',
         'ayah_index',
+        'ayah_key',
         'html',
     ];
 
     public function ayah()
     {
-        return $this->belongsTo(Ayah::class, 'ayah_index', 'ayah_index')
-        ->where('surah_id', $this->surah_id);
+        return $this->belongsTo(Ayah::class, 'ayah_key', 'ayah_key');
     }
 }

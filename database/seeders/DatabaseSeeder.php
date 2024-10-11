@@ -24,15 +24,15 @@ class DatabaseSeeder extends Seeder
             CounterSeeder::class,
             // UserSeeder::class,
             InquirySeeder::class,
-            // JuzSeeder::class,
-            // PageSeeder::class,
+            JuzSeeder::class,
+            PageSeeder::class,
             // SurahSeeder::class,
             // SurahInfoSeeder::class,
             // AyahSeeder::class,
             // WordSeeder::class,
-            // TafseerSeeder::class,
-            // TranslationSeeder::class,
-            // AudioRecitationSeeder::class,
+            TafseerSeeder::class,
+            TranslationSeeder::class,
+            AudioRecitationSeeder::class,
         ]);
     }
 }

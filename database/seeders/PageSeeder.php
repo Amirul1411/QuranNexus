@@ -23,6 +23,7 @@ class PageSeeder extends Seeder
                 '_id' => (string) getNextSequenceValue('page_id'),
                 'surah_id' => (string) $page['sura'],
                 'ayah_index' => (string) $page['aya'],
+                'ayah_key' => (string) $page['sura'].':'.$page['aya'],
             ]);
         }
     }
