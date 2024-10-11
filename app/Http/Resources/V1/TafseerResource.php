@@ -14,6 +14,15 @@ class TafseerResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+
+        return [
+            'Id' => $this->_id,
+            'Surah Id' => $this->surah_id,
+            'Ayah Index' => $this->ayah_index,
+            'Ayah Key' => $this->ayah_key,
+            'Html' => $this->html,
+        ];
+
+        // return parent::toArray($request);
     }
 }

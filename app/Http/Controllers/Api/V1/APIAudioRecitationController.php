@@ -1,22 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreTranslationRequest;
-use App\Http\Requests\UpdateTranslationRequest;
-use App\Http\Resources\V1\TranslationResource;
-use App\Models\Translation;
+use App\Http\Resources\V1\AudioRecitationResource;
+use App\Models\AudioRecitation;
 use Illuminate\Http\Request;
 
-class APITranslationController extends Controller
+class APIAudioRecitationController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return TranslationResource::collection(Translation::all());
+        return AudioRecitationResource::collection(AudioRecitation::all());
     }
 
     /**
@@ -30,7 +28,7 @@ class APITranslationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    // public function store(StoreTranslationRequest $request)
+    // public function store(StoreAudioRecitationRequest $request)
     // {
     //     //
     // }
@@ -40,15 +38,16 @@ class APITranslationController extends Controller
      */
     public function show($key)
     {
-        $translation = Translation::where('ayah_key', $key)->firstOrFail();
 
-        return new TranslationResource($translation);
+        $audioRecitation = AudioRecitation::where('ayah_key', $key)->firstOrFail();
+
+        return new AudioRecitationResource($audioRecitation);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    // public function edit(Translation $translation)
+    // public function edit(AudioRecitation $audioRecitation)
     // {
     //     //
     // }
@@ -56,7 +55,7 @@ class APITranslationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    // public function update(UpdateTranslationRequest $request, Translation $translation)
+    // public function update(UpdateAudioRecitationRequest $request, AudioRecitation $audioRecitation)
     // {
     //     //
     // }
@@ -64,7 +63,7 @@ class APITranslationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    // public function destroy(Translation $translation)
+    // public function destroy(AudioRecitation $audioRecitation)
     // {
     //     //
     // }

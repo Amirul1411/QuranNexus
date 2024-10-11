@@ -14,6 +14,12 @@ class SurahInfoResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+
+        return [
+            'Id' => $this->_id,
+            'Html' => $this->html,
+        ];
+
+        // return parent::toArray($request);
     }
 }

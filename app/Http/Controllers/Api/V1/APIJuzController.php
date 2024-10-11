@@ -38,8 +38,13 @@ class APIJuzController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Juz $juz)
+    public function show(Juz $juz, Request $request)
     {
+
+        if ($request->query('ayahs') === 'true') {
+            $juz->load('ayahs');
+        }
+
         return new JuzResource($juz);
     }
 

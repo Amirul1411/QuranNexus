@@ -19,6 +19,7 @@ class SurahResource extends JsonResource
             'Arabic Name' => $this->name,
             'Name' => $this->tname,
             'Name Meaning' => $this->ename,
+            'Type' => $this->type,
             'Number of ayahs' => $this->ayas,
             'Ayahs' => AyahResource::collection($this->whenLoaded('ayahs')),
             'Surah Info' => new SurahInfoResource($this->whenLoaded('surahInfo')),

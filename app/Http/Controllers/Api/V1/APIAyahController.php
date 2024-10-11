@@ -40,15 +40,23 @@ class APIAyahController extends Controller
      */
     public function show($key, Request $request)
     {
-        // Split the id string by colon (:)
-        [$surah_id, $ayah_index] = explode(':', $key);
 
-        // Now query the Word model using the surah_id and ayah_index
-        $ayah = Ayah::where('surah_id', $surah_id)->where('ayah_index', $ayah_index)->firstOrFail();
+        $ayah = Ayah::where('ayah_key', $key)->firstOrFail();
 
-        // Check if the 'ayahs' query parameter is present and set to 'true'
         if ($request->query('words') === 'true') {
             $ayah->load('words');
+        }
+
+        if ($request->query('tafseers') === 'true') {
+            $ayah->load('tafseers');
+        }
+
+        if ($request->query('translations') === 'true') {
+            $ayah->load('translations');
+        }
+
+        if ($request->query('audio_recitations') === 'true') {
+            $ayah->load('audioRecitations');
         }
 
         return new AyahResource($ayah);

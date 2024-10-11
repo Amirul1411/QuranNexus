@@ -40,7 +40,7 @@ class APISurahController extends Controller
      */
     public function show(Surah $surah, Request $request)
     {
-        // Check if the 'ayahs' query parameter is present and set to 'true'
+
         if ($request->query('ayahs') === 'true') {
             $surah->load('ayahs');
         }

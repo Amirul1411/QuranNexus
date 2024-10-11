@@ -38,13 +38,8 @@ class APITafseerController extends Controller
      */
     public function show($key)
     {
-        // Split the id string by colon (:)
-        [$surah_id, $ayah_index] = explode(':', $key);
+        $tafseer = Tafseer::where('ayah_key', $key)->firstOrFail();
 
-        // Now query the Word model using the surah_id and ayah_index
-        $tafseer = Tafseer::where('surah_id', $surah_id)->where('ayah_index', $ayah_index)->firstOrFail();
-
-        // Return the Word resource
         return new TafseerResource($tafseer);
     }
 

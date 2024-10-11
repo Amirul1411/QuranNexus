@@ -14,6 +14,15 @@ class JuzResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+
+        return [
+            'Id' => $this->_id,
+            'Surah Id' => $this->surah_id,
+            'Ayah Index' => $this->ayah_index,
+            'Ayah Key' => $this->ayah_key,
+            'Ayahs' => AyahResource::collection($this->whenLoaded('ayahs')),
+        ];
+
+        // return parent::toArray($request);
     }
 }
