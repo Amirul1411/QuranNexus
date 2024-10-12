@@ -14,20 +14,9 @@ class AyahResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        if ($this->whenLoaded('ayahs')) {
-            return [
-                'Id' => $this->_id,
-                'Ayah Index' => $this->ayah_index,
-                'Ayah Key' => $this->ayah_key,
-                'Page Id' => $this->page_id,
-                'Juz Id' => $this->juz_id,
-                'Bismillah' => $this->bismillah,
-            ];
-        }
-
         return [
             'Id' => $this->_id,
-            'Surah Id' => $this->surah_id,
+            'Surah Id' => $this->when($request->query('ayahs') !== 'true', $this->surah_id),
             'Ayah Index' => $this->ayah_index,
             'Ayah Key' => $this->ayah_key,
             'Page Id' => $this->page_id,
@@ -35,8 +24,8 @@ class AyahResource extends JsonResource
             'Bismillah' => $this->bismillah,
             'Words' => WordResource::collection($this->whenLoaded('words')),
             'Translations' => TranslationResource::collection($this->whenLoaded('translations')),
-            'Tafseer' => TafseerResource::collection($this->whenLoaded('tafseers')),
-            'Audio Recitation' => AudioRecitationResource::collection($this->whenLoaded('audioRecitations')),
+            'Tafseer' => TafseerResource::collection($this->whenLoaded('tafseer')),
+            'Audio Recitation' => new AudioRecitationResource($this->whenLoaded('audioRecitations')),
         ];
 
         // return parent::toArray($request);

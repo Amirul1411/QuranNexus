@@ -12,11 +12,17 @@ class Translation extends Model
 
     protected $fillable = [
         '_id',
+        'translation_info_id',
         'surah_id',
         'ayah_index',
         'ayah_key',
         'text',
     ];
+
+    public function translationInfo()
+    {
+        return $this->belongsTo(TranslationInfo::class, 'translation_info_id', '_id');
+    }
 
     public function ayah()
     {

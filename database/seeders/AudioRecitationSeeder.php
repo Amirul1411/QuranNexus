@@ -14,7 +14,8 @@ class AudioRecitationSeeder extends Seeder
      */
     public function run(): void
     {
-        $response = Http::timeout(60)->retry(3, 1000)->get('https://api.quran.com/api/v4/quran/recitations/7');
+        $recitationId = 7;
+        $response = Http::timeout(60)->retry(3, 1000)->get('https://api.quran.com/api/v4/quran/recitations/'.$recitationId);
         $data = $response->json();
 
         foreach ($data['audio_files'] as $audio) {
@@ -26,6 +27,7 @@ class AudioRecitationSeeder extends Seeder
 
             DB::table('audio_recitations')->insert([
                 '_id' => (string) getNextSequenceValue('audio_id'),
+                'audio_info_id' => (string) mapAudioRecitationId($recitationId),
                 'surah_id' => (string) $surahNumber,
                 'ayah_index' => (string) $verseNumber,
                 'ayah_key' => (string) $surahNumber.':'.$verseNumber,

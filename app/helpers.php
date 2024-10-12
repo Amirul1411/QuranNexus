@@ -21,6 +21,53 @@ if (!function_exists('getNextSequenceValue')) {
     }
 }
 
+if (!function_exists('mapAudioRecitationId')) {
+    function mapAudioRecitationId($id)
+    {
+        $map = [
+            7 => 1,
+        ];
+
+        return $map[$id] ?? null;
+    }
+}
+
+if (!function_exists('mapTranslationId')) {
+    function mapTranslationId($filePath)
+    {
+        $map = [
+            resource_path('data\ms.basmeih.xml') => 1,
+            resource_path('data\en.sahih.xml') => 2,
+        ];
+
+        return $map[$filePath] ?? null;
+    }
+}
+
+if (!function_exists('mapTafseerResourceId')) {
+    function mapTafseerResourceId($id)
+    {
+        $map = [
+            160 => 169,
+            90 => 169,
+        ];
+
+        return $map[$id] ?? null;
+    }
+}
+
+if (!function_exists('mapTafseerId')) {
+    function mapTafseerId($id)
+    {
+        $map = [
+            160 => 1,
+            90 => 2,
+        ];
+
+        return $map[$id] ?? null;
+    }
+}
+
 if (!function_exists('mapAyahNumberToNumberIcon')) {
     function mapAyahNumberToNumberIcon($ayaIndex)
     {
@@ -313,7 +360,7 @@ if (!function_exists('mapAyahNumberToNumberIcon')) {
             286 => 'ﴝ',
         ];
 
-        return $map[$ayaIndex] ?? null; // Return null if number not found
+        return $map[$ayaIndex] ?? null;
     }
 }
 
@@ -437,7 +484,7 @@ if (!function_exists('mapSurahNumberToSurahFont')) {
             114 => 'µ',
         ];
 
-        return $map[$surahId] ?? null; // Return null if number not found
+        return $map[$surahId] ?? null;
     }
 }
 

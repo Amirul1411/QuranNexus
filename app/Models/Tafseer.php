@@ -12,11 +12,17 @@ class Tafseer extends Model
 
     protected $fillable = [
         '_id',
+        'tafseer_info_id',
         'surah_id',
         'ayah_index',
         'ayah_key',
         'html',
     ];
+
+    public function tafseerInfo()
+    {
+        return $this->belongsTo(TafseerInfo::class, 'tafseer_info_id', '_id');
+    }
 
     public function ayah()
     {

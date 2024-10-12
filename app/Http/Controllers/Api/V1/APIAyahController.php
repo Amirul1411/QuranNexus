@@ -48,7 +48,7 @@ class APIAyahController extends Controller
         }
 
         if ($request->query('tafseers') === 'true') {
-            $ayah->load('tafseers');
+            $ayah->load('tafseer');
         }
 
         if ($request->query('translations') === 'true') {

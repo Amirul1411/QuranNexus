@@ -12,11 +12,17 @@ class AudioRecitation extends Model
 
     protected $fillable = [
         '_id',
+        'audio_info_id',
         'surah_id',
         'ayah_index',
         'ayah_key',
         'audio_url',
     ];
+
+    public function audioInfo()
+    {
+        return $this->belongsTo(AudioRecitationInfo::class, 'audio_info_id', '_id');
+    }
 
     public function ayah()
     {

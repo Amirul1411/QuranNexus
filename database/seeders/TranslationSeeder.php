@@ -13,46 +13,24 @@ class TranslationSeeder extends Seeder
      */
     public function run(): void
     {
-        $filePath = resource_path('data\ms.basmeih.xml');
+        $filePath = [resource_path('data\ms.basmeih.xml'), resource_path('data\en.sahih.xml')];
 
-        $xml = simplexml_load_file($filePath);
+        foreach($filePath as $file){
 
-        // Extract metadata
-        // $metadata = [
-        //     'name' => (string) $xml['name'],
-        //     'translator' => (string) $xml['translator'],
-        //     'language' => (string) $xml['language']
-        // ];
+            $xml = simplexml_load_file($file);
 
-        // Initialize an array to hold translations
-        // $translations = [];
-
-        // Loop through the suras and ayas to collect translations
-        foreach ($xml->sura as $sura) {
-            foreach ($sura->aya as $aya) {
-                // $translations[] = [
-                //     'surah_id' => (string) $sura['index'],
-                //     'ayah_index' => (string) $aya['index'],
-                //     'text' => (string) $aya['text'],
-                // ];
-
-                DB::table('translations')->insert([
-                    '_id' => (string) getNextSequenceValue('translation_id'),
-                    'surah_id' => (string) $sura['index'],
-                    'ayah_index' => (string) $aya['index'],
-                    'ayah_key' => (string) $sura['index'].':'.$aya['index'],
-                    'text' => (string) $aya['text'],
-                ]);
+            foreach ($xml->sura as $sura) {
+                foreach ($sura->aya as $aya) {
+                    DB::table('translations')->insert([
+                        '_id' => (string) getNextSequenceValue('translation_id'),
+                        'translation_info_id' => (string) mapTranslationId($file),
+                        'surah_id' => (string) $sura['index'],
+                        'ayah_index' => (string) $aya['index'],
+                        'ayah_key' => (string) $sura['index'].':'.$aya['index'],
+                        'text' => (string) $aya['text'],
+                    ]);
+                }
             }
         }
-
-        // Insert metadata and translations into the database
-        // DB::table('translations')->insert([
-        //     '_id' => (string) getNextSequenceValue('translation_id'),
-        //     'name' => $metadata['name'],
-        //     'translator' => $metadata['translator'],
-        //     'language' => $metadata['language'],
-        //     'translation' => $translations,  // Insert as an array
-        // ]);
     }
 }
