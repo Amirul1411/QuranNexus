@@ -39,7 +39,7 @@ class APITafseerInfoController extends Controller
     public function show(TafseerInfo $tafseerInfo, Request $request)
     {
 
-        if ($request->query('tafseers') === 'true') {
+        if ($request->query('tafseer_info_tafseers') === 'true') {
             $tafseerInfo->load('tafseers');
         }
 

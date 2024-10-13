@@ -33,16 +33,16 @@ class Ayah extends Model
 
     public function tafseer()
     {
-        return $this->hasOne(Tafseer::class, 'ayah_key', 'ayah_key');
+        return $this->hasMany(Tafseer::class, 'ayah_key', 'ayah_key');
     }
 
     public function translations()
     {
-        return $this->hasOne(Translation::class, 'ayah_key', 'ayah_key');
+        return $this->hasMany(Translation::class, 'ayah_key', 'ayah_key');
     }
 
     public function audioRecitations()
     {
-        return $this->hasOne(AudioRecitation::class, 'ayah_key', 'ayah_key');
+        return $this->hasMany(AudioRecitation::class, 'ayah_key', 'ayah_key');
     }
 }

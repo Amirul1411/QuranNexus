@@ -39,7 +39,7 @@ class APIAudioRecitationInfoController extends Controller
     public function show(AudioRecitationInfo $audioRecitationInfo, Request $request)
     {
 
-        if ($request->query('audio_recitations') === 'true') {
+        if ($request->query('audio_info_audio_recitations') === 'true') {
             $audioRecitationInfo->load('audioRecitations');
         }
 

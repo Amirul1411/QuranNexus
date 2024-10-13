@@ -17,10 +17,10 @@ class TafseerResource extends JsonResource
 
         return [
             'Id' => $this->_id,
-            'Tafseer Info Id' => $this->tafseer_info_id,
-            'Surah Id' => $this->surah_id,
-            'Ayah Index' => $this->ayah_index,
-            'Ayah Key' => $this->ayah_key,
+            'Tafseer Info Id' => $this->when($request->query('tafseer_info_tafseers') !== 'true', $this->tafseer_info_id),
+            'Surah Id' => $this->when($request->query('tafseers') !== 'true', $this->surah_id),
+            'Ayah Index' => $this->when($request->query('tafseers') !== 'true', $this->ayah_index),
+            'Ayah Key' => $this->when($request->query('tafseers') !== 'true', $this->ayah_key),
             'Html' => $this->html,
         ];
 

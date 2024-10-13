@@ -39,7 +39,7 @@ class APITranslationInfoController extends Controller
     public function show(TranslationInfo $translationInfo, Request $request)
     {
 
-        if ($request->query('translations') === 'true') {
+        if ($request->query('translation_info_translations') === 'true') {
             $translationInfo->load('translations');
         }
 

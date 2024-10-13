@@ -17,10 +17,10 @@ class TranslationResource extends JsonResource
 
         return [
             'Id' => $this->_id,
-            'Translation Info Id' => $this->translation_info_id,
-            'Surah Id' => $this->surah_id,
-            'Ayah Index' => $this->ayah_index,
-            'Ayah Key' => $this->ayah_key,
+            'Translation Info Id' => $this->when($request->query('translation_info_translations') !== 'true', $this->translation_info_id),
+            'Surah Id' => $this->when($request->query('translations') !== 'true', $this->surah_id),
+            'Ayah Index' => $this->when($request->query('translations') !== 'true', $this->ayah_index),
+            'Ayah Key' => $this->when($request->query('translations') !== 'true', $this->ayah_key),
             'Text' => $this->text,
         ];
 

@@ -41,7 +41,7 @@ class APIJuzController extends Controller
     public function show(Juz $juz, Request $request)
     {
 
-        if ($request->query('ayahs') === 'true') {
+        if ($request->query('juz_ayahs') === 'true') {
             $juz->load('ayahs');
         }
 

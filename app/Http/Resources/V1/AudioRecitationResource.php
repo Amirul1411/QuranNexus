@@ -17,10 +17,10 @@ class AudioRecitationResource extends JsonResource
 
         return [
             'Id' => $this->_id,
-            'Audio Info Id' => $this->audio_info_id,
-            'Surah Id' => $this->surah_id,
-            'Ayah Index' => $this->ayah_index,
-            'Ayah Key' => $this->ayah_key,
+            'Audio Info Id' => $this->when($request->query('audio_info_audio_recitations') !== 'true', $this->audio_info_id),
+            'Surah Id' => $this->when($request->query('audio_recitations') !== 'true', $this->surah_id),
+            'Ayah Index' => $this->when($request->query('audio_recitations') !== 'true', $this->ayah_index),
+            'Ayah Key' => $this->when($request->query('audio_recitations') !== 'true', $this->ayah_key),
             'Audio Url' => $this->audio_url,
         ];
 
