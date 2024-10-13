@@ -26,6 +26,7 @@ if (!function_exists('mapAudioRecitationId')) {
     {
         $map = [
             7 => 1,
+            2 => 2,
         ];
 
         return $map[$id] ?? null;
