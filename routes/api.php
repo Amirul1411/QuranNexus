@@ -9,6 +9,9 @@ use App\Http\Controllers\Api\V1\APISurahInfoController;
 use App\Http\Controllers\Api\V1\APITafseerController;
 use App\Http\Controllers\Api\V1\APITranslationController;
 use App\Http\Controllers\Api\V1\APIAudioRecitationController;
+use App\Http\Controllers\Api\V1\APIAudioRecitationInfoController;
+use App\Http\Controllers\Api\V1\APITafseerInfoController;
+use App\Http\Controllers\Api\V1\APITranslationInfoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,4 +29,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], f
     Route::apiResource('surah_info', APISurahInfoController::class);
     Route::apiResource('tafseer', APITafseerController::class);
     Route::apiResource('audio_recitations', APIAudioRecitationController::class);
+    Route::apiResource('audio_recitation_info', APIAudioRecitationInfoController::class);
+    Route::apiResource('tafseer_info', APITafseerInfoController::class);
+    Route::apiResource('translation_info', APITranslationInfoController::class);
 });

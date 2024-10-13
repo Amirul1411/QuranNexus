@@ -17,6 +17,7 @@ class AudioRecitationResource extends JsonResource
 
         return [
             'Id' => $this->_id,
+            'Audio Info Id' => $this->audio_info_id,
             'Surah Id' => $this->surah_id,
             'Ayah Index' => $this->ayah_index,
             'Ayah Key' => $this->ayah_key,

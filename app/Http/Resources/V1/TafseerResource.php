@@ -17,6 +17,7 @@ class TafseerResource extends JsonResource
 
         return [
             'Id' => $this->_id,
+            'Tafseer Info Id' => $this->tafseer_info_id,
             'Surah Id' => $this->surah_id,
             'Ayah Index' => $this->ayah_index,
             'Ayah Key' => $this->ayah_key,

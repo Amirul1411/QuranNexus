@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\V1\TafseerResource;
-use App\Models\Tafseer;
+use App\Http\Resources\V1\TranslationInfoResource;
+use App\Models\TranslationInfo;
 use Illuminate\Http\Request;
 
-class APITafseerController extends Controller
+class APITranslationInfoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return TafseerResource::collection(Tafseer::all());
+        return TranslationInfoResource::collection(TranslationInfo::all());
     }
 
     /**
@@ -28,7 +28,7 @@ class APITafseerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    // public function store(StoreTafseerRequest $request)
+    // public function store(StoreTranslationInfoRequest $request)
     // {
     //     //
     // }
@@ -36,17 +36,20 @@ class APITafseerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($key)
+    public function show(TranslationInfo $translationInfo, Request $request)
     {
-        $tafseer = Tafseer::where('ayah_key', $key)->get();
 
-        return TafseerResource::collection($tafseer);
+        if ($request->query('translations') === 'true') {
+            $translationInfo->load('translations');
+        }
+
+        return new TranslationInfoResource($translationInfo);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    // public function edit(Tafseer $tafseer)
+    // public function edit(TranslationInfo $translationInfo)
     // {
     //     //
     // }
@@ -54,7 +57,7 @@ class APITafseerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    // public function update(UpdateTafseerRequest $request, Tafseer $tafseer)
+    // public function update(UpdateTranslationInfoRequest $request, TranslationInfo $translation)
     // {
     //     //
     // }
@@ -62,7 +65,7 @@ class APITafseerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    // public function destroy(Tafseer $tafseer)
+    // public function destroy(TranslationInfo $translationInfo)
     // {
     //     //
     // }

@@ -40,9 +40,9 @@ class APITranslationController extends Controller
      */
     public function show($key)
     {
-        $translation = Translation::where('ayah_key', $key)->firstOrFail();
+        $translation = Translation::where('ayah_key', $key)->get();
 
-        return new TranslationResource($translation);
+        return TranslationResource::collection($translation);
     }
 
     /**

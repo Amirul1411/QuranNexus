@@ -2,10 +2,11 @@
 
 namespace App\Http\Resources\V1;
 
+use App\Models\AudioRecitation;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TranslationResource extends JsonResource
+class AudioRecitationInfoResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,11 +18,10 @@ class TranslationResource extends JsonResource
 
         return [
             'Id' => $this->_id,
-            'Translation Info Id' => $this->translation_info_id,
-            'Surah Id' => $this->surah_id,
-            'Ayah Index' => $this->ayah_index,
-            'Ayah Key' => $this->ayah_key,
-            'Text' => $this->text,
+            'Reciter Name' => $this->reciter_name,
+            'Style' => $this->style,
+            'Translated Name' => $this->translated_name,
+            'Audio Recitations' => AudioRecitationResource::collection($this->whenLoaded('audioRecitations')),
         ];
 
         // return parent::toArray($request);

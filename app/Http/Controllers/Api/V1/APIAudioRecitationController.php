@@ -38,10 +38,9 @@ class APIAudioRecitationController extends Controller
      */
     public function show($key)
     {
+        $audioRecitation = AudioRecitation::where('ayah_key', $key)->get();
 
-        $audioRecitation = AudioRecitation::where('ayah_key', $key)->firstOrFail();
-
-        return new AudioRecitationResource($audioRecitation);
+        return AudioRecitationResource::collection($audioRecitation);
     }
 
     /**

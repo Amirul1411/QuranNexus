@@ -2,10 +2,11 @@
 
 namespace App\Http\Resources\V1;
 
+use App\Models\Translation;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TranslationResource extends JsonResource
+class TranslationInfoResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,11 +18,10 @@ class TranslationResource extends JsonResource
 
         return [
             'Id' => $this->_id,
-            'Translation Info Id' => $this->translation_info_id,
-            'Surah Id' => $this->surah_id,
-            'Ayah Index' => $this->ayah_index,
-            'Ayah Key' => $this->ayah_key,
-            'Text' => $this->text,
+            'Name' => $this->name,
+            'Translator' => $this->translator,
+            'Language' => $this->language,
+            'Translation' => TranslationResource::collection($this->whenLoaded('translations')),
         ];
 
         // return parent::toArray($request);

@@ -2,10 +2,11 @@
 
 namespace App\Http\Resources\V1;
 
+use App\Models\Tafseer;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TranslationResource extends JsonResource
+class TafseerInfoResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,11 +18,12 @@ class TranslationResource extends JsonResource
 
         return [
             'Id' => $this->_id,
-            'Translation Info Id' => $this->translation_info_id,
-            'Surah Id' => $this->surah_id,
-            'Ayah Index' => $this->ayah_index,
-            'Ayah Key' => $this->ayah_key,
-            'Text' => $this->text,
+            'Name' => $this->name,
+            'Author Name' => $this->author_name,
+            'Slug' => $this->slug,
+            'Language Name' => $this->language_name,
+            'Translated Name' => $this->translated_name,
+            'Tafseers' => TafseerResource::collection($this->whenLoaded('tafseers')),
         ];
 
         // return parent::toArray($request);

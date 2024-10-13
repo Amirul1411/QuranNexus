@@ -21,6 +21,6 @@ class TranslationInfo extends Model
 
     public function translations()
     {
-        return $this->hasMany(TranslationInfo::class, 'translation_info_id', '_id');
+        return $this->hasMany(Translation::class, 'translation_info_id', '_id');
     }
 }
