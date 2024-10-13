@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
             // AyahSeeder::class,
             // WordSeeder::class,
             TafseerInfoSeeder::class,
-            // TafseerSeeder::class,
+            TafseerSeeder::class,
             // TranslationInfoSeeder::class,
             // TranslationSeeder::class,
             // AudioRecitationInfoSeeder::class,

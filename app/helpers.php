@@ -49,7 +49,7 @@ if (!function_exists('mapTafseerResourceId')) {
     {
         $map = [
             160 => 169,
-            90 => 169,
+            90 => 168,
         ];
 
         return $map[$id] ?? null;

@@ -14,7 +14,7 @@ class TafseerInfoSeeder extends Seeder
      */
     public function run(): void
     {
-        $tafseerId = [160, 90];
+        $tafseerId = [169, 168];
         $response = Http::timeout(60)->retry(3, 1000)->get('https://api.quran.com/api/v4/resources/tafsirs');
         $data = $response->json();
 
