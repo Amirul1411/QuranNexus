@@ -12,7 +12,7 @@
         @livewire('recitation-timer')
     @endif
 
-    <x-slot name="sideMenu">
+    <x-slot name="leftSideMenu">
         @livewire('recitation-side-menu')
     </x-slot>
 

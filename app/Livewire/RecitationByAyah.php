@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Tafseer;
 use Livewire\Component;
 
 class RecitationByAyah extends Component
@@ -45,7 +46,9 @@ class RecitationByAyah extends Component
 
     public function displayAyahTafseer($tafseerId)
     {
-        return redirect()->route('tafseer.show', ['tafseer' => $tafseerId]);
+        $ayahKey = Tafseer::find($tafseerId)->ayah_key;
+
+        return redirect()->route('tafseer.show', ['tafseer' => $ayahKey]);
     }
 
     public function render()

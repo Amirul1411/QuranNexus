@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Ayah;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class AudioRecitationButton extends Component
@@ -20,7 +21,6 @@ class AudioRecitationButton extends Component
         $audioFiles = [];
         $outputFile = storage_path('app/public/combined_audio.mp3');
 
-        // Remove the existing file if it exists
         if (file_exists($outputFile)) {
             unlink($outputFile);
         }
@@ -28,15 +28,28 @@ class AudioRecitationButton extends Component
         foreach ($ayahs as $ayahData) {
             $ayah = Ayah::find($ayahData['_id']);
 
-            if ($ayah && $ayah->audioRecitations) {
-                if ($ayah->ayah_index == '1') {
-                    $audioFiles[] = 'Alafasy/mp3/audhubillah.mp3';
-                    if ($ayah->bismillah) {
-                        $audioFiles[] = 'Alafasy/mp3/bismillah.mp3';
+            if(Auth::guest() || !isset(Auth::user()->settings)){
+                if ($ayah && $ayah->audioRecitations) {
+                    if ($ayah->ayah_index == '1') {
+                        $audioFiles[] = 'Alafasy/mp3/audhubillah.mp3';
+                        if ($ayah->bismillah) {
+                            $audioFiles[] = 'Alafasy/mp3/bismillah.mp3';
+                        }
                     }
+                    $audioFiles[] = $ayah->audioRecitations->where('audio_info_id', '1')->first()->audio_url;
                 }
-                $audioFiles[] = $ayah->audioRecitations->audio_file;
+            }else{
+                if ($ayah && $ayah->audioRecitations) {
+                    if ($ayah->ayah_index == '1') {
+                        $audioFiles[] = 'AbdulBaset/Murattal/mp3/001000.mp3';
+                        if ($ayah->bismillah) {
+                            $audioFiles[] = 'AbdulBaset/Murattal/mp3/bismillah.mp3';
+                        }
+                    }
+                    $audioFiles[] = $ayah->audioRecitations->where('audio_info_id', Auth::user()->settings->audio_id)->first()->audio_url;
+                }
             }
+
         }
 
         // Concatenate the audio files using FFmpeg

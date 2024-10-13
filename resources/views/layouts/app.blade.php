@@ -48,11 +48,19 @@
 
     <!-- Page Content -->
     <main class=" {{ $backgroundImage }} container flex flex-grow mx-auto">
-        <!-- Side Menu -->
-        @if (isset($sideMenu))
-            {{ $sideMenu }}
+
+        <!-- Left Side Menu -->
+        @if (isset($leftSideMenu))
+            {{ $leftSideMenu }}
         @endif
+
         {{ $slot }}
+
+        <!-- Left Side Menu -->
+        @if (isset($rightSideMenu))
+            {{ $rightSideMenu }}
+        @endif
+        
     </main>
 
     @include('layouts.partials.footer')

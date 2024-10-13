@@ -5,12 +5,20 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Ayah;
 use App\Models\Tafseer;
+use Illuminate\Support\Facades\Auth;
 
 class TafseerController extends Controller
 {
-    public function show(Tafseer $tafseer)
+    public function show($ayahKey)
     {
-        $ayah = Ayah::find($tafseer->id);
+        $ayah = Ayah::where('ayah_key', $ayahKey)->first();
+
+        if(Auth::guest() || !isset(Auth::user()->settings)){
+            $tafseer = Tafseer::where('ayah_key', $ayahKey)->where('tafseer_info_id', '1')->first();
+        }else{
+            $tafseer = Tafseer::where('ayah_key', $ayahKey)->where('tafseer_info_id', Auth::user()->settings->tafseer_id)->first();
+        }
+
 
         $htmlContent = $tafseer->html;
 
