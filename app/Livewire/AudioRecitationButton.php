@@ -28,7 +28,7 @@ class AudioRecitationButton extends Component
         foreach ($ayahs as $ayahData) {
             $ayah = Ayah::find($ayahData['_id']);
 
-            if(Auth::guest() || !isset(Auth::user()->settings)){
+            if(Auth::guest() || !isset(Auth::user()->settings['audio_id'])){
                 if ($ayah && $ayah->audioRecitations) {
                     if ($ayah->ayah_index == '1') {
                         $audioFiles[] = 'Alafasy/mp3/audhubillah.mp3';
@@ -46,7 +46,7 @@ class AudioRecitationButton extends Component
                             $audioFiles[] = 'AbdulBaset/Murattal/mp3/bismillah.mp3';
                         }
                     }
-                    $audioFiles[] = $ayah->audioRecitations->where('audio_info_id', Auth::user()->settings->audio_id)->first()->audio_url;
+                    $audioFiles[] = $ayah->audioRecitations->where('audio_info_id', Auth::user()->settings['audio_id'])->first()->audio_url;
                 }
             }
 

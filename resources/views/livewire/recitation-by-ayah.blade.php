@@ -44,10 +44,10 @@
                             </span>
                         </div>
                         <div class="text-white my-5 font-serif font-thin">
-                            @if (Auth::guest() || !isset(Auth::user()->settings))
+                            @if (Auth::guest() || !isset(Auth::user()->settings['translation_id']))
                                 {{ $ayah->translations->where('translation_info_id', '1')->first()->text }}
                             @else
-                                {{ $ayah->translations->where('translation_info_id', Auth::user()->settings->translation_id)->first()->text }}
+                                {{ $ayah->translations->where('translation_info_id', Auth::user()->settings['translation_id'])->first()->text }}
                             @endif
                         </div>
                     </div>
@@ -120,10 +120,10 @@
                         </span>
                     </div>
                     <div class="text-white my-5 font-serif font-thin">
-                        @if (Auth::guest() || !isset(Auth::user()->settings))
+                        @if (Auth::guest() || !isset(Auth::user()->settings['translation_id']))
                             {{ $ayah->translations->where('translation_info_id', '1')->first()->text }}
                         @else
-                            {{ $ayah->translations->where('translation_info_id', Auth::user()->settings->translation_id)->first()->text }}
+                            {{ $ayah->translations->where('translation_info_id', Auth::user()->settings['translation_id'])->first()->text }}
                         @endif
                     </div>
                 </div>
@@ -202,10 +202,10 @@
                         </span>
                     </div>
                     <div class="text-white my-5 font-serif font-thin">
-                        @if (Auth::guest() || !isset(Auth::user()->settings))
+                        @if (Auth::guest() || !isset(Auth::user()->settings['translation_id']))
                             {{ $ayah->translations->where('translation_info_id', '1')->first()->text }}
                         @else
-                            {{ $ayah->translations->where('translation_info_id', Auth::user()->settings->translation_id)->first()->text }}
+                            {{ $ayah->translations->where('translation_info_id', Auth::user()->settings['translation_id'])->first()->text }}
                         @endif
                     </div>
                 </div>

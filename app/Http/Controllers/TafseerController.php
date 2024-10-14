@@ -13,10 +13,10 @@ class TafseerController extends Controller
     {
         $ayah = Ayah::where('ayah_key', $ayahKey)->first();
 
-        if(Auth::guest() || !isset(Auth::user()->settings)){
+        if(Auth::guest() || !isset(Auth::user()->settings['tafseer_id'])){
             $tafseer = Tafseer::where('ayah_key', $ayahKey)->where('tafseer_info_id', '1')->first();
         }else{
-            $tafseer = Tafseer::where('ayah_key', $ayahKey)->where('tafseer_info_id', Auth::user()->settings->tafseer_id)->first();
+            $tafseer = Tafseer::where('ayah_key', $ayahKey)->where('tafseer_info_id', Auth::user()->settings['tafseer_id'])->first();
         }
 
 

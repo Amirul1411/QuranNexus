@@ -56,11 +56,9 @@
 
         {{ $slot }}
 
-        <!-- Left Side Menu -->
-        @if (isset($rightSideMenu))
-            {{ $rightSideMenu }}
-        @endif
-        
+        <!-- Settings Right Side Menu -->
+        @livewire('settings-side-menu')
+
     </main>
 
     @include('layouts.partials.footer')

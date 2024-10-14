@@ -16,4 +16,5 @@ return [
     'irab' => 'I\'rab',
     'resources' => 'Resources',
     'api_documentation' => 'API Documentation',
+    'settings' => 'Settings',
 ];

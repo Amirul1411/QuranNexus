@@ -10,6 +10,9 @@ $alignmentClasses = match ($align) {
 
 $width = match ($width) {
     '48' => 'w-48',
+    '64' => 'w-64',
+    '80' => 'w-80',
+    'full' => 'w-full',
 };
 @endphp
 

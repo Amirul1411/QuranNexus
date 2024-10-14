@@ -54,7 +54,7 @@ class User extends Authenticatable implements FilamentUser
      *
      * @var array<int, string>
      */
-    protected $fillable = ['_id', 'name', 'email', 'password', 'role', 'recitation_times', 'recitation_streak', 'last_recitation_date'];
+    protected $fillable = ['_id', 'name', 'email', 'password', 'role', 'recitation_times', 'recitation_streak', 'last_recitation_date', 'settings'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -88,6 +88,25 @@ class User extends Authenticatable implements FilamentUser
     // {
     //     return $query->count()+1;
     // }
+
+    // Add settings accessor and mutator
+    // public function getSettingsAttribute($value)
+    // {
+    //     return $value ?? [
+    //         'translation_id' => null,
+    //         'tafseer_id' => null,
+    //         'audio_id' => null,
+    //     ];
+    // }
+
+    public function setSettingsAttribute($value)
+    {
+        // Initialize currentSettings as an empty array if 'settings' is not set
+        $currentSettings = isset($this->attributes['settings']) ? $this->attributes['settings'] : [];
+
+        // Merge the new settings with the existing ones
+        $this->attributes['settings'] = array_merge($currentSettings, $value);
+    }
 
     public function addBookmark($type, $itemId)
     {
@@ -177,8 +196,8 @@ class User extends Authenticatable implements FilamentUser
             $this->attributes['recitation_times'] = [];
         }
 
-        if (!isset($this->attributes['streak'])) {
-            $this->attributes['streak'] = 0;
+        if (!isset($this->attributes['recitation_streak'])) {
+            $this->attributes['recitation_streak'] = 0;
         }
 
         if (!isset($this->attributes['last_recitation_date'])) {
@@ -198,13 +217,13 @@ class User extends Authenticatable implements FilamentUser
             // Check if recitation was done yesterday
             if ($this->attributes['last_recitation_date'] === $yesterday) {
                 // Increment streak
-                $this->attributes['streak'] += 1;
-            } elseif($this->attributes['last_recitation_date'] === $today) {
+                $this->attributes['recitation_streak'] += 1;
+            } elseif ($this->attributes['last_recitation_date'] === $today) {
                 // Maintain the streak
-                $this->attributes['streak'] = $this->attributes['streak'];
+                $this->attributes['recitation_streak'] = $this->attributes['recitation_streak'];
             } else {
                 // Reset streak to 1 if recitation was missed the previous day
-                $this->attributes['streak'] = 1;
+                $this->attributes['recitation_streak'] = 1;
             }
 
             // Update last recitation date
@@ -214,7 +233,7 @@ class User extends Authenticatable implements FilamentUser
         // Save the updated recitation_times, streak, and last_recitation_date fields in MongoDB
         $this->update([
             'recitation_times' => $this->attributes['recitation_times'],
-            'streak' => $this->attributes['streak'],
+            'recitation_streak' => $this->attributes['recitation_streak'],
             'last_recitation_date' => $this->attributes['last_recitation_date'],
         ]);
     }
