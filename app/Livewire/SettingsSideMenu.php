@@ -13,7 +13,7 @@ use Livewire\Component;
 class SettingsSideMenu extends Component
 {
     public $tafseers, $translations, $audioRecitations;
-    public $selectedTafseer, $selectedTranslation, $selectedAudio;
+    public $selectedTafseer, $selectedTranslation, $selectedAudio, $recitationGoal;
 
     public function mount()
     {
@@ -32,6 +32,12 @@ class SettingsSideMenu extends Component
         if (Auth::user() && isset(Auth::user()->settings['audio_id'])) {
             $this->selectedAudio = Auth::user()->settings['audio_id'];
         }
+
+        if (Auth::user() && isset(Auth::user()->recitation_goal)) {
+            $this->recitationGoal = Auth::user()->recitation_goal;
+        }else{
+            $this->recitationGoal = null;
+        }
     }
 
     public function saveSettings()
@@ -46,10 +52,11 @@ class SettingsSideMenu extends Component
             'selectedTafseer' => 'nullable',
             'selectedTranslation' => 'nullable',
             'selectedAudio' => 'nullable',
+            'recitationGoal' => 'nullable|numeric|min:10',
         ]);
 
         // Check if all fields are null
-        if (is_null($this->selectedTafseer) && is_null($this->selectedTranslation) && is_null($this->selectedAudio)) {
+        if (is_null($this->selectedTafseer) && is_null($this->selectedTranslation) && is_null($this->selectedAudio) && $this->recitationGoal === 0) {
             session()->flash('all null', 'You must select at least one setting.');
             return;
         }
@@ -72,6 +79,7 @@ class SettingsSideMenu extends Component
         // Save only the provided settings (without overwriting the entire settings array)
         Auth::user()->update([
             'settings' => $settings, // This will trigger the setSettingsAttribute method
+            'recitation_goal' => (int) $this->recitationGoal,
         ]);
 
         session()->flash('successful', 'Settings successfully saved.');

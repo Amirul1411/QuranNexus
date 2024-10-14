@@ -54,7 +54,7 @@ class User extends Authenticatable implements FilamentUser
      *
      * @var array<int, string>
      */
-    protected $fillable = ['_id', 'name', 'email', 'password', 'role', 'recitation_times', 'recitation_streak', 'last_recitation_date', 'settings'];
+    protected $fillable = ['_id', 'name', 'email', 'password', 'role', 'recitation_times', 'recitation_streak', 'last_recitation_date', 'settings', 'recitation_goal'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -103,9 +103,11 @@ class User extends Authenticatable implements FilamentUser
     {
         // Initialize currentSettings as an empty array if 'settings' is not set
         $currentSettings = isset($this->attributes['settings']) ? $this->attributes['settings'] : [];
+        $currentRecitationGoal = isset($this->attributes['recitation_goal']) ? $this->attributes['recitation_goal'] : null;
 
         // Merge the new settings with the existing ones
         $this->attributes['settings'] = array_merge($currentSettings, $value);
+        $this->attributes['recitation_goal'] = $currentRecitationGoal;
     }
 
     public function addBookmark($type, $itemId)
