@@ -17,7 +17,11 @@ class TafseerInfoResource extends Resource
 {
     protected static ?string $model = TafseerInfo::class;
 
+    protected static ?string $pluralModelLabel = 'Tafseer Info';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?int $navigationSort = 83;
 
     public static function form(Form $form): Form
     {

@@ -17,9 +17,11 @@ class SurahInfoResource extends Resource
 {
     protected static ?string $model = SurahInfo::class;
 
+    protected static ?string $pluralModelLabel = 'Surah Info';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?int $navigationSort = 80;
+    protected static ?int $navigationSort = 31;
 
     public static function form(Form $form): Form
     {

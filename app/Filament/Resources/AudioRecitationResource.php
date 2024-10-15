@@ -19,6 +19,8 @@ class AudioRecitationResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?int $navigationSort = 91;
+
     public static function form(Form $form): Form
     {
         return $form

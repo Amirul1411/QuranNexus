@@ -19,7 +19,7 @@ class TranslationResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?int $navigationSort = 81;
+    protected static ?int $navigationSort = 82;
 
     public static function form(Form $form): Form
     {
