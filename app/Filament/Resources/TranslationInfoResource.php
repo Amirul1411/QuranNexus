@@ -17,7 +17,11 @@ class TranslationInfoResource extends Resource
 {
     protected static ?string $model = TranslationInfo::class;
 
+    protected static ?string $pluralModelLabel = 'Translation Info';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?int $navigationSort = 81;
 
     public static function form(Form $form): Form
     {
