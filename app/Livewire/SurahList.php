@@ -17,18 +17,18 @@ class SurahList extends Component
 
     public $surahs;
 
-    public $search = '';
+    // public $search = '';
 
-    public function updatedSearch()
-    {
-        // General search across multiple fields
-        $this->surahs = Surah::where(function ($query) {
-            $query
-                ->where('tname', 'like', '%' . $this->search . '%')
-                ->orWhere('ename', 'like', '%' . $this->search . '%')
-                ->orWhere('_id', $this->search);
-        })->get();
-    }
+    // public function updatedSearch()
+    // {
+    //     // General search across multiple fields
+    //     $this->surahs = Surah::where(function ($query) {
+    //         $query
+    //             ->where('tname', 'like', '%' . $this->search . '%')
+    //             ->orWhere('ename', 'like', '%' . $this->search . '%')
+    //             ->orWhere('_id', $this->search);
+    //     })->get();
+    // }
 
     public function redirectToSurah($surahId)
     {
