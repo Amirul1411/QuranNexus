@@ -46,4 +46,3 @@
         </form>
     </x-authentication-card>
 </x-guest-layout>
-{{-- <x-modal>Login</x-modal> --}}

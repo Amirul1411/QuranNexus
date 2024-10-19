@@ -23,7 +23,7 @@
     <x-banner />
 
     @include('layouts.partials.header')
-    {{-- @include('auth.login') --}}
+    @livewire('auth.login-modal')
     {{-- @include('auth.register') --}}
 
     {{-- <div class="min-h-screen bg-gray-100 dark:bg-gray-900">

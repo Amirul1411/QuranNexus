@@ -145,7 +145,7 @@
                             <div class="relative w-[15rem]">
                                 <x-input type="text" darkBorder="border-black-500" wire:model="recitationGoal"
                                     darkBg="dark:bg-gray-200" darkText="dark:text-black" class="w-full h-auto pr-10">
-                                    {{ $this->recitationGoal ?? 0 }}
+                                    {{ $this->recitationGoal}}
                                 </x-input>
                             </div>
                         </div>

@@ -57,7 +57,7 @@
         <div class="flex flex-wrap justify-center my-3">
             <template x-for="surah in filteredSurahs" :key="surah._id">
                 <div class="w-1/3 p-5">
-                    <div wire:click="redirectToSurah(surah.'_id')"
+                    <div wire:click="redirectToSurah(surah._id)"
                         class="h-20 flex items-center bg-black text-center p-5 rounded-md cursor-pointer">
                         <div class="w-1/5 relative">
                             <span class="relative flex justify-center items-center">

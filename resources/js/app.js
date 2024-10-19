@@ -1,11 +1,11 @@
-import './bootstrap';
+// import './bootstrap';
 
-import Alpine from 'alpinejs';
-import focus from '@alpinejs/focus';
+// import Alpine from 'alpinejs';
+// import focus from '@alpinejs/focus';
 
-// Register the focus plugin
-Alpine.plugin(focus);
+// // Register the focus plugin
+// Alpine.plugin(focus);
 
-window.Alpine = Alpine
+// window.Alpine = Alpine
 
-Alpine.start()
+// Alpine.start()
