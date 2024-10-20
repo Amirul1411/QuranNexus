@@ -1,11 +1,10 @@
 <div x-data="{ open: false }" x-init="() => {
-    open = false;
     Livewire.on('settingsSaved', () => {
         setTimeout(() => {
             window.location.reload(); // Refresh the page after 3 seconds
         }, 3000);
     });
-}" @open-settings.window="open = $event.detail">
+}" @open-settings.window="open = $event.detail" x-cloak>
 
     {{-- Overlay to close the menu when clicked outside --}}
     <div x-show="open" class="fixed inset-0 bg-black bg-opacity-50 z-40" @click="open = false"

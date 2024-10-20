@@ -1,4 +1,4 @@
-<x-dialog-modal id="loginModal" maxWidth="md" wire:model.live="showOpenModal"  darkBg="modal-bg" footerPosition="text-center"
+<x-dialog-modal id="login-modal" maxWidth="md" wire:model.live="show"  darkBg="modal-bg" footerPosition="text-center"
     footerJustify="justify-center" footerItems="items-start" footerPaddingY='pb-4'>
 
     <x-slot name="title">
@@ -74,7 +74,7 @@
 
             <div class="flex items-center justify-center mt-4">
                 <x-button textSize="text-base" tracking="tracking-wide" uppercase="" darkText="text-white"
-                    darkBg="bg-[#0A1003]" rounded="rounded-full"
+                    darkBg="dark:bg-black" rounded="rounded-full"
                     class="ms-4 font-sans hover:text-black w-1/2 my-4 justify-center focus:text-black dark:focus:text-black">
                     {{ __('Login') }}
                 </x-button>
@@ -84,8 +84,8 @@
 
     <x-slot name="footer">
         <h2 class="text-base text-white font-sans font-semibold me-3">Doesn't have an account yet?</h2>
-        <a href="{{ route('register') }}"
-            class="text-base font-sans font-semibold text-[#63FFDA] hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">Create
+        <a @click="$dispatch('render-register-modal')"
+            class="cursor-pointer text-base font-sans font-semibold text-[#63FFDA] hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">Create
             one</a>
     </x-slot>
 </x-dialog-modal>

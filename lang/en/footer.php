@@ -16,5 +16,5 @@ return [
     'need_help' => 'Need Help?',
     'copyright_quran_nexus' => '2024 Quran Nexus',
     'copyright_terms' => 'Terms',
-    'copyright_privacy' => 'Privacy',
+    'copyright_policy' => 'Policy',
 ];

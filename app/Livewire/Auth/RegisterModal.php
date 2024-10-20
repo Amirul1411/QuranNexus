@@ -5,20 +5,19 @@ namespace App\Livewire\Auth;
 use Livewire\Component;
 use Livewire\Attributes\On;
 
-class LoginModal extends Component
+class RegisterModal extends Component
 {
 
     public $show = false;
 
-    #[On('openLoginModal')]
+    #[On('openRegisterModal')]
     public function open()
     {
         $this->show = true;
-        $this->dispatch('close-login-modal');
     }
 
     public function render()
     {
-        return view('livewire.auth.login-modal');
+        return view('livewire.auth.register-modal');
     }
 }

@@ -29,11 +29,11 @@
                 </svg>
                 {{ __('footer.copyright_quran_nexus') }}
             </p>
-            <p class="text-white mx-4 font-serif me-7">
+            <a class="text-white mx-4 font-serif me-7" href="{{route('terms.show')}}">
                 {{ __('footer.copyright_terms') }}
-            </p>
-            <p class="text-white mx-4 font-serif">
-                {{ __('footer.copyright_privacy') }}
-            </p>
+            </a>
+            <a class="text-white mx-4 font-serif" href="{{route('policy.show')}}">
+                {{ __('footer.copyright_policy') }}
+            </a>
     </div>
 </div>

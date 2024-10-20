@@ -23,8 +23,27 @@
     <x-banner />
 
     @include('layouts.partials.header')
-    @livewire('auth.login-modal')
-    {{-- @include('auth.register') --}}
+
+    <div x-data="{ showLogin: false, showRegister: false }" x-init="showLogin=false; showRegister=false"
+        x-on:render-login-modal.window="showRegister=false; await $nextTick(); showLogin=true;  await $nextTick(); $dispatch('openLoginModal');"
+        x-on:render-register-modal.window="showLogin=false; await $nextTick(); showRegister=true;  await $nextTick(); $dispatch('openRegisterModal');">
+
+        <!-- Login Modal -->
+        <template x-if="showLogin">
+            <div>
+                @livewire('auth.login-modal')
+            </div>
+        </template>
+
+        <!-- Register Modal -->
+        <template x-if="showRegister">
+            <div x-data x-init="$dispatch('openRegisterModal')"">
+                @livewire('auth.register-modal')
+            </div>
+        </template>
+
+
+    </div>
 
     {{-- <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             @livewire('navigation-menu')
