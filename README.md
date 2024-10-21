@@ -126,6 +126,7 @@ git commit -m "Track all files in public/audio/Alafasy folder with Git LFS"
 Test User  - testuser@gmail.com  - user1234
 Test Editor - testeditor@gmail.com - editor1234
 Test Admin - testadmin@gmail.com - admin1234
+Test - test@gmail.com - test1234
 
 6. VS Code Shorcuts
 

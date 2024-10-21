@@ -24,9 +24,11 @@
 
     @include('layouts.partials.header')
 
-    <div x-data="{ showLogin: false, showRegister: false }" x-init="showLogin=false; showRegister=false"
-        x-on:render-login-modal.window="showRegister=false; await $nextTick(); showLogin=true;  await $nextTick(); $dispatch('openLoginModal');"
-        x-on:render-register-modal.window="showLogin=false; await $nextTick(); showRegister=true;  await $nextTick(); $dispatch('openRegisterModal');">
+    <div x-data="{ showLogin: false, showRegister: false, showForgotPassword: false }" x-init="showLogin = false;
+    showRegister = false"
+        x-on:render-login-modal.window="showRegister=false; showForgotPassword=false; await $nextTick(); showLogin=true;  await $nextTick(); $dispatch('openLoginModal');"
+        x-on:render-register-modal.window="showLogin=false; showForgotPassword=false; await $nextTick(); showRegister=true;  await $nextTick(); $dispatch('openRegisterModal');"
+        x-on:render-forgot-password-modal.window="showRegister=false; showLogin=false; await $nextTick(); showForgotPassword=true;  await $nextTick(); $dispatch('openForgotPasswordModal');">
 
         <!-- Login Modal -->
         <template x-if="showLogin">
@@ -37,12 +39,17 @@
 
         <!-- Register Modal -->
         <template x-if="showRegister">
-            <div x-data x-init="$dispatch('openRegisterModal')"">
+            <div>
                 @livewire('auth.register-modal')
             </div>
         </template>
 
-
+        <!-- Forgot Password Modal -->
+        <template x-if="showForgotPassword">
+            <div>
+                @livewire('auth.forgot-password-modal')
+            </div>
+        </template>
     </div>
 
     {{-- <div class="min-h-screen bg-gray-100 dark:bg-gray-900">

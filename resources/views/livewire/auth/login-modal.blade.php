@@ -1,4 +1,4 @@
-<x-dialog-modal id="login-modal" maxWidth="md" wire:model.live="show"  darkBg="modal-bg" footerPosition="text-center"
+<x-dialog-modal id="login-modal" maxWidth="md" wire:model.live="show" darkBg="modal-bg" footerPosition="text-center"
     footerJustify="justify-center" footerItems="items-start" footerPaddingY='pb-4'>
 
     <x-slot name="title">
@@ -18,6 +18,7 @@
             @csrf
 
             <div class="my-7 relative w-full justify-center flex">
+                <x-label for="email" value="{{ __('Email') }}" class="hidden"/>
                 <x-input rounded="rounded-full" darkBg="" darkText="dark:text-black" id="email"
                     class="block mt-1 z-0 w-full font-semibold pl-12" type="email" name="email" :value="old('email')"
                     required autofocus autocomplete="username" placeholder="E-mail" />
@@ -31,8 +32,10 @@
             </div>
 
             <div class="my-7 relative w-full justify-center flex" x-data="{ showPassword: false }">
+                <x-label for="password" value="{{ __('Password') }}" class="hidden"/>
                 <x-input rounded="rounded-full" darkBg="" darkText="dark:text-black" id="password"
-                    class="block mt-1 w-full font-semibold pl-12 z-0 h-[40px]" x-bind:type="showPassword ? 'text' : 'password'" name="password" required
+                    class="block mt-1 w-full font-semibold pl-12 z-0 h-[40px]"
+                    x-bind:type="showPassword ? 'text' : 'password'" name="password" required
                     autocomplete="current-password" placeholder="Password" />
                 <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 z-1">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -65,8 +68,8 @@
                         class="ms-2 text-sm text-[#63FFDA] dark:text-[#63FFDA] font-semibold">{{ __('Remember me') }}</span>
                 </label>
                 @if (Route::has('password.request'))
-                    <a class="font-semibold text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                        href="{{ route('password.request') }}">
+                    <a class=" cursor-pointer font-semibold text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                        @click="$dispatch('render-forgot-password-modal')">
                         {{ __('Forgot your password?') }}
                     </a>
                 @endif
