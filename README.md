@@ -95,6 +95,7 @@ php artisan cleanup:recently-read
 php artisan schedule:run
 php artisan schedule:interrupt
 php artisan schedule:work
+php artisan schedule:list
 
 Log commands:
 tail -f storage/logs/laravel.log
@@ -143,3 +144,5 @@ Password: QuranNexus2024
 
 Username: qurannexus6236
 Password: 2hhxH3PYYOI4uxa4
+
+Total words in al-Quran: 77430
