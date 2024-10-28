@@ -1,4 +1,4 @@
-@props(['id' => null, 'maxWidth' => null, 'darkBg' => 'dark:bg-gray-800', 'footerPosition' => 'text-end', 'footerJustify' => 'justify-end', 'footerItems', 'footerPaddingY' => 'py-4'])
+@props(['id' => null, 'maxWidth' => null, 'darkBg' => 'dark:bg-gray-800', 'footerPosition' => 'text-end', 'footerJustify' => 'justify-end', 'footerItems' => '', 'footerPaddingY' => 'py-4'])
 
 <x-modal :id="$id" :maxWidth="$maxWidth" {{ $attributes }} darkBg="{{ $darkBg }}">
     <div class="px-6 py-4">

@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\SurahResource\Pages;
 use App\Filament\Resources\SurahResource\RelationManagers;
 use App\Filament\Resources\SurahResource\RelationManagers\AyahRelationManager;
+use App\Filament\Resources\SurahResource\RelationManagers\SurahInfoRelationManager;
 use App\Models\Surah;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
@@ -15,6 +16,10 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Select;
+use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Support\Facades\DB;
+use MongoDB\Laravel\Eloquent\Builder as EloquentBuilder;
 
 class SurahResource extends Resource
 {
@@ -26,24 +31,62 @@ class SurahResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form->schema([TextInput::make('name')->required(), TextInput::make('ename')->required(), TextInput::make('tname')->required()]);
+        return $form->schema([
+            TextInput::make('name')
+            ->readOnly()
+            ->label('Arabic Name'),
+            TextInput::make('ename')
+            ->readOnly()
+            ->label('Name Meaning'),
+            TextInput::make('tname')
+            ->readOnly()
+            ->label('Name'),
+            TextInput::make('ayas')
+            ->readOnly()
+            ->label('Number of Ayahs'),
+            Select::make('type')
+            ->options(Surah::TYPES)
+            ->label('Role')
+            ->disabled(),
+        ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('int_id')->numeric()->sortable()->searchable()->label('Id'),
-                TextColumn::make('name')->sortable()->searchable()->label('Arabic Name'),
-                TextColumn::make('tname')->sortable()->searchable()->label('Name'),
-                TextColumn::make('ename')->sortable()->searchable()->label('Name Meaning'),
-                TextColumn::make('type')->sortable()->label('Type')->badge()->color(
+                TextColumn::make('_id')
+                ->sortable()
+                ->searchable()
+                ->label('Id')
+                ->alignCenter(),
+                TextColumn::make('name')
+                ->sortable()
+                ->searchable()
+                ->label('Arabic Name'),
+                TextColumn::make('tname')
+                ->sortable()
+                ->searchable()
+                ->label('Name'),
+                TextColumn::make('ename')
+                ->sortable()
+                ->searchable()
+                ->label('Name Meaning'),
+                TextColumn::make('type')
+                ->sortable()
+                ->label('Type')
+                ->badge()
+                ->color(
                     fn(string $state): string => match ($state) {
                         'Meccan' => 'info',
                         'Medinan' => 'success',
                     },
-                ),
-                TextColumn::make('ayas')->sortable()->label('Number of ayahs'),
+                )
+                ->alignCenter(),
+                TextColumn::make('ayas')
+                ->sortable()
+                ->label('Number of Ayahs')
+                ->alignCenter(),
             ])
             ->filters([
                 //
@@ -56,10 +99,12 @@ class SurahResource extends Resource
             ]);
     }
 
-
     public static function getRelations(): array
     {
-        return [AyahRelationManager::class];
+        return [
+            AyahRelationManager::class,
+            SurahInfoRelationManager::class,
+        ];
     }
 
     public static function getPages(): array

@@ -28,4 +28,9 @@ class Tafseer extends Model
     {
         return $this->belongsTo(Ayah::class, 'ayah_key', 'ayah_key');
     }
+
+    public function surah()
+    {
+        return $this->belongsTo(Surah::class, 'surah_id', '_id');
+    }
 }

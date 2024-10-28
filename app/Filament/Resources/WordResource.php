@@ -4,21 +4,28 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\WordResource\Pages;
 use App\Filament\Resources\WordResource\RelationManagers;
+use App\Models\Ayah;
+use App\Models\Surah;
 use App\Models\Word;
 use Filament\Forms;
+use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use MongoDB\Laravel\Eloquent\Model;
 
 class WordResource extends Resource
 {
     protected static ?string $model = Word::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-bold';
 
     protected static ?int $navigationSort = 50;
 
@@ -26,7 +33,28 @@ class WordResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Select::make('surah.tname')
+                ->relationship(name: 'surah', titleAttribute: 'tname')
+                ->label('Surah Name')
+                ->disabled(),
+                TextInput::make('ayah_index')
+                ->readOnly()
+                ->label('Ayah Index'),
+                TextInput::make('word_index')
+                ->readOnly()
+                ->label('Word Index'),
+                TextInput::make('word_key')
+                ->readOnly()
+                ->label('Word Key'),
+                TextInput::make('page_id')
+                ->readOnly()
+                ->label('Page Number'),
+                TextInput::make('line_number')
+                ->readOnly()
+                ->label('Line Number'),
+                TextInput::make('text')
+                ->required()
+                ->label('Word Text'),
             ]);
     }
 
@@ -38,38 +66,58 @@ class WordResource extends Resource
             ->numeric()
             ->sortable()
             ->searchable()
-            ->label('Id'),
-            TextColumn::make('ayah.surah.tname')
-            ->searchable()
+            ->label('Id')
+            ->alignCenter(),
+            TextColumn::make('surah.tname')
             ->label('Surah Name'),
             TextColumn::make('ayah_index')
             ->numeric()
             ->sortable()
             ->searchable()
-            ->label('Ayah Index'),
+            ->label('Ayah Index')
+            ->alignCenter(),
             TextColumn::make('word_index')
             ->numeric()
             ->sortable()
             ->searchable()
-            ->label('Word Index'),
-            TextColumn::make('ayah.page_id')
+            ->label('Word Index')
+            ->alignCenter(),
+            TextColumn::make('word_key')
             ->numeric()
             ->sortable()
             ->searchable()
-            ->label('Page Number'),
+            ->label('Word Key')
+            ->alignCenter(),
+            TextColumn::make('page_id')
+            ->sortable()
+            ->searchable()
+            ->label('Page Number')
+            ->alignCenter(),
             TextColumn::make('line_number')
-            ->numeric()
             ->sortable()
             ->searchable()
-            ->label('Line Number'),
+            ->label('Line Number')
+            ->alignCenter(),
             TextColumn::make('text')
-            ->label('Word Text'),
+            ->label('Word Text')
+            ->sortable()
+            ->searchable()
+            ->alignEnd(),
             ])
             ->filters([
-                //
+                SelectFilter::make('surah')
+                ->relationship('surah', 'tname', fn (Builder $query) => $query->orderBy('_id'))
+                ->label('Surah Name')
+                ->searchable()
+                ->preload()
+                ->modifyQueryUsing(function (Builder $query, $data) {
+                    if (!empty($data['value'])) {
+                        $query->where('surah_id', $data['value']);
+                    }
+                }),
             ])
             ->actions([
-                // Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -90,7 +138,7 @@ class WordResource extends Resource
         return [
             'index' => Pages\ListWords::route('/'),
             // 'create' => Pages\CreateWord::route('/create'),
-            // 'edit' => Pages\EditWord::route('/{record}/edit'),
+            'edit' => Pages\EditWord::route('/{record}/edit'),
         ];
     }
 }

@@ -4,13 +4,25 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\AyahResource\Pages;
 use App\Filament\Resources\AyahResource\RelationManagers;
+use App\Filament\Resources\AyahResource\RelationManagers\AudioRecitationsRelationManager;
+use App\Filament\Resources\AyahResource\RelationManagers\TafseerRelationManager;
+use App\Filament\Resources\AyahResource\RelationManagers\TranslationsRelationManager;
+use App\Filament\Resources\AyahResource\RelationManagers\WordsRelationManager;
 use App\Models\Ayah;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\FontFamily;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\TextColumn\TextColumnSize;
 use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -19,7 +31,7 @@ class AyahResource extends Resource
 {
     protected static ?string $model = Ayah::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
+    protected static ?string $navigationIcon = 'heroicon-o-list-bullet';
 
     protected static ?int $navigationSort = 40;
 
@@ -27,7 +39,25 @@ class AyahResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Select::make('surah.tname')
+                ->relationship(name: 'surah', titleAttribute: 'tname')
+                ->label('Surah Name')
+                ->disabled(),
+                TextInput::make('ayah_index')
+                ->readOnly()
+                ->label('Ayah Index'),
+                TextInput::make('ayah_key')
+                ->readOnly()
+                ->label('Ayah Key'),
+                TextInput::make('page_id')
+                ->readOnly()
+                ->label('Page Number'),
+                TextInput::make('juz_id')
+                ->readOnly()
+                ->label('Juz Number'),
+                Toggle::make('isVerified')
+                ->required()
+                ->label('Is Verified'),
             ]);
     }
 
@@ -36,35 +66,64 @@ class AyahResource extends Resource
         return $table
         ->columns([
             TextColumn::make('_id')
-            ->numeric()
             ->sortable()
             ->searchable()
-            ->label('Id'),
+            ->label('Id')
+            ->alignCenter(),
             TextColumn::make('surah.tname')
-            ->searchable()
             ->label('Surah Name'),
             TextColumn::make('ayah_index')
-            ->numeric()
             ->sortable()
             ->searchable()
-            ->label('Ayah Index'),
+            ->label('Ayah Index')
+            ->alignCenter(),
+            TextColumn::make('ayah_key')
+            ->sortable()
+            ->searchable()
+            ->label('Ayah Key')
+            ->alignCenter(),
             TextColumn::make('page_id')
             ->numeric()
             ->sortable()
             ->searchable()
-            ->label('Page Id'),
+            ->label('Page Number')
+            ->alignCenter(),
             TextColumn::make('juz_id')
             ->numeric()
             ->sortable()
             ->searchable()
-            ->label('Juz Id'),
-            ToggleColumn::make('isVerified'),
+            ->label('Juz Number')
+            ->alignCenter(),
+            TextColumn::make('words.text')
+            ->fontFamily(FontFamily::Serif)
+            ->formatStateUsing(fn (string $state): string => str_replace(',', ' ', $state))
+            ->limit(100)
+            ->size(TextColumnSize::Large)
+            ->label('Text')
+            ->alignEnd(),
+            IconColumn::make('isVerified')
+            ->boolean()
+            ->trueIcon('heroicon-o-check-circle')
+            ->falseIcon('heroicon-o-x-circle')
+            ->trueColor('success')
+            ->falseColor('danger')
+            ->label('Is Verified')
+            ->alignCenter(),
             ])
             ->filters([
-                //
+                SelectFilter::make('surah')
+                ->relationship('surah', 'tname', fn (Builder $query) => $query->orderBy('_id'))
+                ->label('Surah Name')
+                ->searchable()
+                ->preload()
+                ->modifyQueryUsing(function (Builder $query, $data) {
+                    if (!empty($data['value'])) {
+                        $query->where('surah_id', $data['value']);
+                    }
+                }),
             ])
             ->actions([
-                // Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -76,7 +135,10 @@ class AyahResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            WordsRelationManager::class,
+            TranslationsRelationManager::class,
+            TafseerRelationManager::class,
+            AudioRecitationsRelationManager::class,
         ];
     }
 
@@ -85,7 +147,7 @@ class AyahResource extends Resource
         return [
             'index' => Pages\ListAyahs::route('/'),
             // 'create' => Pages\CreateAyah::route('/create'),
-            // 'edit' => Pages\EditAyah::route('/{record}/edit'),
+            'edit' => Pages\EditAyah::route('/{record}/edit'),
         ];
     }
 }

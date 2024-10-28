@@ -23,20 +23,20 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             CounterSeeder::class,
-            // UserSeeder::class,
+            UserSeeder::class,
             InquirySeeder::class,
             // JuzSeeder::class,
             // PageSeeder::class,
             // SurahSeeder::class,
             // SurahInfoSeeder::class,
             // AyahSeeder::class,
-            // WordSeeder::class,
+            WordSeeder::class,
             // TafseerInfoSeeder::class,
             // TafseerSeeder::class,
             // TranslationInfoSeeder::class,
             // TranslationSeeder::class,
             // AudioRecitationInfoSeeder::class,
-            AudioRecitationSeeder::class,
+            // AudioRecitationSeeder::class,
         ]);
     }
 }

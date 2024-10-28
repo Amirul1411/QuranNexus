@@ -168,22 +168,25 @@ class User extends Authenticatable implements FilamentUser
         if ($type === 'surah' && !empty($this->recently_read_surahs)) {
             $this->recently_read_surahs = collect($this->recently_read_surahs)
                 ->filter(function ($item) use ($currentMinute) {
-                    return Carbon::parse($item['read_at'])->greaterThan($currentMinute->subHours(1));
+                    return Carbon::parse($item['read_at'])->greaterThan($currentMinute->subHour());
                 })
+                ->values()
                 ->toArray();
             $this->save();
         } elseif ($type === 'page' && !empty($this->recently_read_pages)) {
             $this->recently_read_pages = collect($this->recently_read_pages)
                 ->filter(function ($item) use ($currentMinute) {
-                    return Carbon::parse($item['read_at'])->greaterThan($currentMinute->subHours(1));
+                    return Carbon::parse($item['read_at'])->greaterThan($currentMinute->subHour());
                 })
+                ->values()
                 ->toArray();
             $this->save();
         } elseif ($type === 'juz' && !empty($this->recently_read_juzs)) {
             $this->recently_read_juzs = collect($this->recently_read_juzs)
                 ->filter(function ($item) use ($currentMinute) {
-                    return Carbon::parse($item['read_at'])->greaterThan($currentMinute->subHours(1));
+                    return Carbon::parse($item['read_at'])->greaterThan($currentMinute->subHour());
                 })
+                ->values()
                 ->toArray();
             $this->save();
         }
@@ -242,17 +245,19 @@ class User extends Authenticatable implements FilamentUser
 
     public function resetRecitationStreak()
     {
-        $today = now()->startOfDay()->toDateString();
-        $yesterday = now()->subDay()->startOfDay()->toDateString();
+        if (isset($this->attributes['recitation_streak']) && isset($this->attributes['last_recitation_date'])) {
+            $today = now()->startOfDay()->toDateString();
+            $yesterday = now()->subDay()->startOfDay()->toDateString();
 
-        // Check if recitation was done today and yesterday
-        if ($this->attributes['last_recitation_date'] !== $today && $this->attributes['last_recitation_date'] !== $yesterday) {
-            // Reset streak to 0 if recitation was missed the previous day
-            $this->attributes['recitation_streak'] = 0;
+            // Check if recitation was done today and yesterday
+            if ($this->attributes['last_recitation_date'] !== $today && $this->attributes['last_recitation_date'] !== $yesterday) {
+                // Reset streak to 0 if recitation was missed the previous day
+                $this->attributes['recitation_streak'] = 0;
+            }
+
+            $this->update([
+                'recitation_streak' => $this->attributes['recitation_streak'],
+            ]);
         }
-
-        $this->update([
-            'recitation_streak' => $this->attributes['recitation_streak'],
-        ]);
     }
 }

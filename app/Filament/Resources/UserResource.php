@@ -15,6 +15,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use PhpParser\Node\Stmt\Label;
 
 class UserResource extends Resource
 {
@@ -30,13 +31,15 @@ class UserResource extends Resource
         ->schema([
             TextInput::make('name')
                 ->required()
-                ->maxLength(255),
+                ->readOnlyOn('edit')
+                ->label('Name'),
             TextInput::make('email')
-                ->email()
                 ->required()
-                ->maxLength(255),
+                ->readOnlyOn('edit')
+                ->label('Email'),
             Select::make('role')
                 ->options(User::ROLES)
+                ->label('Role')
                 ->required(),
         ]);
     }
@@ -47,12 +50,17 @@ class UserResource extends Resource
             ->columns([
                 TextColumn::make('_id')
                 ->sortable()
-                ->label('Id'),
+                ->searchable()
+                ->label('Id')
+                ->alignCenter(),
                 TextColumn::make('name')
                 ->sortable()
-                ->searchable(),
+                ->searchable()
+                ->label('Name'),
                 TextColumn::make('email')
-                ->searchable(),
+                ->sortable()
+                ->searchable()
+                ->label('Email'),
                 TextColumn::make('role')
                 ->badge()
                 ->color(fn (string $state): string => match ($state) {
@@ -61,14 +69,14 @@ class UserResource extends Resource
                     'ADMIN' => 'success',
                 })
                 ->sortable()
-                ->searchable(),
-                TextColumn::make('created_at')->label('Joined At')
+                ->searchable()
+                ->label('Role')
+                ->alignCenter(),
+                TextColumn::make('created_at')
+                ->label('Joined At')
                 ->dateTime()
-                ->sortable(),
-                TextColumn::make('updated_at')->label('Last Updated')
-                    ->dateTime()
-                    ->sortable(),
-
+                ->sortable()
+                ->alignCenter(),
             ])
             ->filters([
                 //

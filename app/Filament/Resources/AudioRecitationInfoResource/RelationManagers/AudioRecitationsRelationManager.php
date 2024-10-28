@@ -1,16 +1,12 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Resources\AudioRecitationInfoResource\RelationManagers;
 
-use App\Filament\Resources\PageResource\Pages;
-use App\Filament\Resources\PageResource\RelationManagers;
-use App\Filament\Resources\PageResource\RelationManagers\AyahsRelationManager;
-use App\Models\Page;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -18,21 +14,14 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PageResource extends Resource
+class AudioRecitationsRelationManager extends RelationManager
 {
-    protected static ?string $model = Page::class;
+    protected static string $relationship = 'audioRecitations';
 
-    protected static ?string $navigationIcon = 'heroicon-o-bookmark-square';
-
-    protected static ?int $navigationSort = 60;
-
-    public static function form(Form $form): Form
+    public function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('_id')
-                ->readOnly()
-                ->label('Page Number'),
                 Select::make('surah.tname')
                 ->relationship(name: 'surah', titleAttribute: 'tname')
                 ->disabled()
@@ -43,18 +32,20 @@ class PageResource extends Resource
                 TextInput::make('ayah_key')
                 ->readOnly()
                 ->label('Ayah Key'),
+                TextInput::make('audio_url')
+                ->readOnly()
+                ->label('Url'),
             ]);
     }
 
-    public static function table(Table $table): Table
+    public function table(Table $table): Table
     {
         return $table
+            ->recordTitleAttribute('Audio')
             ->columns([
-                TextColumn::make('_id')
+                TextColumn::make('surah.tname')
                 ->sortable()
                 ->searchable()
-                ->label('Page Number'),
-                TextColumn::make('surah.tname')
                 ->label('Surah Name'),
                 TextColumn::make('ayah_index')
                 ->sortable()
@@ -66,6 +57,10 @@ class PageResource extends Resource
                 ->searchable()
                 ->label('Ayah Key')
                 ->alignCenter(),
+                TextColumn::make('audio_url')
+                ->sortable()
+                ->searchable()
+                ->label('Url'),
             ])
             ->filters([
                 SelectFilter::make('surah')
@@ -79,29 +74,17 @@ class PageResource extends Resource
                     }
                 }),
             ])
+            ->headerActions([
+                // Tables\Actions\CreateAction::make(),
+            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                // Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            AyahsRelationManager::class,
-        ];
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListPages::route('/'),
-            // 'create' => Pages\CreatePage::route('/create'),
-            'edit' => Pages\EditPage::route('/{record}/edit'),
-        ];
     }
 }

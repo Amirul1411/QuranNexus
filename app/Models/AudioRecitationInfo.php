@@ -19,6 +19,14 @@ class AudioRecitationInfo extends Model
         'translated_name',
     ];
 
+    const MURATTAL = 'Murattal';
+    const MUJAWWAD = 'Mujawwad';
+
+    const STYLES = [
+        self::MURATTAL => 'Murattal',
+        self::MUJAWWAD => 'Mujawwad',
+    ];
+
     public function audioRecitations()
     {
         return $this->hasMany(AudioRecitation::class, 'audio_info_id', '_id');

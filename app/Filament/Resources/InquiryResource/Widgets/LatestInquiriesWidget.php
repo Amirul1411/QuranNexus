@@ -9,6 +9,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Tables\Actions\Action;
 use Filament\Widgets\TableWidget as BaseWidget;
+use PhpParser\Node\Stmt\Label;
 
 class LatestInquiriesWidget extends BaseWidget
 {
@@ -19,13 +20,21 @@ class LatestInquiriesWidget extends BaseWidget
     {
         return $table
             ->query(
-                Inquiry::whereDate('created_at', '>', now()->subDays(10)->startOfDay())->orderBy('created_at', 'desc')
+                Inquiry::whereDate('created_at', '>', now()->subDays(5)->startOfDay())->orderBy('created_at', 'desc')
             )
             ->columns([
-                TextColumn::make('first_name'),
-                TextColumn::make('last_name'),
-                TextColumn::make('message'),
-                TextColumn::make('created_at')->date()->sortable(),
+                TextColumn::make('first_name')
+                ->label('First Name')
+                ->alignCenter(),
+                TextColumn::make('last_name')
+                ->label('Last Name')
+                ->alignCenter(),
+                TextColumn::make('message')
+                ->wrap(),
+                TextColumn::make('created_at')
+                ->dateTime()
+                ->sortable()
+                ->alignCenter(),
             ]);
     }
 }

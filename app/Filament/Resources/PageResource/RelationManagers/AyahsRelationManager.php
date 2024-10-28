@@ -1,17 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\SurahResource\RelationManagers;
+namespace App\Filament\Resources\PageResource\RelationManagers;
 
-use App\Models\Ayah;
 use App\Models\Word;
 use Filament\Forms;
-use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Support\Enums\FontFamily;
@@ -19,12 +16,12 @@ use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\TextColumn\TextColumnSize;
-use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class AyahRelationManager extends RelationManager
+class AyahsRelationManager extends RelationManager
 {
     protected static string $relationship = 'ayahs';
 
@@ -32,15 +29,16 @@ class AyahRelationManager extends RelationManager
     {
         return $form
             ->schema([
+                Select::make('surah.tname')
+                ->relationship(name: 'surah', titleAttribute: 'tname')
+                ->disabled()
+                ->label('Surah Name'),
                 TextInput::make('ayah_index')
                 ->readOnly()
                 ->label('Ayah Index'),
                 TextInput::make('ayah_key')
                 ->readOnly()
                 ->label('Ayah Key'),
-                TextInput::make('page_id')
-                ->readOnly()
-                ->label('Page Number'),
                 TextInput::make('juz_id')
                 ->readOnly()
                 ->label('Juz Number'),
@@ -66,6 +64,8 @@ class AyahRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('Ayah')
             ->columns([
+                TextColumn::make('surah.tname')
+                ->label('Surah Name'),
                 TextColumn::make('ayah_index')
                 ->sortable()
                 ->searchable()
@@ -75,11 +75,6 @@ class AyahRelationManager extends RelationManager
                 ->sortable()
                 ->searchable()
                 ->label('Ayah Key')
-                ->alignCenter(),
-                TextColumn::make('page_id')
-                ->sortable()
-                ->searchable()
-                ->label('Page Number')
                 ->alignCenter(),
                 TextColumn::make('juz_id')
                 ->sortable()
@@ -103,7 +98,16 @@ class AyahRelationManager extends RelationManager
                 ->alignCenter(),
             ])
             ->filters([
-                //
+                SelectFilter::make('surah')
+                ->relationship('surah', 'tname', fn (Builder $query) => $query->orderBy('_id'))
+                ->label('Surah Name')
+                ->searchable()
+                ->preload()
+                ->modifyQueryUsing(function (Builder $query, $data) {
+                    if (!empty($data['value'])) {
+                        $query->where('surah_id', $data['value']);
+                    }
+                }),
             ])
             ->headerActions([
                 // Tables\Actions\CreateAction::make(),

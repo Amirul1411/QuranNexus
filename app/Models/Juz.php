@@ -21,4 +21,9 @@ class Juz extends Model
     {
         return $this->hasMany(Ayah::class, 'juz_id', '_id');
     }
+
+    public function surah()
+    {
+        return $this->belongsTo(Surah::class, 'surah_id', '_id');
+    }
 }

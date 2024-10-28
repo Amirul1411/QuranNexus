@@ -4,12 +4,16 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\JuzResource\Pages;
 use App\Filament\Resources\JuzResource\RelationManagers;
+use App\Filament\Resources\JuzResource\RelationManagers\AyahsRelationManager;
 use App\Models\Juz;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -18,7 +22,7 @@ class JuzResource extends Resource
 {
     protected static ?string $model = Juz::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document';
 
     protected static ?int $navigationSort = 70;
 
@@ -26,7 +30,19 @@ class JuzResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('_id')
+                ->readOnly()
+                ->label('Juz Number'),
+                Select::make('surah.tname')
+                ->relationship(name: 'surah', titleAttribute: 'tname')
+                ->disabled()
+                ->label('Surah Name'),
+                TextInput::make('ayah_index')
+                ->readOnly()
+                ->label('Ayah Index'),
+                TextInput::make('ayah_key')
+                ->readOnly()
+                ->label('Ayah Key'),
             ]);
     }
 
@@ -35,24 +51,36 @@ class JuzResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('_id')
-                ->numeric()
                 ->sortable()
                 ->searchable()
-                ->label('Id'),
+                ->label('Juz Number'),
                 TextColumn::make('surah.tname')
-                ->searchable()
                 ->label('Surah Name'),
                 TextColumn::make('ayah_index')
-                ->numeric()
                 ->sortable()
                 ->searchable()
-                ->label('Ayah Index'),
+                ->label('Ayah Index')
+                ->alignCenter(),
+                TextColumn::make('ayah_key')
+                ->sortable()
+                ->searchable()
+                ->label('Ayah Key')
+                ->alignCenter(),
             ])
             ->filters([
-                //
+                SelectFilter::make('surah')
+                ->relationship('surah', 'tname', fn (Builder $query) => $query->orderBy('_id'))
+                ->label('Surah Name')
+                ->searchable()
+                ->preload()
+                ->modifyQueryUsing(function (Builder $query, $data) {
+                    if (!empty($data['value'])) {
+                        $query->where('surah_id', $data['value']);
+                    }
+                }),
             ])
             ->actions([
-                // Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -64,7 +92,7 @@ class JuzResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            AyahsRelationManager::class,
         ];
     }
 
@@ -73,7 +101,7 @@ class JuzResource extends Resource
         return [
             'index' => Pages\ListJuzs::route('/'),
             // 'create' => Pages\CreateJuz::route('/create'),
-            // 'edit' => Pages\EditJuz::route('/{record}/edit'),
+            'edit' => Pages\EditJuz::route('/{record}/edit'),
         ];
     }
 }

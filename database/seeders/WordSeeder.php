@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Ayah;
 use App\Models\Page;
+use App\Models\Word;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +22,9 @@ class WordSeeder extends Seeder
         // Include the JavaBridge library
         require("http://localhost:8080/JavaBridge/java/Java.inc");
 
+        $countCurrent = Word::count();
+        $count = 1;
+
         try {
             // Create an instance of the Document class
             $document = new \Java('org.jqurantree.orthography.Document');
@@ -35,6 +39,11 @@ class WordSeeder extends Seeder
                 while (java_is_true($iterator->hasNext())) {
 
                     $token = $iterator->next();
+
+                    if($count <= $countCurrent){
+                        $count++;
+                        continue;
+                    }
 
                     $ayah = Ayah::where('surah_id', (string) $token->getChapterNumber())
                     ->where('ayah_index', (string) $token->getVerseNumber())
@@ -88,6 +97,7 @@ class WordSeeder extends Seeder
                         'text' => (string) $token,
                     ]);
 
+                    $count++;
                 }
 
 
