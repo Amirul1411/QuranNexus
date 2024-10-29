@@ -1,9 +1,15 @@
 <div class="mx-32 w-full" x-data="{
     search: '',
-    surahs: {{ $surahs }}, // Load initial surah data from the server
+    surahs: {{ $surahs }},
+    recentlyReadSurah: {{ $this->recentlyReadSurah }},
+    recentlyReadJuz: {{ $this->recentlyReadJuz }},
+    recentlyReadPage: {{ $this->recentlyReadPage }},
+    bookmarkedSurah: {{ $this->bookmarkedSurah }},
+    bookmarkedAyah: {{ $this->bookmarkedAyah }},
+    bookmarkedPage: {{ $this->bookmarkedPage }},
     get filteredSurahs() {
         const searchTerm = this.search.toLowerCase();
-        if (searchTerm.length === 0) return this.surahs; // If search is empty, return all surahs
+        if (searchTerm.length === 0) return this.surahs;
 
         // Create a dynamic regex pattern to mimic 'LIKE' functionality
         const regex = new RegExp(searchTerm, 'i'); // 'i' flag for case-insensitive matching
@@ -11,9 +17,82 @@
         return this.surahs.filter(surah => {
             return surah.tname.toLowerCase().match(regex) ||
                 surah.ename.toLowerCase().match(regex) ||
-                surah._id.toString().match(regex); // Apply regex matching for ID as well
+                surah._id.toString().match(regex);
         });
-    }
+    },
+    get filteredRecentlyReadSurahs() {
+        const searchTerm = this.search.toLowerCase();
+        if (searchTerm.length === 0) return this.recentlyReadSurah;
+
+        // Create a dynamic regex pattern to mimic 'LIKE' functionality
+        const regex = new RegExp(searchTerm, 'i'); // 'i' flag for case-insensitive matching
+
+        return this.recentlyReadSurah.filter(surah => {
+            return surah.tname.toLowerCase().match(regex) ||
+                surah.ename.toLowerCase().match(regex) ||
+                surah._id.toString().match(regex);
+        });
+    },
+    get filteredRecentlyReadJuzs() {
+        const searchTerm = this.search.toLowerCase();
+        if (searchTerm.length === 0) return this.recentlyReadJuz;
+
+        // Create a dynamic regex pattern to mimic 'LIKE' functionality
+        const regex = new RegExp(searchTerm, 'i'); // 'i' flag for case-insensitive matching
+
+        return this.recentlyReadJuz.filter(juz => {
+            return juz._id.toString().match(regex);
+        });
+    },
+    get filteredRecentlyReadPages() {
+        const searchTerm = this.search.toLowerCase();
+        if (searchTerm.length === 0) return this.recentlyReadPage;
+
+        // Create a dynamic regex pattern to mimic 'LIKE' functionality
+        const regex = new RegExp(searchTerm, 'i'); // 'i' flag for case-insensitive matching
+
+        return this.recentlyReadPage.filter(page => {
+            return page._id.toString().match(regex);
+        });
+    },
+    get filteredBookmarkedSurahs() {
+        const searchTerm = this.search.toLowerCase();
+        if (searchTerm.length === 0) return this.bookmarkedSurah;
+
+        // Create a dynamic regex pattern to mimic 'LIKE' functionality
+        const regex = new RegExp(searchTerm, 'i'); // 'i' flag for case-insensitive matching
+
+        return this.bookmarkedSurah.filter(surah => {
+            return surah.tname.toLowerCase().match(regex) ||
+                surah.ename.toLowerCase().match(regex) ||
+                surah._id.toString().match(regex);
+        });
+    },
+    get filteredBookmarkedAyahs() {
+        const searchTerm = this.search.toLowerCase();
+        if (searchTerm.length === 0) return this.bookmarkedAyah;
+
+        // Create a dynamic regex pattern to mimic 'LIKE' functionality
+        const regex = new RegExp(searchTerm, 'i'); // 'i' flag for case-insensitive matching
+
+        return this.bookmarkedAyah.filter(ayah => {
+            return ayah.surah.tname.toLowerCase().match(regex) ||
+                ayah.surah.ename.toLowerCase().match(regex) ||
+                ayah.surah._id.toString().match(regex) ||
+                ayah.ayah_index.toString().match(regex);
+        });
+    },
+    get filteredBookmarkedPages() {
+        const searchTerm = this.search.toLowerCase();
+        if (searchTerm.length === 0) return this.bookmarkedPage;
+
+        // Create a dynamic regex pattern to mimic 'LIKE' functionality
+        const regex = new RegExp(searchTerm, 'i'); // 'i' flag for case-insensitive matching
+
+        return this.bookmarkedPage.filter(page => {
+            return page._id.toString().match(regex);
+        });
+    },
 }">
     <div class="flex justify-center mt-20 py-20">
         <div class="w-full max-w-md">
@@ -88,9 +167,9 @@
                     {{ __('surah_list.surah') }}
                 </div>
                 <div class="flex flex-wrap justify-center">
-                    @foreach ($this->recentlyReadSurah as $sura)
+                    <template x-for="surah in filteredRecentlyReadSurahs" :key="surah._id">
                         <div class="w-1/3 p-5">
-                            <div wire:click="redirectToSurah({{ $sura['_id'] }})"
+                            <div wire:click="redirectToSurah(surah._id)"
                                 class="h-20 flex items-center bg-black text-center p-5 rounded-md cursor-pointer">
                                 <div class="w-1/5 relative">
                                     <span class="relative flex justify-center items-center">
@@ -100,67 +179,69 @@
                                             <path fill-rule="evenodd"
                                                 d="M6.95.435c.58-.58 1.52-.58 2.1 0l6.515 6.516c.58.58.58 1.519 0 2.098L9.05 15.565c-.58.58-1.519.58-2.098 0L.435 9.05a1.48 1.48 0 0 1 0-2.098z" />
                                         </svg>
-                                        <p class="absolute text-white text-xl font-bold">{{ $sura['_id'] }}</p>
+                                        <p class="absolute text-white text-xl font-bold" x-text="surah._id"></p>
                                     </span>
                                 </div>
                                 <div class="text-white w-3/5">
-                                    <h5 class="font-bold text-xl font-serif">{{ $sura['tname'] }}</h5>
-                                    <p class="text-gray-400 font-bold font-serif text-xs">{{ $sura['ename'] }}</p>
+                                    <h5 class="font-bold text-xl font-serif" x-text="surah.tname"></h5>
+                                    <p class="text-gray-400 font-bold font-serif text-xs" x-text="surah.ename"></p>
                                 </div>
                                 <div class="text-white">
-                                    <h5 class="font-bold text-xl font-serif">{{ $sura['name'] }}</h5>
-                                    <p class="text-gray-400 font-bold font-serif text-xs">{{ $sura['ayas'] }} Ayahs</p>
+                                    <h5 class="font-bold text-xl font-serif" x-text="surah.name"></h5>
+                                    <p class="text-gray-400 font-bold font-serif text-xs" x-text="surah.ayas + ' Ayahs'"></p>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    </template>
                 </div>
             @endif
+            <x-section-border />
             @if ($this->recentlyReadJuz && count($this->recentlyReadJuz) > 0)
-                <div class="text-white text-start font-serif text-lg my-3 border-t-2 border-gray-500 pt-3">
+                <div class="text-white text-start font-serif text-lg my-3">
                     {{ __('surah_list.juz') }}
                 </div>
                 <div class="flex flex-wrap justify-center">
-                    @foreach ($this->recentlyReadJuz as $juz)
+                    <template x-for="juz in filteredRecentlyReadJuzs" :key="juz._id">
                         <div class="w-1/3 p-5">
-                            <div wire:click="redirectToJuz({{ $juz->_id }}"
+                            <div wire:click="redirectToJuz(juz._id)"
                                 class="h-20 flex items-center bg-black text-center p-5 rounded-md cursor-pointer">
                                 <div class="text-white w-full">
-                                    <h5 class="font-bold text-xl font-serif">Juz {{ $juz->_id }}</h5>
+                                    <h5 class="font-bold text-xl font-serif" x-text="'Juz ' + juz._id"></h5>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    </template>
                 </div>
             @endif
+            <x-section-border />
             @if ($this->recentlyReadPage && count($this->recentlyReadPage) > 0)
-                <div class="text-white text-start font-serif text-lg my-3 border-t-2 border-gray-500 pt-3">
+                <div class="text-white text-start font-serif text-lg">
                     {{ __('surah_list.page') }}
                 </div>
                 <div class="flex flex-wrap justify-center">
-                    @foreach ($this->recentlyReadPage as $page)
+                    <template x-for="page in filteredRecentlyReadPages" :key="page._id">
                         <div class="w-1/3 p-5">
-                            <div wire:click="redirectToPage({{ $page->_id }}"
+                            <div wire:click="redirectToPage(page._id)"
                                 class="h-20 flex items-center bg-black text-center p-5 rounded-md cursor-pointer">
                                 <div class="text-white w-full">
-                                    <h5 class="font-bold text-xl font-serif">Page {{ $page->_id }}</h5>
+                                    <h5 class="font-bold text-xl font-serif" x-text="'Page ' + page._id"></h5>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    </template>
                 </div>
             @endif
         </div>
     @elseif ($selectedNavItem == 'bookmarks')
         <div class="flex flex-col justify-center my-3">
             @if ($this->bookmarkedSurah && count($this->bookmarkedSurah) > 0)
-                <div class="text-white text-start font-serif text-lg my-3">
+                <div class="text-white text-start font-serif text-lg">
                     {{ __('surah_list.surah') }}
                 </div>
                 <div class="flex flex-wrap justify-center">
-                    @foreach ($this->bookmarkedSurah as $sura)
+                    <template x-for="surah in filteredBookmarkedSurahs" :key="surah._id">
                         <div class="w-1/3 p-5">
-                            <div wire:click="redirectToSurah({{ $sura['_id'] }})"
+                            <div wire:click="redirectToSurah(surah._id)"
                                 class="h-20 flex items-center bg-black text-center p-5 rounded-md cursor-pointer">
                                 <div class="w-1/5 relative">
                                     <span class="relative flex justify-center items-center">
@@ -170,21 +251,21 @@
                                             <path fill-rule="evenodd"
                                                 d="M6.95.435c.58-.58 1.52-.58 2.1 0l6.515 6.516c.58.58.58 1.519 0 2.098L9.05 15.565c-.58.58-1.519.58-2.098 0L.435 9.05a1.48 1.48 0 0 1 0-2.098z" />
                                         </svg>
-                                        <p class="absolute text-white text-xl font-bold">{{ $sura['_id'] }}</p>
+                                        <p class="absolute text-white text-xl font-bold" x-text="surah._id"></p>
                                     </span>
                                 </div>
                                 <div class="text-white w-3/5">
-                                    <h5 class="font-bold text-xl font-serif">{{ $sura['tname'] }}</h5>
-                                    <p class="text-gray-400 font-bold font-serif text-xs">{{ $sura['ename'] }}</p>
+                                    <h5 class="font-bold text-xl font-serif" x-text="surah.tname"></h5>
+                                    <p class="text-gray-400 font-bold font-serif text-xs" x-text="surah.ename"></p>
                                 </div>
                                 <div class="text-white">
-                                    <h5 class="font-bold text-xl font-serif">{{ $sura['name'] }}</h5>
-                                    <p class="text-gray-400 font-bold font-serif text-xs">{{ $sura['ayas'] }} Ayahs
+                                    <h5 class="font-bold text-xl font-serif" x-text="surah.name"></h5>
+                                    <p class="text-gray-400 font-bold font-serif text-xs" x-text="surah.ayas + ' Ayahs'">
                                     </p>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    </template>
                 </div>
             @endif
             @if ($this->bookmarkedAyah && count($this->bookmarkedAyah) > 0)
@@ -192,9 +273,9 @@
                     {{ __('surah_list.ayah') }}
                 </div>
                 <div class="flex flex-wrap justify-center">
-                    @foreach ($this->bookmarkedAyah as $aya)
+                    <template x-for="ayah in filteredBookmarkedAyahs" :key="ayah._id">
                         <div class="w-1/3 p-5">
-                            <div wire:click="redirectToAyah({{ $aya->surah['_id'] }}, {{ $aya->ayah_index }})"
+                            <div wire:click="redirectToAyah(ayah.ayah_key)"
                                 class="h-20 flex items-center bg-black text-center p-5 rounded-md cursor-pointer">
                                 <div class="w-1/5 relative">
                                     <span class="relative flex justify-center items-center">
@@ -204,22 +285,22 @@
                                             <path fill-rule="evenodd"
                                                 d="M6.95.435c.58-.58 1.52-.58 2.1 0l6.515 6.516c.58.58.58 1.519 0 2.098L9.05 15.565c-.58.58-1.519.58-2.098 0L.435 9.05a1.48 1.48 0 0 1 0-2.098z" />
                                         </svg>
-                                        <p class="absolute text-white text-xl font-bold">{{ $aya->surah['_id'] }}</p>
+                                        <p class="absolute text-white text-xl font-bold" x-text="ayah.surah._id"></p>
                                     </span>
                                 </div>
                                 <div class="text-white w-3/5">
-                                    <h5 class="font-bold text-xl font-serif">{{ $aya->surah['tname'] }}</h5>
-                                    <p class="text-gray-400 font-bold font-serif text-xs">{{ $aya->surah['ename'] }}
+                                    <h5 class="font-bold text-xl font-serif" x-text="ayah.surah.tname"></h5>
+                                    <p class="text-gray-400 font-bold font-serif text-xs" x-text="ayah.surah.ename">
                                     </p>
                                 </div>
                                 <div class="text-white">
-                                    <h5 class="font-bold text-xl font-serif">{{ $aya->surah['name'] }}</h5>
-                                    <p class="text-gray-400 font-bold font-serif text-xs"> Ayah {{ $aya->ayah_index }}
+                                    <h5 class="font-bold text-xl font-serif" x-text="ayah.surah.name"></h5>
+                                    <p class="text-gray-400 font-bold font-serif text-xs" x-text="'Ayah ' + ayah.ayah_index">
                                     </p>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    </template>
                 </div>
             @endif
             @if ($this->bookmarkedPage && count($this->bookmarkedPage) > 0)
@@ -227,16 +308,16 @@
                     {{ __('surah_list.page') }}
                 </div>
                 <div class="flex flex-wrap justify-center">
-                    @foreach ($this->bookmarkedPage as $page)
+                    <template x-for="page in filteredBookmarkedPages" :key="page._id">
                         <div class="w-1/3 p-5">
-                            <div wire:click="redirectToPage({{ $page->_id }}"
+                            <div wire:click="redirectToPage(page._id)"
                                 class="h-20 flex items-center bg-black text-center p-5 rounded-md cursor-pointer">
                                 <div class="text-white w-full">
-                                    <h5 class="font-bold text-xl font-serif">Page {{ $page->_id }}</h5>
+                                    <h5 class="font-bold text-xl font-serif" x-text="'Page ' + page._id"></h5>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    </template>
                 </div>
             @endif
         </div>

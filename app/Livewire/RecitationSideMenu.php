@@ -11,7 +11,7 @@ use App\Models\Surah;
 class RecitationSideMenu extends Component
 {
 
-    public $search='';
+    // public $search='';
 
     public function redirectToSurah($surahId)
     {
@@ -31,42 +31,42 @@ class RecitationSideMenu extends Component
     #[Computed()]
     public function surahs()
     {
-        if($this->search === ''){
-            $surahs = Surah::all();
-        }else{
-            // General search across multiple fields
-            $surahs = Surah::where(function ($query) {
-                    $query->where('tname', 'like', '%' . $this->search . '%')
-                        ->orWhere('ename', 'like', '%' . $this->search . '%')
-                        ->orWhere('_id', $this->search);
-                })->get();
-        }
+        // if($this->search === ''){
+        // $surahs = Surah::all();
+        // }else{
+        //     // General search across multiple fields
+        //     $surahs = Surah::where(function ($query) {
+        //             $query->where('tname', 'like', '%' . $this->search . '%')
+        //                 ->orWhere('ename', 'like', '%' . $this->search . '%')
+        //                 ->orWhere('_id', $this->search);
+        //         })->get();
+        // }
 
-        return $surahs;
+        return Surah::all();
     }
 
     #[Computed()]
     public function juzs()
     {
-        if($this->search === ''){
-            $juzs = Juz::all();
-        }else{
-            $juzs = Juz::where('_id', $this->search)->get();
-        }
+        // if($this->search === ''){
+        //     $juzs = Juz::all();
+        // }else{
+        //     $juzs = Juz::where('_id', $this->search)->get();
+        // }
 
-        return $juzs;
+        return Juz::all();
     }
 
     #[Computed()]
     public function pages()
     {
-        if($this->search === ''){
-            $pages = Page::all();
-        }else{
-            $pages = Page::where('_id', $this->search)->get();
-        }
+        // if($this->search === ''){
+        //     $pages = Page::all();
+        // }else{
+        //     $pages = Page::where('_id', $this->search)->get();
+        // }
 
-        return $pages;
+        return Page::all();
     }
 
     public function render()

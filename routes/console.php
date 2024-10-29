@@ -8,5 +8,5 @@ use Illuminate\Support\Facades\Schedule;
 //     $this->comment(Inspiring::quote());
 // })->purpose('Display an inspiring quote')->hourly();
 
-Schedule::command('cleanup:recently-read')->hourly();
+Schedule::command('cleanup:recently-read')->everyThirtyMinutes();
 Schedule::command('reset:recitation-streak')->daily();

@@ -17,29 +17,19 @@ class SurahList extends Component
 
     public $surahs;
 
-    // public $search = '';
-
-    // public function updatedSearch()
-    // {
-    //     // General search across multiple fields
-    //     $this->surahs = Surah::where(function ($query) {
-    //         $query
-    //             ->where('tname', 'like', '%' . $this->search . '%')
-    //             ->orWhere('ename', 'like', '%' . $this->search . '%')
-    //             ->orWhere('_id', $this->search);
-    //     })->get();
-    // }
-
     public function redirectToSurah($surahId)
     {
         return redirect()->route('surah.show', ['surah' => $surahId]);
     }
 
-    public function redirectToAyah($surahId, $ayahIndex)
+    public function redirectToAyah($ayahKey)
     {
+
+        [$surahNumber, $verseNumber] = explode(':', $ayahKey);
+
         return redirect()
-            ->route('surah.show', ['surah' => $surahId])
-            ->with('scrollToAyah', $surahId . '-' . $ayahIndex);
+            ->route('surah.show', ['surah' => $surahNumber])
+            ->with('scrollToAyah', $surahNumber . '-' . $verseNumber);
     }
 
     public function redirectToPage($pageId)
@@ -70,7 +60,7 @@ class SurahList extends Component
     public function bookmarkedAyah()
     {
         $bookmarks = Auth::user()->ayah_bookmarks ?? [];
-        $ayahs = Ayah::find($bookmarks);
+        $ayahs = Ayah::with('surah')->whereIn('_id', $bookmarks)->get();
 
         // Sort the ayahs based on the order of the IDs in the bookmarks
         return $ayahs
