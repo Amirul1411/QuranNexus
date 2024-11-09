@@ -20,7 +20,7 @@ class WordSeeder extends Seeder
         // Seed database from jQuranTree
 
         // Include the JavaBridge library
-        require("http://localhost:8080/JavaBridge/java/Java.inc");
+        require 'http://localhost:8080/JavaBridge/java/Java.inc';
 
         $countCurrent = Word::count();
         $count = 1;
@@ -33,27 +33,25 @@ class WordSeeder extends Seeder
             $tokensIterable = $document->getTokens();
 
             if ($tokensIterable instanceof \Java) {
-
                 $iterator = $tokensIterable->iterator(); // Get an iterator
 
                 while (java_is_true($iterator->hasNext())) {
-
                     $token = $iterator->next();
 
-                    if($count <= $countCurrent){
+                    if ($count <= $countCurrent) {
                         $count++;
                         continue;
                     }
 
-                    $ayah = Ayah::where('surah_id', (string) $token->getChapterNumber())
-                    ->where('ayah_index', (string) $token->getVerseNumber())
-                    ->first();
+                    $ayah = Ayah::where('surah_id', (string) $token->getChapterNumber())->where('ayah_index', (string) $token->getVerseNumber())->first();
 
                     $page = $ayah->page;
 
                     // $tokenVerseKey = (string) $token->getChapterNumber() . ':' . (string) $token->getVerseNumber() . PHP_EOL;
 
-                    $response = Http::timeout(60)->retry(3, 1000)->get('https://api.quran.com/api/v4/verses/by_page/' . $page->id . '?words=true');
+                    $response = Http::timeout(60)
+                        ->retry(3, 1000)
+                        ->get('https://api.quran.com/api/v4/verses/by_page/' . $page->id . '?words=true');
                     // $jsonContent = $response->json();
                     // echo json_encode($jsonContent, JSON_PRETTY_PRINT);
 
@@ -66,19 +64,27 @@ class WordSeeder extends Seeder
                         $verseKey = $verse['verse_key'];
 
                         // Split the verse_key (e.g., "2:6") into surah_number and verse_number
-                        list($surahNumber, $verseNumber) = explode(':', $verseKey);
+                        [$surahNumber, $verseNumber] = explode(':', $verseKey);
 
                         // Loop through words within each verse
                         foreach ($verse['words'] as $word) {
                             // Access the position property
                             $wordPosition = $word['position'];
 
-                            if( (string) $surahNumber === (string) $token->getChapterNumber() &&
-                                (string) $verseNumber === (string) $token->getVerseNumber() &&
-                                (string) $wordPosition === (string) $token->getTokenNumber()){
-
+                            if ((string) $surahNumber === (string) $token->getChapterNumber() && (string) $verseNumber === (string) $token->getVerseNumber() && (string) $wordPosition === (string) $token->getTokenNumber()) {
                                 $pageLineNumber = $word['line_number'];
-                                $audioUrl = $word['audio_url'];
+
+                                // Construct the expected audio URL format based on surah, verse, and word position
+                                $expectedAudioUrl = sprintf('wbw/%03d_%03d_%03d.mp3', $surahNumber, $verseNumber, $wordPosition);
+
+                                // Check if the actual audio URL matches the expected format
+                                if ($word['audio_url'] === $expectedAudioUrl) {
+                                    $audioUrl = $word['audio_url'];
+                                } else {
+                                    // Overwrite with the correct audio URL if it does not match the expected format
+                                    $audioUrl = $expectedAudioUrl;
+                                }
+
                                 // echo 'Page Number: ' . $word['page_number'] . PHP_EOL;
                                 // echo 'Line Number: ' . $pageLineNumber . PHP_EOL;
                                 break 2;
@@ -91,8 +97,8 @@ class WordSeeder extends Seeder
                         'surah_id' => (string) $token->getChapterNumber(),
                         'ayah_index' => (string) $token->getVerseNumber(),
                         'word_index' => (string) $token->getTokenNumber(),
-                        'ayah_key' => (string) $token->getChapterNumber().':'.$token->getVerseNumber(),
-                        'word_key' => (string) $token->getChapterNumber().':'.$token->getVerseNumber().':'.$token->getTokenNumber(),
+                        'ayah_key' => (string) $token->getChapterNumber() . ':' . $token->getVerseNumber(),
+                        'word_key' => (string) $token->getChapterNumber() . ':' . $token->getVerseNumber() . ':' . $token->getTokenNumber(),
                         'audio_url' => (string) $audioUrl,
                         'page_id' => (string) $page->id,
                         'line_number' => (int) $pageLineNumber,
@@ -101,12 +107,11 @@ class WordSeeder extends Seeder
 
                     $count++;
                 }
-
             } else {
-                echo "The result from Java API is not an Iterable.";
+                echo 'The result from Java API is not an Iterable.';
             }
         } catch (\Exception $e) {
-            echo "Error accessing Java API: " . $e->getMessage();
+            echo 'Error accessing Java API: ' . $e->getMessage();
         }
     }
 }
