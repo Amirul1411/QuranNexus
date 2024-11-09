@@ -46,6 +46,9 @@ class WordResource extends Resource
                 TextInput::make('word_key')
                 ->readOnly()
                 ->label('Word Key'),
+                TextInput::make('audio_url')
+                ->readOnly()
+                ->label('Audio Url'),
                 TextInput::make('page_id')
                 ->readOnly()
                 ->label('Page Number'),
@@ -83,10 +86,14 @@ class WordResource extends Resource
             ->label('Word Index')
             ->alignCenter(),
             TextColumn::make('word_key')
-            ->numeric()
             ->sortable()
             ->searchable()
             ->label('Word Key')
+            ->alignCenter(),
+            TextColumn::make('audio_url')
+            ->sortable()
+            ->searchable()
+            ->label('Audio Url')
             ->alignCenter(),
             TextColumn::make('page_id')
             ->sortable()

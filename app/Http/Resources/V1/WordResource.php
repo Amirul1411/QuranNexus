@@ -22,6 +22,7 @@ class WordResource extends JsonResource
             'Word Index' => $this->word_index,
             'Ayah Key' => $this->when($request->query('words') !== 'true', $this->ayah_key),
             'Word Key' => $this->word_key,
+            'Audio Url' => $this->audio_url,
             'Page Id' => $this->when($request->query('words') !== 'true', $this->page_id),
             'Line Number' => $this->line_number,
             'Text' => $this->text,

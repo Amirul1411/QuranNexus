@@ -29,6 +29,9 @@ class WordsRelationManager extends RelationManager
                 TextInput::make('word_key')
                 ->readOnly()
                 ->label('Word Key'),
+                TextInput::make('audio_url')
+                ->readOnly()
+                ->label('Audio Url'),
                 TextInput::make('line_number')
                 ->readOnly()
                 ->label('Line Number'),
@@ -50,6 +53,10 @@ class WordsRelationManager extends RelationManager
                 ->sortable()
                 ->searchable()
                 ->label('Word Key'),
+                TextColumn::make('audio_url')
+                ->sortable()
+                ->searchable()
+                ->label('Audio Url'),
                 TextColumn::make('line_number')
                 ->sortable()
                 ->searchable()
