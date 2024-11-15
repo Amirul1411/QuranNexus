@@ -12,7 +12,7 @@ class ResetRecitationStreak extends Command
      *
      * @var string
      */
-    protected $signature = 'reset:recitation-streak';
+    protected $signature = 'app:reset-recitation-streak';
 
     /**
      * The console command description.

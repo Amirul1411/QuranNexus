@@ -12,7 +12,7 @@ class CleanupRecentlyReadItems extends Command
      *
      * @var string
      */
-    protected $signature = 'cleanup:recently-read';
+    protected $signature = 'app:cleanup-recently-read';
 
     /**
      * The console command description.
