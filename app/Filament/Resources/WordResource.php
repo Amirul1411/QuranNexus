@@ -58,6 +58,12 @@ class WordResource extends Resource
                 TextInput::make('text')
                 ->required()
                 ->label('Word Text'),
+                TextInput::make('translation')
+                ->readOnly()
+                ->label('Translation'),
+                TextInput::make('transliteration')
+                ->readOnly()
+                ->label('Transliteration'),
             ]);
     }
 
@@ -110,6 +116,14 @@ class WordResource extends Resource
             ->sortable()
             ->searchable()
             ->alignEnd(),
+            TextColumn::make('translation')
+            ->sortable()
+            ->searchable()
+            ->label('Translation'),
+            TextColumn::make('transliteration')
+            ->sortable()
+            ->searchable()
+            ->label('Transliteration'),
             ])
             ->filters([
                 SelectFilter::make('surah')

@@ -37,6 +37,12 @@ class WordsRelationManager extends RelationManager
                 ->label('Line Number'),
                 TextInput::make('text')
                 ->required(),
+                TextInput::make('translation')
+                ->readOnly()
+                ->label('Translation'),
+                TextInput::make('transliteration')
+                ->readOnly()
+                ->label('Transliteration'),
             ]);
     }
 
@@ -48,11 +54,13 @@ class WordsRelationManager extends RelationManager
                 TextColumn::make('word_index')
                 ->sortable()
                 ->searchable()
-                ->label('Word Index'),
+                ->label('Word Index')
+                ->alignCenter(),
                 TextColumn::make('word_key')
                 ->sortable()
                 ->searchable()
-                ->label('Word Key'),
+                ->label('Word Key')
+                ->alignCenter(),
                 TextColumn::make('audio_url')
                 ->sortable()
                 ->searchable()
@@ -60,7 +68,8 @@ class WordsRelationManager extends RelationManager
                 TextColumn::make('line_number')
                 ->sortable()
                 ->searchable()
-                ->label('Line Number'),
+                ->label('Line Number')
+                ->alignCenter(),
                 TextColumn::make('text')
                 ->sortable()
                 ->searchable()
@@ -68,6 +77,14 @@ class WordsRelationManager extends RelationManager
                 ->size(TextColumnSize::Large)
                 ->label('Text')
                 ->alignEnd(),
+                TextColumn::make('translation')
+                ->sortable()
+                ->searchable()
+                ->label('Translation'),
+                TextColumn::make('transliteration')
+                ->sortable()
+                ->searchable()
+                ->label('Transliteration'),
             ])
             ->filters([
                 //

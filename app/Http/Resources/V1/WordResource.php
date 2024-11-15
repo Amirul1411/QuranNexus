@@ -26,6 +26,8 @@ class WordResource extends JsonResource
             'Page Id' => $this->when($request->query('words') !== 'true', $this->page_id),
             'Line Number' => $this->line_number,
             'Text' => $this->text,
+            'Translation' => $this->translation,
+            'Transliteration' => $this->transliteration,
         ];
 
         // return parent::toArray($request);
