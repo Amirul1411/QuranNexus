@@ -1,15 +1,17 @@
-<x-app-layout>
+<x-app-layout title="Profile Page">
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mt-40 ms-10">
+        <h2 class="font-semibold text-3xl text-gray-800 dark:text-gray-200 leading-tight mt-40 ms-10 px-8">
             {{ __('Profile') }}
         </h2>
     </x-slot>
     <div>
-        <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+        <div class="mx-7 py-10 sm:px-6 lg:px-8 w-full">
 
-            <div class="my-5">
-                @livewire(App\Livewire\RecitationTimePerDayWidget::class,[ 'user' => Auth::user()])
+            <div class="mb-10 h-auto w-5/6 mx-auto">
+                @livewire('recitation-time-per-day-widget')
             </div>
+
+            <x-section-border />
 
             @if (Laravel\Fortify\Features::canUpdateProfileInformation())
                 @livewire('profile.update-profile-information-form')

@@ -11,10 +11,11 @@
     <link rel="icon" type="image/png" href="{{ Vite::asset('resources/images/quran-nexus-logo-image.png') }}">
 
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/scss/app.scss', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/scss/app.scss'])
 
     <!-- Styles -->
     @livewireStyles
+    @filamentStyles
 
 </head>
 
@@ -91,6 +92,8 @@
 
     @stack('modals')
     @livewireScripts
+    @filamentScripts
+    @vite('resources/js/app.js')
 </body>
 
 </html>

@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\User;
 use Carbon\Carbon;
 use Filament\Widgets\ChartWidget;
+use Illuminate\Support\Facades\Auth;
 
 class RecitationTimePerDayWidget extends ChartWidget
 {
@@ -16,6 +17,9 @@ class RecitationTimePerDayWidget extends ChartWidget
 
     protected function getData(): array
     {
+
+        $this->user = Auth::user();
+
         // Initialize arrays to hold labels and total times
         $totalTimes = [];
 
