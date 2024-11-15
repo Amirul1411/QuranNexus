@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use MongoDB\Client as MongoClient;
 
 class AyahSeeder extends Seeder
 {
@@ -14,6 +15,11 @@ class AyahSeeder extends Seeder
      */
     public function run(): void
     {
+
+        // Define the collection name
+        $collectionName = 'ayahs';
+
+        createDatabaseCollection($collectionName);
 
         $filePathAya = resource_path('data/quran-uthmani.xml');
         $filePathPage = resource_path('data/quran-data.xml');
@@ -49,7 +55,7 @@ class AyahSeeder extends Seeder
                 $pageIndex = $this->getPageIndex($pages, $suraIndex, $ayaIndex);
                 $juzIndex = $this->getJuzIndex($juzs, $suraIndex, $ayaIndex);
 
-                DB::table('ayahs')->insert([
+                DB::table($collectionName)->insert([
                     '_id' => (string) getNextSequenceValue('ayah_id'),
                     'page_id' => (string) $pageIndex,
                     'juz_id' => (string) $juzIndex,

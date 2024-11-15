@@ -9,6 +9,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use MongoDB\Client as MongoClient;
 
 class WordSeeder extends Seeder
 {
@@ -17,6 +18,10 @@ class WordSeeder extends Seeder
      */
     public function run(): void
     {
+        $collectionName = 'words';
+
+        createDatabaseCollection($collectionName);
+
         // Seed database from jQuranTree
 
         // Include the JavaBridge library
@@ -73,6 +78,8 @@ class WordSeeder extends Seeder
 
                             if ((string) $surahNumber === (string) $token->getChapterNumber() && (string) $verseNumber === (string) $token->getVerseNumber() && (string) $wordPosition === (string) $token->getTokenNumber()) {
                                 $pageLineNumber = $word['line_number'];
+                                $translation = $word['translation']['text'];
+                                $transliteration = $word['transliteration']['text'];
 
                                 // Construct the expected audio URL format based on surah, verse, and word position
                                 $expectedAudioUrl = sprintf('wbw/%03d_%03d_%03d.mp3', $surahNumber, $verseNumber, $wordPosition);
@@ -92,7 +99,7 @@ class WordSeeder extends Seeder
                         }
                     }
 
-                    DB::table('words')->insert([
+                    DB::table($collectionName)->insert([
                         '_id' => (string) getNextSequenceValue('word_id'),
                         'surah_id' => (string) $token->getChapterNumber(),
                         'ayah_index' => (string) $token->getVerseNumber(),
@@ -103,6 +110,8 @@ class WordSeeder extends Seeder
                         'page_id' => (string) $page->id,
                         'line_number' => (int) $pageLineNumber,
                         'text' => (string) $token,
+                        'translation' => (string) $translation,
+                        'transliteration' => (string) $transliteration,
                     ]);
 
                     $count++;

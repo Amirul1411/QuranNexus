@@ -19,6 +19,7 @@ use App\Models\Word;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use MongoDB\Client as MongoClient;
 
 class CounterSeeder extends Seeder
 {
@@ -27,12 +28,16 @@ class CounterSeeder extends Seeder
      */
     public function run(): void
     {
+        // Define the collection name
+        $collectionName = 'counters';
+
+        createDatabaseCollection($collectionName);
 
         // Delete all existing documents in the 'counters' collection
-        DB::collection('counters')->delete();
+        DB::collection($collectionName)->delete();
 
         // Insert initial documents for each collection counter
-        DB::collection('counters')->insert([
+        DB::collection($collectionName)->insert([
             ['_id' => 'user_id', 'sequence_value' => User::count()],
             ['_id' => 'inquiry_id', 'sequence_value' => Inquiry::count()],
             ['_id' => 'surah_id', 'sequence_value' => Surah::count()],

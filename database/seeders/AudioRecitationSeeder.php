@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use MongoDB\Client as MongoClient;
 
 class AudioRecitationSeeder extends Seeder
 {
@@ -14,10 +15,15 @@ class AudioRecitationSeeder extends Seeder
      */
     public function run(): void
     {
+
+        // Define the collection name
+        $collectionName = 'audio_recitations';
+
+        createDatabaseCollection($collectionName);
+
         $recitationId = [7, 2];
 
-        foreach ($recitationId as $id)
-        {
+        foreach ($recitationId as $id) {
             $response = Http::timeout(60)
                 ->retry(3, 1000)
                 ->get('https://api.quran.com/api/v4/quran/recitations/' . $id);
@@ -30,7 +36,7 @@ class AudioRecitationSeeder extends Seeder
                 // Split the verse_key (e.g., "2:6") into surah_number and verse_number
                 [$surahNumber, $verseNumber] = explode(':', $verseKey);
 
-                DB::table('audio_recitations')->insert([
+                DB::table($collectionName)->insert([
                     '_id' => (string) getNextSequenceValue('audio_id'),
                     'audio_info_id' => (string) mapAudioRecitationId($id),
                     'surah_id' => (string) $surahNumber,

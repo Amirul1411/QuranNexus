@@ -21,6 +21,35 @@ if (!function_exists('getNextSequenceValue')) {
     }
 }
 
+if (!function_exists('createDatabaseCollection')) {
+    function createDatabaseCollection($collectionName)
+    {
+        // Set up MongoDB client and specify the database
+        $client = new MongoClient(env('DB_URI'));
+        $database = $client->selectDatabase(env('DB_DATABASE'));
+
+        // Check if the collection exists by listing collections
+        $collectionExists = false;
+        foreach ($database->listCollections() as $collection) {
+            if ($collection->getName() === $collectionName) {
+                $collectionExists = true;
+                break;
+            }
+        }
+
+        // Check if the collection is not exists
+        if (!$collectionExists) {
+            // Create collection with specified collation
+            $database->createCollection($collectionName, [
+                'collation' => [
+                    'locale' => 'en',
+                    'numericOrdering' => true,
+                ],
+            ]);
+        }
+    }
+}
+
 if (!function_exists('mapAudioRecitationId')) {
     function mapAudioRecitationId($id)
     {

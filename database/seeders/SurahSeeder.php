@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use MongoDB\Client as MongoClient;
 
 class SurahSeeder extends Seeder
 {
@@ -14,6 +15,11 @@ class SurahSeeder extends Seeder
     public function run(): void
     {
 
+        // Define the collection name
+        $collectionName = 'surahs';
+
+        createDatabaseCollection($collectionName);
+
         // Seed database from XML file
 
         $filePath = resource_path('data\quran-data.xml');
@@ -22,7 +28,7 @@ class SurahSeeder extends Seeder
 
         foreach ($xml->suras->sura as $sura) {
 
-            DB::table('surahs')->insert([
+            DB::table($collectionName)->insert([
                 '_id' => (string) getNextSequenceValue('surah_id'),
                 'name' => (string) $sura['name'],
                 'tname' => (string) $sura['tname'],
