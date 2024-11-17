@@ -50,6 +50,7 @@ Alpinejs - https://alpinejs.dev/directives/data
 Laravel Jetstream - https://jetstream.laravel.com/introduction.html
 Laravel Filament - https://filamentphp.com/docs/3.x/panels/installation
 VS Code Shortcut - https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf  
+PHP Java Bridge Client API - https://php-java-bridge.sourceforge.net/pjb/docs/php-api-old/
 
 4. List of commands:
 
@@ -107,6 +108,15 @@ git remote remove origin
 git remote add origin https://github.com/Amirul1411/QuranNexus.git
 git push -u origin main
 
+git stash
+git stash --keep-index
+git stash list
+git stash pop
+git stash pop stash@{0}
+
+gitk
+gitk stash@{0}
+
 # Filter Alafasy folder from older commit
 git filter-repo --path-glob "public/Alafasy" --invert-paths --force
 
@@ -146,3 +156,5 @@ Username: qurannexus6236
 Password: 2hhxH3PYYOI4uxa4
 
 Total words in al-Quran: 77430
+Total ayahs in al-Quran: 6236
+Total overall: 83666

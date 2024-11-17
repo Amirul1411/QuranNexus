@@ -100,7 +100,7 @@ class WordResource extends Resource
             ->sortable()
             ->searchable()
             ->label('Audio Url')
-            ->alignCenter(),
+            ->placeholder('N/A'),
             TextColumn::make('page_id')
             ->sortable()
             ->searchable()
@@ -123,7 +123,8 @@ class WordResource extends Resource
             TextColumn::make('transliteration')
             ->sortable()
             ->searchable()
-            ->label('Transliteration'),
+            ->label('Transliteration')
+            ->placeholder('N/A'),
             ])
             ->filters([
                 SelectFilter::make('surah')

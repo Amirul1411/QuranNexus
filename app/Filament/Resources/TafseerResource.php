@@ -84,7 +84,8 @@ class TafseerResource extends Resource
                 ->wrap()
                 ->html()
                 ->limit(100)
-                ->label('Tafseer Text'),
+                ->label('Tafseer Text')
+                ->placeholder('None'),
             ])
             ->filters([
                 SelectFilter::make('tafseerInfo')

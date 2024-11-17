@@ -22,6 +22,65 @@ class WordSeeder extends Seeder
 
         createDatabaseCollection($collectionName);
 
+        $client = new MongoClient(env('DB_URI'));
+        $database = $client->selectDatabase(env('DB_DATABASE'));
+        $collection = $database->selectCollection($collectionName);
+
+        // Define your indexes (composite or single) with collation and unique options
+        $indexesToCreate = [
+            [
+                'fields' => ['ayah_key' => 1], // Index fields
+                'collation' => [
+                    'locale' => 'en',
+                    'numericOrdering' => true,
+                ],
+                'unique' => false, // Unique
+            ],
+            [
+                'fields' => ['word_key' => 1], // Index fields
+                'collation' => [
+                    'locale' => 'en',
+                    'numericOrdering' => true,
+                ],
+                'unique' => true, // Not unique
+            ],
+        ];
+
+        // Get existing indexes
+        $existingIndexes = $collection->listIndexes();
+        $existingIndexNames = [];
+
+        // Store existing index names
+        foreach ($existingIndexes as $index) {
+            $existingIndexNames[] = $index->getName();
+        }
+
+        // Loop through your desired indexes and create them if they do not exist
+        foreach ($indexesToCreate as $indexConfig) {
+            $indexFields = $indexConfig['fields'];
+            $collation = $indexConfig['collation'];
+            $unique = $indexConfig['unique'];
+
+            // Generate a unique index name based on the fields
+            $indexName = implode('_', array_keys($indexFields));
+
+            // Check if the index already exists
+            if (!in_array($indexName, $existingIndexNames)) {
+                $options = [
+                    'name' => $indexName,
+                    'unique' => $unique, // Apply unique constraint if specified
+                ];
+
+                // Add collation to the options if it exists
+                if ($collation) {
+                    $options['collation'] = $collation;
+                }
+
+                // Create the index
+                $collection->createIndex($indexFields, $options);
+            }
+        }
+
         // Seed database from jQuranTree
 
         // Include the JavaBridge library

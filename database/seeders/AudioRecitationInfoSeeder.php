@@ -31,7 +31,7 @@ class AudioRecitationInfoSeeder extends Seeder
                     DB::table($collectionName)->insert([
                         '_id' => (string) getNextSequenceValue('audio_info_id'),
                         'reciter_name' => (string) $recitation['reciter_name'],
-                        'style' => (string) $recitation['style'],
+                        'style' => $recitation['style'],
                         'translated_name' => $recitation['translated_name'],
                     ]);
                     break;

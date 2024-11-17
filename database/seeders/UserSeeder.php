@@ -14,7 +14,6 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-
         // Define the collection name
         $collectionName = 'users';
 
