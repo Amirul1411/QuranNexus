@@ -50,6 +50,31 @@ if (!function_exists('createDatabaseCollection')) {
     }
 }
 
+if (!function_exists('isWaqfSymbol')) {
+    function isWaqfSymbol($word)
+    {
+        $waqfSymbols = [
+            '۞',
+            '۩',
+            '۝',
+            'ۖ',
+            'ۗ',
+            'ۚ',
+            'ۛ',
+            'ۜ',
+            '۟',
+            '۠',
+            'ۡ',
+            'ۢ',
+            'ۣ',
+            'ۤ',
+            'ۥ',
+            'ۦ',
+        ];
+        return in_array($word, $waqfSymbols, true);
+    }
+}
+
 if (!function_exists('mapAudioRecitationId')) {
     function mapAudioRecitationId($id)
     {

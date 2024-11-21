@@ -113,6 +113,8 @@ git stash --keep-index
 git stash list
 git stash pop
 git stash pop stash@{0}
+git stash push --keep-index -m "Fixing bug in ayah indexing logic"
+git stash drop stash@{1}
 
 gitk
 gitk stash@{0}
@@ -155,6 +157,6 @@ Password: QuranNexus2024
 Username: qurannexus6236
 Password: 2hhxH3PYYOI4uxa4
 
-Total words in al-Quran: 77430
+Total words in al-Quran: 77430 (-1 because of duplicate word document at word_key 37:130:4)
 Total ayahs in al-Quran: 6236
-Total overall: 83666
+Total overall: 83665

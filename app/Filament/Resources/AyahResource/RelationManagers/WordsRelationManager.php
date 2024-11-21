@@ -50,6 +50,7 @@ class WordsRelationManager extends RelationManager
     {
         return $table
             ->recordTitleAttribute('Word')
+            ->modifyQueryUsing( fn (Builder $query) => $query->whereNotNull('audio_url'))
             ->columns([
                 TextColumn::make('word_index')
                 ->sortable()

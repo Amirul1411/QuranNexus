@@ -20,11 +20,11 @@ class JavaBridgeTest extends TestCase
         try {
             // Create an instance of the Document class
             $document = new \Java('org.jqurantree.orthography.Document');
-            $ArabicText = new \Java('org.jqurantree.arabic.ArabicText');
+            // $ArabicText = new \Java('org.jqurantree.arabic.ArabicText');
 
-            $verse = $document->getVerse(13,1);
+            $token = $document->getToken(37,130,3);
 
-            echo $verse->getToken(4);
+            echo $token;
 
             // DB::table('test_verses')->insert([
             //     // '_id' => (string) getNextSequenceValue('word_id'),
@@ -34,7 +34,7 @@ class JavaBridgeTest extends TestCase
             //     'text' => (string) $verse,
             // ]);
 
-            $this->assertNotEmpty( $verse, "Null value is not accepted.");
+            $this->assertNotEmpty( $token, "Null value is not accepted.");
 
         } catch (\Exception $e) {
             $this->fail("Error accessing Java API: " . $e->getMessage());

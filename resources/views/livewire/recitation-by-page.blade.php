@@ -47,12 +47,12 @@
                         class="row-span-1 flex flex-wrap items-center flex-row-reverse gap-2 my-2 text-white justify-center">
                         @foreach ($words as $word)
                             <div class="font-UthmanicHafs text-3xl inline-block">
-                                {{ $word->text }}
-
-                                {{-- Check if it's the last word of the ayah to display the ayah icon --}}
-                                @if ($word->word_index === (string) $word->ayah->words->count())
+                                {{-- Check if it's not the last word of the ayah to differentiate between displaying the word text and ayah icon--}}
+                                @if ($word->word_index !== (string) $word->ayah->words->count())
+                                    {{ $word->text }}
+                                @else
                                     <span class="text-3xl font-UthmanicHafs text-white">
-                                        {{ mapAyahNumberToNumberIcon($word->ayah->ayah_index) }}
+                                        {{ $word->text }}
                                     </span>
                                 @endif
                             </div>
@@ -63,12 +63,12 @@
                         class="row-span-1 flex flex-wrap items-center flex-row-reverse gap-2 my-2 text-white justify-between w-3/4 mx-auto">
                         @foreach ($words as $word)
                             <div class="font-UthmanicHafs text-3xl inline-block">
-                                {{ $word->text }}
-
-                                {{-- Check if it's the last word of the ayah to display the ayah icon --}}
-                                @if ($word->word_index === (string) $word->ayah->words->count())
+                                {{-- Check if it's not the last word of the ayah to differentiate between displaying the word text and ayah icon--}}
+                                @if ($word->word_index !== (string) $word->ayah->words->count())
+                                    {{ $word->text }}
+                                @else
                                     <span class="text-3xl font-UthmanicHafs text-white">
-                                        {{ mapAyahNumberToNumberIcon($word->ayah->ayah_index) }}
+                                        {{ $word->text }}
                                     </span>
                                 @endif
                             </div>

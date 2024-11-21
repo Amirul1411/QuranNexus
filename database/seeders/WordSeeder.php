@@ -13,6 +13,37 @@ use MongoDB\Client as MongoClient;
 
 class WordSeeder extends Seeder
 {
+
+    // !!! IMPORTANT !!!
+    // !!! PLEASE READ THIS INSTRUCTION BEFORE ATTEMPTING TO RUN WORDSEEDER !!!
+
+    // You can just run the wordseeder as normal if currently there is no record inside words collection
+    // However, if you are attempting to run the wordseeder when there are already records inside words collection
+    // You need to make sure that the last word document inside the words collection is in the middle of the ayah...and not at the end of the ayah
+    // For example, if the last word document is inside ayah_key of 28:3 ... and there are a total number of 10 tokens inside 28:3
+    // Make sure to only run the wordseeder if the word_key of the last word document is between 28:3:1 to 28:3:8
+    // If not, then please manually delete some of the last word documents first until this condition is met
+    // Don't run it at 28:3:9 as it will skip some of the supposed-to-be-inserted word document
+    // Also, please be aware of the comment messages at line 129 - 136
+    // Please ask if you don't understand this
+    // Take note
+    // Thanks
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Run the database seeds.
      */
@@ -86,8 +117,29 @@ class WordSeeder extends Seeder
         // Include the JavaBridge library
         require 'http://localhost:8080/JavaBridge/java/Java.inc';
 
-        $countCurrent = Word::count();
-        $count = 1;
+        $countWordCurrent = Word::count();
+        $currentLastWord = null;
+        // $currentLastWordIndex = false;
+        // $lastApiWordArrIndex = false;
+
+        if($countWordCurrent > 0){
+            $currentLastWord = Word::find($countWordCurrent);
+            $countAyahCurrent = (int) $currentLastWord->ayah->_id;
+
+            if($currentLastWord->audio_url !== null){
+
+                // Uncomment below if the currentLastWord word_key is less than 37:130:4
+                // $countAyahCurrent--;
+
+                // Uncomment below if the currentLastWord word_key is above 37:130:4
+                $countAyahCurrent=$countAyahCurrent-2;
+            }
+
+        }else{
+            $countAyahCurrent = 0;
+        }
+
+        $countWord = 1;
 
         try {
             // Create an instance of the Document class
@@ -100,45 +152,69 @@ class WordSeeder extends Seeder
                 $iterator = $tokensIterable->iterator(); // Get an iterator
 
                 while (java_is_true($iterator->hasNext())) {
+
                     $token = $iterator->next();
 
-                    if ($count <= $countCurrent) {
-                        $count++;
+                    // $tokenCount = java_cast($token->getVerse()->getTokenCount(), "int");
+
+                    // if($currentLastWord !== null){
+                    //     $currentLastWordIndex = $tokenCount === (int) $currentLastWord->word_index;
+                    // }
+
+                    // if( $currentLastWordIndex ){
+                    //     $countAyahCurrent++;
+                    // }
+
+                    if ($countWordCurrent > 0 && $countWord <= ( $countWordCurrent - $countAyahCurrent)) {
+                        $countWord++;
+                        continue;
+                    }
+
+                    if(  (string) $token->getChapterNumber() === "37" && (string) $token->getVerseNumber() === "130" && (string) $token->getTokenNumber() === "4"){
                         continue;
                     }
 
                     $ayah = Ayah::where('surah_id', (string) $token->getChapterNumber())->where('ayah_index', (string) $token->getVerseNumber())->first();
 
                     $page = $ayah->page;
-
-                    // $tokenVerseKey = (string) $token->getChapterNumber() . ':' . (string) $token->getVerseNumber() . PHP_EOL;
+                    // $wordsArr = explode(' ', $ayah->text);
 
                     $response = Http::timeout(60)
                         ->retry(3, 1000)
                         ->get('https://api.quran.com/api/v4/verses/by_page/' . $page->id . '?words=true');
-                    // $jsonContent = $response->json();
-                    // echo json_encode($jsonContent, JSON_PRETTY_PRINT);
 
                     // Extract JSON data from the response
                     $data = $response->json();
 
                     // Loop through verses
                     foreach ($data['verses'] as $verse) {
+
                         // Access the verse_key property
                         $verseKey = $verse['verse_key'];
+
+                        // $appendIndex = 0;
 
                         // Split the verse_key (e.g., "2:6") into surah_number and verse_number
                         [$surahNumber, $verseNumber] = explode(':', $verseKey);
 
                         // Loop through words within each verse
-                        foreach ($verse['words'] as $word) {
+                        foreach ($verse['words'] as $index => $word) {
+
                             // Access the position property
                             $wordPosition = $word['position'];
 
-                            if ((string) $surahNumber === (string) $token->getChapterNumber() && (string) $verseNumber === (string) $token->getVerseNumber() && (string) $wordPosition === (string) $token->getTokenNumber()) {
-                                $pageLineNumber = $word['line_number'];
-                                $translation = $word['translation']['text'];
-                                $transliteration = $word['transliteration']['text'];
+                            $wordTextMatch = (string) $surahNumber === (string) $token->getChapterNumber() && (string) $verseNumber === (string) $token->getVerseNumber() && (string) $wordPosition === (string) $token->getTokenNumber();
+                            $ayahIconMatch = (string) $surahNumber === (string) $token->getChapterNumber() && (string) $verseNumber === (string) $token->getVerseNumber() && $wordPosition === count($verse['words']);
+
+                            // if ($wordTextMatch && !$lastApiWordArrIndex) {
+                            if($wordTextMatch) {
+
+                                // if($currentLastWordIndex){
+                                //     $currentLastWordIndex = false;
+                                //     $lastApiWordArrIndex = true;
+                                //     $currentLastWord = null;
+                                //     continue;
+                                // }
 
                                 // Construct the expected audio URL format based on surah, verse, and word position
                                 $expectedAudioUrl = sprintf('wbw/%03d_%03d_%03d.mp3', $surahNumber, $verseNumber, $wordPosition);
@@ -151,29 +227,63 @@ class WordSeeder extends Seeder
                                     $audioUrl = $expectedAudioUrl;
                                 }
 
-                                // echo 'Page Number: ' . $word['page_number'] . PHP_EOL;
-                                // echo 'Line Number: ' . $pageLineNumber . PHP_EOL;
+                                // if(isWaqfSymbol($wordsArr[$index + $appendIndex])){
+                                //     $tokenText = $token . $wordsArr[$index];
+                                //     $appendIndex++;
+                                // }else{
+                                //     $tokenText = $token;
+                                // }
+
+                                $tokenText = (string) $token->getChapterNumber() === "37" && (string) $token->getVerseNumber() === "130" && (string) $token->getTokenNumber() === "3" ? "إِلْ يَاسِينَ" : $token;
+
+                                DB::table($collectionName)->insert([
+                                    '_id' => (string) getNextSequenceValue('word_id'),
+                                    'surah_id' => (string) $token->getChapterNumber(),
+                                    'ayah_index' => (string) $token->getVerseNumber(),
+                                    'word_index' => (string) $token->getTokenNumber(),
+                                    'ayah_key' => (string) $token->getChapterNumber() . ':' . $token->getVerseNumber(),
+                                    'word_key' => (string) $token->getChapterNumber() . ':' . $token->getVerseNumber() . ':' . (string) $token->getTokenNumber(),
+                                    'audio_url' => (string) $audioUrl,
+                                    'page_id' => (string) $page->id,
+                                    'line_number' => (int) $word['line_number'],
+                                    'text' =>  (string) $tokenText,
+                                    // 'text' =>  (string) $wordsArr[$index],
+                                    'translation' => (string) $word['translation']['text'],
+                                    'transliteration' => (string) $word['transliteration']['text'],
+                                ]);
+
+                                if ((string) $token->getTokenNumber() ===  (string) (count($verse['words'])-1)){
+                                    // $lastApiWordArrIndex = true;
+                                    continue;
+                                } else {
+                                    break 2;
+                                }
+                            }
+
+                            // if ($ayahIconMatch && $lastApiWordArrIndex) {
+                            if($ayahIconMatch) {
+
+                                // $lastApiWordArrIndex = false;
+
+                                DB::table($collectionName)->insert([
+                                    '_id' => (string) getNextSequenceValue('word_id'),
+                                    'surah_id' => (string) $token->getChapterNumber(),
+                                    'ayah_index' => (string) $token->getVerseNumber(),
+                                    'word_index' => (string) $word['position'],
+                                    'ayah_key' => (string) $token->getChapterNumber() . ':' . $token->getVerseNumber(),
+                                    'word_key' => (string) $token->getChapterNumber() . ':' . $token->getVerseNumber() . ':' . (string) $word['position'],
+                                    'audio_url' => $word['audio_url'] === "" ? null : $word['audio_url'],
+                                    'page_id' => (string) $page->id,
+                                    'line_number' => (int) $word['line_number'],
+                                    'text' =>  (string) mapAyahNumberToNumberIcon( (string) $token->getVerseNumber()),
+                                    'translation' => (string) $word['translation']['text'],
+                                    'transliteration' => $word['transliteration']['text'] === "" ? null : $word['transliteration']['text'],
+                                ]);
+
                                 break 2;
                             }
                         }
                     }
-
-                    DB::table($collectionName)->insert([
-                        '_id' => (string) getNextSequenceValue('word_id'),
-                        'surah_id' => (string) $token->getChapterNumber(),
-                        'ayah_index' => (string) $token->getVerseNumber(),
-                        'word_index' => (string) $token->getTokenNumber(),
-                        'ayah_key' => (string) $token->getChapterNumber() . ':' . $token->getVerseNumber(),
-                        'word_key' => (string) $token->getChapterNumber() . ':' . $token->getVerseNumber() . ':' . $token->getTokenNumber(),
-                        'audio_url' => (string) $audioUrl,
-                        'page_id' => (string) $page->id,
-                        'line_number' => (int) $pageLineNumber,
-                        'text' => (string) $token,
-                        'translation' => (string) $translation,
-                        'transliteration' => (string) $transliteration,
-                    ]);
-
-                    $count++;
                 }
             } else {
                 echo 'The result from Java API is not an Iterable.';

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Ayah;
+use App\Models\Tafseer;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -80,35 +81,60 @@ class TafseerSeeder extends Seeder
             }
         }
 
-        $tafseerId = [160, 90];
-        $allAyahs = Ayah::all();
+        // $countTafseerCurrent = Tafseer::count();
+        // $currentLastTafseer = null;
+        // $countTafseerInfoIdCurrent = 0;
 
-        foreach ($tafseerId as $id) {
-            foreach ($allAyahs as $ayah) {
-                $response = Http::timeout(60)
-                    ->retry(3, 1000)
-                    ->get('https://api.quran.com/api/v4/quran/tafsirs/' . $id . '?verse_key=' . $ayah->surah_id . ':' . $ayah->ayah_index);
+        // if($countTafseerCurrent > 0){
+        //     $currentLastTafseer = Tafseer::find($countTafseerCurrent);
+        //     $countTafseerInfoIdCurrent = (int) $currentLastTafseer->tafseer_info_id;
+        // }
 
-                // Extract JSON data from the response
-                $data = $response->json();
-                $tafseers = $data['tafsirs'];
+        // $countTafseer = 1;
 
-                foreach ($tafseers as $tafseer) {
-                    if ($tafseer['resource_id'] === mapTafseerResourceId($id)) {
-                        $html = $tafseer['text'];
-                        break;
-                    }
-                }
+        // $tafseerId = [160, 90];
+        // $allAyahs = Ayah::all();
 
-                DB::table($collectionName)->insert([
-                    '_id' => (string) getNextSequenceValue('tafseer_id'),
-                    'tafseer_info_id' => (string) mapTafseerId($id),
-                    'surah_id' => (string) $ayah->surah_id,
-                    'ayah_index' => (string) $ayah->ayah_index,
-                    'ayah_key' => (string) $ayah->surah_id . ':' . $ayah->ayah_index,
-                    'html' => $html === "" ? null : $html,
-                ]);
-            }
-        }
+        // foreach ($tafseerId as $id) {
+
+        //     if($countTafseerCurrent > 0 && $countTafseerInfoIdCurrent !==  (int) mapTafseerId($id)){
+        //         continue;
+        //     }
+
+        //     foreach ($allAyahs as $ayah) {
+
+        //         if ($countTafseerCurrent > 0 && $countTafseer <= ( $countTafseerCurrent % 6236 )) {
+        //             $countTafseer++;
+        //             continue;
+        //         }
+
+        //         $response = Http::timeout(60)
+        //             ->retry(3, 1000)
+        //             ->get('https://api.quran.com/api/v4/quran/tafsirs/' . $id . '?verse_key=' . $ayah->surah_id . ':' . $ayah->ayah_index);
+
+        //         // Extract JSON data from the response
+        //         $data = $response->json();
+        //         $tafseers = $data['tafsirs'];
+
+        //         foreach ($tafseers as $tafseer) {
+        //             if ($tafseer['resource_id'] === mapTafseerResourceId($id)) {
+        //                 $html = $tafseer['text'];
+        //                 break;
+        //             }
+        //         }
+
+        //         DB::table($collectionName)->insert([
+        //             '_id' => (string) getNextSequenceValue('tafseer_id'),
+        //             'tafseer_info_id' => (string) mapTafseerId($id),
+        //             'surah_id' => (string) $ayah->surah_id,
+        //             'ayah_index' => (string) $ayah->ayah_index,
+        //             'ayah_key' => (string) $ayah->surah_id . ':' . $ayah->ayah_index,
+        //             'html' => $html === "" ? null : $html,
+        //         ]);
+        //     }
+
+        //     $countTafseerInfoIdCurrent++;
+
+        // }
     }
 }

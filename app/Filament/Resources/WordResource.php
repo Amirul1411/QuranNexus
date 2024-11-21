@@ -70,6 +70,7 @@ class WordResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+        ->modifyQueryUsing( fn (Builder $query) => $query->whereNotNull('audio_url'))
         ->columns([
             TextColumn::make('_id')
             ->numeric()

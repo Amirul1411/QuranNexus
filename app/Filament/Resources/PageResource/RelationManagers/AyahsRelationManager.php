@@ -83,7 +83,18 @@ class AyahsRelationManager extends RelationManager
                 ->alignCenter(),
                 TextColumn::make('words.text')
                 ->fontFamily(FontFamily::Serif)
-                ->formatStateUsing(fn (string $state): string => str_replace(',', ' ', $state))
+                ->formatStateUsing(function ($state, $record) {
+                    // Get all words except the last one
+                    $wordsWithoutLast = $record->words->slice(0, -1);
+
+                    // Check if there are words to display
+                    if ($wordsWithoutLast->isEmpty()) {
+                        return null; // Return null if no words to display
+                    }
+
+                    // Join the text from the remaining words and format it
+                    return str_replace(',', ' ', $wordsWithoutLast->pluck('text')->implode(' ')); // Combine words' text with a space
+                })
                 ->limit(100)
                 ->size(TextColumnSize::Large)
                 ->label('Text')
