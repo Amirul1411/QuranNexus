@@ -38,17 +38,8 @@ class APISurahController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Surah $surah, Request $request)
+    public function show(Surah $surah)
     {
-
-        if ($request->query('ayahs') === 'true') {
-            $surah->load('ayahs');
-        }
-
-        if ($request->query('surah_info') === 'true') {
-            $surah->load('surahInfo');
-        }
-
         return new SurahResource($surah);
     }
 

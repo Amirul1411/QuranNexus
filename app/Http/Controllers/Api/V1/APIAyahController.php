@@ -38,27 +38,9 @@ class APIAyahController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($key, Request $request)
+    public function show($key)
     {
-
         $ayah = Ayah::where('ayah_key', $key)->firstOrFail();
-
-        if ($request->query('words') === 'true') {
-            $ayah->load('words');
-        }
-
-        if ($request->query('tafseers') === 'true') {
-            $ayah->load('tafseer');
-        }
-
-        if ($request->query('translations') === 'true') {
-            $ayah->load('translations');
-        }
-
-        if ($request->query('audio_recitations') === 'true') {
-            $ayah->load('audioRecitations');
-        }
-
         return new AyahResource($ayah);
     }
 

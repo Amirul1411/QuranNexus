@@ -36,13 +36,8 @@ class APITafseerInfoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(TafseerInfo $tafseerInfo, Request $request)
+    public function show(TafseerInfo $tafseerInfo)
     {
-
-        if ($request->query('tafseer_info_tafseers') === 'true') {
-            $tafseerInfo->load('tafseers');
-        }
-
         return new TafseerInfoResource($tafseerInfo);
     }
 

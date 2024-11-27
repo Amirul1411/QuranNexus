@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\APIAchievementController;
 use App\Http\Controllers\Api\V1\APIAyahController;
 use App\Http\Controllers\Api\V1\APIPageController;
 use App\Http\Controllers\Api\V1\APISurahController;
@@ -20,16 +21,17 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], function(){
-    Route::apiResource('surahs', APISurahController::class);
-    Route::apiResource('ayahs', APIAyahController::class);
-    Route::apiResource('pages', APIPageController::class);
-    Route::apiResource('words', APIWordController::class);
-    Route::apiResource('juzs', APIJuzController::class);
-    Route::apiResource('translations', APITranslationController::class);
-    Route::apiResource('surah_info', APISurahInfoController::class);
-    Route::apiResource('tafseer', APITafseerController::class);
-    Route::apiResource('audio_recitations', APIAudioRecitationController::class);
-    Route::apiResource('audio_recitation_info', APIAudioRecitationInfoController::class);
-    Route::apiResource('tafseer_info', APITafseerInfoController::class);
-    Route::apiResource('translation_info', APITranslationInfoController::class);
+    Route::apiResource('surahs', APISurahController::class)->name('index','surah.index')->name('show', 'surah.show');
+    Route::apiResource('ayahs', APIAyahController::class)->name('index','ayah.index')->name('show', 'ayah.show');
+    Route::apiResource('pages', APIPageController::class)->name('index','page.index')->name('show', 'page.show');
+    Route::apiResource('words', APIWordController::class)->name('index','word.index')->name('show', 'word.show');
+    Route::apiResource('juzs', APIJuzController::class)->name('index','juz.index')->name('show', 'juz.show');
+    Route::apiResource('translations', APITranslationController::class)->name('index','translation.index')->name('show', 'translation.show');
+    Route::apiResource('surah_info', APISurahInfoController::class)->name('index','surah_info.index')->name('show', 'surah_info.show');
+    Route::apiResource('tafseer', APITafseerController::class)->name('index','tafseer.index')->name('show', 'tafseer.show');
+    Route::apiResource('audio_recitations', APIAudioRecitationController::class)->name('index','audio_recitation.index')->name('show', 'audio_recitation.show');
+    Route::apiResource('audio_recitation_info', APIAudioRecitationInfoController::class)->name('index','audio_recitation_info.index')->name('show', 'audio_recitation_info.show');
+    Route::apiResource('tafseer_info', APITafseerInfoController::class)->name('index','tafseer_info.index')->name('show', 'tafseer_info.show');
+    Route::apiResource('translation_info', APITranslationInfoController::class)->name('index','translation_info.index')->name('show', 'translation_info.show');
+    Route::apiResource('achievements', APIAchievementController::class)->name('index','achievement.index')->name('show', 'achievement.show');
 });

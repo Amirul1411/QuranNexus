@@ -36,13 +36,8 @@ class APIAudioRecitationInfoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(AudioRecitationInfo $audioRecitationInfo, Request $request)
+    public function show(AudioRecitationInfo $audioRecitationInfo)
     {
-
-        if ($request->query('audio_info_audio_recitations') === 'true') {
-            $audioRecitationInfo->load('audioRecitations');
-        }
-
         return new AudioRecitationInfoResource($audioRecitationInfo);
     }
 

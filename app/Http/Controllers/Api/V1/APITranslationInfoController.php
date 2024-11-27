@@ -36,13 +36,8 @@ class APITranslationInfoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(TranslationInfo $translationInfo, Request $request)
+    public function show(TranslationInfo $translationInfo)
     {
-
-        if ($request->query('translation_info_translations') === 'true') {
-            $translationInfo->load('translations');
-        }
-
         return new TranslationInfoResource($translationInfo);
     }
 

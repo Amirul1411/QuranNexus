@@ -40,11 +40,6 @@ class APIPageController extends Controller
      */
     public function show(Page $page, Request $request)
     {
-
-        if ($request->query('page_ayahs') === 'true') {
-            $page->load('ayahs');
-        }
-
         return new PageResource($page);
     }
 
