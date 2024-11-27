@@ -53,64 +53,64 @@ class WordSeeder extends Seeder
 
         createDatabaseCollection($collectionName);
 
-        $client = new MongoClient(env('DB_URI'));
-        $database = $client->selectDatabase(env('DB_DATABASE'));
-        $collection = $database->selectCollection($collectionName);
+        // $client = new MongoClient(env('DB_URI'));
+        // $database = $client->selectDatabase(env('DB_DATABASE'));
+        // $collection = $database->selectCollection($collectionName);
 
-        // Define your indexes (composite or single) with collation and unique options
-        $indexesToCreate = [
-            [
-                'fields' => ['ayah_key' => 1], // Index fields
-                'collation' => [
-                    'locale' => 'en',
-                    'numericOrdering' => true,
-                ],
-                'unique' => false, // Unique
-            ],
-            [
-                'fields' => ['word_key' => 1], // Index fields
-                'collation' => [
-                    'locale' => 'en',
-                    'numericOrdering' => true,
-                ],
-                'unique' => true, // Not unique
-            ],
-        ];
+        // // Define your indexes (composite or single) with collation and unique options
+        // $indexesToCreate = [
+        //     [
+        //         'fields' => ['ayah_key' => 1], // Index fields
+        //         'collation' => [
+        //             'locale' => 'en',
+        //             'numericOrdering' => true,
+        //         ],
+        //         'unique' => false, // Unique
+        //     ],
+        //     [
+        //         'fields' => ['word_key' => 1], // Index fields
+        //         'collation' => [
+        //             'locale' => 'en',
+        //             'numericOrdering' => true,
+        //         ],
+        //         'unique' => true, // Not unique
+        //     ],
+        // ];
 
-        // Get existing indexes
-        $existingIndexes = $collection->listIndexes();
-        $existingIndexNames = [];
+        // // Get existing indexes
+        // $existingIndexes = $collection->listIndexes();
+        // $existingIndexNames = [];
 
-        // Store existing index names
-        foreach ($existingIndexes as $index) {
-            $existingIndexNames[] = $index->getName();
-        }
+        // // Store existing index names
+        // foreach ($existingIndexes as $index) {
+        //     $existingIndexNames[] = $index->getName();
+        // }
 
-        // Loop through your desired indexes and create them if they do not exist
-        foreach ($indexesToCreate as $indexConfig) {
-            $indexFields = $indexConfig['fields'];
-            $collation = $indexConfig['collation'];
-            $unique = $indexConfig['unique'];
+        // // Loop through your desired indexes and create them if they do not exist
+        // foreach ($indexesToCreate as $indexConfig) {
+        //     $indexFields = $indexConfig['fields'];
+        //     $collation = $indexConfig['collation'];
+        //     $unique = $indexConfig['unique'];
 
-            // Generate a unique index name based on the fields
-            $indexName = implode('_', array_keys($indexFields));
+        //     // Generate a unique index name based on the fields
+        //     $indexName = implode('_', array_keys($indexFields));
 
-            // Check if the index already exists
-            if (!in_array($indexName, $existingIndexNames)) {
-                $options = [
-                    'name' => $indexName,
-                    'unique' => $unique, // Apply unique constraint if specified
-                ];
+        //     // Check if the index already exists
+        //     if (!in_array($indexName, $existingIndexNames)) {
+        //         $options = [
+        //             'name' => $indexName,
+        //             'unique' => $unique, // Apply unique constraint if specified
+        //         ];
 
-                // Add collation to the options if it exists
-                if ($collation) {
-                    $options['collation'] = $collation;
-                }
+        //         // Add collation to the options if it exists
+        //         if ($collation) {
+        //             $options['collation'] = $collation;
+        //         }
 
-                // Create the index
-                $collection->createIndex($indexFields, $options);
-            }
-        }
+        //         // Create the index
+        //         $collection->createIndex($indexFields, $options);
+        //     }
+        // }
 
         // Seed database from jQuranTree
 
@@ -129,10 +129,10 @@ class WordSeeder extends Seeder
             if($currentLastWord->audio_url !== null){
 
                 // Uncomment below if the currentLastWord word_key is less than 37:130:4
-                // $countAyahCurrent--;
+                $countAyahCurrent--;
 
                 // Uncomment below if the currentLastWord word_key is above 37:130:4
-                $countAyahCurrent=$countAyahCurrent-2;
+                // $countAyahCurrent=$countAyahCurrent-2;
             }
 
         }else{
@@ -154,6 +154,7 @@ class WordSeeder extends Seeder
                 while (java_is_true($iterator->hasNext())) {
 
                     $token = $iterator->next();
+                    $characters = [];
 
                     // $tokenCount = java_cast($token->getVerse()->getTokenCount(), "int");
 
@@ -234,7 +235,30 @@ class WordSeeder extends Seeder
                                 //     $tokenText = $token;
                                 // }
 
-                                $tokenText = (string) $token->getChapterNumber() === "37" && (string) $token->getVerseNumber() === "130" && (string) $token->getTokenNumber() === "3" ? "إِلْ يَاسِينَ" : $token;
+                                if((string) $token->getChapterNumber() === "37" && (string) $token->getVerseNumber() === "130" && (string) $token->getTokenNumber() === "3"){
+                                    $nextToken = $document->getToken(37,130,4);
+                                    $tokenText = $token . " " . $nextToken;
+                                }else{
+                                    $tokenText = $token;
+                                }
+
+                                $tokenLength = java_cast($token->getLength(), 'int');
+
+                                for ($i=0; $i < $tokenLength; $i++) {
+                                    // Add the character type to the array
+                                    $characters[] = java_cast($token->getCharacter($i)->toUnicode(), 'string');
+                                }
+
+                                if((string) $token->getChapterNumber() === "37" && (string) $token->getVerseNumber() === "130" && (string) $token->getTokenNumber() === "3"){
+
+                                    $nextToken = $document->getToken(37,130,4);
+                                    $nextTokenLength = java_cast($nextToken->getLength(), 'int');
+
+                                    for ($i=0; $i < $nextTokenLength; $i++) {
+                                        // Add the character type to the array
+                                        $characters[] = java_cast($nextToken->getCharacter($i)->toUnicode(), 'string');
+                                    }
+                                }
 
                                 DB::table($collectionName)->insert([
                                     '_id' => (string) getNextSequenceValue('word_id'),
@@ -247,6 +271,7 @@ class WordSeeder extends Seeder
                                     'page_id' => (string) $page->id,
                                     'line_number' => (int) $word['line_number'],
                                     'text' =>  (string) $tokenText,
+                                    'characters' => $characters,
                                     // 'text' =>  (string) $wordsArr[$index],
                                     'translation' => (string) $word['translation']['text'],
                                     'transliteration' => (string) $word['transliteration']['text'],
@@ -276,6 +301,7 @@ class WordSeeder extends Seeder
                                     'page_id' => (string) $page->id,
                                     'line_number' => (int) $word['line_number'],
                                     'text' =>  (string) mapAyahNumberToNumberIcon( (string) $token->getVerseNumber()),
+                                    'characters' => null,
                                     'translation' => (string) $word['translation']['text'],
                                     'transliteration' => $word['transliteration']['text'] === "" ? null : $word['transliteration']['text'],
                                 ]);
