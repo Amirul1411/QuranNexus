@@ -10,3 +10,4 @@ CHANGELOG.md export-ignore
 public/audio/Alafasy/* filter=lfs diff=lfs merge=lfs -text
 public/audio/AbdulBaset/* filter=lfs diff=lfs merge=lfs -text
 public/audio/wbw/* filter=lfs diff=lfs merge=lfs -text
+public/audio/** !text !filter !merge !diff
