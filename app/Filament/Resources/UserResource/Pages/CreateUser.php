@@ -9,4 +9,11 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateUser extends CreateRecord
 {
     protected static string $resource = UserResource::class;
+
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        $data['_id'] = (string) getNextSequenceValue('user_id');
+        return $data;
+    }
+
 }

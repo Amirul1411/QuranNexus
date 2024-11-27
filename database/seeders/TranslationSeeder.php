@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use MongoDB\Client as MongoClient;
 
 class TranslationSeeder extends Seeder
@@ -79,7 +80,7 @@ class TranslationSeeder extends Seeder
             }
         }
 
-        $filePath = [resource_path('data\ms.basmeih.xml'), resource_path('data\en.sahih.xml')];
+        $filePath = [Storage::url('quran-data\ms.basmeih.xml'), Storage::url('quran-data\en.sahih.xml')];
 
         foreach ($filePath as $file) {
             $xml = simplexml_load_file($file);

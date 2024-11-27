@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use MongoDB\Client as MongoClient;
 
 class SurahSeeder extends Seeder
@@ -22,7 +23,7 @@ class SurahSeeder extends Seeder
 
         // Seed database from XML file
 
-        $filePath = resource_path('data\quran-data.xml');
+        $filePath = Storage::url('quran-data\quran-data.xml');
 
         $xml = simplexml_load_file($filePath);
 

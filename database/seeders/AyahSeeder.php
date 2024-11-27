@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use MongoDB\Client as MongoClient;
 
 class AyahSeeder extends Seeder
@@ -87,8 +88,8 @@ class AyahSeeder extends Seeder
             }
         }
 
-        $filePathAya = resource_path('data/quran-uthmani.xml');
-        $filePathPage = resource_path('data/quran-data.xml');
+        $filePathAya = Storage::url('quran-data/quran-uthmani.xml');
+        $filePathPage = Storage::url('quran-data/quran-data.xml');
 
         $xmlAya = simplexml_load_file($filePathAya);
         $xmlPage = simplexml_load_file($filePathPage);

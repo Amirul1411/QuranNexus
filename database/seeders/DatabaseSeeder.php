@@ -30,13 +30,14 @@ class DatabaseSeeder extends Seeder
             // SurahSeeder::class,
             // SurahInfoSeeder::class,
             // AyahSeeder::class,
-            // WordSeeder::class,
+            WordSeeder::class,
             // TafseerInfoSeeder::class,
-            TafseerSeeder::class,
+            // TafseerSeeder::class,
             // TranslationInfoSeeder::class,
             // TranslationSeeder::class,
             // AudioRecitationInfoSeeder::class,
             // AudioRecitationSeeder::class,
+            // AchievementSeeder::class,
         ]);
     }
 }

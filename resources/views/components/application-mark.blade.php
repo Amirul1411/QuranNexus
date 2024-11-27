@@ -1,1 +1,1 @@
-<img {{ $attributes }} src="{{ Vite::asset('resources/images/quran-nexus-logo-image.png') }}" alt="Quran Nexus Logo Image">
+<img {{ $attributes }} src="{{ Storage::url('web-images/quran-nexus-logo-image.png') }}" alt="Quran Nexus Logo Image">

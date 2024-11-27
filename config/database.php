@@ -32,10 +32,10 @@ return [
     'connections' => [
 
         'mongodb' => [
-        'driver' => 'mongodb',
-        'dsn' => env('DB_URI', 'mongodb+srv://aidil:Re2OU81mz5W3WGNc@quranic.smuf3ns.mongodb.net/'),
-        'database' => env('DB_DATABASE', 'quran_database'),
-],
+            'driver' => 'mongodb',
+            'dsn' => env('DB_URI', 'mongodb+srv://aidil:Re2OU81mz5W3WGNc@quranic.smuf3ns.mongodb.net/'),
+            'database' => env('DB_DATABASE', 'quran_database'),
+        ],
 
         'sqlite' => [
             'driver' => 'sqlite',

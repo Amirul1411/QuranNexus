@@ -28,7 +28,7 @@
                 <h4 class="font-bold my-2 text-3xl font-serif text-center">{{ __('home.card1_title') }}</h4>
                 <p class="font-bold my-2 flex items-center font-serif">
                     <img class="nexus-logo-card text-black mr-2 w-6"
-                        src="{{ Vite::asset('resources/images/nexus-logo-card-image.png') }}"
+                        src="{{ Storage::url('web-images/nexus-logo-card-image.png') }}"
                         alt="Quran Nexus Logo Image">
                     {{ __('home.card1_point1') }}
                 </p>
@@ -37,7 +37,7 @@
                 </p>
                 <p class="font-bold my-2 flex items-center font-serif">
                     <img class="nexus-logo-card text-black mr-2 w-6"
-                        src="{{ Vite::asset('resources/images/nexus-logo-card-image.png') }}"
+                        src="{{ Storage::url('web-images/nexus-logo-card-image.png') }}"
                         alt="Quran Nexus Logo Image">
                     {{ __('home.card1_point2') }}
                 </p>
@@ -47,19 +47,19 @@
                 <button class="btn ml-8 border border-gray-300 w-40 py-1">{{ __('home.card1_button') }}</button>
             </div>
             <div class="w-full md:w-2/5">
-                <img src="{{ Vite::asset('resources/images/AI-image.png') }}" alt="AI Image">
+                <img src="{{ Storage::url('web-images/AI-image.png') }}" alt="AI Image">
             </div>
         </div>
 
         <div class="flex flex-wrap w-3/4 mx-auto mb-16 home-recitation">
             <div class="w-full md:w-2/5 flex p-0">
-                <img src="{{ Vite::asset('resources/images/home-quran-image.png') }}" alt="Quran Image">
+                <img src="{{ Storage::url('web-images/home-quran-image.png') }}" alt="Quran Image">
             </div>
             <div class="w-full md:w-3/5 flex flex-col justify-between homecard">
                 <h4 class="font-bold text-center my-3 text-3xl font-serif">{{ __('home.card2_title') }}</h4>
                 <p class="font-bold my-2 flex items-center font-serif ml-16">
                     <img class="nexus-logo-card text-black mr-2 w-6"
-                        src="{{ Vite::asset('resources/images/nexus-logo-card-image.png') }}"
+                        src="{{ Storage::url('web-images/nexus-logo-card-image.png') }}"
                         alt="Quran Nexus Logo Image">
                     {{ __('home.card2_point1') }}
                 </p>
@@ -67,7 +67,7 @@
                     {{ __('home.card2_subpoint1') }} </p>
                 <p class="font-bold my-2 flex items-center font-serif ml-16 pe-16">
                     <img class="nexus-logo-card text-black mr-2 w-6"
-                        src="{{ Vite::asset('resources/images/nexus-logo-card-image.png') }}"
+                        src="{{ Storage::url('web-images/nexus-logo-card-image.png') }}"
                         alt="Quran Nexus Logo Image">
                     {{ __('home.card2_point2') }}
                 </p>

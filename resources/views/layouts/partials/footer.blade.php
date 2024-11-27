@@ -1,5 +1,5 @@
 <div class="relative text-white py-8 footer">
-    <img class="w-7 absolute left-60 top-32 transform -translate-x-1/2" src="{{ Vite::asset('resources/images/quran-nexus-logo-image.png') }}" alt="Quran Nexus Logo Image">
+    <img class="w-7 absolute left-60 top-32 transform -translate-x-1/2" src="{{ Storage::url('web-images/quran-nexus-logo-image.png') }}" alt="Quran Nexus Logo Image">
     <div class="container mx-auto absolute left-96 top-32 w-2/3">
         <div class="grid grid-cols-3 gap-2 mt-4">
             <p class="font-bold mx-5">{{ __('footer.create_free_account') }}</p>
