@@ -14,6 +14,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class User extends Authenticatable implements FilamentUser
 {
@@ -22,6 +23,24 @@ class User extends Authenticatable implements FilamentUser
     use HasProfilePhoto;
     use Notifiable;
     // use TwoFactorAuthenticatable;
+
+    protected $connection = 'mongodb';
+    
+    /**
+     * Get the class name for the personal access token model.
+     *
+     * @return string
+     */
+    public function newAccessToken($name, array $abilities = ['*'])
+    {
+        return new PersonalAccessToken([
+            'tokenable_type' => static::class,
+            'tokenable_id' => $this->_id,
+            'name' => $name,
+            'token' => hash('sha256', $plainTextToken = \Illuminate\Support\Str::random(40)),
+            'abilities' => $abilities,
+        ]);
+    }
 
     const ROLE_ADMIN = 'ADMIN';
     const ROLE_EDITOR = 'EDITOR';

@@ -13,12 +13,24 @@ use App\Http\Controllers\Api\V1\APIAudioRecitationController;
 use App\Http\Controllers\Api\V1\APIAudioRecitationInfoController;
 use App\Http\Controllers\Api\V1\APITafseerInfoController;
 use App\Http\Controllers\Api\V1\APITranslationInfoController;
+use App\Http\Controllers\Api\V1\APIAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
+Route::prefix('v1')->group(function () {
+    Route::post('/register', [APIAuthController::class, 'register']);
+    Route::post('/login', [APIAuthController::class, 'login']);
+    
+    // Protected routes
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/profile', [APIAuthController::class, 'profile']);
+        Route::post('/logout', [APIAuthController::class, 'logout']);
+    });
+});
 
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], function(){
     Route::apiResource('surahs', APISurahController::class)->name('index','surah.index')->name('show', 'surah.show');
@@ -34,4 +46,9 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], f
     Route::apiResource('tafseer_info', APITafseerInfoController::class)->name('index','tafseer_info.index')->name('show', 'tafseer_info.show');
     Route::apiResource('translation_info', APITranslationInfoController::class)->name('index','translation_info.index')->name('show', 'translation_info.show');
     Route::apiResource('achievements', APIAchievementController::class)->name('index','achievement.index')->name('show', 'achievement.show');
+
+    // Temporary route
+    Route::get('chapters/{id}/verses', [APIAyahController::class, 'getVersesByChapter']);
 });
+
+

@@ -16,93 +16,77 @@ class WordResource extends JsonResource
     {
         $response = [];
 
-        if ($request->query('ayah') === 'true' && ($request->route()->getName() === 'word.index' || $request->route()->getName() === 'word.show')) {
+        // Load related resources if needed
+        if ($request->query('ayah') === 'true') {
             $this->load('ayah');
         }
-
-        if ($request->query('surah') === 'true' && ($request->route()->getName() === 'word.index' || $request->route()->getName() === 'word.show')) {
+        if ($request->query('surah') === 'true') {
             $this->load('surah');
         }
 
+        // Determine fields to return
         $wordFields = $request->has('word_fields') ? explode(',', $request->input('word_fields')) : null;
-
-        if($wordFields !== null){
-            $fields = $wordFields;
-        }elseif($request->route()->getName() === 'word.show' || $request->route()->getName() === 'word.index'){
-            $fields = explode(',', $request->input('fields', ''));
-        }
+        $fields = $wordFields ?: explode(',', $request->input('fields', ''));
 
         // If no fields were provided, return all fields
         if (empty($fields[0])) {
-            // Add all fields to the response
             $response = $this->getAllFields($request);
         } else {
-            // Conditionally add fields based on the user's request
-            if (in_array('Id', $fields)) {
-                $response['Id'] = $this->_id;
+            // Add fields conditionally
+            foreach ($fields as $field) {
+                switch ($field) {
+                    case 'Id':
+                        $response['Id'] = $this->_id;
+                        break;
+                    case 'Surah Id':
+                        $response['Surah Id'] = $this->when($request->query('words') !== 'true', $this->surah_id);
+                        break;
+                    case 'Ayah Index':
+                        $response['Ayah Index'] = $this->when($request->query('words') !== 'true', $this->ayah_index);
+                        break;
+                    case 'Word Index':
+                        $response['Word Index'] = $this->word_index;
+                        break;
+                    case 'Ayah Key':
+                        $response['Ayah Key'] = $this->when($request->query('words') !== 'true', $this->ayah_key);
+                        break;
+                    case 'Word Key':
+                        $response['Word Key'] = $this->word_key;
+                        break;
+                    case 'Audio Url':
+                        $response['Audio Url'] = $this->audio_url;
+                        break;
+                    case 'Page Id':
+                        $response['Page Id'] = $this->when($request->query('words') !== 'true', $this->page_id);
+                        break;
+                    case 'Line Number':
+                        $response['Line Number'] = $this->line_number;
+                        break;
+                    case 'Text':
+                        $response['Text'] = $this->text;
+                        break;
+                    case 'Characters':
+                        $response['Characters'] = $this->characters;
+                        break;
+                    case 'Translation':
+                        $response['Translation'] = $this->translation;
+                        break;
+                    case 'Transliteration':
+                        $response['Transliteration'] = $this->transliteration;
+                        break;
+                }
             }
-
-            if (in_array('Surah Id', $fields)) {
-                $response['Surah Id'] = $this->surah_id;
-            }
-
-            if (in_array('Ayah Index', $fields)) {
-                $response['Ayah Index'] = $this->ayah_index;
-            }
-
-            if (in_array('Word Index', $fields)) {
-                $response['Word Index'] = $this->word_index;
-            }
-
-            if (in_array('Ayah Key', $fields)) {
-                $response['Ayah Key'] = $this->ayah_key;
-            }
-
-            if (in_array('Word Key', $fields)) {
-                $response['Word Key'] = $this->word_key;
-            }
-
-            if (in_array('Audio Url', $fields)) {
-                $response['Audio Url'] = $this->audio_url;
-            }
-
-            if (in_array('Page Id', $fields)) {
-                $response['Page Id'] = $this->page_id;
-            }
-
-            if (in_array('Line Number', $fields)) {
-                $response['Line Number'] = $this->line_number;
-            }
-
-            if (in_array('Text', $fields)) {
-                $response['Text'] = $this->text;
-            }
-
-            if (in_array('Characters', $fields)) {
-                $response['Characters'] = $this->characters;
-            }
-
-            if (in_array('Translation', $fields)) {
-                $response['Translation'] = $this->translation;
-            }
-
-            if (in_array('Transliteration', $fields)) {
-                $response['Transliteration'] = $this->transliteration;
-            }
-
         }
 
+        // Include related resources if loaded
         if ($this->relationLoaded('surah')) {
             $response['Surah'] = new SurahResource($this->whenLoaded('surah'));
         }
-
         if ($this->relationLoaded('ayah')) {
             $response['Ayah'] = new AyahResource($this->whenLoaded('ayah'));
         }
 
         return $response;
-
-        // return parent::toArray($request);
     }
 
     private function getAllFields($request)
