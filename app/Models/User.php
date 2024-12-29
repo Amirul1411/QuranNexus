@@ -54,7 +54,7 @@ class User extends Authenticatable implements FilamentUser
      *
      * @var array<int, string>
      */
-    protected $fillable = ['_id', 'name', 'email', 'password', 'role', 'recitation_times', 'recitation_streak', 'last_recitation_date', 'settings', 'recitation_goal'];
+    protected $fillable = ['_id', 'name', 'email', 'password', 'role', 'recitation_times', 'recitation_streak', 'longest_streak', 'last_recitation_date', 'settings', 'recitation_goal'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -233,12 +233,18 @@ class User extends Authenticatable implements FilamentUser
 
             // Update last recitation date
             $this->attributes['last_recitation_date'] = $today;
+
+            // Check if the current streak is the longest streak
+            if (!isset($this->attributes['longest_streak']) || $this->attributes['recitation_streak'] > $this->attributes['longest_streak']) {
+                $this->attributes['longest_streak'] = $this->attributes['recitation_streak'];
+            }
         }
 
         // Save the updated recitation_times, streak, and last_recitation_date fields in MongoDB
         $this->update([
             'recitation_times' => $this->attributes['recitation_times'],
             'recitation_streak' => $this->attributes['recitation_streak'],
+            'longest_streak' => $this->attributes['longest_streak'],
             'last_recitation_date' => $this->attributes['last_recitation_date'],
         ]);
     }

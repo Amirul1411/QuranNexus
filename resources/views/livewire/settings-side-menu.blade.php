@@ -140,8 +140,7 @@
                                 </x-slot>
                             </x-dropdown>
                         </div>
-                        <div class="flex flex-col gap-2">
-                            {{-- Recitation Goal --}}
+                        {{-- <div class="flex flex-col gap-2">
                             <x-label darkTextColor="dark:text-gray-700" value="{{ __('Recitation Goal (Minutes)') }}"
                                 class="w-[15rem]" />
                             <div class="relative w-[15rem]">
@@ -150,7 +149,7 @@
                                     {{ $this->recitationGoal}}
                                 </x-input>
                             </div>
-                        </div>
+                        </div> --}}
                         @if (session('not logged in'))
                             <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 5000)" x-show="show"
                                 class="text-red-500 font-base w-[15rem] text-center">

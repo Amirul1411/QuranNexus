@@ -7,6 +7,10 @@
     <div>
         <div class="mx-7 py-10 sm:px-6 lg:px-8 w-full">
 
+            <div class="mb-10 h-auto w-5/6 mx-auto justify-center">
+                @livewire('user-recitation-widget')
+            </div>
+
             <div class="mb-10 h-auto w-5/6 mx-auto">
                 @livewire('recitation-time-per-day-widget')
             </div>
