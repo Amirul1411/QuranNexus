@@ -134,6 +134,21 @@ git add .gitattributes
 # Commit the .gitattributes file
 git commit -m "Track all files in public/audio/Alafasy folder with Git LFS"
 
+Deployment commands:
+
+php artisan optimize
+
+sudo chmod -R 775 /var/app/current/bootstrap/cache
+sudo chmod -R 775 /var/app/current/storage
+
+zip ../quran-nexus.zip -r * .[^.]* -x "vendor/*" "node_modules/*" ".git/*"
+
+putty passphrase: QuranNexus
+putty passphrase: QuranCorpusAPI
+
+sudo systemctl restart php-fpm
+sudo systemctl restart httpd
+
 5. User accounts:
 
 Test User  - testuser@gmail.com  - user1234

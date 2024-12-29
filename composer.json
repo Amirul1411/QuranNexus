@@ -6,7 +6,12 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "aws/aws-sdk-php": "^3.334",
+        "calebporzio/sushi": "^2.4",
+        "filament/actions": "^3.2",
         "filament/filament": "^3.2",
+        "filament/notifications": "^3.2",
+        "filament/tables": "^3.2",
         "filament/widgets": "^3.2",
         "flowframe/laravel-trend": "^0.2.0",
         "laravel/framework": "^11.0",
