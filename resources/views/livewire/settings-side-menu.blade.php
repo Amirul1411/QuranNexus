@@ -45,7 +45,8 @@
                             <x-label darkTextColor="dark:text-gray-700" value="{{ __('Tafseer') }}" class="w-[15rem]" />
                             <x-dropdown align="right" width="48">
                                 <x-slot name="trigger">
-                                    <x-button type="button" borderColor="border-black-500"
+                                    <x-button type="button" borderColor="border-gray-300" bg="bg-gray-200" text="text-gray-800" activeBg="bg-gray-300"
+                                    hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800"
                                         class="text-black cursor-pointer w-[15rem] flex h-auto">
                                         <div class="w-5/6">
                                             {{ $this->selectedTafseerNameAndLanguage ?? __('Choose Tafseer') }}
@@ -77,8 +78,9 @@
                                 class="w-[15rem]" />
                             <x-dropdown align="right" width="48">
                                 <x-slot name="trigger">
-                                    <x-button type="button" borderColor="border-black-500"
-                                        class="text-black cursor-pointer w-[15rem] flex h-auto">
+                                    <x-button type="button" borderColor="border-gray-300" bg="bg-gray-200" text="text-gray-800" activeBg="bg-gray-300"
+                                    hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800"
+                                        class="cursor-pointer w-[15rem] flex h-auto">
                                         <div class="w-5/6">
                                             {{ $this->selectedTranslationNameAndLanguage ?? __('Choose Translation') }}
 
@@ -110,8 +112,9 @@
                                 class="w-[15rem]" />
                             <x-dropdown align="right" width="48">
                                 <x-slot name="trigger">
-                                    <x-button type="button" borderColor="border-black-500"
-                                        class="text-black cursor-pointer w-[15rem] flex h-auto">
+                                    <x-button type="button" borderColor="border-gray-300" bg="bg-gray-200" text="text-gray-800" activeBg="bg-gray-300"
+                                    hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800"
+                                        class="cursor-pointer w-[15rem] flex h-auto">
                                         <div class="w-5/6">
                                             {{ $this->selectedAudioRecitationName ?? __('Choose Audio Recitation') }}
                                         </div>
@@ -180,8 +183,9 @@
 
 
             <x-slot name="actions">
-                <x-button
-                    class="bg-gradient-to-r from-light-green via-light-green-teal via-56 to-teal font-serif font-medium">
+                <x-button bg="bg-gradient-to-r from-light-green via-light-green-teal via-56 to-teal" text="text-gray-800" activeBg="bg-gray-300"
+                hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800" borderWidth="border-0"
+                    class="font-serif">
                     {{ __('Save Settings') }}
                 </x-button>
             </x-slot>

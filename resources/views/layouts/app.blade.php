@@ -4,18 +4,20 @@
 
 <head>
     <meta charset="utf-8">
+
+    <meta name="application-name" content="{{ config('app.name') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title> {{ isset($title) ? $title . ' | ' : '' }}{{ config('app.name', '') }}</title>
     <link rel="icon" type="image/png" href="{{ Storage::url('web-images/quran-nexus-logo-image.png') }}">
 
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/scss/app.scss'])
-
     <!-- Styles -->
     @livewireStyles
     @filamentStyles
+
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/scss/app.scss'])
 
 </head>
 
@@ -65,6 +67,8 @@
                 </header>
             @endif
         </div> --}}
+
+    @livewire('notifications')
 
     <!-- Page Heading -->
     @if (isset($header))

@@ -42,7 +42,9 @@
 
 
     <x-slot name="actions">
-        <x-button class="bg-gradient-to-r from-light-green via-light-green-teal via-56 to-teal font-serif font-medium">
+        <x-button bg="bg-gradient-to-r from-light-green via-light-green-teal via-56 to-teal" text="text-gray-800" activeBg="bg-gray-300"
+                hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800" borderWidth="border-0"
+        class="font-serif">
             {{ __('contact.send_message') }}
         </x-button>
     </x-slot>

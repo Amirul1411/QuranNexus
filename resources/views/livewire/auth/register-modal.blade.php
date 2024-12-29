@@ -2,7 +2,7 @@
     footerJustify="justify-center" footerItems="items-start" footerPaddingY='pb-4'>
 
     <x-slot name="title">
-        <h2 class="text-center text-3xl my-5">Register</h2>
+        <h2 class="text-center text-3xl my-5 text-white">Register</h2>
     </x-slot>
 
     <x-slot name="content">
@@ -106,7 +106,7 @@
                         <div class="flex items-center">
                             <x-checkbox darkBg="" name="terms" id="terms" required />
 
-                            <div class="ms-2">
+                            <div class="ms-2 text-gray-400">
                                 {!! __('I agree to the :terms_of_service and :privacy_policy', [
                                     'terms_of_service' =>
                                         '<a target="_blank" href="' .
