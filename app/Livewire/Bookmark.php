@@ -5,10 +5,10 @@ namespace App\Livewire;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Filament\Notifications\Notification;
 
 class Bookmark extends Component
 {
-
     public $itemId; // This will hold the item being bookmarked (Surah, Ayah, or Page)
     public $type; // This will hold the type of the item ('surah', 'ayah', or 'page')
 
@@ -20,9 +20,14 @@ class Bookmark extends Component
 
     public function toggleBookmark()
     {
-
         if (Auth::guest()) {
-            return redirect()->route('login');
+            Notification::make()
+            ->title('You have to login to perform this operation')
+            ->color('danger')
+            ->danger()
+            // ->body()
+            ->send();
+            return;
         }
 
         $user = Auth::user();
@@ -32,6 +37,12 @@ class Bookmark extends Component
         } else {
             $user->addBookmark($this->type, $this->itemId);
         }
+
+        Notification::make()
+        ->title('Bookmarked.')
+        ->success()
+        ->color('success')
+        ->send();
     }
 
     public function render()

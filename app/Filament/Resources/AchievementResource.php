@@ -40,6 +40,7 @@ class AchievementResource extends Resource
                 ->label('Title'),
                 TextInput::make('description')
                 ->required()
+                ->minLength(20)
                 ->label('Description'),
             ]);
     }
