@@ -4,6 +4,7 @@ use App\Models\Achievement;
 use App\Models\AudioRecitation;
 use App\Models\AudioRecitationInfo;
 use App\Models\Ayah;
+use App\Models\DailyQuotes;
 use App\Models\Inquiry;
 use App\Models\Juz;
 use App\Models\Page;
@@ -68,6 +69,7 @@ if (!function_exists('resetCountersCollection')) {
             ['_id' => 'audio_id', 'sequence_value' => AudioRecitation::count()],
             ['_id' => 'audio_info_id', 'sequence_value' => AudioRecitationInfo::count()],
             ['_id' => 'achievement_id', 'sequence_value' => Achievement::count()],
+            ['_id' => 'daily_quotes_id', 'sequence_value' => DailyQuotes::count()],
             // Add more collections as needed
         ]);
     }

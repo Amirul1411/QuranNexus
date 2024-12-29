@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\V1\APITafseerController;
 use App\Http\Controllers\Api\V1\APITranslationController;
 use App\Http\Controllers\Api\V1\APIAudioRecitationController;
 use App\Http\Controllers\Api\V1\APIAudioRecitationInfoController;
+use App\Http\Controllers\Api\V1\APIDailyQuotesController;
 use App\Http\Controllers\Api\V1\APITafseerInfoController;
 use App\Http\Controllers\Api\V1\APITranslationInfoController;
 use Illuminate\Http\Request;
@@ -34,4 +35,5 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], f
     Route::apiResource('tafseer_info', APITafseerInfoController::class)->name('index','api_tafseer_info.index')->name('show', 'api_tafseer_info.show');
     Route::apiResource('translation_info', APITranslationInfoController::class)->name('index','api_translation_info.index')->name('show', 'api_translation_info.show');
     Route::apiResource('achievements', APIAchievementController::class)->name('index','api_achievement.index')->name('show', 'api_achievement.show');
+    Route::apiResource('daily_quotes', APIDailyQuotesController::class)->name('index','api_daily_quotes.index')->name('show', 'api_daily_quotes.show');
 });
