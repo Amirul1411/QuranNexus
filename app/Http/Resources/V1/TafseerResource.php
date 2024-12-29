@@ -21,11 +21,11 @@ class TafseerResource extends JsonResource
             $this->load('tafseerInfo');
         }
 
-        if ($request->query('surah') === 'true' && ($request->route()->getName() === 'tafseer.index' || $request->route()->getName() === 'tafseer.show')) {
+        if ($request->query('surah') === 'true' && ($request->route()->getName() === 'api_tafseer.index' || $request->route()->getName() === 'api_tafseer.show')) {
             $this->load('surah');
         }
 
-        if ($request->query('ayah') === 'true' && ($request->route()->getName() === 'tafseer.index' || $request->route()->getName() === 'tafseer.show')) {
+        if ($request->query('ayah') === 'true' && ($request->route()->getName() === 'api_tafseer.index' || $request->route()->getName() === 'api_tafseer.show')) {
             $this->load('ayah');
         }
 
@@ -33,7 +33,7 @@ class TafseerResource extends JsonResource
 
         if($tafseerFields !== null){
             $fields = $tafseerFields;
-        }elseif($request->route()->getName() === 'tafseer.show' || $request->route()->getName() === 'tafseer.index'){
+        }elseif($request->route()->getName() === 'api_tafseer.show' || $request->route()->getName() === 'api_tafseer.index'){
             $fields = explode(',', $request->input('fields', ''));
         }
 

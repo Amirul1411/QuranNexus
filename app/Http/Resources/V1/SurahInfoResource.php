@@ -18,7 +18,7 @@ class SurahInfoResource extends JsonResource
         // Prepare the response data
         $response = [];
 
-        if ($request->query('surah') === 'true' && ($request->route()->getName() === 'surah_info.index' || $request->route()->getName() === 'surah_info.show')) {
+        if ($request->query('surah') === 'true' && ($request->route()->getName() === 'api_surah_info.index' || $request->route()->getName() === 'api_surah_info.show')) {
             $this->load('surah');
         }
 
@@ -26,7 +26,7 @@ class SurahInfoResource extends JsonResource
 
         if($surahInfoFields !== null){
             $fields = $surahInfoFields;
-        }elseif($request->route()->getName() === 'surah_info.show' || $request->route()->getName() === 'surah_info.index'){
+        }elseif($request->route()->getName() === 'api_surah_info.show' || $request->route()->getName() === 'api_surah_info.index'){
             $fields = explode(',', $request->input('fields', ''));
         }
 

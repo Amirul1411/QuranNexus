@@ -18,7 +18,7 @@ class TranslationInfoResource extends JsonResource
 
         $response = [];
 
-        if ($request->query('translations') === 'true' && ($request->route()->getName() === 'translation_info.index' || $request->route()->getName() === 'translation_info.show')) {
+        if ($request->query('translations') === 'true' && ($request->route()->getName() === 'api_translation_info.index' || $request->route()->getName() === 'api_translation_info.show')) {
             $this->load('translations');
         }
 
@@ -26,7 +26,7 @@ class TranslationInfoResource extends JsonResource
 
         if($translationInfoFields !== null){
             $fields = $translationInfoFields;
-        }elseif($request->route()->getName() === 'translation_info.show' || $request->route()->getName() === 'translation_info.index'){
+        }elseif($request->route()->getName() === 'api_translation_info.show' || $request->route()->getName() === 'api_translation_info.index'){
             $fields = explode(',', $request->input('fields', ''));
         }
 

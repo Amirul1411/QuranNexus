@@ -16,11 +16,11 @@ class WordResource extends JsonResource
     {
         $response = [];
 
-        if ($request->query('ayah') === 'true' && ($request->route()->getName() === 'word.index' || $request->route()->getName() === 'word.show')) {
+        if ($request->query('ayah') === 'true' && ($request->route()->getName() === 'api_word.index' || $request->route()->getName() === 'api_word.show')) {
             $this->load('ayah');
         }
 
-        if ($request->query('surah') === 'true' && ($request->route()->getName() === 'word.index' || $request->route()->getName() === 'word.show')) {
+        if ($request->query('surah') === 'true' && ($request->route()->getName() === 'api_word.index' || $request->route()->getName() === 'api_word.show')) {
             $this->load('surah');
         }
 
@@ -28,7 +28,7 @@ class WordResource extends JsonResource
 
         if($wordFields !== null){
             $fields = $wordFields;
-        }elseif($request->route()->getName() === 'word.show' || $request->route()->getName() === 'word.index'){
+        }elseif($request->route()->getName() === 'api_word.show' || $request->route()->getName() === 'api_word.index'){
             $fields = explode(',', $request->input('fields', ''));
         }
 

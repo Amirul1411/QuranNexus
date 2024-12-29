@@ -17,11 +17,11 @@ class JuzResource extends JsonResource
 
         $response = [];
 
-        if ($request->query('surah') === 'true' && ($request->route()->getName() === 'juz.index' || $request->route()->getName() === 'juz.show')) {
+        if ($request->query('surah') === 'true' && ($request->route()->getName() === 'api_juz.index' || $request->route()->getName() === 'api_juz.show')) {
             $this->load('surah');
         }
 
-        if ($request->query('ayahs') === 'true' && ($request->route()->getName() === 'juz.index' || $request->route()->getName() === 'juz.show')) {
+        if ($request->query('ayahs') === 'true' && ($request->route()->getName() === 'api_juz.index' || $request->route()->getName() === 'api_juz.show')) {
             $this->load('ayahs');
         }
 
@@ -29,7 +29,7 @@ class JuzResource extends JsonResource
 
         if($juzFields !== null){
             $fields = $juzFields;
-        }elseif($request->route()->getName() === 'juz.show' || $request->route()->getName() === 'juz.index'){
+        }elseif($request->route()->getName() === 'api_juz.show' || $request->route()->getName() === 'api_juz.index'){
             $fields = explode(',', $request->input('fields', ''));
         }
 

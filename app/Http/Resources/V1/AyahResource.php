@@ -18,7 +18,7 @@ class AyahResource extends JsonResource
         // Prepare the response data
         $response = [];
 
-        if ($request->query('surah') === 'true' && ($request->route()->getName() === 'ayah.index' || $request->route()->getName() === 'ayah.show')) {
+        if ($request->query('surah') === 'true' && ($request->route()->getName() === 'api_ayah.index' || $request->route()->getName() === 'api_ayah.show')) {
             $this->load('surah');
         }
 
@@ -43,7 +43,7 @@ class AyahResource extends JsonResource
         // Get the fields parameter from the request
         if($ayahFields !== null){
             $fields = $ayahFields;
-        }elseif($request->route()->getName() === 'ayah.show' || $request->route()->getName() === 'ayah.index'){
+        }elseif($request->route()->getName() === 'api_ayah.show' || $request->route()->getName() === 'api_ayah.index'){
             $fields = explode(',', $request->input('fields', ''));
         }
 

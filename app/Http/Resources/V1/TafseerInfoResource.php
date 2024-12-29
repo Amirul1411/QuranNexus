@@ -18,7 +18,7 @@ class TafseerInfoResource extends JsonResource
 
         $response = [];
 
-        if ($request->query('tafseers') === 'true' && ($request->route()->getName() === 'tafseer_info.index' || $request->route()->getName() === 'tafseer_info.show')) {
+        if ($request->query('tafseers') === 'true' && ($request->route()->getName() === 'api_tafseer_info.index' || $request->route()->getName() === 'api_tafseer_info.show')) {
             $this->load('tafseers');
         }
 
@@ -26,7 +26,7 @@ class TafseerInfoResource extends JsonResource
 
         if($tafseerInfoFields !== null){
             $fields = $tafseerInfoFields;
-        }elseif($request->route()->getName() === 'tafseer_info.show' || $request->route()->getName() === 'tafseer_info.index'){
+        }elseif($request->route()->getName() === 'api_tafseer_info.show' || $request->route()->getName() === 'api_tafseer_info.index'){
             $fields = explode(',', $request->input('fields', ''));
         }
 

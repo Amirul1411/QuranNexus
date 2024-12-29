@@ -21,7 +21,7 @@ class AchievementResource extends JsonResource
 
         if($achievementFields !== null){
             $fields = $achievementFields;
-        }elseif($request->route()->getName() === 'achievement.show' || $request->route()->getName() === 'achievement.index'){
+        }elseif($request->route()->getName() === 'api_achievement.show' || $request->route()->getName() === 'api_achievement.index'){
             $fields = explode(',', $request->input('fields', ''));
         }
 

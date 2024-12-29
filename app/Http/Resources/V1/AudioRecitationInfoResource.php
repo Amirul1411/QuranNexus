@@ -18,7 +18,7 @@ class AudioRecitationInfoResource extends JsonResource
 
         $response = [];
 
-        if ($request->query('audio_recitations') === 'true' && ($request->route()->getName() === 'audio_recitation_info.index' || $request->route()->getName() === 'audio_recitation_info.show')) {
+        if ($request->query('audio_recitations') === 'true' && ($request->route()->getName() === 'api_audio_recitation_info.index' || $request->route()->getName() === 'api_audio_recitation_info.show')) {
             $this->load('audioRecitations');
         }
 
@@ -26,7 +26,7 @@ class AudioRecitationInfoResource extends JsonResource
 
         if($audioRecitationInfoFields !== null){
             $fields = $audioRecitationInfoFields;
-        }elseif($request->route()->getName() === 'audio_recitation_info.show' || $request->route()->getName() === 'audio_recitation_info.index'){
+        }elseif($request->route()->getName() === 'api_audio_recitation_info.show' || $request->route()->getName() === 'api_audio_recitation_info.index'){
             $fields = explode(',', $request->input('fields', ''));
         }
 
