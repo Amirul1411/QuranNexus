@@ -1,9 +1,21 @@
 <div>
     @if (Route::is('surah.show'))
-        <div x-data="{ scrollToAyah: '{{ session('scrollToAyah', '') }}' }" x-init="if (scrollToAyah) {
+        <div x-data="{
+            scrollToAyah: '{{ session('scrollToAyah', '') }}',
+            highlightToken: '{{ session('highlightToken', '') }}'
+        }" x-init="if (scrollToAyah) {
             const ayahElement = document.querySelector('#sa_' + scrollToAyah);
             if (ayahElement) {
                 ayahElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        if (highlightToken) {
+            const tokenElement = document.querySelector('#sat_' + highlightToken);
+            if (tokenElement) {
+                tokenElement.classList.add('text-yellow-500');
+                setTimeout(() => {
+                    tokenElement.classList.remove('text-yellow-500');
+                }, 5000); // Remove highlight after 5 seconds
             }
         }">
             @foreach ($surah->ayahs as $ayah)
@@ -34,9 +46,10 @@
                     <div class="w-11/12 my-5 flex flex-col gap-2">
                         <div class="flex flex-wrap items-center flex-row-reverse gap-2 my-5">
                             @foreach ($ayah->words as $word)
-                                {{-- Check if it's not the last word of the ayah to differentiate between displaying the word text and ayah icon--}}
+                                {{-- Check if it's not the last word of the ayah to differentiate between displaying the word text and ayah icon --}}
                                 @if ($word->word_index !== (string) $word->ayah->words->count())
-                                    <div class="font-UthmanicHafs text-3xl">
+                                    <div id="sat_{{ $surah->_id }}-{{ $ayah->ayah_index }}-{{ $word->word_index }}"
+                                        class="font-UthmanicHafs text-3xl">
                                         {{ $word->text }}
                                     </div>
                                     {{-- <img src="https://static.qurancdn.com/images/w/rq-color/{{ $word->surah_id }}/{{ $word->ayah_index }}/{{ $word->word_index }}.png?v=1" alt="{{ $word->text }}"> --}}
@@ -114,7 +127,7 @@
                 <div class="w-11/12 my-5 flex flex-col gap-2">
                     <div class="flex flex-wrap items-center flex-row-reverse gap-2 my-5">
                         @foreach ($ayah->words as $word)
-                            {{-- Check if it's not the last word of the ayah to differentiate between displaying the word text and ayah icon--}}
+                            {{-- Check if it's not the last word of the ayah to differentiate between displaying the word text and ayah icon --}}
                             @if ($word->word_index !== (string) $word->ayah->words->count())
                                 <div class="font-UthmanicHafs text-3xl">
                                     {{ $word->text }}
@@ -200,7 +213,7 @@
                 <div class="w-11/12 my-5 flex flex-col gap-2">
                     <div class="flex flex-wrap items-center flex-row-reverse gap-2 my-5">
                         @foreach ($ayah->words as $word)
-                            {{-- Check if it's not the last word of the ayah to differentiate between displaying the word text and ayah icon--}}
+                            {{-- Check if it's not the last word of the ayah to differentiate between displaying the word text and ayah icon --}}
                             @if ($word->word_index !== (string) $word->ayah->words->count())
                                 <div class="font-UthmanicHafs text-3xl">
                                     {{ $word->text }}

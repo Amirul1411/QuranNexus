@@ -273,11 +273,14 @@
                             <x-dropdown-link href="{{ route('surah.index') }}">
                                 {{ __('menu.surah_list') }}
                             </x-dropdown-link>
-                            <x-dropdown-link href="#">
+                            {{-- <x-dropdown-link href="#">
                                 {{ __('menu.tajweed') }}
                             </x-dropdown-link>
                             <x-dropdown-link href="#">
                                 {{ __('menu.irab') }}
+                            </x-dropdown-link> --}}
+                            <x-dropdown-link href="{{ route('quran_analysis.show') }}">
+                                {{ __('menu.quran_analysis') }}
                             </x-dropdown-link>
                         </x-slot>
                     </x-dropdown>

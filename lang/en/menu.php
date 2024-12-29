@@ -14,6 +14,7 @@ return [
     'surah_list' => 'Surah List',
     'tajweed' => 'Tajweed',
     'irab' => 'I\'rab',
+    'quran_analysis' => 'Quran Analysis',
     'resources' => 'Resources',
     'api_documentation' => 'API Documentation',
     'settings' => 'Settings',
