@@ -22,12 +22,12 @@
 </head>
 
 <body
-    class="font-sans antialiased {{ !Route::is('home') && !Route::is('contact') && !Route::is('faqs') ? 'background' : 'bg-gray-100' }}">
+    class="font-sans antialiased {{ !Route::is('home') && !Route::is('contact') && !Route::is('faqs') && !Route::is('login') && !Route::is('password.reset') && !Route::is('password.request') && !Route::is('register') ? 'background' : 'bg-gray-100' }}">
     <x-banner />
 
     @include('layouts.partials.header')
 
-    <div x-data="{ showLogin: false, showRegister: false, showForgotPassword: false }" x-init="showLogin = false;
+    {{-- <div x-data="{ showLogin: false, showRegister: false, showForgotPassword: false }" x-init="showLogin = false;
     showRegister = false"
         x-on:render-login-modal.window="showRegister=false; showForgotPassword=false; await $nextTick(); showLogin=true;  await $nextTick(); $dispatch('openLoginModal');"
         x-on:render-register-modal.window="showLogin=false; showForgotPassword=false; await $nextTick(); showRegister=true;  await $nextTick(); $dispatch('openRegisterModal');"
@@ -53,7 +53,7 @@
                 @livewire('auth.forgot-password-modal')
             </div>
         </template>
-    </div>
+    </div> --}}
 
     {{-- <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             @livewire('navigation-menu')
