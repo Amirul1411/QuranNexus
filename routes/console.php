@@ -10,4 +10,4 @@ use Illuminate\Support\Facades\Schedule;
 
 Schedule::command('app:cleanup-recently-read')->everyThirtyMinutes();
 Schedule::command('app:reset-recitation-streak')->daily();
-Schedule::command('app:update-password-reset-tokens')->everySecond();
+// Schedule::command('app:update-password-reset-tokens')->everySecond();

@@ -34,15 +34,20 @@ class Bookmark extends Component
 
         if ($user->isBookmarked($this->type, $this->itemId)) {
             $user->removeBookmark($this->type, $this->itemId);
+            Notification::make()
+            ->title('Bookmark removed succesfully.')
+            ->success()
+            ->color('success')
+            ->send();
         } else {
             $user->addBookmark($this->type, $this->itemId);
+            Notification::make()
+            ->title('Bookmarked successfully.')
+            ->success()
+            ->color('success')
+            ->send();
         }
 
-        Notification::make()
-        ->title('Bookmarked.')
-        ->success()
-        ->color('success')
-        ->send();
     }
 
     public function render()
