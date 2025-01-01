@@ -44,7 +44,7 @@
                 <p class="pl-8 font-serif text-gray-600">
                     {{ __('home.card1_subpoint2') }}
                 </p>
-                <button class="btn ml-8 border border-gray-300 w-40 py-1">{{ __('home.card1_button') }}</button>
+                <a class="btn ml-8 border border-gray-300 w-40 py-1 text-center" href="{{ route('api_documentation.index') }}">{{ __('home.card1_button') }}</a>
             </div>
             <div class="w-full md:w-2/5">
                 <img src="{{ Storage::url('web-images/AI-image.png') }}" alt="AI Image">
