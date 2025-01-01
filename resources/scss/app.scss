@@ -35,6 +35,13 @@ $button-color: mix(#78C2AD, #FFFFFF, 100%);
 //     src: url("https://quran-nexus-bucket.s3.ap-southeast-1.amazonaws.com/quran-fonts/KfgqpcHafsUthmanicScriptRegular-nARZ1.ttf") format('truetype');
 // }
 
+.rotate-90 {
+    transform: rotate(90deg);
+}
+.rotate-0 {
+    transform: rotate(0deg);
+}
+
 .aya-side-menu-color{
     color: #A5F38A;
 }

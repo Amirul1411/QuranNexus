@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\APIDocumentationController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FAQsController;
 use App\Http\Controllers\HomeController;
@@ -37,7 +38,7 @@ Route::get('/Tafseer/{tafseer}', [TafseerController::class, 'show'])->name('tafs
 
 Route::get('/QuranAnalysis', [QuranAnalysisController::class, 'show'])->name('quran_analysis.show');
 
-Route::get('/QuranAnalysis/TokenFrequency/{token_frequency}', [QuranAnalysisController::class, 'tokenFrequencyShow'])->name('token_frequency.show');
+Route::get('/APIDocumentation', [APIDocumentationController::class, 'index'])->name('api_documentation.index');
 
 Route::middleware([
     'auth:sanctum',

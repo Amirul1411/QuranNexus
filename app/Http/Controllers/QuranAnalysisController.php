@@ -11,9 +11,4 @@ class QuranAnalysisController extends Controller
     {
         return view('quran-analysis');
     }
-
-    public function tokenFrequencyShow()
-    {
-        // return view('token-frequency-show');
-    }
 }

@@ -301,7 +301,7 @@
 
                         <x-slot name="content">
                             <!-- Dropdown content -->
-                            <x-dropdown-link href="#">
+                            <x-dropdown-link href="{{ route('api_documentation.index') }}">
                                 {{ __('menu.api_documentation') }}
                             </x-dropdown-link>
                         </x-slot>
