@@ -18,4 +18,6 @@ return [
     'resources' => 'Resources',
     'api_documentation' => 'API Documentation',
     'settings' => 'Settings',
+    'contact_us' => 'Contact Us',
+    'faqs' => 'FAQs',
 ];

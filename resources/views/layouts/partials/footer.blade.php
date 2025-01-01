@@ -3,23 +3,18 @@
     <div class="container mx-auto absolute left-96 top-32 w-2/3">
         <div class="grid grid-cols-3 gap-2 mt-4">
             <p class="font-bold mx-5">{{ __('footer.create_free_account') }}</p>
-            <p class="font-bold mx-5">{{ __('footer.resources') }}</p>
+            <p class="font-bold mx-5">{{ __('footer.services') }}</p>
             <p class="font-bold mx-5">{{ __('footer.support') }}</p>
-        </div>
-        <div class="grid grid-cols-3 gap-2 mt-4 ">
-            <a class="font-bold mx-5 text-gray-500" href="{{ route('home') }}">{{ __('footer.home') }}</a>
-            <p class="font-bold mx-5 text-gray-500">{{ __('footer.services') }}</p>
-            <a class="font-bold mx-5 text-gray-500" href="{{ route('contact') }}">{{ __('footer.contact_us') }}</a>
         </div>
         <div class="grid grid-cols-3 gap-2 mt-4">
             <a class="font-bold mx-5 text-gray-500" href="{{ route('login') }}">{{ __('footer.sign_in') }}</a>
-            <p class="font-bold mx-5 text-gray-500">{{ __('footer.developer_use') }}</p>
-            <a href="{{ route('faqs') }}" class="font-bold mx-5 text-gray-500">{{ __('footer.faqs') }}</a>
+            <a class="font-bold mx-5 text-gray-500" href="{{ route('quran_analysis.show') }}">{{ __('footer.quran_analysis') }}</a>
+            <a class="font-bold mx-5 text-gray-500" href="{{ route('contact') }}">{{ __('footer.contact_us') }}</a>
         </div>
         <div class="grid grid-cols-3 gap-2 mt-4">
-            <p class="font-bold mx-5 text-gray-500">{{ __('footer.about_us') }}</p>
-            <p class="font-bold mx-5 text-gray-500">{{ __('footer.documentation') }}</p>
-            <p class="font-bold mx-5 text-gray-500">{{ __('footer.need_help') }}</p>
+            <a class="font-bold mx-5 text-gray-500" href="{{ route('register') }}">{{ __('footer.register') }}</a>
+            <a class="font-bold mx-5 text-gray-500" href="{{ route('api_documentation.index') }}">{{ __('footer.documentation') }}</a>
+            <a class="font-bold mx-5 text-gray-500" href="{{ route('faqs') }}">{{ __('footer.faqs') }}</a>
         </div>
     </div>
     <div class="footer-copyright mt-12 absolute bottom-0 left-0 right-0 border-t-2 border-gray-600 flex ps-52 items-center">

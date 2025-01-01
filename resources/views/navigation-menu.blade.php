@@ -248,10 +248,32 @@
                         :active="request()->routeIs('home')">
                         {{ __('menu.home') }}
                     </x-nav-link>
-                    <x-nav-link class="{{ Route::is('home') ? 'text-white' : 'text-black' }}"
-                        href="{{ route('contact') }}" :active="request()->routeIs('contact')">
-                        {{ __('menu.contact') }}
-                    </x-nav-link>
+
+                    <!-- Contact Dropdown -->
+                    <x-dropdown align="right" width="48">
+                        <x-slot name="trigger">
+                            <x-nav-link class="{{ Route::is('home') ? 'text-white' : 'text-black' }} cursor-pointer">
+                                {{ __('menu.contact') }}
+                                <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                    fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                        d="M5.23 7.21a.75.75 0 011.06 0L10 10.94l3.71-3.73a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.23 8.27a.75.75 0 010-1.06z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </x-nav-link>
+                        </x-slot>
+
+                        <x-slot name="content">
+                            <!-- Dropdown content -->
+                            <x-dropdown-link href="{{ route('contact') }}">
+                                {{ __('menu.contact_us') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link href="{{ route('faqs') }}">
+                                {{ __('menu.faqs') }}
+                            </x-dropdown-link>
+                        </x-slot>
+                    </x-dropdown>
+                    <!-- End Contact Dropdown -->
 
                     <!-- Services Dropdown -->
                     <x-dropdown align="right" width="48">
