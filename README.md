@@ -139,6 +139,8 @@ Deployment commands:
 php artisan optimize
 php artisan optimize:clear
 
+npm run build
+
 sudo chmod -R 775 /var/app/current/bootstrap/cache
 sudo chmod -R 775 /var/app/current/storage
 
