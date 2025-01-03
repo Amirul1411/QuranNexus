@@ -22,7 +22,7 @@
 </head>
 
 <body
-    class="font-sans antialiased {{ !Route::is('home') && !Route::is('contact') && !Route::is('faqs') && !Route::is('login') && !Route::is('password.reset') && !Route::is('password.request') && !Route::is('register') ? 'background' : 'bg-gray-100' }}">
+    class="font-sans antialiased {{ !Route::is('home') && !Route::is('contact') && !Route::is('faqs') && !Route::is('login') && !Route::is('password.reset') && !Route::is('password.request') && !Route::is('register') && !Route::is('verification.notice') ? 'background' : 'bg-gray-100' }}">
     <x-banner />
 
     @include('layouts.partials.header')
