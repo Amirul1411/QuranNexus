@@ -20,4 +20,8 @@ return [
     'settings' => 'Settings',
     'contact_us' => 'Contact Us',
     'faqs' => 'FAQs',
+    'editor' => 'Editor',
+    'ayah' => 'Ayah',
+    'word' => 'Word',
+    'search' => 'Search',
 ];

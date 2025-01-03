@@ -11,6 +11,11 @@ use App\Http\Controllers\QuranAnalysisController;
 use App\Http\Controllers\SurahInfoController;
 use App\Http\Controllers\TafseerController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\NewPageController;
+use App\Http\Controllers\NewSurahController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\AyahController;
+use App\Http\Controllers\WordController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -49,3 +54,21 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+Route::get('/new-page', [NewPageController::class, 'index']);
+Route::get('/surah/{id}', [NewSurahController::class, 'show']);
+Route::get('/surahs', [NewSurahController::class, 'index']);
+
+Route::get('/basic-search', [SearchController::class, 'basicSearch'])->name('basic-search');
+Route::post('/search', [SearchController::class, 'search'])->name('search.perform');
+Route::get('/advanced-search', [SearchController::class, 'advancedSearch'])->name('advanced-search');
+
+Route::get('/ayah/{ayahKey?}', [AyahController::class, 'index'])->name('ayah.index');
+Route::post('/ayah/{ayahKey}/verify', [AyahController::class, 'verify'])->name('ayah.verify');
+Route::get('/ayah/{ayahKey}/next', [AyahController::class, 'next'])->name('ayah.next');
+Route::get('/ayah/{ayahKey}/back', [AyahController::class, 'back'])->name('ayah.back');
+
+Route::get('/word/{wordKey?}', [WordController::class, 'index'])->name('word.index');
+Route::post('/word/{wordKey}/verify', [WordController::class, 'verify'])->name('word.verify');
+Route::get('/word/{wordKey}/next', [WordController::class, 'next'])->name('word.next');
+Route::get('/word/{wordKey}/back', [WordController::class, 'back'])->name('word.back');

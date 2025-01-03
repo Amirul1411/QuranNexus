@@ -6,7 +6,6 @@ use MongoDB\Laravel\Eloquent\Model;
 
 class Juz extends Model
 {
-
     protected $connection = 'mongodb';
     protected $collection = 'juzs';
 
