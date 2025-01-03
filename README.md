@@ -137,6 +137,7 @@ git commit -m "Track all files in public/audio/Alafasy folder with Git LFS"
 Deployment commands:
 
 php artisan optimize
+php artisan optimize:clear
 
 sudo chmod -R 775 /var/app/current/bootstrap/cache
 sudo chmod -R 775 /var/app/current/storage
