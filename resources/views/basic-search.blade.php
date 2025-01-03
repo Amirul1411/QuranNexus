@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Basic Search</title>
-</head>
-<body class="bg-blue-50 p-8">
+@extends('layouts.app')
+
+@section('title', 'Basic Search')
+
+@section('content')
+<div class="bg-blue-50 p-8">
     <div class="bg-white shadow-lg rounded-lg p-6 max-w-4xl mx-auto">
         <!-- Header -->
         <div class="flex justify-between items-center border-b pb-4">
@@ -62,29 +59,29 @@
             </div>
         </form>
     </div>
+</div>
 
-    <!-- JavaScript for Adding Rows -->
-    <script>
-        let rowIndex = 1; // Keeps track of row indices for dynamic inputs
+<!-- JavaScript for Adding Rows -->
+<script>
+    let rowIndex = 1; // Keeps track of row indices for dynamic inputs
 
-        document.getElementById('add-row').addEventListener('click', function () {
-            const searchRows = document.getElementById('search-rows');
-            const row = document.createElement('div');
-            row.classList.add('flex', 'items-center', 'space-x-4', 'mt-2');
-            row.innerHTML = `
-                <!-- Text Input -->
-                <input
-                    name="conditions[${rowIndex}][value]"
-                    type="text"
-                    placeholder="Example: Al-Fatihah"
-                    class="flex-grow border border-gray-300 p-2 rounded"
-                />
-                <!-- Remove Button -->
-                <button type="button" class="text-red-600 hover:text-red-800" onclick="this.parentElement.remove()">&minus;</button>
-            `;
-            searchRows.appendChild(row);
-            rowIndex++;
-        });
-    </script>
-</body>
-</html>
+    document.getElementById('add-row').addEventListener('click', function () {
+        const searchRows = document.getElementById('search-rows');
+        const row = document.createElement('div');
+        row.classList.add('flex', 'items-center', 'space-x-4', 'mt-2');
+        row.innerHTML = `
+            <!-- Text Input -->
+            <input
+                name="conditions[${rowIndex}][value]"
+                type="text"
+                placeholder="Example: Al-Fatihah"
+                class="flex-grow border border-gray-300 p-2 rounded"
+            />
+            <!-- Remove Button -->
+            <button type="button" class="text-red-600 hover:text-red-800" onclick="this.parentElement.remove()">&minus;</button>
+        `;
+        searchRows.appendChild(row);
+        rowIndex++;
+    });
+</script>
+@endsection

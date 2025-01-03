@@ -24,3 +24,10 @@ Route::get('/ayah/{ayahKey?}', [AyahController::class, 'index'])->name('ayah.ind
 Route::post('/ayah/{ayahKey}/verify', [AyahController::class, 'verify'])->name('ayah.verify');
 Route::get('/ayah/{ayahKey}/next', [AyahController::class, 'next'])->name('ayah.next');
 Route::get('/ayah/{ayahKey}/back', [AyahController::class, 'back'])->name('ayah.back');
+
+use App\Http\Controllers\WordController;
+
+Route::get('/word/{wordKey?}', [WordController::class, 'index'])->name('word.index');
+Route::post('/word/{wordKey}/verify', [WordController::class, 'verify'])->name('word.verify');
+Route::get('/word/{wordKey}/next', [WordController::class, 'next'])->name('word.next');
+Route::get('/word/{wordKey}/back', [WordController::class, 'back'])->name('word.back');

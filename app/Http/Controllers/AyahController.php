@@ -8,29 +8,34 @@ use App\Models\Surah;
 
 class AyahController extends Controller
 {
-    public function index($ayahKey = null)
+    public function index(Request $request)
     {
-        // Fetch the current ayah
-        $ayah = Ayah::where('ayah_key', $ayahKey)->first();
+        // Fetch the list of Surahs
+        $surahs = Surah::all();
 
-        // If no ayah is found, default to Surah 1, Ayah 1
+        // Get selected Surah and Ayah from the request
+        $surahId = $request->get('surah_id', '1');
+        $ayahIndex = $request->get('ayah_index', '1');
+
+        // Fetch the total Ayahs in the selected Surah
+        $totalAyahs = Ayah::where('surah_id', $surahId)->count();
+
+        // Fetch the current Ayah
+        $ayah = Ayah::where('surah_id', $surahId)
+            ->where('ayah_index', $ayahIndex)
+            ->first();
+
+        // If no Ayah is found, default to Surah 1, Ayah 1
         if (!$ayah) {
             $ayah = Ayah::where('ayah_key', '1:1')->first();
         }
 
-        // Use surah_id from the Ayahs collection to query the Surahs collection
-        $surahId = $ayah->surah_id; // Surah ID as a string from the ayahs collection
-
-        // Fetch the Surah document from the Surahs collection
+        // Fetch the Surah name
         $surah = Surah::where('_id', $surahId)->first();
-
-        // Get the tname field or fallback to "Surah X" if not found
         $surahName = $surah ? $surah->tname : "Surah $surahId";
 
-        // Pass data to the view
-        return view('ayah', compact('ayah', 'surahName'));
+        return view('ayah', compact('ayah', 'surahId', 'ayahIndex', 'surahName', 'surahs', 'totalAyahs'));
     }
-
 
     public function verify(Request $request, $ayahKey)
     {
@@ -45,22 +50,18 @@ class AyahController extends Controller
             ]);
         }
 
-        // Redirect to the same ayah or the next one
-        return redirect()->route('ayah.next', ['ayahKey' => $ayahKey]);
+        return redirect()->route('ayah.index', ['surah_id' => $ayah->surah_id, 'ayah_index' => $ayah->ayah_index]);
     }
 
     public function next($ayahKey)
     {
-        // Split the ayah_key into surah_id and ayah_index
         [$currentSurah, $currentAyah] = explode(':', $ayahKey);
 
-        // Fetch the next ayah within the current surah
         $nextAyah = Ayah::where('surah_id', $currentSurah)
             ->where('ayah_index', '>', $currentAyah)
             ->orderBy('ayah_index')
             ->first();
 
-        // If no next ayah exists in the current surah, go to the first ayah of the next surah
         if (!$nextAyah) {
             $nextSurah = Ayah::where('surah_id', '>', $currentSurah)
                 ->orderBy('surah_id')
@@ -73,27 +74,22 @@ class AyahController extends Controller
             }
         }
 
-        // If no next ayah exists, stay on the current one
         if (!$nextAyah) {
-            return redirect()->route('ayah.index', ['ayahKey' => $ayahKey]);
+            return redirect()->route('ayah.index', ['surah_id' => $currentSurah, 'ayah_index' => $currentAyah]);
         }
 
-        // Redirect to the next ayah
-        return redirect()->route('ayah.index', ['ayahKey' => $nextAyah->ayah_key]);
+        return redirect()->route('ayah.index', ['surah_id' => $nextAyah->surah_id, 'ayah_index' => $nextAyah->ayah_index]);
     }
 
     public function back($ayahKey)
     {
-        // Split the ayah_key into surah_id and ayah_index
         [$currentSurah, $currentAyah] = explode(':', $ayahKey);
 
-        // Fetch the previous ayah within the current surah
         $previousAyah = Ayah::where('surah_id', $currentSurah)
             ->where('ayah_index', '<', $currentAyah)
             ->orderBy('ayah_index', 'desc')
             ->first();
 
-        // If no previous ayah exists in the current surah, go to the last ayah of the previous surah
         if (!$previousAyah) {
             $previousSurah = Ayah::where('surah_id', '<', $currentSurah)
                 ->orderBy('surah_id', 'desc')
@@ -106,12 +102,10 @@ class AyahController extends Controller
             }
         }
 
-        // If no previous ayah exists, stay on the current one
         if (!$previousAyah) {
-            return redirect()->route('ayah.index', ['ayahKey' => $ayahKey]);
+            return redirect()->route('ayah.index', ['surah_id' => $currentSurah, 'ayah_index' => $currentAyah]);
         }
 
-        // Redirect to the previous ayah
-        return redirect()->route('ayah.index', ['ayahKey' => $previousAyah->ayah_key]);
+        return redirect()->route('ayah.index', ['surah_id' => $previousAyah->surah_id, 'ayah_index' => $previousAyah->ayah_index]);
     }
 }
