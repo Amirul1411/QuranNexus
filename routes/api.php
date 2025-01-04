@@ -14,6 +14,10 @@ use App\Http\Controllers\Api\V1\APIAudioRecitationInfoController;
 use App\Http\Controllers\Api\V1\APITafseerInfoController;
 use App\Http\Controllers\Api\V1\APITranslationInfoController;
 use App\Http\Controllers\Api\V1\APIAuthController;
+use App\Http\Controllers\Api\V1\APIBookmarkController;
+use App\Http\Controllers\Api\V1\QuizProgressController;
+use App\Http\Middleware\ForceJsonResponse;
+use App\Http\Middleware\LoggingAuthMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,14 +26,34 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::prefix('v1')->group(function () {
+    // Public routes
     Route::post('/register', [APIAuthController::class, 'register']);
     Route::post('/login', [APIAuthController::class, 'login']);
-    
+
     // Protected routes
-    Route::middleware('auth:sanctum')->group(function () {
+    Route::middleware(['auth:sanctum', 'auth.logging'])->group(function () {
+        Route::get('/test', function () {
+            return response()->json([
+                'message' => 'Authenticated successfully',
+                'user' => auth()->user()
+            ]);
+        });
+
         Route::get('/profile', [APIAuthController::class, 'profile']);
         Route::post('/logout', [APIAuthController::class, 'logout']);
+
+        // Quiz routes
+        Route::post('/quiz/start', [QuizProgressController::class, 'startQuiz']);
+        Route::post('/quiz/answer', [QuizProgressController::class, 'submitAnswer']);
+        Route::get('/quiz/progress', [QuizProgressController::class, 'getQuizProgress']);
+        Route::post('/quiz/finish', [QuizProgressController::class, 'finishQuiz']);
     });
+});
+
+Route::prefix('mobile')->group(function () {
+    Route::get('/bookmarks/{userId}', [APIBookmarkController::class, 'getBookmarks']);
+    Route::post('/users/{userId}/bookmarks', [APIBookmarkController::class, 'addBookmark']);
+    Route::delete('/users/{userId}/bookmarks/{bookmarkId}', [APIBookmarkController::class, 'removeBookmark']);
 });
 
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], function(){

@@ -15,7 +15,8 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Sanctum\PersonalAccessToken;
-
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 class User extends Authenticatable implements FilamentUser
 {
     use HasApiTokens;
@@ -25,6 +26,7 @@ class User extends Authenticatable implements FilamentUser
     // use TwoFactorAuthenticatable;
 
     protected $connection = 'mongodb';
+    protected $collection = 'users';
     
     /**
      * Get the class name for the personal access token model.
@@ -37,7 +39,7 @@ class User extends Authenticatable implements FilamentUser
             'tokenable_type' => static::class,
             'tokenable_id' => $this->_id,
             'name' => $name,
-            'token' => hash('sha256', $plainTextToken = \Illuminate\Support\Str::random(40)),
+            'token' => hash('sha256', $plainTextToken = Str::random(40)),
             'abilities' => $abilities,
         ]);
     }
@@ -52,7 +54,51 @@ class User extends Authenticatable implements FilamentUser
         self::ROLE_EDITOR => 'Editor',
         self::ROLE_USER => 'User',
     ];
-
+    public function createToken(string $name, array $abilities = ['*'])
+    {
+        $plainTextToken = Str::random(40);
+        $hashedToken = hash('sha256', $plainTextToken);
+        
+        Log::info('Creating new token', [
+            'plain_length' => strlen($plainTextToken),
+            'hash_length' => strlen($hashedToken)
+        ]);
+    
+        $token = $this->tokens()->create([
+            'name' => $name,
+            'token' => $hashedToken,
+            'abilities' => $abilities,
+            'tokenable_type' => static::class,
+            'tokenable_id' => $this->_id
+        ]);
+    
+        Log::info('Token created', [
+            'token_id' => $token->_id,
+            'user_id' => $this->_id,
+            'stored_hash_length' => strlen($token->token)
+        ]);
+    
+        // Create the full token string
+        $fullToken = $token->_id . '|' . $plainTextToken;
+        
+        Log::info('Full token created', [
+            'full_token_length' => strlen($fullToken)
+        ]);
+    
+        return new \Laravel\Sanctum\NewAccessToken(
+            $token, 
+            $fullToken
+        );
+    }
+    public function tokens()
+    {
+        return $this->morphMany(
+            PersonalAccessToken::class,
+            'tokenable',
+            'tokenable_type',
+            'tokenable_id'
+        );
+    }
     public function canAccessPanel(Panel $panel): bool
     {
         return $this->can('view-admin', User::class);
