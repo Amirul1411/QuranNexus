@@ -12,27 +12,18 @@ class Authenticate extends BaseAuthenticate
     public function handle($request, Closure $next, ...$guards)
     {
         try {
-            // Log the auth header for debugging
             Log::info('Auth attempt', [
                 'header' => $request->header('Authorization'),
-                'token' => $request->bearerToken()
+                'token' => $request->bearerToken(),
+                'guards' => $guards
             ]);
 
-            if (!$request->header('Authorization')) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'No authorization header found'
-                ], 401);
-            }
-
-            if (!str_starts_with($request->header('Authorization'), 'Bearer ')) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Invalid authorization header format. Must start with "Bearer "'
-                ], 401);
-            }
-
             $this->authenticate($request, $guards);
+            
+            Log::info('User authenticated', [
+                'user' => auth()->user() ? auth()->user()->_id : null
+            ]);
+
             return $next($request);
         } catch (\Exception $e) {
             Log::error('Authentication failed', [
@@ -42,9 +33,24 @@ class Authenticate extends BaseAuthenticate
             
             return response()->json([
                 'status' => 'error',
-                'message' => 'Unauthenticatedd',
+                'message' => 'Unauthenticated',
                 'details' => $e->getMessage()
             ], 401);
         }
+    }
+
+    protected function authenticate($request, array $guards)
+    {
+        if (empty($guards)) {
+            $guards = [null];
+        }
+
+        foreach ($guards as $guard) {
+            if ($this->auth->guard($guard)->check()) {
+                return $this->auth->shouldUse($guard);
+            }
+        }
+
+        $this->unauthenticated($request, $guards);
     }
 }

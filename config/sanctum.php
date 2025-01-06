@@ -100,12 +100,6 @@ return [
     ))),
 
     'guard' => ['web'],
-
-
-    'middleware' => [
-        'verify_csrf_token' => App\Http\Middleware\VerifyCsrfToken::class,
-        'encrypt_cookies' => App\Http\Middleware\EncryptCookies::class,
-    ],
     'expiration' => null,  // Make sure this is null or a high number for testing
     'token_prefix' => '',  // Make sure this is empty
     'prefix' => 'api',

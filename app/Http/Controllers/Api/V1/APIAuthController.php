@@ -49,9 +49,9 @@ class APIAuthController extends Controller
 
             return response()->json([
                 'message' => 'Registration successful',
-                'token' => $token->_id . '|' . $plainTextToken,
+                'token' => (string)$token->_id . '|' . $plainTextToken,
                 'user' => [
-                    'id' => $user->_id,
+                    'id' => (string)$user->_id,
                     'name' => $user->name,
                     'email' => $user->email,
                     'role' => $user->role
@@ -81,20 +81,20 @@ class APIAuthController extends Controller
                 'password' => 'required',
                 'device_name' => 'required',
             ]);
-
+    
             $user = User::where('email', $request->email)->first();
-
+    
             if (!$user || !Hash::check($request->password, $user->password)) {
                 throw ValidationException::withMessages([
                     'email' => ['The provided credentials are incorrect.'],
                 ]);
             }
-
+    
             // Delete any existing tokens for this device
             PersonalAccessToken::where('tokenable_id', $user->_id)
                 ->where('name', $request->device_name)
                 ->delete();
-
+    
             // Create new token
             $plainTextToken = Str::random(40);
             
@@ -104,82 +104,85 @@ class APIAuthController extends Controller
             $token->name = $request->device_name;
             $token->token = hash('sha256', $plainTextToken);
             $token->abilities = ['*'];
-            $token->save();
-
+            
+            // Log before save
+            Log::info('Before save:', [
+                'token_model' => $token->toArray()
+            ]);
+            
+            $saved = $token->save();
+            
+            // Log after save
+            Log::info('After save:', [
+                'save_result' => $saved,
+                'token_id' => $token->_id,
+                'token_attributes' => $token->getAttributes()
+            ]);
+    
+            // Try different ways to get the token ID
+            $mongoId = $token->getKey();
+            $rawId = $token->getAttribute('_id');
+            
+            Log::info('ID checks:', [
+                'mongo_id' => $mongoId,
+                'raw_id' => $rawId,
+                'direct_id' => $token->_id
+            ]);
+    
+            // Get the latest token for this user/device
+            $latestToken = PersonalAccessToken::where('tokenable_id', $user->_id)
+                                            ->where('name', $request->device_name)
+                                            ->orderBy('created_at', 'desc')
+                                            ->first();
+            
+            Log::info('Latest token:', [
+                'found' => !is_null($latestToken),
+                'token_details' => $latestToken ? $latestToken->toArray() : null
+            ]);
+    
+            if (!$latestToken) {
+                throw new \Exception('Token was not saved successfully');
+            }
+    
+            $fullToken = $latestToken->_id . '|' . $plainTextToken;
+    
             return response()->json([
-                'token' => $token->_id . '|' . $plainTextToken,
+                'token' => $fullToken,
                 'user' => [
-                    'id' => $user->_id,
+                    'id' => (string)$user->_id,
                     'name' => $user->name,
                     'email' => $user->email,
                     'role' => $user->role
                 ]
             ]);
-
-        } catch (ValidationException $e) {
-            Log::error('Login validation failed', ['errors' => $e->errors()]);
-            return response()->json([
-                'message' => 'Validation failed',
-                'errors' => $e->errors(),
-            ], 422);
+    
         } catch (\Exception $e) {
-            Log::error('Login failed', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
+            Log::error('Login failed', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
             return response()->json([
                 'message' => 'Login failed',
                 'error' => $e->getMessage()
             ], 500);
         }
-    }
+    }  
+    
     public function profile(Request $request)
     {
         try {
-            // Debug logging for token
-            $bearerToken = $request->bearerToken();
-            \Log::debug('Token debug', [
-                'has_bearer_token' => !empty($bearerToken),
-                'token' => $bearerToken
-            ]);
-    
-            if ($bearerToken) {
-                // Split and check token parts
-                $parts = explode('|', $bearerToken);
-                \Log::debug('Token parts', [
-                    'parts_count' => count($parts),
-                    'token_id' => $parts[0] ?? null
-                ]);
-    
-                if (count($parts) === 2) {
-                    $tokenId = $parts[0];
-                    // Check if token exists in DB
-                    $token = PersonalAccessToken::find($tokenId);
-                    \Log::debug('Token lookup', [
-                        'token_found' => !is_null($token),
-                        'token_details' => $token ? [
-                            'id' => $token->_id,
-                            'tokenable_id' => $token->tokenable_id,
-                            'name' => $token->name
-                        ] : null
-                    ]);
-                }
-            }
-    
-            $user = $request->user();
-            \Log::debug('User check', [
-                'has_user' => !is_null($user),
-                'user_details' => $user ? [
-                    'id' => $user->_id,
-                    'email' => $user->email
-                ] : null
+            $user = auth()->user();
+            
+            Log::info('Profile request', [
+                'auth_user' => $user ? $user->_id : null,
+                'request_user' => $request->user() ? $request->user()->_id : null,
+                'auth_check' => auth()->check()
             ]);
     
             if (!$user) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Unauthenticated',
-                    'debug_info' => [
-                        'has_token' => !empty($bearerToken),
-                        'token_format_valid' => !empty($bearerToken) && str_contains($bearerToken, '|')
-                    ]
+                    'message' => 'User not found'
                 ], 401);
             }
     
@@ -194,19 +197,18 @@ class APIAuthController extends Controller
                 ]
             ]);
         } catch (\Exception $e) {
-            \Log::error('Profile error', [
+            Log::error('Profile error', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);
-    
+            
             return response()->json([
                 'status' => 'error',
                 'message' => 'Error fetching profile',
-                'debug_info' => $e->getMessage()
+                'details' => $e->getMessage()
             ], 500);
         }
     }
-
     public function logout(Request $request)
     {
         try {

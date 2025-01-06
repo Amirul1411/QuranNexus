@@ -4,11 +4,16 @@ namespace App\Models;
 
 use MongoDB\Laravel\Eloquent\Model;
 use Laravel\Sanctum\Contracts\HasAbilities;
+use MongoDB\BSON\ObjectId;
 use Illuminate\Support\Facades\Log;
+
 class PersonalAccessToken extends Model implements HasAbilities
 {
     protected $connection = 'mongodb';
     protected $collection = 'personal_access_tokens';
+    protected $primaryKey = '_id';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = [
         'name',
@@ -16,8 +21,6 @@ class PersonalAccessToken extends Model implements HasAbilities
         'abilities',
         'tokenable_type',
         'tokenable_id',
-        'last_used_at',
-        'expires_at'
     ];
 
     protected $casts = [
@@ -25,11 +28,18 @@ class PersonalAccessToken extends Model implements HasAbilities
         'last_used_at' => 'datetime',
         'expires_at' => 'datetime',
     ];
-
+    public function getIdAttribute($value = null)
+    {
+        return (string)$value;
+    }
+    public function getIdString()
+    {
+        return (string)$this->_id;
+    }
     public static function findToken($token)
     {
         Log::info('Starting token verification', [
-            'received_token' => $token
+            'token_length' => strlen($token)
         ]);
 
         if (strpos($token, '|') === false) {
@@ -44,36 +54,31 @@ class PersonalAccessToken extends Model implements HasAbilities
             'plain_text_length' => strlen($plainTextToken)
         ]);
 
-        // Find token record by ID
         $instance = static::find($id);
         
         if (!$instance) {
-            Log::error('Token record not found for ID', ['id' => $id]);
+            Log::error('Token not found', ['id' => $id]);
             return null;
         }
 
-        Log::info('Token record found', [
-            'stored_token_length' => strlen($instance->token),
+        Log::info('Token found', [
+            'id' => (string)$instance->_id,
             'tokenable_type' => $instance->tokenable_type,
             'tokenable_id' => $instance->tokenable_id
         ]);
 
-        // Hash the received plain text token
         $hashedReceived = hash('sha256', $plainTextToken);
         
-        Log::info('Token comparison', [
-            'hashed_received' => $hashedReceived,
-            'stored_hash' => $instance->token,
-            'match' => hash_equals($instance->token, $hashedReceived)
-        ]);
-
-        if (hash_equals($instance->token, $hashedReceived)) {
-            Log::info('Token verified successfully');
-            return $instance;
+        if (!hash_equals($instance->token, $hashedReceived)) {
+            Log::error('Token hash mismatch', [
+                'stored' => $instance->token,
+                'received' => $hashedReceived
+            ]);
+            return null;
         }
 
-        Log::error('Token hash mismatch');
-        return null;
+        Log::info('Token verified successfully');
+        return $instance;
     }
 
     public function tokenable()

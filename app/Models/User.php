@@ -27,7 +27,10 @@ class User extends Authenticatable implements FilamentUser
 
     protected $connection = 'mongodb';
     protected $collection = 'users';
-    
+    protected $primaryKey = '_id';
+    public $incrementing = false;
+    protected $keyType = 'string';
+
     /**
      * Get the class name for the personal access token model.
      *
@@ -44,6 +47,26 @@ class User extends Authenticatable implements FilamentUser
         ]);
     }
 
+    public function currentAccessToken()
+    {
+        return $this->accessToken;
+    }
+
+    public static function findById($id)
+    {
+        Log::info('Finding user by ID', ['id' => $id]);
+        return static::where('_id', $id)->first();
+    }
+    
+    public function tokens()
+    {
+        return $this->morphMany(
+            PersonalAccessToken::class,
+            'tokenable',
+            'tokenable_type',
+            'tokenable_id'
+        );
+    }
     const ROLE_ADMIN = 'ADMIN';
     const ROLE_EDITOR = 'EDITOR';
     const ROLE_USER = 'USER';
@@ -90,15 +113,7 @@ class User extends Authenticatable implements FilamentUser
             $fullToken
         );
     }
-    public function tokens()
-    {
-        return $this->morphMany(
-            PersonalAccessToken::class,
-            'tokenable',
-            'tokenable_type',
-            'tokenable_id'
-        );
-    }
+   
     public function canAccessPanel(Panel $panel): bool
     {
         return $this->can('view-admin', User::class);
