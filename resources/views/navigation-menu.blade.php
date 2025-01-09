@@ -356,6 +356,9 @@
                                 <x-dropdown-link href="{{ route('basic-search') }}">
                                     {{ __('menu.search') }}
                                 </x-dropdown-link>
+                                <x-dropdown-link href="{{ route('translation.index') }}">
+                                    {{ __('menu.translation') }}
+                                </x-dropdown-link>
                             </x-slot>
                         </x-dropdown>
                     @endcan

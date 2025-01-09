@@ -1,5 +1,5 @@
 <x-app-layout title="Advanced Search Query Builder">
-    <div class="bg-blue-50 p-8 w-full h-screen">
+    <div class="w-full h-screen" style="background: linear-gradient(90deg, #86D6C3 0%, #75FF9C 100%); padding-top: 80px;">
         <!-- Back to Basic Search -->
         <div class="mb-4">
             <a href="{{ route('basic-search') }}" class="text-blue-600 hover:underline text-sm font-semibold">

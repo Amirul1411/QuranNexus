@@ -24,4 +24,5 @@ return [
     'ayah' => 'Ayah',
     'word' => 'Word',
     'search' => 'Search',
+    'translation' => 'Translation',
 ];
