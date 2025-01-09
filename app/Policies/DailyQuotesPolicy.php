@@ -2,10 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\Achievement;
+use App\Models\DailyQuotes;
 use App\Models\User;
 
-class AchievementPolicy
+class DailyQuotesPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -18,7 +18,7 @@ class AchievementPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Achievement $achievement): bool
+    public function view(User $user, DailyQuotes $dailyQuotes): bool
     {
         return $user->isAdmin();
     }
@@ -34,7 +34,7 @@ class AchievementPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Achievement $achievement): bool
+    public function update(User $user, DailyQuotes $dailyQuotes): bool
     {
         return $user->isAdmin();
     }
@@ -42,7 +42,7 @@ class AchievementPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Achievement $achievement): bool
+    public function delete(User $user, DailyQuotes $dailyQuotes): bool
     {
         return $user->isAdmin();
     }
@@ -50,7 +50,7 @@ class AchievementPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Achievement $achievement): bool
+    public function restore(User $user, DailyQuotes $dailyQuotes): bool
     {
         return $user->isAdmin();
     }
@@ -58,7 +58,7 @@ class AchievementPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Achievement $achievement): bool
+    public function forceDelete(User $user, DailyQuotes $dailyQuotes): bool
     {
         return $user->isAdmin();
     }
