@@ -2,11 +2,13 @@
 
 namespace App\Livewire;
 
+use Livewire\WithPagination;
 use App\Models\Tafseer;
 use Livewire\Component;
 
 class RecitationByAyah extends Component
 {
+    use WithPagination;
 
     public $surah;
 
@@ -53,10 +55,24 @@ class RecitationByAyah extends Component
 
     public function render()
     {
+
+        if($this->surah != null) {
+            $ayahs = $this->surah->ayahs()->paginate(10);
+        }
+
+        if($this->page != null) {
+            $ayahs = $this->page->ayahs()->paginate(10);
+        }
+
+        if($this->juz != null) {
+            $ayahs = $this->juz->ayahs()->paginate(10);
+        }
+
         return view('livewire.recitation-by-ayah', [
             'surah' => $this->surah,
             'page' => $this->page,
             'juz' => $this->juz,
+            'ayahs' => $ayahs,
         ]);
     }
 }
