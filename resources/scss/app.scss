@@ -1,4 +1,4 @@
-$footer-color: mix(#0A2625, #67D6CA, 100%);
+$footer-color: mix(#02584A, #67D6CA, 100%);
 $button-color: mix(#78C2AD, #FFFFFF, 100%);
 
 
@@ -47,7 +47,8 @@ $button-color: mix(#78C2AD, #FFFFFF, 100%);
 }
 
 .background{
-    background-color: #2D6360;
+    // background-color: #2D6360;
+    background-image: linear-gradient(to top right, #86D6C3, #75FF9C);
 }
 
 .modal-bg{

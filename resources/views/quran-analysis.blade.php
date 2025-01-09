@@ -6,33 +6,33 @@
     </x-slot>
     <div class="my-24 mx-20 w-full" x-data="{ quranAnalysisActiveOption: $persist('') }">
         <div class="flex gap-2 justify-center my-5">
-            <x-button borderColor="border-gray-300" bg="bg-gray-200" text="text-gray-800" activeBg="bg-gray-300"
-                hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800"
+            <x-button :class="{'text-green-400': quranAnalysisActiveOption = 'chaptersInitials'}" borderColor="border-gray-300" bg="bg-gray-200" text="text-gray-800" activeBg="bg-gray-300"
+                hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800" class="transform transition-transform duration-300 hover:scale-105"
                 @click="quranAnalysisActiveOption = 'chaptersInitials'">
                 {{ __('quran_analysis.chapters_initials') }}
             </x-button>
-            <x-button borderColor="border-gray-300" bg="bg-gray-200" text="text-gray-800" activeBg="bg-gray-300"
-                hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800"
+            <x-button :class="{'text-green-400': quranAnalysisActiveOption = 'characterFrequency'}" borderColor="border-gray-300" bg="bg-gray-200" text="text-gray-800" activeBg="bg-gray-300"
+                hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800" class="transform transition-transform duration-300 hover:scale-105"
                 @click="quranAnalysisActiveOption = 'characterFrequency'">
                 {{ __('quran_analysis.character_frequency') }}
             </x-button>
-            <x-button borderColor="border-gray-300" bg="bg-gray-200" text="text-gray-800" activeBg="bg-gray-300"
-                hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800"
+            <x-button :class="{'text-green-400': quranAnalysisActiveOption = 'longestToken'}" borderColor="border-gray-300" bg="bg-gray-200" text="text-gray-800" activeBg="bg-gray-300"
+                hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800" class="transform transition-transform duration-300 hover:scale-105"
                 @click="quranAnalysisActiveOption = 'longestToken'">
                 {{ __('quran_analysis.longest_token') }}
             </x-button>
-            <x-button borderColor="border-gray-300" bg="bg-gray-200" text="text-gray-800" activeBg="bg-gray-300"
-                hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800"
+            <x-button :class="{'text-green-400': quranAnalysisActiveOption = 'verseCount'}" borderColor="border-gray-300" bg="bg-gray-200" text="text-gray-800" activeBg="bg-gray-300"
+                hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800" class="transform transition-transform duration-300 hover:scale-105"
                 @click="quranAnalysisActiveOption = 'verseCount'">
                 {{ __('quran_analysis.verse_count') }}
             </x-button>
-            <x-button borderColor="border-gray-300" bg="bg-gray-200" text="text-gray-800" activeBg="bg-gray-300"
-                hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800"
+            <x-button :class="{'text-green-400': quranAnalysisActiveOption = 'diacriticFrequency'}" borderColor="border-gray-300" bg="bg-gray-200" text="text-gray-800" activeBg="bg-gray-300"
+                hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800" class="transform transition-transform duration-300 hover:scale-105"
                 @click="quranAnalysisActiveOption = 'diacriticFrequency'">
                 {{ __('quran_analysis.diacritic_frequency') }}
             </x-button>
-            {{-- <x-button borderColor="border-gray-300" bg="bg-gray-200" text="text-gray-800" activeBg="bg-gray-300"
-                hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800"
+            {{-- <x-button :class="{'text-green-400': quranAnalysisActiveOption = 'chaptersInitials'}" borderColor="border-gray-300" bg="bg-gray-200" text="text-gray-800" activeBg="bg-gray-300"
+                hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800" class="transform transition-transform duration-300 hover:scale-105"
                 @click="quranAnalysisActiveOption = 'irab'">
                 {{ __('quran_analysis.irab') }}
             </x-button> --}}

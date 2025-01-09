@@ -24,7 +24,7 @@
             {{-- Close button --}}
             <button @click="open = false" class="text-black">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-6">
+                    stroke="currentColor" class="size-6 transform transition-transform duration-300 hover:scale-125">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                 </svg>
             </button>
@@ -47,7 +47,7 @@
                                 <x-slot name="trigger">
                                     <x-button type="button" borderColor="border-gray-300" bg="bg-gray-200" text="text-gray-800" activeBg="bg-gray-300"
                                     hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800"
-                                        class="text-black cursor-pointer w-[15rem] flex h-auto">
+                                        class="text-black cursor-pointer w-[15rem] flex h-auto transform transition-transform duration-300 hover:scale-105">
                                         <div class="w-5/6">
                                             {{ $this->selectedTafseerNameAndLanguage ?? __('Choose Tafseer') }}
                                         </div>
@@ -80,7 +80,7 @@
                                 <x-slot name="trigger">
                                     <x-button type="button" borderColor="border-gray-300" bg="bg-gray-200" text="text-gray-800" activeBg="bg-gray-300"
                                     hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800"
-                                        class="cursor-pointer w-[15rem] flex h-auto">
+                                        class="cursor-pointer w-[15rem] flex h-auto transform transition-transform duration-300 hover:scale-105">
                                         <div class="w-5/6">
                                             {{ $this->selectedTranslationNameAndLanguage ?? __('Choose Translation') }}
 
@@ -114,7 +114,7 @@
                                 <x-slot name="trigger">
                                     <x-button type="button" borderColor="border-gray-300" bg="bg-gray-200" text="text-gray-800" activeBg="bg-gray-300"
                                     hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800"
-                                        class="cursor-pointer w-[15rem] flex h-auto">
+                                        class="cursor-pointer w-[15rem] flex h-auto transform transition-transform duration-300 hover:scale-105">
                                         <div class="w-5/6">
                                             {{ $this->selectedAudioRecitationName ?? __('Choose Audio Recitation') }}
                                         </div>
@@ -182,7 +182,7 @@
 
 
             <x-slot name="actions">
-                <x-button bg="bg-gradient-to-r from-light-green via-light-green-teal via-56 to-teal" text="text-gray-800" activeBg="bg-gray-300"
+                <x-button bg="bg-gradient-to-r from-light-green via-light-green-teal via-56 to-teal transform transition-transform duration-300 hover:scale-105" text="text-gray-800" activeBg="bg-gray-300"
                 hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800" borderWidth="border-0"
                     class="font-serif">
                     {{ __('Save Settings') }}
