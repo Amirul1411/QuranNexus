@@ -1,5 +1,5 @@
 <x-app-layout title="Basic Search">
-    <div class="bg-blue-50 p-8 w-full h-screen">
+    <div class="w-full h-screen" style="background: linear-gradient(90deg, #86D6C3 0%, #75FF9C 100%); padding-top: 80px;">
         <div class="bg-white shadow-lg rounded-lg p-6 max-w-4xl mx-auto">
             <!-- Header -->
             <div class="flex justify-between items-center border-b pb-4">

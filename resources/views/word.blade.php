@@ -1,8 +1,8 @@
 <x-app-layout title="Word by Word Verification">
-    <div class="flex justify-center items-center h-screen bg-gray-50 w-full">
-        <div class="bg-[#2D6360] rounded-lg p-8 shadow-lg w-3/4 max-w-4xl">
+    <div class="flex justify-center items-center h-screen w-full" style="background: linear-gradient(90deg, #86D6C3 0%, #75FF9C 100%);">
+        <div class="bg-[#BCFFCE] rounded-lg p-8 shadow-lg w-3/4 max-w-4xl">
             <!-- Page Title -->
-            <h1 class="text-center text-3xl font-bold text-white mb-6">
+            <h1 class="text-center text-3xl font-bold text-[#2D6360] mb-6">
                 Word by Word Verification
             </h1>
 
@@ -12,7 +12,7 @@
                     <div class="flex justify-center space-x-4 items-center">
                         <!-- Surah Dropdown -->
                         <select name="surah_id" id="surah-dropdown"
-                            class="p-2 rounded border border-gray-300 focus:ring focus:ring-[#4CAF50]">
+                            class="p-2 rounded border border-gray-300 focus:ring focus:ring-[#4CAF50] appearance-none bg-white pr-8">
                             @foreach ($surahs as $surah)
                                 <option value="{{ $surah->_id }}" {{ $surah->_id == $surahId ? 'selected' : '' }}>
                                     {{ $surah->tname }}
@@ -22,7 +22,7 @@
 
                         <!-- Ayah Dropdown -->
                         <select name="ayah_index" id="ayah-dropdown"
-                            class="p-2 rounded border border-gray-300 focus:ring focus:ring-[#4CAF50]">
+                            class="p-2 rounded border border-gray-300 focus:ring focus:ring-[#4CAF50] appearance-none bg-white pr-8">
                             @for ($i = 1; $i <= $totalAyahs; $i++)
                                 <option value="{{ $i }}" {{ $i == $ayahIndex ? 'selected' : '' }}>
                                     Ayah {{ $i }}
@@ -32,7 +32,7 @@
 
                         <!-- Word Dropdown -->
                         <select name="word_index" id="word-dropdown"
-                            class="p-2 rounded border border-gray-300 focus:ring focus:ring-[#4CAF50]">
+                            class="p-2 rounded border border-gray-300 focus:ring focus:ring-[#4CAF50] appearance-none bg-white pr-8">
                             @for ($i = 1; $i <= $totalWords; $i++)
                                 <option value="{{ $i }}" {{ $i == $word->word_index ? 'selected' : '' }}>
                                     Word {{ $i }}

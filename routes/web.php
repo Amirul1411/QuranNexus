@@ -16,6 +16,7 @@ use App\Http\Controllers\NewSurahController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\AyahController;
 use App\Http\Controllers\WordController;
+use App\Http\Controllers\TranslationController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -72,3 +73,8 @@ Route::get('/word/{wordKey?}', [WordController::class, 'index'])->name('word.ind
 Route::post('/word/{wordKey}/verify', [WordController::class, 'verify'])->name('word.verify');
 Route::get('/word/{wordKey}/next', [WordController::class, 'next'])->name('word.next');
 Route::get('/word/{wordKey}/back', [WordController::class, 'back'])->name('word.back');
+
+Route::get('/translation', [TranslationController::class, 'index'])->name('translation.index');
+Route::post('/translation/verify/{ayahKey}', [TranslationController::class, 'verify'])->name('translation.verify');
+Route::get('/translation/next/{ayahKey}', [TranslationController::class, 'next'])->name('translation.next');
+Route::get('/translation/back/{ayahKey}', [TranslationController::class, 'back'])->name('translation.back');
