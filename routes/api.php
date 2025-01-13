@@ -98,26 +98,27 @@ Route::prefix('v1')->group(function () {
     //         Route::post('/logout', [APIAuthController::class, 'logout']);
 
     //     });
-    //     // Quiz routes
-    //     Route::post('/quiz/start', [QuizProgressController::class, 'startQuiz']);
-    //     Route::post('/quiz/answer', [QuizProgressController::class, 'submitAnswer']);
-    //     Route::get('/quiz/progress', [QuizProgressController::class, 'getQuizProgress']);
-    //     Route::post('/quiz/finish', [QuizProgressController::class, 'finishQuiz']);
+
     // });
 
     Route::middleware(['auth.logging'])->group(function () {
         Route::get('/profile', [APIAuthController::class, 'profile']);
-        // ... other authenticated routes
+        // Quiz routes
+        Route::post('/quiz/start', [QuizProgressController::class, 'startQuiz']);
+        Route::post('/quiz/answer', [QuizProgressController::class, 'submitAnswer']);
+        Route::post('/quiz/submit-batch', [QuizProgressController::class, 'submitBatchAnswers']);
+        Route::get('/quiz/progress', [QuizProgressController::class, 'getQuizProgress']);
+        Route::post('/quiz/finish', [QuizProgressController::class, 'finishQuiz']);
+
+        Route::prefix('mobile')->group(function () {
+                Route::get('/bookmarks', [APIBookmarkController::class, 'getBookmarks']);
+                Route::post('/bookmarks', [APIBookmarkController::class, 'addBookmark']);
+                Route::delete('/bookmarks/{type}/{itemId}', [APIBookmarkController::class, 'removeBookmark']);
+        });
+
     });
 });
 
-
-
-Route::prefix('mobile')->group(function () {
-    Route::get('/bookmarks/{userId}', [APIBookmarkController::class, 'getBookmarks']);
-    Route::post('/users/{userId}/bookmarks', [APIBookmarkController::class, 'addBookmark']);
-    Route::delete('/users/{userId}/bookmarks/{bookmarkId}', [APIBookmarkController::class, 'removeBookmark']);
-});
 
 
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], function(){

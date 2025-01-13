@@ -171,19 +171,23 @@ class APIAuthController extends Controller
     public function profile(Request $request)
     {
         try {
-            $user = auth()->user();
+            $user = $request->user();
             
-            Log::info('Profile request', [
-                'auth_user' => $user ? $user->_id : null,
-                'request_user' => $request->user() ? $request->user()->_id : null,
-                'auth_check' => auth()->check()
-            ]);
-    
             if (!$user) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'User not found'
+                    'message' => 'Unauthenticated'
                 ], 401);
+            }
+
+            // Format the quiz_progress data
+            $quizProgress = $user->quiz_progress ?? [];
+            foreach ($quizProgress as &$quiz) {
+                // Ensure answers is always an array
+                $quiz['answers'] = $quiz['answers'] ?? [];
+                // Ensure start_time and end_time are strings
+                $quiz['start_time'] = is_string($quiz['start_time']) ? $quiz['start_time'] : null;
+                $quiz['end_time'] = is_string($quiz['end_time']) ? $quiz['end_time'] : null;
             }
     
             return response()->json([
@@ -193,7 +197,14 @@ class APIAuthController extends Controller
                     'name' => $user->name,
                     'email' => $user->email,
                     'role' => $user->role,
-                    'settings' => $user->settings ?? []
+                    'settings' => $user->settings ?? [],
+                    'recitationTimes' => $user->recitation_times ?? [],
+                    'recitationStreak' => $user->recitation_streak ?? 0,
+                    'lastRecitationDate' => $user->last_recitation_date,
+                    'recitationGoal' => $user->recitation_goal,
+                    'quiz_progress' => $quizProgress,
+                    'created_at' => $user->created_at?->toDateTimeString(),
+                    'updated_at' => $user->updated_at?->toDateTimeString()
                 ]
             ]);
         } catch (\Exception $e) {
@@ -201,14 +212,15 @@ class APIAuthController extends Controller
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);
-            
+    
             return response()->json([
                 'status' => 'error',
                 'message' => 'Error fetching profile',
-                'details' => $e->getMessage()
+                'debug_info' => $e->getMessage()
             ], 500);
         }
     }
+
     public function logout(Request $request)
     {
         try {

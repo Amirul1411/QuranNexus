@@ -134,7 +134,7 @@ class User extends Authenticatable implements FilamentUser
      *
      * @var array<int, string>
      */
-    protected $fillable = ['_id', 'name', 'email', 'password', 'role', 'recitation_times', 'recitation_streak', 'last_recitation_date', 'settings', 'recitation_goal'];
+    protected $fillable = ['_id', 'name', 'email', 'password', 'role', 'recitation_times', 'recitation_streak', 'last_recitation_date', 'settings', 'recitation_goal', 'quiz_progress' ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -161,6 +161,7 @@ class User extends Authenticatable implements FilamentUser
             'email_verified_at' => 'datetime',
             'created_at' => 'datetime',
             'password' => 'hashed',
+          
         ];
     }
 
@@ -339,5 +340,33 @@ class User extends Authenticatable implements FilamentUser
                 'recitation_streak' => $this->attributes['recitation_streak'],
             ]);
         }
+    }
+    public function updateQuizProgress($surahId, $data)
+    {
+        $quizProgress = $this->quiz_progress ?? [];
+        
+        // Find existing quiz progress for this surah
+        $index = collect($quizProgress)->search(function ($item) use ($surahId) {
+            return $item['surah_id'] === $surahId;
+        });
+
+        // Ensure datetime fields are properly formatted
+        if (isset($data['start_time'])) {
+            $data['start_time'] = Carbon::now()->toDateTimeString();
+        }
+        if (isset($data['end_time']) && $data['end_time'] !== null) {
+            $data['end_time'] = Carbon::now()->toDateTimeString();
+        }
+        
+        if ($index !== false) {
+            $quizProgress[$index] = array_merge($quizProgress[$index], $data);
+        } else {
+            $quizProgress[] = $data;
+        }
+        
+        $this->quiz_progress = $quizProgress;
+        $this->save();
+        
+        return $this->fresh();
     }
 }
