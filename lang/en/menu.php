@@ -25,4 +25,5 @@ return [
     'word' => 'Word',
     'search' => 'Search',
     'translation' => 'Translation',
+    'upload' => 'Upload',
 ];

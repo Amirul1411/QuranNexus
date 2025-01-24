@@ -17,6 +17,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\AyahController;
 use App\Http\Controllers\WordController;
 use App\Http\Controllers\TranslationController;
+use App\Http\Controllers\UploadController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -78,3 +79,7 @@ Route::get('/translation', [TranslationController::class, 'index'])->name('trans
 Route::post('/translation/verify/{ayahKey}', [TranslationController::class, 'verify'])->name('translation.verify');
 Route::get('/translation/next/{ayahKey}', [TranslationController::class, 'next'])->name('translation.next');
 Route::get('/translation/back/{ayahKey}', [TranslationController::class, 'back'])->name('translation.back');
+
+Route::get('/upload', [UploadController::class, 'index'])->name('upload.index');
+Route::get('/upload/template', [UploadController::class, 'downloadTemplate'])->name('upload.downloadTemplate');
+Route::post('/upload/store', [UploadController::class, 'store'])->name('upload.store');
