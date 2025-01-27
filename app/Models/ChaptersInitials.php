@@ -14,7 +14,7 @@ class ChaptersInitials extends Model
     {
         try {
 
-            require 'http://13.229.243.29:8080/JavaBridge/java/Java.inc';
+            require 'http://localhost:8080/JavaBridge/java/Java.inc';
 
             $document = new \Java('org.jqurantree.orthography.Document');
             $tokensIterable = $document->getTokens(); // Replace this with your actual source for tokens

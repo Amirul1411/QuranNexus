@@ -13,7 +13,7 @@ class VerseCount extends Model
     {
         try {
 
-            require 'http://13.229.243.29:8080/JavaBridge/java/Java.inc';
+            require 'http://localhost:8080/JavaBridge/java/Java.inc';
 
             $document = new \Java('org.jqurantree.orthography.Document');
             $chaptersIterable = $document->getChapters(); // Replace this with your actual source for tokens

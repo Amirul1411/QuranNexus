@@ -17,12 +17,12 @@ class Irab extends Model
 
         try {
             // // Define before requiring Java.inc
-            define ('JAVA_HOSTS', '13.229.243.29:8080'); // EC2 instance public IP and port
-            define ('JAVA_SERVLET', '/JavaBridge'); // Java servlet path
-            define ('JAVA_PREFER_VALUES', true); // Optional: to prefer PHP values over Java objects
+            // define ('JAVA_HOSTS', '13.229.243.29:8080'); // EC2 instance public IP and port
+            // define ('JAVA_SERVLET', '/JavaBridge'); // Java servlet path
+            // define ('JAVA_PREFER_VALUES', true); // Optional: to prefer PHP values over Java objects
 
             // Include Java.inc
-            require_once('http://13.229.243.29:8080/JavaBridge/java/Java.inc');
+            require_once('http://localhost:8080/JavaBridge/java/Java.inc');
 
             // Load the jqurantree.jar file
             // java_require('http://13.229.243.29:8080/opt/tomcat/lib/jqurantree-1.0.0.jar'); // Full path to the JAR file on Tomcat

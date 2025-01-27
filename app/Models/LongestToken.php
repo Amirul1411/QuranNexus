@@ -12,7 +12,7 @@ class LongestToken extends Model
     public function getRows(): array
     {
         try {
-            require 'http://13.229.243.29:8080/JavaBridge/java/Java.inc';
+            require 'http://localhost:8080/JavaBridge/java/Java.inc';
 
             // Get tokens from the Document class
             $document = new \Java('org.jqurantree.orthography.Document');
