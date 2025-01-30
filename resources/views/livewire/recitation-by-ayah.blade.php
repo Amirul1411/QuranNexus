@@ -29,7 +29,7 @@
                     <div
                         class="w-1/12 my-5 text-black text-center flex flex-col justify-center items-center gap-3">
                         <p>{{ $surah->_id }}:{{ $ayah->ayah_index }}</p>
-                        @livewire('bookmark', ['type' => 'ayah', 'itemId' => $ayah->id])
+                        @livewire('bookmark', ['type' => 'ayah', 'itemProperties' => ['surah_id' => $ayah->surah_id, 'ayah_index' => $ayah->ayah_index]])
                         <span wire:click="displayAyahTafseer({{ $ayah->_id }})" class="cursor-pointer transform transition-transform duration-300 hover:scale-125"><svg
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
                                 <path fill-rule="evenodd"
@@ -117,7 +117,7 @@
                 <div
                     class="w-1/12 my-5 text-black text-center flex flex-col justify-center items-center gap-3">
                     <p>{{ $ayah->surah->_id }}:{{ $ayah->ayah_index }}</p>
-                    @livewire('bookmark', ['type' => 'ayah', 'itemId' => $ayah->id])
+                    @livewire('bookmark', ['type' => 'ayah', 'itemProperties' => ['surah_id' => $ayah->surah_id, 'ayah_index' => $ayah->ayah_index]])
                     <span wire:click="displayAyahTafseer({{ $ayah->_id }})" class="cursor-pointer transform transition-transform duration-300 hover:scale-125"><svg
                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
                             <path fill-rule="evenodd"
@@ -206,7 +206,7 @@
                 <div
                     class="w-1/12 my-5 text-black text-center flex flex-col justify-center items-center gap-3">
                     <p>{{ $ayah->surah->_id }}:{{ $ayah->ayah_index }}</p>
-                    @livewire('bookmark', ['type' => 'ayah', 'itemId' => $ayah->id])
+                    @livewire('bookmark', ['type' => 'ayah', 'itemProperties' => ['surah_id' => $ayah->surah_id, 'ayah_index' => $ayah->ayah_index]])
                     <span wire:click="displayAyahTafseer({{ $ayah->_id }})" class="cursor-pointer transform transition-transform duration-300 hover:scale-125"><svg
                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                             class="size-5">

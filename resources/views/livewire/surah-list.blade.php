@@ -200,9 +200,10 @@
                         </div>
                     </template>
                 </div>
-                <x-section-border />
             @endif
             @if ($this->recentlyReadJuz && count($this->recentlyReadJuz) > 0)
+                <x-section-border />
+
                 <div class="text-black text-start font-serif text-lg my-3 font-bold">
                     {{ __('surah_list.juz') }}
                 </div>
@@ -218,9 +219,10 @@
                         </div>
                     </template>
                 </div>
-                <x-section-border />
             @endif
             @if ($this->recentlyReadPage && count($this->recentlyReadPage) > 0)
+                <x-section-border />
+
                 <div class="text-black text-start font-serif text-lg font-bold">
                     {{ __('surah_list.page') }}
                 </div>
@@ -253,35 +255,45 @@
                     <template x-for="surah in filteredBookmarkedSurahs" :key="surah._id">
                         <div class="w-1/3 p-5">
                             <div wire:click="redirectToSurah(surah._id)"
-                                class="h-20 flex items-center bg-[#BCFFCE] text-center p-5 rounded-md cursor-pointer transform transition-transform duration-300 hover:scale-105">
-                                <div class="w-1/5 relative">
-                                    <span class="relative flex justify-center items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
-                                            fill="currentColor" class="bi bi-diamond-fill text-[#00EBB4]"
-                                            viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd"
-                                                d="M6.95.435c.58-.58 1.52-.58 2.1 0l6.515 6.516c.58.58.58 1.519 0 2.098L9.05 15.565c-.58.58-1.519.58-2.098 0L.435 9.05a1.48 1.48 0 0 1 0-2.098z" />
-                                        </svg>
-                                        <p class="absolute text-black text-xl font-bold" x-text="surah._id"></p>
-                                    </span>
+                                class="h-48 bg-[#BCFFCE] flex-col text-center p-5 rounded-md cursor-pointer transform transition-transform duration-300 hover:scale-105">
+                                <div class="flex items-center">
+                                    <div class="w-1/5 relative">
+                                        <span class="relative flex justify-center items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
+                                                fill="currentColor" class="bi bi-diamond-fill text-[#00EBB4]"
+                                                viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd"
+                                                    d="M6.95.435c.58-.58 1.52-.58 2.1 0l6.515 6.516c.58.58.58 1.519 0 2.098L9.05 15.565c-.58.58-1.519.58-2.098 0L.435 9.05a1.48 1.48 0 0 1 0-2.098z" />
+                                            </svg>
+                                            <p class="absolute text-black text-xl font-bold" x-text="surah._id"></p>
+                                        </span>
+                                    </div>
+                                    <div class="text-black w-3/5">
+                                        <h5 class="font-bold text-xl font-serif" x-text="surah.tname"></h5>
+                                        <p class="text-gray-500 font-bold font-serif text-xs" x-text="surah.ename">
+                                        </p>
+                                    </div>
+                                    <div class="text-black">
+                                        <h5 class="font-bold text-xl font-serif" x-text="surah.name"></h5>
+                                        <p class="text-gray-500 font-bold font-serif text-xs"
+                                            x-text="surah.ayas + ' Ayahs'">
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="text-black w-3/5">
-                                    <h5 class="font-bold text-xl font-serif" x-text="surah.tname"></h5>
-                                    <p class="text-gray-500 font-bold font-serif text-xs" x-text="surah.ename"></p>
-                                </div>
-                                <div class="text-black">
-                                    <h5 class="font-bold text-xl font-serif" x-text="surah.name"></h5>
+                                <div class="text-start mt-2">
+                                    <h5 class="font-bold text-xl font-serif">Notes:</h5>
                                     <p class="text-gray-500 font-bold font-serif text-xs"
-                                        x-text="surah.ayas + ' Ayahs'">
+                                        x-text="surah.notes === '' ? 'No notes for this bookmark...' : surah.notes">
                                     </p>
                                 </div>
                             </div>
                         </div>
                     </template>
                 </div>
-                <x-section-border />
             @endif
             @if ($this->bookmarkedAyah && count($this->bookmarkedAyah) > 0)
+                <x-section-border />
+
                 <div class="text-black text-start font-serif text-lg my-3 pt-3 font-bold">
                     {{ __('surah_list.ayah') }}
                 </div>
@@ -289,36 +301,44 @@
                     <template x-for="ayah in filteredBookmarkedAyahs" :key="ayah._id">
                         <div class="w-1/3 p-5">
                             <div wire:click="redirectToAyah(ayah.ayah_key)"
-                                class="h-20 flex items-center bg-[#BCFFCE] text-center p-5 rounded-md cursor-pointer transform transition-transform duration-300 hover:scale-105">
-                                <div class="w-1/5 relative">
-                                    <span class="relative flex justify-center items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
-                                            fill="currentColor" class="bi bi-diamond-fill text-[#00EBB4]"
-                                            viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd"
-                                                d="M6.95.435c.58-.58 1.52-.58 2.1 0l6.515 6.516c.58.58.58 1.519 0 2.098L9.05 15.565c-.58.58-1.519.58-2.098 0L.435 9.05a1.48 1.48 0 0 1 0-2.098z" />
-                                        </svg>
-                                        <p class="absolute text-black text-xl font-bold" x-text="ayah.surah._id"></p>
-                                    </span>
+                                class="h-48 flex-col bg-[#BCFFCE] text-center p-5 rounded-md cursor-pointer transform transition-transform duration-300 hover:scale-105">
+                                <div class='flex items-center'>
+                                    <div class="w-1/5 relative">
+                                        <span class="relative flex justify-center items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
+                                                fill="currentColor" class="bi bi-diamond-fill text-[#00EBB4]"
+                                                viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd"
+                                                    d="M6.95.435c.58-.58 1.52-.58 2.1 0l6.515 6.516c.58.58.58 1.519 0 2.098L9.05 15.565c-.58.58-1.519.58-2.098 0L.435 9.05a1.48 1.48 0 0 1 0-2.098z" />
+                                            </svg>
+                                            <p class="absolute text-black text-xl font-bold" x-text="ayah.surah._id"></p>
+                                        </span>
+                                    </div>
+                                    <div class="text-black w-3/5">
+                                        <h5 class="font-bold text-xl font-serif" x-text="ayah.surah.tname"></h5>
+                                        <p class="text-gray-500 font-bold font-serif text-xs" x-text="ayah.surah.ename">
+                                        </p>
+                                    </div>
+                                    <div class="text-black">
+                                        <h5 class="font-bold text-xl font-serif" x-text="ayah.surah.name"></h5>
+                                        <p class="text-gray-500 font-bold font-serif text-xs"
+                                            x-text="'Ayah ' + ayah.ayah_index">
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="text-black w-3/5">
-                                    <h5 class="font-bold text-xl font-serif" x-text="ayah.surah.tname"></h5>
-                                    <p class="text-gray-500 font-bold font-serif text-xs" x-text="ayah.surah.ename">
-                                    </p>
-                                </div>
-                                <div class="text-black">
-                                    <h5 class="font-bold text-xl font-serif" x-text="ayah.surah.name"></h5>
+                                <div class="text-start mt-2">
+                                    <h5 class="font-bold text-xl font-serif">Notes:</h5>
                                     <p class="text-gray-500 font-bold font-serif text-xs"
-                                        x-text="'Ayah ' + ayah.ayah_index">
+                                        x-text="ayah.notes === '' ? 'No notes for this bookmark...' : ayah.notes">
                                     </p>
                                 </div>
                             </div>
                         </div>
                     </template>
                 </div>
-                <x-section-border />
             @endif
             @if ($this->bookmarkedPage && count($this->bookmarkedPage) > 0)
+                <x-section-border />
                 <div class="text-black text-start font-serif text-lg my-3 pt-3 font-bold">
                     {{ __('surah_list.page') }}
                 </div>
@@ -326,9 +346,17 @@
                     <template x-for="page in filteredBookmarkedPages" :key="page._id">
                         <div class="w-1/3 p-5">
                             <div wire:click="redirectToPage(page._id)"
-                                class="h-20 flex items-center bg-[#BCFFCE] text-center p-5 rounded-md cursor-pointer transform transition-transform duration-300 hover:scale-105">
-                                <div class="text-black w-full">
-                                    <h5 class="font-bold text-xl font-serif" x-text="'Page ' + page._id"></h5>
+                                class="h-48 flex-col bg-[#BCFFCE] text-center p-5 rounded-md cursor-pointer transform transition-transform duration-300 hover:scale-105">
+                                <div class='flex items-center'>
+                                    <div class="text-black w-full">
+                                        <h5 class="font-bold text-xl font-serif" x-text="'Page ' + page._id"></h5>
+                                    </div>
+                                </div>
+                                <div class="text-start mt-2">
+                                    <h5 class="font-bold text-xl font-serif">Notes:</h5>
+                                    <p class="text-gray-500 font-bold font-serif text-xs"
+                                        x-text="page.notes === '' ? 'No notes for this bookmark...' : page.notes">
+                                    </p>
                                 </div>
                             </div>
                         </div>

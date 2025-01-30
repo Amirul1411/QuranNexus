@@ -16,6 +16,8 @@
         @livewire('recitation-side-menu')
     </x-slot>
 
+    @livewire('bookmark-notes-modal')
+
     <div class="w-full mx-32">
         <div class="flex justify-center my-3 mt-32">
             <div x-data="{ activeOption: 'byAyat' }" class="bg-[#29737B] rounded-full flex my-5">
@@ -73,9 +75,9 @@
 
         <div class="flex justify-end mr-1 text-black">
             @if (Route::is('surah.show'))
-                @livewire('bookmark', ['type' => 'surah', 'itemId' => $surah->id])
+                @livewire('bookmark', ['type' => 'surah', 'itemProperties' => [ 'surah_id' => $surah->id]])
             @elseif(Route::is('page.show'))
-                @livewire('bookmark', ['type' => 'page', 'itemId' => $page->id])
+                @livewire('bookmark', ['type' => 'page', 'itemProperties' => [ 'page_id' => $page->id]])
             @endif
         </div>
 

@@ -99,7 +99,7 @@ php artisan db:seed --class=SurahSeeder
 
 php artisan test --filter=JavaBridgeTest
 
-php artisan cleanup:recently-read  
+php artisan app:cleanup-recently-read  
 php artisan schedule:run  
 php artisan schedule:interrupt  
 php artisan schedule:work  
@@ -187,3 +187,63 @@ Password: 2hhxH3PYYOI4uxa4
 Total words in al-Quran: 77430 (-1 because of duplicate word document at word_key 37:130:4)  
 Total ayahs in al-Quran: 6236  
 Total overall: 83665
+
+# Copyright from Quran Data Originators
+
+## Tanzil
+
+PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK
+
+Tanzil Quran Text (Uthmani, version 1.0.2)  
+Copyright (C) 2008-2009 Tanzil.info  
+License: Creative Commons BY-ND 3.0 Unported
+
+This copy of quran text is carefully produced, highly  
+verified and continuously monitored by a group of specialists  
+at Tanzil project.
+
+TERMS OF USE:
+
+Permission is granted to copy and distribute verbatim copies  
+of this text, but CHANGING IT IS NOT ALLOWED.
+
+This quran text can be used in any website or application,  
+provided its source (Tanzil.info) is clearly indicated, and  
+a link is made to http://tanzil.info to enable users to keep  
+track of changes.
+
+This copyright notice shall be included in all verbatim copies  
+of the text, and shall be reproduced appropriately in all files  
+derived from or containing substantial portion of this text.
+
+Please check updates at: http://tanzil.info/updates/
+
+## Quran Corpus
+
+PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK
+
+Quranic Arabic Corpus (morphology, version 0.4)  
+Copyright (C) 2011 Kais Dukes  
+License: GNU General Public License
+
+The Quranic Arabic Corpus includes syntactic and morphological  
+annotation of the Quran, and builds on the verified Arabic text  
+distributed by the Tanzil project.
+
+TERMS OF USE:
+
+Permission is granted to copy and distribute verbatim copies  
+of this file, but CHANGING IT IS NOT ALLOWED.
+
+This annotation can be used in any website or application,  
+provided its source (the Quranic Arabic Corpus) is clearly  
+indicated, and a link is made to http://corpus.quran.com to enable  
+users to keep track of changes.
+
+This copyright notice shall be included in all verbatim copies
+of the text, and shall be reproduced appropriately in all works
+derived from or containing substantial portion of this file.
+
+Please check updates at: http://corpus.quran.com/download
+
+

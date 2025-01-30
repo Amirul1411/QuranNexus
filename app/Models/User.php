@@ -54,7 +54,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
      *
      * @var array<int, string>
      */
-    protected $fillable = ['_id', 'name', 'email', 'password', 'role', 'recitation_times', 'recitation_streak', 'longest_streak', 'last_recitation_date', 'settings', 'recitation_goal'];
+    protected $fillable = ['_id', 'name', 'email', 'password', 'role', 'recitation_times', 'recitation_streak', 'longest_streak', 'last_recitation_date', 'settings', 'recitation_goal', 'bookmarks', 'recently_read'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -110,36 +110,30 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         $this->attributes['recitation_goal'] = $currentRecitationGoal;
     }
 
-    public function addBookmark($type, $itemId)
+    public function addBookmark($type, $itemProperties, $notes)
     {
         if ($type === 'surah') {
-            $this->push('surah_bookmarks', $itemId);
+            $this->push('bookmarks', ['type' => $type, 'item_properties' => $itemProperties, 'notes' => $notes]);
         } elseif ($type === 'page') {
-            $this->push('page_bookmarks', $itemId);
+            $this->push('bookmarks', ['type' => $type, 'item_properties' => $itemProperties, 'notes' => $notes]);
         } elseif ($type === 'ayah') {
-            $this->push('ayah_bookmarks', $itemId);
+            $this->push('bookmarks', ['type' => $type, 'item_properties' => $itemProperties, 'notes' => $notes]);
         }
     }
 
-    public function removeBookmark($type, $itemId)
+    public function removeBookmark($type, $itemProperties)
     {
-        if ($type === 'surah') {
-            $this->pull('surah_bookmarks', $itemId);
-        } elseif ($type === 'page') {
-            $this->pull('page_bookmarks', $itemId);
-        } elseif ($type === 'ayah') {
-            $this->pull('ayah_bookmarks', $itemId);
-        }
+        $this->pull('bookmarks', ['type' => $type, 'item_properties' => $itemProperties]);
     }
 
-    public function isBookmarked($type, $itemId)
+    public function isBookmarked($type, $itemProperties)
     {
-        if ($type === 'surah') {
-            return in_array($itemId, $this->surah_bookmarks ?? []);
-        } elseif ($type === 'page') {
-            return in_array($itemId, $this->page_bookmarks ?? []);
-        } elseif ($type === 'ayah') {
-            return in_array($itemId, $this->ayah_bookmarks ?? []);
+        $bookmarks = $this->bookmarks ?? [];
+
+        foreach ($bookmarks as $bookmark) {
+            if (isset($bookmark['type'], $bookmark['item_properties']) && $bookmark['type'] === $type && $bookmark['item_properties'] == $itemProperties) {
+                return true;
+            }
         }
 
         return false;
@@ -150,14 +144,14 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         $timestamp = now()->toDateTimeString(); // Use start of the day for clearing by day
 
         if ($type === 'surah') {
-            $this->pull('recently_read_surahs', ['item_id' => $itemId]);
-            $this->push('recently_read_surahs', ['item_id' => $itemId, 'read_at' => $timestamp]);
+            $this->pull('recently_read', ['type' => $type, 'item_id' => $itemId]);
+            $this->push('recently_read', ['type' => $type, 'item_id' => $itemId, 'read_at' => $timestamp]);
         } elseif ($type === 'page') {
-            $this->pull('recently_read_pages', ['item_id' => $itemId]);
-            $this->push('recently_read_pages', ['item_id' => $itemId, 'read_at' => $timestamp]);
+            $this->pull('recently_read', ['type' => $type, 'item_id' => $itemId]);
+            $this->push('recently_read', ['type' => $type, 'item_id' => $itemId, 'read_at' => $timestamp]);
         } elseif ($type === 'juz') {
-            $this->pull('recently_read_juzs', ['item_id' => $itemId]);
-            $this->push('recently_read_juzs', ['item_id' => $itemId, 'read_at' => $timestamp]);
+            $this->pull('recently_read', ['type' => $type, 'item_id' => $itemId]);
+            $this->push('recently_read', ['type' => $type, 'item_id' => $itemId, 'read_at' => $timestamp]);
         }
     }
 
@@ -165,24 +159,24 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
     {
         $currentMinute = now();
 
-        if ($type === 'surah' && !empty($this->recently_read_surahs)) {
-            $this->recently_read_surahs = collect($this->recently_read_surahs)
+        if ($type === 'surah' && !empty(collect($this->recently_read)->where('type', 'surah'))) {
+            $this->recently_read = collect($this->recently_read)->where('type', 'surah')
                 ->filter(function ($item) use ($currentMinute) {
                     return Carbon::parse($item['read_at'])->greaterThan($currentMinute->subHour());
                 })
                 ->values()
                 ->toArray();
             $this->save();
-        } elseif ($type === 'page' && !empty($this->recently_read_pages)) {
-            $this->recently_read_pages = collect($this->recently_read_pages)
+        } elseif ($type === 'page' && !empty(collect($this->recently_read)->where('type', 'page'))) {
+            $this->recently_read = collect($this->recently_read)->where('type', 'page')
                 ->filter(function ($item) use ($currentMinute) {
                     return Carbon::parse($item['read_at'])->greaterThan($currentMinute->subHour());
                 })
                 ->values()
                 ->toArray();
             $this->save();
-        } elseif ($type === 'juz' && !empty($this->recently_read_juzs)) {
-            $this->recently_read_juzs = collect($this->recently_read_juzs)
+        } elseif ($type === 'juz' && !empty(collect($this->recently_read)->where('type', 'juz'))) {
+            $this->recently_read = collect($this->recently_read)->where('type', 'juz')
                 ->filter(function ($item) use ($currentMinute) {
                     return Carbon::parse($item['read_at'])->greaterThan($currentMinute->subHour());
                 })

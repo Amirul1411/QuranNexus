@@ -6,16 +6,17 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Filament\Notifications\Notification;
+use Livewire\Attributes\On;
 
 class Bookmark extends Component
 {
-    public $itemId; // This will hold the item being bookmarked (Surah, Ayah, or Page)
+    public $itemProperties; // This will hold the item being bookmarked (Surah, Ayah, or Page)
     public $type; // This will hold the type of the item ('surah', 'ayah', or 'page')
 
-    public function mount($type, $itemId)
+    public function mount($type, $itemProperties)
     {
         $this->type = $type;
-        $this->itemId = $itemId;
+        $this->itemProperties = $itemProperties;
     }
 
     public function toggleBookmark()
@@ -32,22 +33,16 @@ class Bookmark extends Component
 
         $user = Auth::user();
 
-        if ($user->isBookmarked($this->type, $this->itemId)) {
-            $user->removeBookmark($this->type, $this->itemId);
+        if ($user->isBookmarked($this->type, $this->itemProperties)) {
+            $user->removeBookmark($this->type, $this->itemProperties);
             Notification::make()
             ->title('Bookmark removed succesfully.')
             ->success()
             ->color('success')
             ->send();
         } else {
-            $user->addBookmark($this->type, $this->itemId);
-            Notification::make()
-            ->title('Bookmarked successfully.')
-            ->success()
-            ->color('success')
-            ->send();
+            $this->dispatch('openBookmarkNotesModal', $this->type, $this->itemProperties)->to('bookmark-notes-modal');
         }
-
     }
 
     public function render()
