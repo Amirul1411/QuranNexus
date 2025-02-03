@@ -22,11 +22,7 @@ class Bookmark extends Component
     public function toggleBookmark()
     {
         if (Auth::guest()) {
-            Notification::make()
-            ->title('You have to login to perform this operation')
-            ->color('danger')
-            ->danger()
-            // ->body()
+            Notification::make()->title('You have to login to perform this operation')->color('danger')->danger()// ->body()
             ->send();
             return;
         }
@@ -35,13 +31,12 @@ class Bookmark extends Component
 
         if ($user->isBookmarked($this->type, $this->itemProperties)) {
             $user->removeBookmark($this->type, $this->itemProperties);
-            Notification::make()
-            ->title('Bookmark removed succesfully.')
-            ->success()
-            ->color('success')
-            ->send();
-        } else {
+            Notification::make()->title('Bookmark removed succesfully.')->success()->color('success')->send();
+        } else if ($this->type != 'word') {
             $this->dispatch('openBookmarkNotesModal', $this->type, $this->itemProperties)->to('bookmark-notes-modal');
+        } else {
+            $user->addBookmark($this->type, $this->itemProperties, null);
+            Notification::make()->title('Bookmarked successfully.')->success()->color('success')->send();
         }
     }
 

@@ -129,10 +129,10 @@ class WordSeeder extends Seeder
             if($currentLastWord->audio_url !== null){
 
                 // Uncomment below if the currentLastWord word_key is less than 37:130:4
-                $countAyahCurrent--;
+                // $countAyahCurrent--;
 
                 // Uncomment below if the currentLastWord word_key is above 37:130:4
-                // $countAyahCurrent=$countAyahCurrent-2;
+                $countAyahCurrent=$countAyahCurrent-2;
             }
 
         }else{
@@ -178,6 +178,7 @@ class WordSeeder extends Seeder
                     $ayah = Ayah::where('surah_id', (string) $token->getChapterNumber())->where('ayah_index', (string) $token->getVerseNumber())->first();
 
                     $page = $ayah->page;
+                    $juz = $ayah->juz;
                     // $wordsArr = explode(' ', $ayah->text);
 
                     $response = Http::timeout(60)
@@ -268,6 +269,7 @@ class WordSeeder extends Seeder
                                     'ayah_key' => (string) $token->getChapterNumber() . ':' . $token->getVerseNumber(),
                                     'word_key' => (string) $token->getChapterNumber() . ':' . $token->getVerseNumber() . ':' . (string) $token->getTokenNumber(),
                                     'audio_url' => (string) $audioUrl,
+                                    'juz_id' => (string) $juz->id,
                                     'page_id' => (string) $page->id,
                                     'line_number' => (int) $word['line_number'],
                                     'text' =>  (string) $tokenText,
@@ -298,6 +300,7 @@ class WordSeeder extends Seeder
                                     'ayah_key' => (string) $token->getChapterNumber() . ':' . $token->getVerseNumber(),
                                     'word_key' => (string) $token->getChapterNumber() . ':' . $token->getVerseNumber() . ':' . (string) $word['position'],
                                     'audio_url' => $word['audio_url'] === "" ? null : $word['audio_url'],
+                                    'juz_id' => (string) $juz->id,
                                     'page_id' => (string) $page->id,
                                     'line_number' => (int) $word['line_number'],
                                     'text' =>  (string) mapAyahNumberToNumberIcon( (string) $token->getVerseNumber()),

@@ -17,6 +17,7 @@
     </x-slot>
 
     @livewire('bookmark-notes-modal')
+    @livewire('word-info-modal')
 
     <div class="w-full mx-32">
         <div class="flex justify-center my-3 mt-32">

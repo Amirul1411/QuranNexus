@@ -95,6 +95,7 @@
     @include('layouts.partials.footer')
 
     @stack('modals')
+    @stack('scripts')
     @livewireScripts
     @filamentScripts
     @vite('resources/js/app.js')
