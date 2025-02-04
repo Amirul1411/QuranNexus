@@ -27,11 +27,13 @@ class ChaptersInitials extends Component implements HasForms, HasTable
         return $table
             ->query(ModelsChaptersInitials::query())
             ->columns([
-                TextColumn::make('chapter')
+                TextColumn::make('_id')
+                ->label('Id'),
+                TextColumn::make('surah.name')
+                ->label('Surah Name')
                 ->fontFamily(FontFamily::Serif)
-                ->size(TextColumnSize::Large)
-                ->label('Chapter'),
-                TextColumn::make('verse')
+                ->size(TextColumnSize::Large),
+                TextColumn::make('ayah_key')
                 ->label('Verse'),
                 TextColumn::make('initials')
                 ->fontFamily(FontFamily::Serif)
@@ -47,7 +49,7 @@ class ChaptersInitials extends Component implements HasForms, HasTable
                 ->outlined()
                 ->color('success')
                 // ->url(fn (ModelsChaptersInitials $record): string => route('surah.show', ['surah' => substr(explode(':', $record->verse)[0],1)])),
-                ->url(fn (ModelsChaptersInitials $record): string => route('surah.show', ['surah' => Surah::where('name', $record->chapter)->first()->id])),
+                ->url(fn (ModelsChaptersInitials $record): string => route('surah.show', ['surah' => Surah::where('name', $record->surah->name)->first()->id])),
             ])
             ->bulkActions([
                 // ExportBulkAction::make()

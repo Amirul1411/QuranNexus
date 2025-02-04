@@ -21,6 +21,16 @@ class Ayah extends Model
         return $this->hasMany(Word::class, 'ayah_key', 'ayah_key');
     }
 
+    public function longestToken()
+    {
+        return $this->hasOne(LongestToken::class, 'ayah_key', 'ayah_key');
+    }
+
+    public function chaptersInitials()
+    {
+        return $this->hasOne(ChaptersInitials::class, 'ayah_key', 'ayah_key');
+    }
+
     public function page()
     {
         return $this->belongsTo(Page::class, 'page_id', '_id');

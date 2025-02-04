@@ -15,7 +15,7 @@ use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\TextColumn\TextColumnSize;
 
-class VerseCount extends Component implements HasForms, HasTable
+class SurahAnalysis extends Component implements HasForms, HasTable
 {
 
     use InteractsWithTable;
@@ -24,14 +24,18 @@ class VerseCount extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(ModelsVerseCount::query())
+            ->query(Surah::query())
             ->columns([
-                TextColumn::make('chapter')
+                TextColumn::make('_id')
+                ->label('Id'),
+                TextColumn::make('name')
                 ->fontFamily(FontFamily::Serif)
                 ->size(TextColumnSize::Large)
-                ->label('Chapter'),
-                TextColumn::make('verseCount')
-                ->label('Verse Count'),
+                ->label('Surah Name'),
+                TextColumn::make('ayas')
+                ->label('Number of Ayahs'),
+                TextColumn::make('word_count')
+                ->label('Number of Words'),
             ])
             ->filters([
                 // ...
@@ -41,7 +45,7 @@ class VerseCount extends Component implements HasForms, HasTable
                 ->button()
                 ->outlined()
                 ->color('success')
-                ->url(fn (ModelsVerseCount $record): string => route('surah.show', ['surah' => Surah::where('name', $record->chapter)->first()->id])),
+                ->url(fn (Surah $record): string => route('surah.show', ['surah' => Surah::where('name', $record->name)->first()->id])),
             ])
             ->bulkActions([
                 // ...
@@ -50,6 +54,6 @@ class VerseCount extends Component implements HasForms, HasTable
 
     public function render()
     {
-        return view('livewire.verse-count');
+        return view('livewire.surah-analysis');
     }
 }

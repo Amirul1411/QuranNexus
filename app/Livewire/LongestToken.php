@@ -27,16 +27,22 @@ class LongestToken extends Component implements HasForms, HasTable
         return $table
             ->query(ModelsLongestToken::query())
             ->columns([
-                TextColumn::make('chapter')
+                TextColumn::make('_id')
+                ->label('Id'),
+                TextColumn::make('surah.name')
                 ->fontFamily(FontFamily::Serif)
                 ->size(TextColumnSize::Large)
                 ->label('Chapter Name'),
-                TextColumn::make('verse')
-                ->label('Verse Number'),
-                TextColumn::make('token_number')
-                ->label('Token Number'),
-                TextColumn::make('token')
-                ->label('Token')
+                TextColumn::make('ayah_index')
+                ->label('Ayah '),
+                TextColumn::make('word_index')
+                ->label('Word Index'),
+                TextColumn::make('ayah_key')
+                ->label('Ayah Key'),
+                TextColumn::make('word_key')
+                ->label('Word Key'),
+                TextColumn::make('text')
+                ->label('Word Text')
                 ->size(TextColumnSize::Large)
                 ->fontFamily(FontFamily::Serif),
                 TextColumn::make('length')
@@ -50,17 +56,19 @@ class LongestToken extends Component implements HasForms, HasTable
                 ->button()
                 ->outlined()
                 ->color('success')
-                ->url(function (ModelsLongestToken $record): string {
-                    $surahId = Surah::where('name', $record->chapter)->first()->id;
-                    $scrollToAyah = $record->verse . '-' . $record->token_number;
-                    $highlightToken = $surahId . '-' . $record->verse . '-' . $record->token_number;
+                ->action(function (ModelsLongestToken $record) {
+                    $wordKey = $record->word_key;
+                    [$surahNumber, $verseNumber, $tokenNumber] = explode(':', $wordKey);
+                    $verseNumber = (int) $verseNumber;
+                    $pageNumber = ceil($verseNumber / 10);
 
-                    // Set session values
-                    Session::put('scrollToAyah', $scrollToAyah);
-                    Session::put('highlightToken', $highlightToken);
-
-                    // Generate and return the URL
-                    return route('surah.show', ['surah' => $surahId]);
+                    return redirect()
+                    ->route('surah.show', [
+                        'surah' => $surahNumber,
+                        'page' => $pageNumber,
+                    ])
+                    ->with('scrollToAyah', $surahNumber . '-' . $verseNumber)
+                    ->with('highlightToken', $surahNumber . '-' . $verseNumber . '-' . $tokenNumber);
                 }),
             ])
             ->bulkActions([

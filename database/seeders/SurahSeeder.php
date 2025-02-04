@@ -23,11 +23,18 @@ class SurahSeeder extends Seeder
 
         // Seed database from XML file
 
-        $filePath = Storage::url('quran-data\quran-data.xml');
+        $filePath = Storage::url('/quran-data/quran-data.xml');
 
         $xml = simplexml_load_file($filePath);
 
+        require("http://localhost:8080/JavaBridge/java/Java.inc");
+
+        $document = new \Java('org.jqurantree.orthography.Document');
+
         foreach ($xml->suras->sura as $sura) {
+
+            $chapter = $document->getChapter( (int) $sura['index'] );
+            $wordCount = java_cast($chapter->getTokenCount(), 'int');
 
             DB::table($collectionName)->insert([
                 '_id' => (string) getNextSequenceValue('surah_id'),
@@ -36,6 +43,7 @@ class SurahSeeder extends Seeder
                 'ename' => (string) $sura['ename'],
                 'type' => (string) $sura['type'],
                 'ayas' => (int) $sura['ayas'],
+                'word_count' => (int) $wordCount,
             ]);
         }
 

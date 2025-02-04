@@ -22,6 +22,8 @@ class CharacterFrequency extends Component implements HasForms, HasTable
         return $table
             ->query(ModelsCharacterFrequency::query())
             ->columns([
+                TextColumn::make('_id')
+                ->label('Id'),
                 TextColumn::make('character')
                 ->label('Character'),
                 TextColumn::make('count')

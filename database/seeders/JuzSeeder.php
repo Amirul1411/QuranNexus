@@ -21,7 +21,7 @@ class JuzSeeder extends Seeder
 
         createDatabaseCollection($collectionName);
 
-        $filePath = Storage::url('quran-data\quran-data.xml');
+        $filePath = Storage::url('/quran-data/quran-data.xml');
 
         $xml = simplexml_load_file($filePath);
 

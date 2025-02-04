@@ -21,10 +21,10 @@
                 @click="quranAnalysisActiveOption = 'longestToken'">
                 {{ __('quran_analysis.longest_token') }}
             </x-button>
-            <x-button :class="{'text-green-400': quranAnalysisActiveOption = 'verseCount'}" borderColor="border-gray-300" bg="bg-gray-200" text="text-gray-800" activeBg="bg-gray-300"
+            <x-button :class="{'text-green-400': quranAnalysisActiveOption = 'surahAnalysis'}" borderColor="border-gray-300" bg="bg-gray-200" text="text-gray-800" activeBg="bg-gray-300"
                 hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800" class="transform transition-transform duration-300 hover:scale-105"
-                @click="quranAnalysisActiveOption = 'verseCount'">
-                {{ __('quran_analysis.verse_count') }}
+                @click="quranAnalysisActiveOption = 'surahAnalysis'">
+                {{ __('quran_analysis.surah_analysis') }}
             </x-button>
             <x-button :class="{'text-green-400': quranAnalysisActiveOption = 'diacriticFrequency'}" borderColor="border-gray-300" bg="bg-gray-200" text="text-gray-800" activeBg="bg-gray-300"
                 hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800" class="transform transition-transform duration-300 hover:scale-105"
@@ -47,8 +47,8 @@
         <template x-if=" quranAnalysisActiveOption === 'longestToken' ">
             @livewire('longest-token')
         </template>
-        <template x-if=" quranAnalysisActiveOption === 'verseCount' ">
-            @livewire('verse-count')
+        <template x-if=" quranAnalysisActiveOption === 'surahAnalysis' ">
+            @livewire('surah-analysis')
         </template>
         <template x-if=" quranAnalysisActiveOption === 'diacriticFrequency' ">
             @livewire('diacritic-frequency')

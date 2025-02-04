@@ -5,19 +5,17 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use MongoDB\Client as MongoClient;
 
-class TranslationSeeder extends Seeder
+class ChaptersInitialsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-
         // Define the collection name
-        $collectionName = 'translations';
+        $collectionName = 'chapters_initials';
 
         createDatabaseCollection($collectionName);
 
@@ -28,20 +26,12 @@ class TranslationSeeder extends Seeder
         // Define your indexes (composite or single) with collation and unique options
         $indexesToCreate = [
             [
-                'fields' => ['translation_info_id' => 1, 'ayah_key' => 1], // Index fields
-                'collation' => [
-                    'locale' => 'en',
-                    'numericOrdering' => true,
-                ],
-                'unique' => true, // Unique
-            ],
-            [
                 'fields' => ['ayah_key' => 1], // Index fields
                 'collation' => [
                     'locale' => 'en',
                     'numericOrdering' => true,
                 ],
-                'unique' => false, // Not unique
+                'unique' => true, // Unique
             ],
         ];
 
@@ -80,23 +70,47 @@ class TranslationSeeder extends Seeder
             }
         }
 
-        $filePath = [Storage::url('/quran-data/ms.basmeih.xml'), Storage::url('/quran-data/en.sahih.xml')];
+        try {
 
-        foreach ($filePath as $file) {
-            $xml = simplexml_load_file($file);
+            require 'http://localhost:8080/JavaBridge/java/Java.inc';
 
-            foreach ($xml->sura as $sura) {
-                foreach ($sura->aya as $aya) {
+            $document = new \Java('org.jqurantree.orthography.Document');
+            $tokensIterable = $document->getTokens(); // Replace this with your actual source for tokens
+            $iterator = $tokensIterable->iterator();
+
+            while (java_is_true($iterator->hasNext())) {
+
+                $token = $iterator->next();
+                $isValid = true;
+
+                $tokenLength = java_cast($token->getLength(), 'int');
+
+                // Check if the token contains only maddah or no diacritics
+                for ($i = 0; $i < $tokenLength; $i++) {
+                    $character = $token->getCharacter($i);
+
+                    if (!java_cast($character->isMaddah(), 'boolean') && java_cast($character->getDiacriticCount(), 'int') != 0) {
+                        $isValid = false;
+                        break;
+                    }
+                }
+
+                if ($isValid) {
+                    $chapterNumber =  java_cast( $token->getChapterNumber(), 'string');
+                    $verseLocation = java_Cast($token->getVerse()->getLocation(), 'string');
+                    $verseLocation = str_replace(['(', ')'], '', $verseLocation);
+                    $initials = java_cast($token->removeDiacritics()->toUnicode(), 'string');
                     DB::table($collectionName)->insert([
-                        '_id' => (string) getNextSequenceValue('translation_id'),
-                        'translation_info_id' => (string) mapTranslationId($file),
-                        'surah_id' => (string) $sura['index'],
-                        'ayah_index' => (string) $aya['index'],
-                        'ayah_key' => (string) $sura['index'] . ':' . $aya['index'],
-                        'text' => (string) $aya['text'],
+                        '_id' => (string) getNextSequenceValue('chapters_initials_id'),
+                        'surah_id' => $chapterNumber,
+                        'ayah_key' => $verseLocation,
+                        'initials' => $initials,
                     ]);
                 }
             }
+        } catch (\JavaException $e) {
+            echo 'Java Exception: ' . $e->getMessage();
+            echo 'Stack Trace: ' . $e->getTraceAsString();
         }
     }
 }

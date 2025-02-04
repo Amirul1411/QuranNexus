@@ -2,64 +2,26 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use MongoDB\Laravel\Eloquent\Model;
 use Sushi\Sushi;
 use Illuminate\Support\Arr;
 
 class ChaptersInitials extends Model
 {
-    use Sushi;
 
-    public function getRows(): array
+    protected $connection = 'mongodb';
+    protected $collection = 'chapters_initials';
+
+    protected $fillable = ['_id', 'surah_id', 'ayah_key', 'initials'];
+
+    public function surah()
     {
-        try {
-
-            require 'http://localhost:8080/JavaBridge/java/Java.inc';
-
-            $document = new \Java('org.jqurantree.orthography.Document');
-            $tokensIterable = $document->getTokens(); // Replace this with your actual source for tokens
-            $iterator = $tokensIterable->iterator();
-            $analysisTable = [];
-
-            while (java_is_true($iterator->hasNext())) {
-
-                $token = $iterator->next();
-                $isValid = true;
-
-                $tokenLength = java_cast($token->getLength(), 'int');
-
-                // Check if the token contains only maddah or no diacritics
-                for ($i = 0; $i < $tokenLength; $i++) {
-                    $character = $token->getCharacter($i);
-
-                    if (!java_cast($character->isMaddah(), 'boolean') && java_cast($character->getDiacriticCount(), 'int') != 0) {
-                        $isValid = false;
-                        break;
-                    }
-                }
-
-                if ($isValid) {
-                    $chapter =  (string) $token->getChapter()->getName()->toUnicode();
-                    $verseLocation = $token->getVerse()->getLocation();
-                    $initials = $token->removeDiacritics()->toUnicode();
-                    $analysisTable[] = [
-                        'chapter' => $chapter,
-                        'verse' => $verseLocation,
-                        'initials' => $initials,
-                    ];
-                }
-            }
-
-            return $analysisTable;
-
-        } catch (\JavaException $e) {
-            echo 'Java Exception: ' . $e->getMessage();
-            echo 'Stack Trace: ' . $e->getTraceAsString();
-        }
+        return $this->belongsTo(Surah::class, 'surah_id', '_id');
     }
 
-    public function getVerseAttribute(): ?string
+    public function ayah()
     {
-        return $this->attributes['verse'] ?? null;
+        return $this->belongsTo(Ayah::class, 'ayah_key', 'ayah_key');
     }
+
 }

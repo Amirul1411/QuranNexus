@@ -21,7 +21,7 @@ class TranslationInfoSeeder extends Seeder
 
         createDatabaseCollection($collectionName);
 
-        $filePath = [Storage::url('quran-data\ms.basmeih.xml'), Storage::url('quran-data\en.sahih.xml')];
+        $filePath = [Storage::url('/quran-data/ms.basmeih.xml'), Storage::url('/quran-data/en.sahih.xml')];
 
         foreach ($filePath as $file) {
             $xml = simplexml_load_file($file);

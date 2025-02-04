@@ -5,7 +5,7 @@ return [
     'chapters_initials' => 'Chapters Initials',
     'character_frequency' => 'Character Frequency',
     'longest_token' => 'Longest Token',
-    'verse_count' => 'Verse Count',
+    'surah_analysis' => 'Surah Analysis',
     'diacritic_frequency' => 'Diacritic Frequency',
     'irab' => 'I\'rab',
 ];

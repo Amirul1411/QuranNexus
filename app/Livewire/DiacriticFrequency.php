@@ -22,6 +22,8 @@ class DiacriticFrequency extends Component implements HasForms, HasTable
         return $table
             ->query(ModelsDiacriticFrequency::query())
             ->columns([
+                TextColumn::make('_id')
+                ->label('Id'),
                 TextColumn::make('diacritic')
                 ->label('Diacritic'),
                 TextColumn::make('count')

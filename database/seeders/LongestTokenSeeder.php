@@ -5,19 +5,17 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use MongoDB\Client as MongoClient;
 
-class TranslationSeeder extends Seeder
+class LongestTokenSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-
         // Define the collection name
-        $collectionName = 'translations';
+        $collectionName = 'longest_token';
 
         createDatabaseCollection($collectionName);
 
@@ -28,20 +26,20 @@ class TranslationSeeder extends Seeder
         // Define your indexes (composite or single) with collation and unique options
         $indexesToCreate = [
             [
-                'fields' => ['translation_info_id' => 1, 'ayah_key' => 1], // Index fields
-                'collation' => [
-                    'locale' => 'en',
-                    'numericOrdering' => true,
-                ],
-                'unique' => true, // Unique
-            ],
-            [
                 'fields' => ['ayah_key' => 1], // Index fields
                 'collation' => [
                     'locale' => 'en',
                     'numericOrdering' => true,
                 ],
-                'unique' => false, // Not unique
+                'unique' => false, // Unique
+            ],
+            [
+                'fields' => ['word_key' => 1], // Index fields
+                'collation' => [
+                    'locale' => 'en',
+                    'numericOrdering' => true,
+                ],
+                'unique' => true, // Not unique
             ],
         ];
 
@@ -80,23 +78,41 @@ class TranslationSeeder extends Seeder
             }
         }
 
-        $filePath = [Storage::url('/quran-data/ms.basmeih.xml'), Storage::url('/quran-data/en.sahih.xml')];
+        try {
+            require 'http://localhost:8080/JavaBridge/java/Java.inc';
 
-        foreach ($filePath as $file) {
-            $xml = simplexml_load_file($file);
+            // Get tokens from the Document class
+            $document = new \Java('org.jqurantree.orthography.Document');
+            $tokens = $document->getTokens();
 
-            foreach ($xml->sura as $sura) {
-                foreach ($sura->aya as $aya) {
+            // Array to store tokens of target letter count
+            // Longest token in the whole quran has a letter count of 11
+            $targetLetterCount = [8, 9, 10, 11];
+
+            // Iterate over tokens and find those matching target lengths
+            $tokenIterator = $tokens->iterator();
+            while (java_is_true($tokenIterator->hasNext())) {
+                $token = $tokenIterator->next();
+                $tokenLength = java_cast($token->getLetterCount(), 'int');
+
+                if (in_array($tokenLength, $targetLetterCount)) {
                     DB::table($collectionName)->insert([
-                        '_id' => (string) getNextSequenceValue('translation_id'),
-                        'translation_info_id' => (string) mapTranslationId($file),
-                        'surah_id' => (string) $sura['index'],
-                        'ayah_index' => (string) $aya['index'],
-                        'ayah_key' => (string) $sura['index'] . ':' . $aya['index'],
-                        'text' => (string) $aya['text'],
+                        '_id' => (string) getNextSequenceValue('longest_token_id'),
+                        'surah_id' => (string) $token->getChapterNumber(),
+                        'ayah_index' => (string) $token->getVerseNumber(),
+                        'word_index' => (string) $token->getTokenNumber(),
+                        'ayah_key' => (string) $token->getChapterNumber() . ':' . $token->getVerseNumber(),
+                        'word_key' => (string) $token->getChapterNumber() . ':' . $token->getVerseNumber() . ':' . $token->getTokenNumber(),
+                        'text' => (string) $token->toUnicode(),
+                        'length' => (int) $tokenLength,
                     ]);
                 }
             }
+
+            // Convert results into the required rows format
+        } catch (\JavaException $e) {
+            echo 'Java Exception: ' . $e->getMessage();
+            echo 'Stack Trace: ' . $e->getTraceAsString();
         }
     }
 }
