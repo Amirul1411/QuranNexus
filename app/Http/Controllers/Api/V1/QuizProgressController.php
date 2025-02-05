@@ -145,7 +145,7 @@ class QuizProgressController extends Controller
             // Validate request
             $request->validate([
                 'surah_id' => 'required|string',
-                'answers' => 'required|array',
+                'answers' => 'required|array|size:10',
                 'answers.*.ayah_key' => 'required|string',
                 'answers.*.question_id' => 'required|integer',
                 'answers.*.selected_answer' => 'required|string',

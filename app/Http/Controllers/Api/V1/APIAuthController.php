@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\Mail; 
 class APIAuthController extends Controller
 {
     public function register(Request $request)
@@ -73,6 +73,53 @@ class APIAuthController extends Controller
         }
     }
 
+    public function forgotPassword(Request $request)
+    {
+        try {
+            $request->validate([
+                'email' => 'required|email'
+            ]);
+    
+            $user = User::where('email', $request->email)->first();
+    
+            if ($user) {
+                // Generate new password
+                // $newPassword = Str::random(10);
+                $newPassword = "password";
+    
+                // Update password
+                $user->password = Hash::make($newPassword);
+                $user->save();
+    
+                            // Print the new password to the terminal
+          
+                // Send simple email
+                Mail::raw(
+                    "Your temporary password for QuranNexus is: $newPassword\n\nPlease login and change your password as soon as possible.",
+                    function($message) use ($user) {
+                        $message->to($user->email)
+                                ->subject('QuranNexus Password Reset');
+                    }
+                );
+    
+                return response()->json([
+                    'message' => 'If that email exists in our system, we have sent password reset instructions.',
+                    'new_password' => $newPassword // Include the new password in the response
+                ]);
+            }
+    
+            return response()->json([
+                'message' => 'If that email exists in our system, we have sent password reset instructions.'
+            ]);
+    
+        } catch (\Exception $e) {
+            Log::error('Password reset failed', ['error' => $e->getMessage()]);
+            return response()->json([
+                'message' => 'Password reset failed'
+            ], 500);
+        }
+    }
+    
     public function login(Request $request)
     {
         try {
