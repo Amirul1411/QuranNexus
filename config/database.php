@@ -33,8 +33,8 @@ return [
 
         'mongodb' => [
             'driver' => 'mongodb',
-            'dsn' => env('DB_URI', 'mongodb+srv://aidil:Re2OU81mz5W3WGNc@quranic.smuf3ns.mongodb.net/'),
-            'database' => env('DB_DATABASE', 'quran_database'),
+            'dsn' => env('DB_URI'),
+            'database' => env('DB_DATABASE'),
         ],
 
         'sqlite' => [
@@ -113,12 +113,6 @@ return [
             'prefix_indexes' => true,
             // 'encrypt' => env('DB_ENCRYPT', 'yes'),
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
-        ],
-
-        'mongodb' => [
-        'driver'   => 'mongodb',
-        'dsn'      => env('DB_DSN', 'mongodb+srv://aidil:Re2OU81mz5W3WGNc@quranic.smuf3ns.mongodb.net/'),
-        'database' => env('DB_DATABASE', 'quran_database'),
         ],
     ],
 
