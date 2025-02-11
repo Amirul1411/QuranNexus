@@ -66,6 +66,10 @@ class WordResource extends JsonResource
                 $response['Audio Url'] = $this->audio_url;
             }
 
+            if (in_array('Juz Id', $fields)) {
+                $response['Juz Id'] = $this->juz_id;
+            }
+
             if (in_array('Page Id', $fields)) {
                 $response['Page Id'] = $this->page_id;
             }
@@ -115,6 +119,7 @@ class WordResource extends JsonResource
             'Ayah Key' => $this->ayah_key,
             'Word Key' => $this->word_key,
             'Audio Url' => $this->audio_url,
+            'Juz Id' => $this->juz_id,
             'Page Id' => $this->page_id,
             'Line Number' => $this->line_number,
             'Text' => $this->text,

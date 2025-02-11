@@ -47,6 +47,10 @@ class AchievementResource extends JsonResource
                 $response['Description'] = $this->description;
             }
 
+            if (in_array('Show', $fields)) {
+                $response['Show'] = $this->show;
+            }
+
         }
 
         return $response;
@@ -62,6 +66,7 @@ class AchievementResource extends JsonResource
             'Badge Image' => $this->badge_image,
             'Title' => $this->title,
             'Description' => $this->description,
+            'Show' => $this->show,
         ];
     }
 }

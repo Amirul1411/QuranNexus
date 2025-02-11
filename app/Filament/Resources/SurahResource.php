@@ -44,6 +44,9 @@ class SurahResource extends Resource
             TextInput::make('ayas')
             ->readOnly()
             ->label('Number of Ayahs'),
+            TextInput::make('word_count')
+            ->readOnly()
+            ->label('Number of Words'),
             Select::make('type')
             ->options(Surah::TYPES)
             ->label('Role')
@@ -86,6 +89,10 @@ class SurahResource extends Resource
                 TextColumn::make('ayas')
                 ->sortable()
                 ->label('Number of Ayahs')
+                ->alignCenter(),
+                TextColumn::make('word_count')
+                ->sortable()
+                ->label('Number of Words')
                 ->alignCenter(),
             ])
             ->filters([

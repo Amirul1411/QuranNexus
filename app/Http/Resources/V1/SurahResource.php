@@ -64,6 +64,10 @@ class SurahResource extends JsonResource
                 $response['Number of Ayahs'] = $this->ayas;
             }
 
+            if (in_array('Number of Words', $fields)) {
+                $response['Number of Words'] = $this->word_count;
+            }
+
         }
 
         // Add Ayahs relationship data if loaded
@@ -89,7 +93,8 @@ class SurahResource extends JsonResource
             'Name' => $this->tname,
             'Name Meaning' => $this->ename,
             'Type' => $this->type,
-            'Number of ayahs' => $this->ayas,
+            'Number of Ayahs' => $this->ayas,
+            'Number of Words' => $this->word_count,
         ];
     }
 }

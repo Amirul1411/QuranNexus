@@ -10,6 +10,7 @@ use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Components\Select;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
@@ -42,6 +43,12 @@ class AchievementResource extends Resource
                 ->required()
                 ->minLength(20)
                 ->label('Description'),
+                Select::make('show')
+                ->options(Achievement::SHOW)
+                ->label('Show')
+                ->required()
+                ->default(Achievement::SHOW_DEFAULT)
+                ->selectablePlaceholder(false),
             ]);
     }
 
@@ -65,6 +72,16 @@ class AchievementResource extends Resource
                 ->searchable()
                 ->sortable()
                 ->label('Description'),
+                TextColumn::make('show')
+                ->badge()
+                ->color(fn (string $state): string => match ($state) {
+                    'TRUE' => 'success',
+                    'FALSE' => 'gray',
+                })
+                ->sortable()
+                ->searchable()
+                ->label('Show')
+                ->alignCenter(),
             ])
             ->filters([
                 //

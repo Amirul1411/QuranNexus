@@ -49,6 +49,9 @@ class WordResource extends Resource
                 TextInput::make('audio_url')
                 ->readOnly()
                 ->label('Audio Url'),
+                TextInput::make('juz_id')
+                ->readOnly()
+                ->label('Juz Number'),
                 TextInput::make('page_id')
                 ->readOnly()
                 ->label('Page Number'),
@@ -102,6 +105,11 @@ class WordResource extends Resource
             ->searchable()
             ->label('Audio Url')
             ->placeholder('N/A'),
+            TextColumn::make('juz_id')
+            ->sortable()
+            ->searchable()
+            ->label('Juz Number')
+            ->alignCenter(),
             TextColumn::make('page_id')
             ->sortable()
             ->searchable()
