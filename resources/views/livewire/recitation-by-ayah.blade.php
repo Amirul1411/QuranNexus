@@ -12,9 +12,9 @@
         if (highlightToken) {
             const tokenElement = document.querySelector('#sat_' + highlightToken);
             if (tokenElement) {
-                tokenElement.classList.add('bg-yellow-300');
+                tokenElement.classList.add('bg-yellow-200');
                 setTimeout(() => {
-                    tokenElement.classList.remove('bg-yellow-300');
+                    tokenElement.classList.remove('bg-yellow-200');
                 }, 5000); // Remove highlight after 5 seconds
             }
         }">

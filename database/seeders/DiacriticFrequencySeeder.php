@@ -67,6 +67,7 @@ class DiacriticFrequencySeeder extends Seeder
                         $diacriticData['Fatha']['count']++;
                         $diacriticData['Fatha']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -74,6 +75,7 @@ class DiacriticFrequencySeeder extends Seeder
                         $diacriticData['Damma']['count']++;
                         $diacriticData['Damma']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -81,6 +83,7 @@ class DiacriticFrequencySeeder extends Seeder
                         $diacriticData['Kasra']['count']++;
                         $diacriticData['Kasra']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -88,6 +91,7 @@ class DiacriticFrequencySeeder extends Seeder
                         $diacriticData['Fathatan']['count']++;
                         $diacriticData['Fathatan']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -95,6 +99,7 @@ class DiacriticFrequencySeeder extends Seeder
                         $diacriticData['Dammatan']['count']++;
                         $diacriticData['Dammatan']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -102,6 +107,7 @@ class DiacriticFrequencySeeder extends Seeder
                         $diacriticData['Kasratan']['count']++;
                         $diacriticData['Kasratan']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -109,6 +115,7 @@ class DiacriticFrequencySeeder extends Seeder
                         $diacriticData['Shadda']['count']++;
                         $diacriticData['Shadda']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -116,6 +123,7 @@ class DiacriticFrequencySeeder extends Seeder
                         $diacriticData['Sukun']['count']++;
                         $diacriticData['Sukun']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -123,6 +131,7 @@ class DiacriticFrequencySeeder extends Seeder
                         $diacriticData['Maddah']['count']++;
                         $diacriticData['Maddah']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -130,6 +139,7 @@ class DiacriticFrequencySeeder extends Seeder
                         $diacriticData['HamzaAbove']['count']++;
                         $diacriticData['HamzaAbove']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -137,6 +147,7 @@ class DiacriticFrequencySeeder extends Seeder
                         $diacriticData['HamzaBelow']['count']++;
                         $diacriticData['HamzaBelow']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -144,6 +155,7 @@ class DiacriticFrequencySeeder extends Seeder
                         $diacriticData['HamzatWasl']['count']++;
                         $diacriticData['HamzatWasl']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -151,6 +163,7 @@ class DiacriticFrequencySeeder extends Seeder
                         $diacriticData['AlifKhanjareeya']['count']++;
                         $diacriticData['AlifKhanjareeya']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
                 }

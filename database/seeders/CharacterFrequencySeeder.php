@@ -97,6 +97,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['Alif']['count']++;
                         $characterData['Alif']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -104,6 +105,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['Ba']['count']++;
                         $characterData['Ba']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -111,6 +113,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['Ta']['count']++;
                         $characterData['Ta']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -118,6 +121,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['Tha']['count']++;
                         $characterData['Tha']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -125,6 +129,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['Jeem']['count']++;
                         $characterData['Jeem']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -132,6 +137,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['HHa']['count']++;
                         $characterData['HHa']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -139,6 +145,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['Kha']['count']++;
                         $characterData['Kha']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -146,6 +153,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['Dal']['count']++;
                         $characterData['Dal']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -153,6 +161,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['Thal']['count']++;
                         $characterData['Thal']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -160,6 +169,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['Ra']['count']++;
                         $characterData['Ra']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -167,6 +177,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['Zain']['count']++;
                         $characterData['Zain']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -174,6 +185,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['Seen']['count']++;
                         $characterData['Seen']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -181,6 +193,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['Sheen']['count']++;
                         $characterData['Sheen']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -188,6 +201,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['Sad']['count']++;
                         $characterData['Sad']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -195,6 +209,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['DDad']['count']++;
                         $characterData['DDad']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -202,6 +217,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['TTa']['count']++;
                         $characterData['TTa']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -209,6 +225,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['DTha']['count']++;
                         $characterData['DTha']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -216,6 +233,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['Ain']['count']++;
                         $characterData['Ain']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -223,6 +241,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['Ghain']['count']++;
                         $characterData['Ghain']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -230,6 +249,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['Fa']['count']++;
                         $characterData['Fa']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -237,6 +257,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['Qaf']['count']++;
                         $characterData['Qaf']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -244,6 +265,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['Kaf']['count']++;
                         $characterData['Kaf']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -251,6 +273,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['Lam']['count']++;
                         $characterData['Lam']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -258,6 +281,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['Meem']['count']++;
                         $characterData['Meem']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -265,6 +289,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['Noon']['count']++;
                         $characterData['Noon']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -272,6 +297,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['Ha']['count']++;
                         $characterData['Ha']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -279,6 +305,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['Waw']['count']++;
                         $characterData['Waw']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -286,6 +313,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['Ya']['count']++;
                         $characterData['Ya']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -293,6 +321,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['Hamza']['count']++;
                         $characterData['Hamza']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -300,6 +329,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['AlifMaksura']['count']++;
                         $characterData['AlifMaksura']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -307,6 +337,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['TaMarbuta']['count']++;
                         $characterData['TaMarbuta']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -314,6 +345,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['Tatweel']['count']++;
                         $characterData['Tatweel']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -321,6 +353,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['SmallHighSeen']['count']++;
                         $characterData['SmallHighSeen']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -328,6 +361,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['SmallHighRoundedZero']['count']++;
                         $characterData['SmallHighRoundedZero']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -335,6 +369,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['SmallHighUprightRectangularZero']['count']++;
                         $characterData['SmallHighUprightRectangularZero']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -342,6 +377,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['SmallHighMeemIsolatedForm']['count']++;
                         $characterData['SmallHighMeemIsolatedForm']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -349,6 +385,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['SmallLowSeen']['count']++;
                         $characterData['SmallLowSeen']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -356,6 +393,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['SmallWaw']['count']++;
                         $characterData['SmallWaw']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -363,6 +401,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['SmallYa']['count']++;
                         $characterData['SmallYa']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -370,6 +409,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['SmallHighNoon']['count']++;
                         $characterData['SmallHighNoon']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -377,6 +417,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['EmptyCentreLowStop']['count']++;
                         $characterData['EmptyCentreLowStop']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -384,6 +425,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['EmptyCentreHighStop']['count']++;
                         $characterData['EmptyCentreHighStop']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -391,6 +433,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['RoundedHighStopWithFilledCentre']['count']++;
                         $characterData['RoundedHighStopWithFilledCentre']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
 
@@ -398,6 +441,7 @@ class CharacterFrequencySeeder extends Seeder
                         $characterData['SmallLowMeem']['count']++;
                         $characterData['SmallLowMeem']['locations'][] = [
                             'character_key' => (string) $chapterNumber . ':' . $verseNumber . ':' . $tokenNumber . ':' . $characterPosition,
+                            'token' => (string) $token,
                         ];
                     }
                 }

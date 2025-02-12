@@ -27,15 +27,25 @@ class SurahAnalysis extends Component implements HasForms, HasTable
             ->query(Surah::query())
             ->columns([
                 TextColumn::make('_id')
-                ->label('Id'),
+                ->label('Id')
+                ->sortable()
+                ->searchable(),
                 TextColumn::make('name')
                 ->fontFamily(FontFamily::Serif)
                 ->size(TextColumnSize::Large)
-                ->label('Surah Name'),
+                ->label('Surah Name')
+                ->sortable()
+                ->searchable(),
                 TextColumn::make('ayas')
-                ->label('Number of Ayahs'),
+                ->label('Number of Ayahs')
+                ->sortable()
+                ->searchable()
+                ->alignCenter(),
                 TextColumn::make('word_count')
-                ->label('Number of Words'),
+                ->label('Number of Words')
+                ->sortable()
+                ->searchable()
+                ->alignCenter(),
             ])
             ->filters([
                 // ...
