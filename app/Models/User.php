@@ -112,27 +112,77 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 
     public function addBookmark($type, $itemProperties, $notes)
     {
-        if ($type === 'surah') {
-            $this->push('bookmarks', ['type' => $type, 'item_properties' => $itemProperties, 'notes' => $notes]);
-        } elseif ($type === 'page') {
-            $this->push('bookmarks', ['type' => $type, 'item_properties' => $itemProperties, 'notes' => $notes]);
-        } elseif ($type === 'ayah') {
-            $this->push('bookmarks', ['type' => $type, 'item_properties' => $itemProperties, 'notes' => $notes]);
-        }
+        $timestamp = now()->toDateTimeString();
+
+        // Retrieve existing recently_read data
+        $bookmarks = $this->bookmarks ?? [];
+
+        $typeCast = [
+            'surah' => 'chapters',
+            'ayah' => 'verses',
+            'page' => 'pages',
+        ];
+
+        $bookmarks[$typeCast[$type]] = $bookmarks[$typeCast[$type]] ?? [];
+
+        // Push the bookmark into the specific type array
+        $bookmarks[$typeCast[$type]][] = [
+            'item_properties' => $itemProperties,
+            'notes' => $notes,
+            'created_at' => $timestamp,
+        ];
+
+        // Assign back and save
+        $this->bookmarks = $bookmarks;
+        $this->save();
     }
 
     public function removeBookmark($type, $itemProperties)
     {
-        $this->pull('bookmarks', ['type' => $type, 'item_properties' => $itemProperties]);
+        $typeCast = [
+            'surah' => 'chapters',
+            'ayah' => 'verses',
+            'page' => 'pages',
+        ];
+
+        if (!isset($typeCast[$type])) {
+            throw new \InvalidArgumentException("Invalid type: $type");
+        }
+
+        // Retrieve bookmarks array to avoid "Indirect modification" error
+        $bookmarks = $this->bookmarks ?? [];
+
+        if (isset($bookmarks[$typeCast[$type]])) {
+            // Filter out the matching item
+            $bookmarks[$typeCast[$type]] = array_values(array_filter($bookmarks[$typeCast[$type]], fn($bookmark) => $bookmark['item_properties'] != $itemProperties));
+
+            // If the array is empty, remove the key
+            if (empty($bookmarks[$typeCast[$type]])) {
+                unset($bookmarks[$typeCast[$type]]);
+            }
+
+            // Save back to the model
+            $this->bookmarks = $bookmarks;
+            $this->save();
+        }
     }
 
     public function isBookmarked($type, $itemProperties)
     {
-        $bookmarks = $this->bookmarks ?? [];
+        $typeCast = [
+            'surah' => 'chapters',
+            'ayah' => 'verses',
+            'page' => 'pages',
+        ];
 
-        foreach ($bookmarks as $bookmark) {
-            if (isset($bookmark['type'], $bookmark['item_properties']) && $bookmark['type'] === $type && $bookmark['item_properties'] == $itemProperties) {
-                return true;
+        // Check if the bookmarks array and the specific type array exist
+        if (isset($this->bookmarks[$typeCast[$type]])) {
+            // Loop through the bookmarks of the specific type
+            foreach ($this->bookmarks[$typeCast[$type]] as $bookmark) {
+                // Check if the item_properties match
+                if ($bookmark['item_properties'] == $itemProperties) {
+                    return true;
+                }
             }
         }
 
@@ -141,47 +191,69 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 
     public function markAsRecentlyRead($type, $itemId)
     {
-        $timestamp = now()->toDateTimeString(); // Use start of the day for clearing by day
+        $timestamp = now()->toDateTimeString(); // Capture the current timestamp
 
-        if ($type === 'surah') {
-            $this->pull('recently_read', ['type' => $type, 'item_id' => $itemId]);
-            $this->push('recently_read', ['type' => $type, 'item_id' => $itemId, 'read_at' => $timestamp]);
-        } elseif ($type === 'page') {
-            $this->pull('recently_read', ['type' => $type, 'item_id' => $itemId]);
-            $this->push('recently_read', ['type' => $type, 'item_id' => $itemId, 'read_at' => $timestamp]);
-        } elseif ($type === 'juz') {
-            $this->pull('recently_read', ['type' => $type, 'item_id' => $itemId]);
-            $this->push('recently_read', ['type' => $type, 'item_id' => $itemId, 'read_at' => $timestamp]);
+        // Map type to the corresponding array name
+        $typeCast = [
+            'surah' => 'chapters',
+            'page' => 'pages',
+            'juz' => 'juzs',
+        ];
+
+        // Validate the type
+        if (!isset($typeCast[$type])) {
+            throw new \InvalidArgumentException("Invalid type: $type");
         }
+
+        $arrayName = $typeCast[$type];
+
+        // Retrieve existing recently_read data
+        $recentlyRead = $this->recently_read ?? [];
+
+        // Initialize the specific type array if it doesn't exist
+        $recentlyRead[$arrayName] = $recentlyRead[$arrayName] ?? [];
+
+        // Remove existing entry for the same item (if any)
+        $recentlyRead[$arrayName] = array_values(array_filter($recentlyRead[$arrayName], fn($item) => $item['item_id'] != $itemId));
+
+        // Add the new entry
+        $recentlyRead[$arrayName][] = [
+            'item_id' => $itemId,
+            'read_at' => $timestamp,
+        ];
+
+        // Assign back and save
+        $this->recently_read = $recentlyRead;
+        $this->save();
     }
 
     public function cleanOldRecentlyReadItems($type)
     {
         $currentMinute = now();
 
-        if ($type === 'surah' && !empty(collect($this->recently_read)->where('type', 'surah'))) {
-            $this->recently_read = collect($this->recently_read)->where('type', 'surah')
-                ->filter(function ($item) use ($currentMinute) {
-                    return Carbon::parse($item['read_at'])->greaterThan($currentMinute->subHour());
-                })
-                ->values()
-                ->toArray();
-            $this->save();
-        } elseif ($type === 'page' && !empty(collect($this->recently_read)->where('type', 'page'))) {
-            $this->recently_read = collect($this->recently_read)->where('type', 'page')
-                ->filter(function ($item) use ($currentMinute) {
-                    return Carbon::parse($item['read_at'])->greaterThan($currentMinute->subHour());
-                })
-                ->values()
-                ->toArray();
-            $this->save();
-        } elseif ($type === 'juz' && !empty(collect($this->recently_read)->where('type', 'juz'))) {
-            $this->recently_read = collect($this->recently_read)->where('type', 'juz')
-                ->filter(function ($item) use ($currentMinute) {
-                    return Carbon::parse($item['read_at'])->greaterThan($currentMinute->subHour());
-                })
-                ->values()
-                ->toArray();
+        $typeCast = [
+            'surah' => 'chapters',
+            'page' => 'pages',
+            'juz' => 'juzs',
+        ];
+
+        if (!isset($typeCast[$type])) {
+            throw new \InvalidArgumentException("Invalid type: $type");
+        }
+
+        // Retrieve the recently_read attribute
+        $recentlyRead = $this->recently_read ?? [];
+
+        if (isset($recentlyRead[$typeCast[$type]])) {
+            $recentlyRead[$typeCast[$type]] = array_values(array_filter($recentlyRead[$typeCast[$type]], fn($item) => Carbon::parse($item['read_at'])->greaterThan($currentMinute->subHour())));
+
+            // If the array is empty, unset the key
+            if (empty($recentlyRead[$typeCast[$type]])) {
+                unset($recentlyRead[$typeCast[$type]]);
+            }
+
+            // Save back to the model
+            $this->recently_read = $recentlyRead;
             $this->save();
         }
     }
