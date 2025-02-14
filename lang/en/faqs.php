@@ -4,7 +4,7 @@
 return [
     'header_title' => 'Frequently Asked Questions',
     'header_subtitle_1' => 'Can\'t find what you\'re looking for?',
-    'header_subtitle_2' => 'Send us an inquiry',
+    'header_subtitle_2' => 'Send us an ',
     'item_1_title' => 'What is Quran Nexus?',
     'item_1_subtitle' => 'Quran Nexus is a platform designed to provide users with access to authentic Quranic content, including text, translations, audio recitations, and more. It also offers developer-friendly tools and resources for integrating Quranic data into applications.',
     'item_2_title' => 'Can I download the Quran Nexus to my computer?',

@@ -11,6 +11,11 @@ use App\Http\Controllers\Api\V1\APITafseerController;
 use App\Http\Controllers\Api\V1\APITranslationController;
 use App\Http\Controllers\Api\V1\APIAudioRecitationController;
 use App\Http\Controllers\Api\V1\APIAudioRecitationInfoController;
+use App\Http\Controllers\Api\V1\APIChaptersInitialsController;
+use App\Http\Controllers\Api\V1\APICharacterFrequencyController;
+use App\Http\Controllers\Api\V1\APIDailyQuotesController;
+use App\Http\Controllers\Api\V1\APIDiacriticFrequencyController;
+use App\Http\Controllers\Api\V1\APILongestTokenController;
 use App\Http\Controllers\Api\V1\APITafseerInfoController;
 use App\Http\Controllers\Api\V1\APITranslationInfoController;
 use App\Http\Controllers\Api\V1\APIAuthController;
@@ -39,26 +44,28 @@ Route::prefix('v1')->group(function () {
     Route::get('words/distribution', [APIWordController::class, 'getWordJuzDistribution']);
     Route::get('words/chapters-distribution', [APIWordController::class, 'getWordsChaptersDistribution']);
 
-
-
-    Route::apiResource('surahs', APISurahController::class)->name('index','surah.index')->name('show', 'surah.show');
-    Route::apiResource('ayahs', APIAyahController::class)->name('index','ayah.index')->name('show', 'ayah.show');
-    Route::apiResource('pages', APIPageController::class)->name('index','page.index')->name('show', 'page.show');
-    Route::apiResource('words', APIWordController::class)->name('index','word.index')->name('show', 'word.show');
-    Route::apiResource('juzs', APIJuzController::class)->name('index','juz.index')->name('show', 'juz.show');
-    Route::apiResource('translations', APITranslationController::class)->name('index','translation.index')->name('show', 'translation.show');
-    Route::apiResource('surah_info', APISurahInfoController::class)->name('index','surah_info.index')->name('show', 'surah_info.show');
-    Route::apiResource('tafseer', APITafseerController::class)->name('index','tafseer.index')->name('show', 'tafseer.show');
-    Route::apiResource('audio_recitations', APIAudioRecitationController::class)->name('index','audio_recitation.index')->name('show', 'audio_recitation.show');
-    Route::apiResource('audio_recitation_info', APIAudioRecitationInfoController::class)->name('index','audio_recitation_info.index')->name('show', 'audio_recitation_info.show');
-    Route::apiResource('tafseer_info', APITafseerInfoController::class)->name('index','tafseer_info.index')->name('show', 'tafseer_info.show');
-    Route::apiResource('translation_info', APITranslationInfoController::class)->name('index','translation_info.index')->name('show', 'translation_info.show');
-    Route::apiResource('achievements', APIAchievementController::class)->name('index','achievement.index')->name('show', 'achievement.show');
+    
+    Route::apiResource('surahs', APISurahController::class)->name('index','api_surah.index')->name('show', 'api_surah.show');
+    Route::apiResource('ayahs', APIAyahController::class)->name('index','api_ayah.index')->name('show', 'api_ayah.show');
+    Route::apiResource('pages', APIPageController::class)->name('index','api_page.index')->name('show', 'api_page.show');
+    Route::apiResource('words', APIWordController::class)->name('index','api_word.index')->name('show', 'api_word.show');
+    Route::apiResource('juzs', APIJuzController::class)->name('index','api_juz.index')->name('show', 'api_juz.show');
+    Route::apiResource('translations', APITranslationController::class)->name('index','api_translation.index')->name('show', 'api_translation.show');
+    Route::apiResource('surah_info', APISurahInfoController::class)->name('index','api_surah_info.index')->name('show', 'api_surah_info.show');
+    Route::apiResource('tafseer', APITafseerController::class)->name('index','api_tafseer.index')->name('show', 'api_tafseer.show');
+    Route::apiResource('audio_recitations', APIAudioRecitationController::class)->name('index','api_audio_recitation.index')->name('show', 'api_audio_recitation.show');
+    Route::apiResource('audio_recitation_info', APIAudioRecitationInfoController::class)->name('index','api_audio_recitation_info.index')->name('show', 'api_audio_recitation_info.show');
+    Route::apiResource('tafseer_info', APITafseerInfoController::class)->name('index','api_tafseer_info.index')->name('show', 'api_tafseer_info.show');
+    Route::apiResource('translation_info', APITranslationInfoController::class)->name('index','api_translation_info.index')->name('show', 'api_translation_info.show');
+    Route::apiResource('achievements', APIAchievementController::class)->name('index','api_achievement.index')->name('show', 'api_achievement.show');
+    Route::apiResource('daily_quotes', APIDailyQuotesController::class)->name('index','api_daily_quotes.index')->name('show', 'api_daily_quotes.show');
+    Route::apiResource('chapters_initials', APIChaptersInitialsController::class)->name('index','api_chapters_initials.index')->name('show', 'api_chapters_initials.show');
+    Route::apiResource('character_frequency', APICharacterFrequencyController::class)->name('index','api_character_frequency.index')->name('show', 'api_character_frequency.show');
+    Route::apiResource('diacritic_frequency', APIDiacriticFrequencyController::class)->name('index','api_diacritic_frequency.index')->name('show', 'api_diacritic_frequency.show');
+    Route::apiResource('longest_token', APILongestTokenController::class)->name('index','api_longest_token.index')->name('show', 'api_longest_token.show');
 
     // Temporary route
     Route::get('chapters/{id}/verses', [APIAyahController::class, 'getVersesByChapter']);
-
-
 
     // Authenticated routes
     Route::middleware(['auth.logging'])->group(function () {
@@ -73,13 +80,13 @@ Route::prefix('v1')->group(function () {
         Route::post('/achievements/unlock', [APIUserAchievementController::class, 'unlockAchievement']);
         Route::get('/achievements/status', [APIUserAchievementController::class, 'getAchievementStatus']);
         Route::get('/achievements/check-streak', [APIUserAchievementController::class, 'checkStreakAchievement']);
-        
+
         Route::get('/bookmarks', [APIBookmarkController::class, 'getBookmarks']);
         Route::post('/bookmarks', [APIBookmarkController::class, 'addBookmark']);
         Route::delete('/bookmarks/{type}/{itemId}', [APIBookmarkController::class, 'removeBookmark']);
-        
+
         Route::post('/bookmarks/migrate', [APIBookmarkController::class, 'migrateBookmarks']);
-      
+
         });
     });
 });
@@ -87,21 +94,25 @@ Route::prefix('v1')->group(function () {
 
 
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], function(){
-    Route::apiResource('surahs', APISurahController::class)->name('index','surah.index')->name('show', 'surah.show');
-    Route::apiResource('ayahs', APIAyahController::class)->name('index','ayah.index')->name('show', 'ayah.show');
-    Route::apiResource('pages', APIPageController::class)->name('index','page.index')->name('show', 'page.show');
-    Route::apiResource('words', APIWordController::class)->name('index','word.index')->name('show', 'word.show');
-    Route::apiResource('juzs', APIJuzController::class)->name('index','juz.index')->name('show', 'juz.show');
-    Route::apiResource('translations', APITranslationController::class)->name('index','translation.index')->name('show', 'translation.show');
-    Route::apiResource('surah_info', APISurahInfoController::class)->name('index','surah_info.index')->name('show', 'surah_info.show');
-    Route::apiResource('tafseer', APITafseerController::class)->name('index','tafseer.index')->name('show', 'tafseer.show');
-    Route::apiResource('audio_recitations', APIAudioRecitationController::class)->name('index','audio_recitation.index')->name('show', 'audio_recitation.show');
-    Route::apiResource('audio_recitation_info', APIAudioRecitationInfoController::class)->name('index','audio_recitation_info.index')->name('show', 'audio_recitation_info.show');
-    Route::apiResource('tafseer_info', APITafseerInfoController::class)->name('index','tafseer_info.index')->name('show', 'tafseer_info.show');
-    Route::apiResource('translation_info', APITranslationInfoController::class)->name('index','translation_info.index')->name('show', 'translation_info.show');
-    Route::apiResource('achievements', APIAchievementController::class)->name('index','achievement.index')->name('show', 'achievement.show');
 
-    // Temporary route
-    Route::get('chapters/{id}/verses', [APIAyahController::class, 'getVersesByChapter']);
+    Route::apiResource('surahs', APISurahController::class)->name('index','api_surah.index')->name('show', 'api_surah.show');
+    Route::apiResource('ayahs', APIAyahController::class)->name('index','api_ayah.index')->name('show', 'api_ayah.show');
+    Route::apiResource('pages', APIPageController::class)->name('index','api_page.index')->name('show', 'api_page.show');
+    Route::apiResource('words', APIWordController::class)->name('index','api_word.index')->name('show', 'api_word.show');
+    Route::apiResource('juzs', APIJuzController::class)->name('index','api_juz.index')->name('show', 'api_juz.show');
+    Route::apiResource('translations', APITranslationController::class)->name('index','api_translation.index')->name('show', 'api_translation.show');
+    Route::apiResource('surah_info', APISurahInfoController::class)->name('index','api_surah_info.index')->name('show', 'api_surah_info.show');
+    Route::apiResource('tafseer', APITafseerController::class)->name('index','api_tafseer.index')->name('show', 'api_tafseer.show');
+    Route::apiResource('audio_recitations', APIAudioRecitationController::class)->name('index','api_audio_recitation.index')->name('show', 'api_audio_recitation.show');
+    Route::apiResource('audio_recitation_info', APIAudioRecitationInfoController::class)->name('index','api_audio_recitation_info.index')->name('show', 'api_audio_recitation_info.show');
+    Route::apiResource('tafseer_info', APITafseerInfoController::class)->name('index','api_tafseer_info.index')->name('show', 'api_tafseer_info.show');
+    Route::apiResource('translation_info', APITranslationInfoController::class)->name('index','api_translation_info.index')->name('show', 'api_translation_info.show');
+    Route::apiResource('achievements', APIAchievementController::class)->name('index','api_achievement.index')->name('show', 'api_achievement.show');
+    Route::apiResource('daily_quotes', APIDailyQuotesController::class)->name('index','api_daily_quotes.index')->name('show', 'api_daily_quotes.show');
+    Route::apiResource('chapters_initials', APIChaptersInitialsController::class)->name('index','api_chapters_initials.index')->name('show', 'api_chapters_initials.show');
+    Route::apiResource('character_frequency', APICharacterFrequencyController::class)->name('index','api_character_frequency.index')->name('show', 'api_character_frequency.show');
+    Route::apiResource('diacritic_frequency', APIDiacriticFrequencyController::class)->name('index','api_diacritic_frequency.index')->name('show', 'api_diacritic_frequency.show');
+    Route::apiResource('longest_token', APILongestTokenController::class)->name('index','api_longest_token.index')->name('show', 'api_longest_token.show');
+
 });
 

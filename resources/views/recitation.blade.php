@@ -16,13 +16,16 @@
         @livewire('recitation-side-menu')
     </x-slot>
 
+    @livewire('bookmark-notes-modal')
+    @livewire('word-info-modal')
+
     <div class="w-full mx-32">
         <div class="flex justify-center my-3 mt-32">
-            <div x-data="{ activeOption: 'byAyat' }" class="bg-black rounded-full flex my-5">
+            <div x-data="{ activeOption: 'byAyat' }" class="bg-[#29737B] rounded-full flex my-5">
                 <input type="radio" class="hidden" name="recitationPageLayoutOptions" id="byAyat" autocomplete="off"
                     checked x-model="activeOption" value="byAyat">
-                <label :class="activeOption === 'byAyat' ? 'bg-gray-600' : 'bg-transparent'"
-                    class="hover:bg-gray-500 rounded-full px-10 cursor-pointer py-2 text-white font-serif flex items-center"
+                <label :class="activeOption === 'byAyat' ? 'bg-[#82CCB2]' : 'bg-transparent'"
+                    class="hover:bg-gray-300 rounded-full px-10 cursor-pointer py-2 text-black font-serif flex items-center"
                     for="byAyat" @click="$dispatch('set-page-layout', 'byAyah')"><svg
                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6 mr-2">
@@ -33,8 +36,8 @@
 
                 <input type="radio" class="hidden" name="recitationPageLayoutOptions" id="byPage"
                     autocomplete="off" x-model="activeOption" value="byPage">
-                <label :class="activeOption === 'byPage' ? 'bg-gray-600' : 'bg-transparent'"
-                    class="hover:bg-gray-500 rounded-full px-10 py-2 cursor-pointer text-white font-serif flex items-center"
+                <label :class="activeOption === 'byPage' ? 'bg-[#82CCB2]' : 'bg-transparent'"
+                    class="hover:bg-gray-300 rounded-full px-10 py-2 cursor-pointer text-black font-serif flex items-center"
                     for="byPage" @click="$dispatch('set-page-layout', 'byPage')"><svg
                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 mr-2">
                         <path
@@ -49,7 +52,7 @@
         <div x-data="{ layout: 'byAyah' }" @set-page-layout.window="layout = $event.detail">
             <template x-if=" layout === 'byAyah' ">
                 @if (Route::is('surah.show'))
-                    <h3 class="text-center text-white font-light text-9xl mt-6 font-surahnames">
+                    <h3 class="text-center text-black font-light text-9xl mt-6 font-surahnames">
                         {{ mapSurahNumberToSurahFont($surah->id) }}</h3>
                 @endif
             </template>
@@ -71,11 +74,11 @@
 
         @endif
 
-        <div class="flex justify-end mr-1 text-white">
+        <div class="flex justify-end mr-1 text-black">
             @if (Route::is('surah.show'))
-                @livewire('bookmark', ['type' => 'surah', 'itemId' => $surah->id])
+                @livewire('bookmark', ['type' => 'surah', 'itemProperties' => [ 'surah_id' => $surah->id]])
             @elseif(Route::is('page.show'))
-                @livewire('bookmark', ['type' => 'page', 'itemId' => $page->id])
+                @livewire('bookmark', ['type' => 'page', 'itemProperties' => [ 'page_id' => $page->id]])
             @endif
         </div>
 

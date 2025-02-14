@@ -248,16 +248,37 @@
                         :active="request()->routeIs('home')">
                         {{ __('menu.home') }}
                     </x-nav-link>
-                    <x-nav-link class="{{ Route::is('home') ? 'text-white' : 'text-black' }}"
-                        href="{{ route('contact') }}" :active="request()->routeIs('posts.index')">
-                        {{ __('menu.contact') }}
-                    </x-nav-link>
+
+                    <!-- Contact Dropdown -->
+                    <x-dropdown align="right" width="48">
+                        <x-slot name="trigger">
+                            <x-nav-link class="{{ Route::is('home') ? 'text-white' : 'text-black' }} cursor-pointer">
+                                {{ __('menu.contact') }}
+                                <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                    fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                        d="M5.23 7.21a.75.75 0 011.06 0L10 10.94l3.71-3.73a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.23 8.27a.75.75 0 010-1.06z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </x-nav-link>
+                        </x-slot>
+
+                        <x-slot name="content">
+                            <!-- Dropdown content -->
+                            <x-dropdown-link href="{{ route('contact') }}">
+                                {{ __('menu.contact_us') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link href="{{ route('faqs') }}">
+                                {{ __('menu.faqs') }}
+                            </x-dropdown-link>
+                        </x-slot>
+                    </x-dropdown>
+                    <!-- End Contact Dropdown -->
 
                     <!-- Services Dropdown -->
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
-                            <x-nav-link class="{{ Route::is('home') ? 'text-white' : 'text-black' }} cursor-pointer"
-                                :active="request()->routeIs('posts.index')">
+                            <x-nav-link class="{{ Route::is('home') ? 'text-white' : 'text-black' }} cursor-pointer">
                                 {{ __('menu.services') }}
                                 <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                     fill="currentColor">
@@ -273,11 +294,14 @@
                             <x-dropdown-link href="{{ route('surah.index') }}">
                                 {{ __('menu.surah_list') }}
                             </x-dropdown-link>
-                            <x-dropdown-link href="#">
+                            {{-- <x-dropdown-link href="#">
                                 {{ __('menu.tajweed') }}
                             </x-dropdown-link>
                             <x-dropdown-link href="#">
                                 {{ __('menu.irab') }}
+                            </x-dropdown-link> --}}
+                            <x-dropdown-link href="{{ route('quran_analysis.show') }}">
+                                {{ __('menu.quran_analysis') }}
                             </x-dropdown-link>
                         </x-slot>
                     </x-dropdown>
@@ -286,8 +310,7 @@
                     <!-- Resources Dropdown -->
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
-                            <x-nav-link class="{{ Route::is('home') ? 'text-white' : 'text-black' }} cursor-pointer"
-                                :active="request()->routeIs('posts.index')">
+                            <x-nav-link class="{{ Route::is('home') ? 'text-white' : 'text-black' }} cursor-pointer">
                                 {{ __('menu.resources') }}
                                 <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                     fill="currentColor">
@@ -300,13 +323,46 @@
 
                         <x-slot name="content">
                             <!-- Dropdown content -->
-                            <x-dropdown-link href="#">
+                            <x-dropdown-link href="{{ route('api_documentation.index') }}">
                                 {{ __('menu.api_documentation') }}
                             </x-dropdown-link>
                         </x-slot>
                     </x-dropdown>
                     <!-- End Resources Dropdown -->
 
+                    <!-- Editor Dropdown -->
+                    @can('view-admin', App\Models\User::class)
+                        <x-dropdown align="right" width="48">
+                            <x-slot name="trigger">
+                                <x-nav-link class="{{ Route::is('home') ? 'text-white' : 'text-black' }} cursor-pointer">
+                                    {{ __('menu.editor') }}
+                                    <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M5.23 7.21a.75.75 0 011.06 0L10 10.94l3.71-3.73a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.23 8.27a.75.75 0 010-1.06z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </x-nav-link>
+                            </x-slot>
+
+                            <x-slot name="content">
+                                <!-- Dropdown content -->
+                                <x-dropdown-link href="{{ route('ayah.index') }}">
+                                    {{ __('menu.ayah') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link href="{{ route('word.index') }}">
+                                    {{ __('menu.word') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link href="{{ route('basic-search') }}">
+                                    {{ __('menu.search') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link href="{{ route('translation.index') }}">
+                                    {{ __('menu.translation') }}
+                                </x-dropdown-link>
+                            </x-slot>
+                        </x-dropdown>
+                    @endcan
+                    <!-- End Editor Dropdown -->
                 </div>
             </div>
         </div>

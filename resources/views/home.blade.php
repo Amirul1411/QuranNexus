@@ -2,14 +2,14 @@
     <x-slot name="header">
         <div class="header-image bg-cover">
             <div class="container mx-auto pt-5">
-                <div class="flex flex-col absolute left-96 top-80">
+                <div class="flex flex-col absolute left-96 top-72">
                     <h1 class="text-left text-white text-5xl w-96 font-serif">{{ __('home.header_title') }}</h1>
                     <div class="flex justify-end my-7">
-                        <p class="text-sm text-white  w-80 text-justify font-serif">{{ __('home.header_subtitle') }}
+                        <p class="text-base text-white  w-80 text-justify font-serif">{{ __('home.header_subtitle') }}
                         </p>
                     </div>
                     <div class="flex justify-end">
-                        <a class="font-serif text-black bg-white rounded-lg font-bold mt-3 relative w-52 py-1 text-center"
+                        <a class="font-serif text-black bg-white rounded-lg font-bold mt-3 relative w-52 py-1 text-center transform transition-transform duration-300 hover:scale-105"
                             href="{{ route('surah.index') }}">{{ __('home.header_button') }}</a>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
                 <p class="pl-8 font-serif text-gray-600">
                     {{ __('home.card1_subpoint2') }}
                 </p>
-                <button class="btn ml-8 border border-gray-300 w-40 py-1">{{ __('home.card1_button') }}</button>
+                <a class="btn ml-8 border border-gray-300 w-40 py-1 text-center transform transition-transform duration-300 hover:scale-105" href="{{ route('api_documentation.index') }}">{{ __('home.card1_button') }}</a>
             </div>
             <div class="w-full md:w-2/5">
                 <img src="{{ Storage::url('web-images/AI-image.png') }}" alt="AI Image">
@@ -75,7 +75,7 @@
                     {{ __('home.card2_subpoint2') }}
                 </p>
                 <div class="flex justify-end m-5">
-                    <a class="btn w-40 ml-4 border border-black font-serif py-1 text-center"
+                    <a class="btn w-40 ml-4 border border-black font-serif py-1 text-center transform transition-transform duration-300 hover:scale-105"
                         href="{{ route('surah.index') }}">{{ __('home.card2_button') }}</a>
                 </div>
             </div>
@@ -83,10 +83,10 @@
         <div class="my-5 flex flex-col w-1/2 mx-auto home-ready">
             <h2 class="font-bold text-center text-3xl font-sans mb-8">{{ __('home.ready') }}</h2>
             <div class="flex justify-center mx-auto my-1 gap-2">
-                <a class="btn-color rounded-full text-white px-5 py-1 font-sans" href="{{ route('register') }}">
+                <a class="btn-color rounded-full text-white px-5 py-1 font-sans transform transition-transform duration-300 hover:scale-105" href="{{ route('register') }}">
                     {{ __('home.sign_up') }}
                 </a>
-                <a class="font-sans rounded-full px-5 py-1 border btn-color-outline hover:btn-color-outline-fill transition duration-300 ease-in-out"
+                <a class="font-sans rounded-full px-5 py-1 border btn-color-outline hover:btn-color-outline-fill transform transition-transform duration-300 hover:scale-105"
                     href="{{ route('contact') }}">
                     {{ __('home.contact_us') }}
                 </a>

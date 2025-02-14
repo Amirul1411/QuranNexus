@@ -41,19 +41,19 @@
         },
     }"
 >
-    <div class="bg-black rounded-full flex justify-center items-center mx-5 my-5">
+    <div class="bg-[#29737B] rounded-full flex justify-center items-center mx-5 my-5">
         <input type="radio" class="hidden" name="recitationSideMenuOptions" id="surah" autocomplete="off" checked x-model="activeOption" value="surah">
-        <label :class="activeOption === 'surah' ? 'bg-gray-600' : 'bg-transparent'" class="hover:bg-gray-500 w-full rounded-full px-5 cursor-pointer py-2 text-white font-serif text-center" for="surah">
+        <label :class="activeOption === 'surah' ? 'bg-[#82CCB2]' : 'bg-transparent'" class="hover:bg-gray-300 w-full rounded-full px-5 cursor-pointer py-2 text-white font-serif text-center" for="surah">
             {{ __('recitation.surah') }}
         </label>
 
         <input type="radio" class="hidden" name="recitationSideMenuOptions" id="juz" autocomplete="off" x-model="activeOption" value="juz">
-        <label :class="activeOption === 'juz' ? 'bg-gray-600' : 'bg-transparent'" class="hover:bg-gray-500 w-full rounded-full px-5 py-2 cursor-pointer text-white font-serif text-center" for="juz">
+        <label :class="activeOption === 'juz' ? 'bg-[#82CCB2]' : 'bg-transparent'" class="hover:bg-gray-300 w-full rounded-full px-5 py-2 cursor-pointer text-white font-serif text-center" for="juz">
             {{ __('recitation.juz') }}
         </label>
 
         <input type="radio" class="hidden" name="recitationSideMenuOptions" id="page" autocomplete="off" x-model="activeOption" value="page">
-        <label :class="activeOption === 'page' ? 'bg-gray-600' : 'bg-transparent'" class="hover:bg-gray-500 w-full rounded-full px-5 py-2 cursor-pointer text-white font-serif text-center" for="page">
+        <label :class="activeOption === 'page' ? 'bg-[#82CCB2]' : 'bg-transparent'" class="hover:bg-gray-300 w-full rounded-full px-5 py-2 cursor-pointer text-white font-serif text-center" for="page">
             {{ __('recitation.page') }}
         </label>
     </div>

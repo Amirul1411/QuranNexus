@@ -12,7 +12,7 @@ class AchievementPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->isAdmin() || $user->isEditor();
+        return $user->isAdmin();
     }
 
     /**
@@ -20,7 +20,7 @@ class AchievementPolicy
      */
     public function view(User $user, Achievement $achievement): bool
     {
-        return $user->isAdmin() || $user->isEditor();
+        return $user->isAdmin();
     }
 
     /**
@@ -28,7 +28,7 @@ class AchievementPolicy
      */
     public function create(User $user): bool
     {
-        return $user->isAdmin() || $user->isEditor();
+        return $user->isAdmin();
     }
 
     /**
@@ -36,7 +36,7 @@ class AchievementPolicy
      */
     public function update(User $user, Achievement $achievement): bool
     {
-        return $user->isAdmin() || $user->isEditor();
+        return $user->isAdmin();
     }
 
     /**
@@ -44,7 +44,7 @@ class AchievementPolicy
      */
     public function delete(User $user, Achievement $achievement): bool
     {
-        return $user->isAdmin() || $user->isEditor();
+        return $user->isAdmin();
     }
 
     /**
@@ -52,7 +52,7 @@ class AchievementPolicy
      */
     public function restore(User $user, Achievement $achievement): bool
     {
-        return $user->isAdmin() || $user->isEditor();
+        return $user->isAdmin();
     }
 
     /**
@@ -60,6 +60,6 @@ class AchievementPolicy
      */
     public function forceDelete(User $user, Achievement $achievement): bool
     {
-        return $user->isAdmin() || $user->isEditor();
+        return $user->isAdmin();
     }
 }

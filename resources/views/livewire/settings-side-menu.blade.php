@@ -24,7 +24,7 @@
             {{-- Close button --}}
             <button @click="open = false" class="text-black">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-6">
+                    stroke="currentColor" class="size-6 transform transition-transform duration-300 hover:scale-125">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                 </svg>
             </button>
@@ -45,8 +45,9 @@
                             <x-label darkTextColor="dark:text-gray-700" value="{{ __('Tafseer') }}" class="w-[15rem]" />
                             <x-dropdown align="right" width="48">
                                 <x-slot name="trigger">
-                                    <x-button type="button" borderColor="border-black-500"
-                                        class="text-black cursor-pointer w-[15rem] flex h-auto">
+                                    <x-button type="button" borderColor="border-gray-300" bg="bg-gray-200" text="text-gray-800" activeBg="bg-gray-300"
+                                    hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800"
+                                        class="text-black cursor-pointer w-[15rem] flex h-auto transform transition-transform duration-300 hover:scale-105">
                                         <div class="w-5/6">
                                             {{ $this->selectedTafseerNameAndLanguage ?? __('Choose Tafseer') }}
                                         </div>
@@ -77,8 +78,9 @@
                                 class="w-[15rem]" />
                             <x-dropdown align="right" width="48">
                                 <x-slot name="trigger">
-                                    <x-button type="button" borderColor="border-black-500"
-                                        class="text-black cursor-pointer w-[15rem] flex h-auto">
+                                    <x-button type="button" borderColor="border-gray-300" bg="bg-gray-200" text="text-gray-800" activeBg="bg-gray-300"
+                                    hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800"
+                                        class="cursor-pointer w-[15rem] flex h-auto transform transition-transform duration-300 hover:scale-105">
                                         <div class="w-5/6">
                                             {{ $this->selectedTranslationNameAndLanguage ?? __('Choose Translation') }}
 
@@ -110,8 +112,9 @@
                                 class="w-[15rem]" />
                             <x-dropdown align="right" width="48">
                                 <x-slot name="trigger">
-                                    <x-button type="button" borderColor="border-black-500"
-                                        class="text-black cursor-pointer w-[15rem] flex h-auto">
+                                    <x-button type="button" borderColor="border-gray-300" bg="bg-gray-200" text="text-gray-800" activeBg="bg-gray-300"
+                                    hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800"
+                                        class="cursor-pointer w-[15rem] flex h-auto transform transition-transform duration-300 hover:scale-105">
                                         <div class="w-5/6">
                                             {{ $this->selectedAudioRecitationName ?? __('Choose Audio Recitation') }}
                                         </div>
@@ -137,8 +140,7 @@
                                 </x-slot>
                             </x-dropdown>
                         </div>
-                        <div class="flex flex-col gap-2">
-                            {{-- Recitation Goal --}}
+                        {{-- <div class="flex flex-col gap-2">
                             <x-label darkTextColor="dark:text-gray-700" value="{{ __('Recitation Goal (Minutes)') }}"
                                 class="w-[15rem]" />
                             <div class="relative w-[15rem]">
@@ -147,7 +149,7 @@
                                     {{ $this->recitationGoal}}
                                 </x-input>
                             </div>
-                        </div>
+                        </div> --}}
                         @if (session('not logged in'))
                             <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 5000)" x-show="show"
                                 class="text-red-500 font-base w-[15rem] text-center">
@@ -180,8 +182,9 @@
 
 
             <x-slot name="actions">
-                <x-button
-                    class="bg-gradient-to-r from-light-green via-light-green-teal via-56 to-teal font-serif font-medium">
+                <x-button bg="bg-gradient-to-r from-light-green via-light-green-teal via-56 to-teal" text="text-gray-800" activeBg="bg-gray-300"
+                hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800" borderWidth="border-0"
+                    class="font-serif transform transition-transform duration-300 hover:scale-105">
                     {{ __('Save Settings') }}
                 </x-button>
             </x-slot>

@@ -18,7 +18,7 @@ class SurahResource extends JsonResource
         // Prepare the response data
         $response = [];
 
-        if ($request->query('ayahs') === 'true' && ($request->route()->getName() === 'surah.index' || $request->route()->getName() === 'surah.show')) {
+        if ($request->query('ayahs') === 'true' && ($request->route()->getName() === 'api_surah.index' || $request->route()->getName() === 'api_surah.show')) {
             $this->load('ayahs');
         }
 
@@ -30,7 +30,7 @@ class SurahResource extends JsonResource
 
         if($surahFields !== null){
             $fields = $surahFields;
-        }elseif($request->route()->getName() === 'surah.show' || $request->route()->getName() === 'surah.index'){
+        }elseif($request->route()->getName() === 'api_surah.show' || $request->route()->getName() === 'api_surah.index'){
             $fields = explode(',', $request->input('fields', ''));
         }
 
@@ -64,6 +64,10 @@ class SurahResource extends JsonResource
                 $response['Number of Ayahs'] = $this->ayas;
             }
 
+            if (in_array('Number of Words', $fields)) {
+                $response['Number of Words'] = $this->word_count;
+            }
+
         }
 
         // Add Ayahs relationship data if loaded
@@ -89,7 +93,8 @@ class SurahResource extends JsonResource
             'Name' => $this->tname,
             'Name Meaning' => $this->ename,
             'Type' => $this->type,
-            'Number of ayahs' => $this->ayas,
+            'Number of Ayahs' => $this->ayas,
+            'Number of Words' => $this->word_count,
         ];
     }
 }

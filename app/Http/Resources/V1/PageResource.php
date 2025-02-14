@@ -17,11 +17,11 @@ class PageResource extends JsonResource
 
         $response = [];
 
-        if ($request->query('surah') === 'true' && ($request->route()->getName() === 'page.index' || $request->route()->getName() === 'page.show')) {
+        if ($request->query('surah') === 'true' && ($request->route()->getName() === 'api_page.index' || $request->route()->getName() === 'api_page.show')) {
             $this->load('surah');
         }
 
-        if ($request->query('ayahs') === 'true' && ($request->route()->getName() === 'page.index' || $request->route()->getName() === 'page.show')) {
+        if ($request->query('ayahs') === 'true' && ($request->route()->getName() === 'api_page.index' || $request->route()->getName() === 'api_page.show')) {
             $this->load('ayahs');
         }
 
@@ -29,7 +29,7 @@ class PageResource extends JsonResource
 
         if($pageFields !== null){
             $fields = $pageFields;
-        }elseif($request->route()->getName() === 'page.show' || $request->route()->getName() === 'page.index'){
+        }elseif($request->route()->getName() === 'api_page.show' || $request->route()->getName() === 'api_page.index'){
             $fields = explode(',', $request->input('fields', ''));
         }
 

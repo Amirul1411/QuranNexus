@@ -22,11 +22,11 @@ class TranslationResource extends JsonResource
             $this->load('translationInfo');
         }
 
-        if ($request->query('surah') === 'true' && ($request->route()->getName() === 'translation.index' || $request->route()->getName() === 'translation.show')) {
+        if ($request->query('surah') === 'true' && ($request->route()->getName() === 'api_translation.index' || $request->route()->getName() === 'api_translation.show')) {
             $this->load('surah');
         }
 
-        if ($request->query('ayah') === 'true' && ($request->route()->getName() === 'translation.index' || $request->route()->getName() === 'translation.show')) {
+        if ($request->query('ayah') === 'true' && ($request->route()->getName() === 'api_translation.index' || $request->route()->getName() === 'api_translation.show')) {
             $this->load('ayah');
         }
 
@@ -34,7 +34,7 @@ class TranslationResource extends JsonResource
 
         if($translationFields !== null){
             $fields = $translationFields;
-        }elseif($request->route()->getName() === 'translation.show' || $request->route()->getName() === 'translation.index'){
+        }elseif($request->route()->getName() === 'api_translation.show' || $request->route()->getName() === 'api_translation.index'){
             $fields = explode(',', $request->input('fields', ''));
         }
 

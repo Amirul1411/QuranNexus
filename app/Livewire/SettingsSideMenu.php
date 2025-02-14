@@ -13,7 +13,8 @@ use Livewire\Component;
 class SettingsSideMenu extends Component
 {
     public $tafseers, $translations, $audioRecitations;
-    public $selectedTafseer, $selectedTranslation, $selectedAudio, $recitationGoal;
+    // public $selectedTafseer, $selectedTranslation, $selectedAudio, $recitationGoal;
+    public $selectedTafseer, $selectedTranslation, $selectedAudio;
 
     public function mount()
     {
@@ -23,21 +24,27 @@ class SettingsSideMenu extends Component
 
         if (Auth::user() && isset(Auth::user()->settings['tafseer_id'])) {
             $this->selectedTafseer = Auth::user()->settings['tafseer_id'];
+        }else{
+            $this->selectedTafseer = TafseerInfo::where('_id', '1')->first()->id;
         }
 
         if (Auth::user() && isset(Auth::user()->settings['translation_id'])) {
             $this->selectedTranslation = Auth::user()->settings['translation_id'];
+        }else{
+            $this->selectedTranslation = TranslationInfo::where('_id', '1')->first()->id;
         }
 
         if (Auth::user() && isset(Auth::user()->settings['audio_id'])) {
             $this->selectedAudio = Auth::user()->settings['audio_id'];
+        }else{
+            $this->selectedAudio = AudioRecitationInfo::where('_id', '1')->first()->id;
         }
 
-        if (Auth::user() && isset(Auth::user()->recitation_goal)) {
-            $this->recitationGoal = Auth::user()->recitation_goal;
-        }else{
-            $this->recitationGoal = null;
-        }
+        // if (Auth::user() && isset(Auth::user()->recitation_goal)) {
+        //     $this->recitationGoal = Auth::user()->recitation_goal;
+        // }else{
+        //     $this->recitationGoal = null;
+        // }
     }
 
     public function saveSettings()
@@ -52,7 +59,7 @@ class SettingsSideMenu extends Component
             'selectedTafseer' => 'nullable',
             'selectedTranslation' => 'nullable',
             'selectedAudio' => 'nullable',
-            'recitationGoal' => 'nullable|numeric|min:10',
+            // 'recitationGoal' => 'nullable|numeric|min:10',
         ]);
 
         // Check if all fields are null
@@ -79,7 +86,7 @@ class SettingsSideMenu extends Component
         // Save only the provided settings (without overwriting the entire settings array)
         Auth::user()->update([
             'settings' => $settings, // This will trigger the setSettingsAttribute method
-            'recitation_goal' => (int) $this->recitationGoal,
+            // 'recitation_goal' => (int) $this->recitationGoal,
         ]);
 
         session()->flash('successful', 'Settings successfully saved.');

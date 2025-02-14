@@ -11,11 +11,21 @@ class Achievement extends Model
     protected $connection = 'mongodb';
     protected $collection = 'achievements';
 
+    const SHOW_TRUE = 'TRUE';
+    const SHOW_FALSE = 'FALSE';
+    const SHOW_DEFAULT = self::SHOW_FALSE;
+
+    const SHOW = [
+        self::SHOW_TRUE => 'True',
+        self::SHOW_FALSE => 'False',
+    ];
+
     protected $fillable = [
         '_id',
         'badge_image',
         'title',
         'description',
+        'show',
     ];
 
     protected static function boot()

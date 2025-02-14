@@ -81,60 +81,60 @@ class TafseerSeeder extends Seeder
             }
         }
 
-        // $countTafseerCurrent = Tafseer::count();
-        // $currentLastTafseer = null;
-        // $countTafseerInfoIdCurrent = 0;
+        $countTafseerCurrent = Tafseer::count();
+        $currentLastTafseer = null;
+        $countTafseerInfoIdCurrent = 0;
 
-        // if($countTafseerCurrent > 0){
-        //     $currentLastTafseer = Tafseer::find($countTafseerCurrent);
-        //     $countTafseerInfoIdCurrent = (int) $currentLastTafseer->tafseer_info_id;
-        // }
+        if($countTafseerCurrent > 0){
+            $currentLastTafseer = Tafseer::find($countTafseerCurrent);
+            $countTafseerInfoIdCurrent = (int) $currentLastTafseer->tafseer_info_id;
+        }
 
-        // $countTafseer = 1;
+        $countTafseer = 1;
 
-        // $tafseerId = [160, 90];
-        // $allAyahs = Ayah::all();
+        $tafseerId = [160, 90];
+        $allAyahs = Ayah::all();
 
-        // foreach ($tafseerId as $id) {
+        foreach ($tafseerId as $id) {
 
-        //     if($countTafseerCurrent > 0 && $countTafseerInfoIdCurrent !==  (int) mapTafseerId($id)){
-        //         continue;
-        //     }
+            if($countTafseerCurrent > 0 && $countTafseerInfoIdCurrent !==  (int) mapTafseerId($id)){
+                continue;
+            }
 
-        //     foreach ($allAyahs as $ayah) {
+            foreach ($allAyahs as $ayah) {
 
-        //         if ($countTafseerCurrent > 0 && $countTafseer <= ( $countTafseerCurrent % 6236 )) {
-        //             $countTafseer++;
-        //             continue;
-        //         }
+                if ($countTafseerCurrent > 0 && $countTafseer <= ( $countTafseerCurrent % 6236 )) {
+                    $countTafseer++;
+                    continue;
+                }
 
-        //         $response = Http::timeout(60)
-        //             ->retry(3, 1000)
-        //             ->get('https://api.quran.com/api/v4/quran/tafsirs/' . $id . '?verse_key=' . $ayah->surah_id . ':' . $ayah->ayah_index);
+                $response = Http::timeout(60)
+                    ->retry(3, 1000)
+                    ->get('https://api.quran.com/api/v4/quran/tafsirs/' . $id . '?verse_key=' . $ayah->surah_id . ':' . $ayah->ayah_index);
 
-        //         // Extract JSON data from the response
-        //         $data = $response->json();
-        //         $tafseers = $data['tafsirs'];
+                // Extract JSON data from the response
+                $data = $response->json();
+                $tafseers = $data['tafsirs'];
 
-        //         foreach ($tafseers as $tafseer) {
-        //             if ($tafseer['resource_id'] === mapTafseerResourceId($id)) {
-        //                 $html = $tafseer['text'];
-        //                 break;
-        //             }
-        //         }
+                foreach ($tafseers as $tafseer) {
+                    if ($tafseer['resource_id'] === mapTafseerResourceId($id)) {
+                        $html = $tafseer['text'];
+                        break;
+                    }
+                }
 
-        //         DB::table($collectionName)->insert([
-        //             '_id' => (string) getNextSequenceValue('tafseer_id'),
-        //             'tafseer_info_id' => (string) mapTafseerId($id),
-        //             'surah_id' => (string) $ayah->surah_id,
-        //             'ayah_index' => (string) $ayah->ayah_index,
-        //             'ayah_key' => (string) $ayah->surah_id . ':' . $ayah->ayah_index,
-        //             'html' => $html === "" ? null : $html,
-        //         ]);
-        //     }
+                DB::table($collectionName)->insert([
+                    '_id' => (string) getNextSequenceValue('tafseer_id'),
+                    'tafseer_info_id' => (string) mapTafseerId($id),
+                    'surah_id' => (string) $ayah->surah_id,
+                    'ayah_index' => (string) $ayah->ayah_index,
+                    'ayah_key' => (string) $ayah->surah_id . ':' . $ayah->ayah_index,
+                    'html' => $html === "" ? null : $html,
+                ]);
+            }
 
-        //     $countTafseerInfoIdCurrent++;
+            $countTafseerInfoIdCurrent++;
 
-        // }
+        }
     }
 }

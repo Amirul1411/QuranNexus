@@ -40,7 +40,9 @@ class UserResource extends Resource
             Select::make('role')
                 ->options(User::ROLES)
                 ->label('Role')
-                ->required(),
+                ->required()
+                ->default(USER::ROLE_DEFAULT)
+                ->selectablePlaceholder(false),
         ]);
     }
 

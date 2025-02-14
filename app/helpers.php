@@ -4,8 +4,13 @@ use App\Models\Achievement;
 use App\Models\AudioRecitation;
 use App\Models\AudioRecitationInfo;
 use App\Models\Ayah;
+use App\Models\ChaptersInitials;
+use App\Models\CharacterFrequency;
+use App\Models\DailyQuotes;
+use App\Models\DiacriticFrequency;
 use App\Models\Inquiry;
 use App\Models\Juz;
+use App\Models\LongestToken;
 use App\Models\Page;
 use App\Models\Surah;
 use App\Models\SurahInfo;
@@ -68,6 +73,11 @@ if (!function_exists('resetCountersCollection')) {
             ['_id' => 'audio_id', 'sequence_value' => AudioRecitation::count()],
             ['_id' => 'audio_info_id', 'sequence_value' => AudioRecitationInfo::count()],
             ['_id' => 'achievement_id', 'sequence_value' => Achievement::count()],
+            ['_id' => 'daily_quotes_id', 'sequence_value' => DailyQuotes::count()],
+            ['_id' => 'chapters_initials_id', 'sequence_value' => ChaptersInitials::count()],
+            ['_id' => 'character_frequency_id', 'sequence_value' => CharacterFrequency::count()],
+            ['_id' => 'diacritic_frequency_id', 'sequence_value' => DiacriticFrequency::count()],
+            ['_id' => 'longest_token_id', 'sequence_value' => LongestToken::count()],
             // Add more collections as needed
         ]);
     }

@@ -16,17 +16,22 @@ class WordResource extends JsonResource
     {
         $response = [];
 
-        // Load related resources if needed
-        if ($request->query('ayah') === 'true') {
+        if ($request->query('ayah') === 'true' && ($request->route()->getName() === 'api_word.index' || $request->route()->getName() === 'api_word.show')) {
             $this->load('ayah');
         }
-        if ($request->query('surah') === 'true') {
+
+        if ($request->query('surah') === 'true' && ($request->route()->getName() === 'api_word.index' || $request->route()->getName() === 'api_word.show')) {
             $this->load('surah');
         }
 
         // Determine fields to return
         $wordFields = $request->has('word_fields') ? explode(',', $request->input('word_fields')) : null;
-        $fields = $wordFields ?: explode(',', $request->input('fields', ''));
+
+        if($wordFields !== null){
+            $fields = $wordFields;
+        }elseif($request->route()->getName() === 'api_word.show' || $request->route()->getName() === 'api_word.index'){
+            $fields = explode(',', $request->input('fields', ''));
+        }
 
         // If no fields were provided, return all fields
         if (empty($fields[0])) {
@@ -76,6 +81,60 @@ class WordResource extends JsonResource
                         break;
                 }
             }
+
+
+            if (in_array('Surah Id', $fields)) {
+                $response['Surah Id'] = $this->surah_id;
+            }
+
+            if (in_array('Ayah Index', $fields)) {
+                $response['Ayah Index'] = $this->ayah_index;
+            }
+
+            if (in_array('Word Index', $fields)) {
+                $response['Word Index'] = $this->word_index;
+            }
+
+            if (in_array('Ayah Key', $fields)) {
+                $response['Ayah Key'] = $this->ayah_key;
+            }
+
+            if (in_array('Word Key', $fields)) {
+                $response['Word Key'] = $this->word_key;
+            }
+
+            if (in_array('Audio Url', $fields)) {
+                $response['Audio Url'] = $this->audio_url;
+            }
+
+            if (in_array('Juz Id', $fields)) {
+                $response['Juz Id'] = $this->juz_id;
+            }
+
+            if (in_array('Page Id', $fields)) {
+                $response['Page Id'] = $this->page_id;
+            }
+
+            if (in_array('Line Number', $fields)) {
+                $response['Line Number'] = $this->line_number;
+            }
+
+            if (in_array('Text', $fields)) {
+                $response['Text'] = $this->text;
+            }
+
+            if (in_array('Characters', $fields)) {
+                $response['Characters'] = $this->characters;
+            }
+
+            if (in_array('Translation', $fields)) {
+                $response['Translation'] = $this->translation;
+            }
+
+            if (in_array('Transliteration', $fields)) {
+                $response['Transliteration'] = $this->transliteration;
+            }
+
         }
 
         // Include related resources if loaded
@@ -99,6 +158,7 @@ class WordResource extends JsonResource
             'Ayah Key' => $this->ayah_key,
             'Word Key' => $this->word_key,
             'Audio Url' => $this->audio_url,
+            'Juz Id' => $this->juz_id,
             'Page Id' => $this->page_id,
             'Line Number' => $this->line_number,
             'Text' => $this->text,

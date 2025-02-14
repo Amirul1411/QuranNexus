@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             // SurahSeeder::class,
             // SurahInfoSeeder::class,
             // AyahSeeder::class,
-            WordSeeder::class,
+            // WordSeeder::class,
             // TafseerInfoSeeder::class,
             // TafseerSeeder::class,
             // TranslationInfoSeeder::class,
@@ -38,6 +38,10 @@ class DatabaseSeeder extends Seeder
             // AudioRecitationInfoSeeder::class,
             // AudioRecitationSeeder::class,
             // AchievementSeeder::class,
+            // ChaptersInitialsSeeder::class,
+            CharacterFrequencySeeder::class,
+            // LongestTokenSeeder::class,
+            DiacriticFrequencySeeder::class,
         ]);
     }
 }

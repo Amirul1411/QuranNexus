@@ -6,6 +6,7 @@ use App\Models\Ayah;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\Attributes\On;
 
 class AudioRecitationButton extends Component
 {

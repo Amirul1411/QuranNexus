@@ -1,6 +1,6 @@
-<div class="flex justify-end items-center my-5 text-white">
+<div class="flex justify-end items-center my-5 text-black">
     @if (Route::is('surah.show'))
-        <div wire:click="playAudioRecitation({{ $surah->ayahs }})" class="flex w-auto items-center cursor-pointer">
+        <div wire:click="playAudioRecitation({{ $surah->ayahs }})" class="flex w-auto items-center cursor-pointer transform transition-transform duration-300 hover:scale-125">
             <span class="mr-1 cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                     fill="currentColor" class="size-5">
                     <path
@@ -10,7 +10,7 @@
             <p class="cursor-pointer">{{ __('recitation.play_audio') }}</p>
         </div>
     @elseif (Route::is('page.show'))
-        <div wire:click="playAudioRecitation({{ $page->ayahs }})" class="flex w-auto items-center cursor-pointer">
+        <div wire:click="playAudioRecitation({{ $page->ayahs }})" class="flex w-auto items-center cursor-pointer transform transition-transform duration-300 hover:scale-125">
             <span class="mr-1 cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                     fill="currentColor" class="size-5">
                     <path
@@ -20,7 +20,7 @@
             <p class="cursor-pointer">{{ __('recitation.play_audio') }}</p>
         </div>
     @elseif (Route::is('juz.show'))
-        <div wire:click="playAudioRecitation({{ $juz->ayahs }})" class="flex w-auto items-center cursor-pointer">
+        <div wire:click="playAudioRecitation({{ $juz->ayahs }})" class="flex w-auto items-center cursor-pointer transform transition-transform duration-300 hover:scale-125">
             <span class="mr-1 cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                     fill="currentColor" class="size-5">
                     <path

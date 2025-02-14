@@ -2,11 +2,11 @@
     footerJustify="justify-center" footerItems="items-start" footerPaddingY='pb-4'>
 
     <x-slot name="title">
-        <h2 class="text-center text-3xl my-5">Forgot Password</h2>
+        <h2 class="text-center text-3xl my-5 text-white">Forgot Password</h2>
     </x-slot>
 
     <x-slot name="content">
-        <div class="mb-4 text-sm text-gray-600 dark:text-gray-400 text-center font-semibold">
+        <div class="mb-4 text-sm text-gray-400 text-center font-semibold">
             {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
         </div>
 

@@ -1,5 +1,7 @@
-$footer-color: mix(#0A2625, #67D6CA, 100%);
-$button-color: mix(#78C2AD, #FFFFFF, 100%);
+@use "sass:color";
+
+$footer-color: color.mix(#02584A, #67D6CA, 100%);
+$button-color: color.mix(#78C2AD, #FFFFFF, 100%);
 
 
 @font-face {
@@ -35,16 +37,24 @@ $button-color: mix(#78C2AD, #FFFFFF, 100%);
 //     src: url("https://quran-nexus-bucket.s3.ap-southeast-1.amazonaws.com/quran-fonts/KfgqpcHafsUthmanicScriptRegular-nARZ1.ttf") format('truetype');
 // }
 
+.rotate-90 {
+    transform: rotate(90deg);
+}
+.rotate-0 {
+    transform: rotate(0deg);
+}
+
 .aya-side-menu-color{
     color: #A5F38A;
 }
 
 .background{
-    background-color: #2D6360;
+    // background-color: #2D6360;
+    background-image: linear-gradient(to top right, #86D6C3, #75FF9C);
 }
 
 .modal-bg{
-    background-color: #134848;
+    background-color: $footer-color;
 }
 
 .contact-form-button-color{

@@ -18,6 +18,7 @@ class Surah extends Model
         'ename',
         'type',
         'ayas',
+        'word_count',
     ];
 
     const MECCAN = 'Meccan';
@@ -66,5 +67,15 @@ class Surah extends Model
     public function surahInfo()
     {
         return $this->hasOne(SurahInfo::class, '_id', '_id');
+    }
+
+    public function chapterInitial()
+    {
+        return $this->hasOne(ChaptersInitials::class, '_id', '_id');
+    }
+
+    public function longestToken()
+    {
+        return $this->hasMany(LongestToken::class, 'surah_id', '_id');
     }
 }

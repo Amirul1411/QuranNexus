@@ -88,8 +88,8 @@ class AyahSeeder extends Seeder
             }
         }
 
-        $filePathAya = Storage::url('quran-data/quran-uthmani.xml');
-        $filePathPage = Storage::url('quran-data/quran-data.xml');
+        $filePathAya = Storage::url('/quran-data/quran-uthmani.xml');
+        $filePathPage = Storage::url('/quran-data/quran-data.xml');
 
         $xmlAya = simplexml_load_file($filePathAya);
         $xmlPage = simplexml_load_file($filePathPage);
