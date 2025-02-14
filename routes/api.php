@@ -39,6 +39,27 @@ Route::prefix('v1')->group(function () {
     Route::get('words/distribution', [APIWordController::class, 'getWordJuzDistribution']);
     Route::get('words/chapters-distribution', [APIWordController::class, 'getWordsChaptersDistribution']);
 
+
+
+    Route::apiResource('surahs', APISurahController::class)->name('index','surah.index')->name('show', 'surah.show');
+    Route::apiResource('ayahs', APIAyahController::class)->name('index','ayah.index')->name('show', 'ayah.show');
+    Route::apiResource('pages', APIPageController::class)->name('index','page.index')->name('show', 'page.show');
+    Route::apiResource('words', APIWordController::class)->name('index','word.index')->name('show', 'word.show');
+    Route::apiResource('juzs', APIJuzController::class)->name('index','juz.index')->name('show', 'juz.show');
+    Route::apiResource('translations', APITranslationController::class)->name('index','translation.index')->name('show', 'translation.show');
+    Route::apiResource('surah_info', APISurahInfoController::class)->name('index','surah_info.index')->name('show', 'surah_info.show');
+    Route::apiResource('tafseer', APITafseerController::class)->name('index','tafseer.index')->name('show', 'tafseer.show');
+    Route::apiResource('audio_recitations', APIAudioRecitationController::class)->name('index','audio_recitation.index')->name('show', 'audio_recitation.show');
+    Route::apiResource('audio_recitation_info', APIAudioRecitationInfoController::class)->name('index','audio_recitation_info.index')->name('show', 'audio_recitation_info.show');
+    Route::apiResource('tafseer_info', APITafseerInfoController::class)->name('index','tafseer_info.index')->name('show', 'tafseer_info.show');
+    Route::apiResource('translation_info', APITranslationInfoController::class)->name('index','translation_info.index')->name('show', 'translation_info.show');
+    Route::apiResource('achievements', APIAchievementController::class)->name('index','achievement.index')->name('show', 'achievement.show');
+
+    // Temporary route
+    Route::get('chapters/{id}/verses', [APIAyahController::class, 'getVersesByChapter']);
+
+
+
     // Authenticated routes
     Route::middleware(['auth.logging'])->group(function () {
         Route::get('/profile', [APIAuthController::class, 'profile']);
@@ -56,7 +77,8 @@ Route::prefix('v1')->group(function () {
         Route::get('/bookmarks', [APIBookmarkController::class, 'getBookmarks']);
         Route::post('/bookmarks', [APIBookmarkController::class, 'addBookmark']);
         Route::delete('/bookmarks/{type}/{itemId}', [APIBookmarkController::class, 'removeBookmark']);
-        Route::post('/bookmarks/migrate', [APIBookmarkController::class, 'migrateWordBookmarks']);
+        
+        Route::post('/bookmarks/migrate', [APIBookmarkController::class, 'migrateBookmarks']);
       
         });
     });

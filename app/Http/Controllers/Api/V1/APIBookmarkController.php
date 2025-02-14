@@ -14,24 +14,11 @@ class APIBookmarkController extends Controller
     {
         try {
             $request->validate([
-                'type' => 'required|string|in:chapter,verse,word,quote',
-                'item_id' => 'required|string',
-                'word_text' => 'required_if:type,word',
-                'translation' => 'required_if:type,word',
-                'transliteration' => 'nullable|string',
-                'total_occurrences' => 'required_if:type,word|integer',
-                'first_occurrence' => 'required_if:type,word|array',
-                'first_occurrence.word_key' => 'required_if:type,word|string',
-                'first_occurrence.chapter_id' => 'required_if:type,word|string',
-                'first_occurrence.verse_number' => 'required_if:type,word|string',
-                'first_occurrence.surah_name' => 'required_if:type,word|string',
-                'first_occurrence.page_id' => 'required_if:type,word|string',
-                'first_occurrence.juz_id' => 'required_if:type,word|string',
-                'first_occurrence.verse_text' => 'required_if:type,word|string',
-                'first_occurrence.audio_url' => 'nullable|string',
+                'type' => 'required|string|in:chapter,verse,word,quote,page',
+                'item_properties' => 'required|array',
+                'notes' => 'nullable|string'
             ]);
 
-            // Get authenticated user
             $user = auth()->user();
             if (!$user) {
                 return response()->json([
@@ -40,81 +27,65 @@ class APIBookmarkController extends Controller
                 ], 401);
             }
 
-            switch($request->type) {
+            // Initialize bookmarks structure if it doesn't exist
+            if (!isset($user->bookmarks)) {
+                $user->bookmarks = [
+                    'chapters' => [],
+                    'verses' => [],
+                    'words' => [],
+                    'quotes' => [],
+                    'pages' => []
+                ];
+            }
+
+            // Check for duplicates based on type
+            $isDuplicate = false;
+            switch ($request->type) {
                 case 'chapter':
-                    // Existing chapter logic
-                    if (in_array($request->item_id, $user->surah_bookmarks ?? [])) {
-                        return response()->json([
-                            'status' => 'error',
-                            'message' => 'Chapter already bookmarked'
-                        ], 409);
-                    }
-                    $user->push('surah_bookmarks', $request->item_id);
+                    $isDuplicate = collect($user->bookmarks['chapters'])->contains(function ($item) use ($request) {
+                        return $item['item_properties']['chapter_id'] === $request->item_properties['chapter_id'];
+                    });
                     break;
-
                 case 'verse':
-                    // Existing verse logic
-                    if (in_array($request->item_id, $user->ayah_bookmarks ?? [])) {
-                        return response()->json([
-                            'status' => 'error',
-                            'message' => 'Verse already bookmarked'
-                        ], 409);
-                    }
-                    $user->push('ayah_bookmarks', $request->item_id);
-                    $user->push('ayah_bookmarks_mobile', [
-                        'ayah_id' => $request->item_id,
-                        'chapter_id' => $request->chapter_id,
-                        'notes' => $request->notes ?? '',
-                        'created_at' => now()->toDateTimeString()
-                    ]);
+                    $isDuplicate = collect($user->bookmarks['verses'])->contains(function ($item) use ($request) {
+                        return $item['item_properties']['chapter_id'] === $request->item_properties['chapter_id'] 
+                            && $item['item_properties']['verse_number'] === $request->item_properties['verse_number'];
+                    });
                     break;
-
                 case 'word':
-                    // New word bookmark logic
-                    if ($user->word_bookmarks && collect($user->word_bookmarks)->contains('word_text', $request->word_text)) {
-                        return response()->json([
-                            'status' => 'error',
-                            'message' => 'Word already bookmarked'
-                        ], 409);
-                    }
-                    $wordBookmark = [
-                        'word_text' => $request->word_text,
-                        'translation' => $request->translation,
-                        'transliteration' => $request->transliteration,
-                        'total_occurrences' => $request->total_occurrences,
-                        'first_occurrence' => [
-                            'word_key' => $request->first_occurrence['word_key'],
-                            'chapter_id' => $request->first_occurrence['chapter_id'],
-                            'verse_number' => $request->first_occurrence['verse_number'],
-                            'surah_name' => $request->first_occurrence['surah_name'],
-                            'page_id' => $request->first_occurrence['page_id'],
-                            'juz_id' => $request->first_occurrence['juz_id'],
-                            'verse_text' => $request->first_occurrence['verse_text'],
-                            'audio_url' => $request->first_occurrence['audio_url']
-                        ],
-                        'bookmark_date' => now()->toDateTimeString()
-                    ];
-                    
-                    $user->push('word_bookmarks', $wordBookmark);
+                    $isDuplicate = collect($user->bookmarks['words'])->contains(function ($item) use ($request) {
+                        return $item['item_properties']['word_text'] === $request->item_properties['word_text'];
+                    });
                     break;
-
                 case 'quote':
-                    // New quote bookmark logic
-                    if (in_array($request->item_id, array_column($user->quote_bookmarks ?? [], 'quote_id'))) {
-                        return response()->json([
-                            'status' => 'error',
-                            'message' => 'Quote already bookmarked'
-                        ], 409);
-                    }
-                    $quoteBookmark = [
-                        'quote_id' => $request->item_id,
-                        'title' => $request->title,
-                        'description' => $request->description,
-                        'source' => $request->source
-                    ];
-                    $user->push('quote_bookmarks', $quoteBookmark);
+                    $isDuplicate = collect($user->bookmarks['quotes'])->contains(function ($item) use ($request) {
+                        return $item['item_properties']['quote_id'] === $request->item_properties['quote_id'];
+                    });
+                    break;
+                case 'page':
+                    $isDuplicate = collect($user->bookmarks['pages'])->contains(function ($item) use ($request) {
+                        return $item['item_properties']['page_id'] === $request->item_properties['page_id'];
+                    });
                     break;
             }
+
+            if ($isDuplicate) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Item already bookmarked'
+                ], 409);
+            }
+
+            // Create new bookmark
+            $newBookmark = [
+                'item_properties' => $request->item_properties,
+                'notes' => $request->notes ?? '',
+                'created_at' => now()->toDateTimeString()
+            ];
+
+            // Add to appropriate array based on type
+            $bookmarkType = $request->type . 's'; // Convert to plural
+            $user->push('bookmarks.' . $bookmarkType, $newBookmark);
 
             return response()->json([
                 'status' => 'success',
@@ -140,21 +111,37 @@ class APIBookmarkController extends Controller
                 ], 401);
             }
 
-            switch($type) {
-                case 'chapter':
-                    $user->pull('surah_bookmarks', $itemId);
-                    break;
-                case 'verse':
-                    $user->pull('ayah_bookmarks', $itemId);
-                    $user->pull('ayah_bookmarks_mobile', ['ayah_id' => $itemId]);
-                    break;
-                case 'word':
-                    $user->pull('word_bookmarks', ['word_text' => $itemId]);
-                    break;
-                case 'quote':
-                    $user->pull('quote_bookmarks', ['quote_id' => $itemId]);
-                    break;
+            $bookmarkType = $type . 's'; // Convert to plural
+            if (!isset($user->bookmarks[$bookmarkType])) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Invalid bookmark type'
+                ], 400);
             }
+
+            $bookmarks = collect($user->bookmarks[$bookmarkType]);
+            
+            // Filter out the bookmark to remove based on type
+            $updatedBookmarks = $bookmarks->filter(function ($bookmark) use ($type, $itemId) {
+                switch ($type) {
+                    case 'chapter':
+                        return $bookmark['item_properties']['chapter_id'] !== $itemId;
+                    case 'verse':
+                        return $bookmark['item_properties']['verse_id'] !== $itemId;
+                    case 'word':
+                        return $bookmark['item_properties']['word_text'] !== $itemId;
+                    case 'quote':
+                        return $bookmark['item_properties']['quote_id'] !== $itemId;
+                    case 'page':
+                        return $bookmark['item_properties']['page_id'] !== $itemId;
+                    default:
+                        return true;
+                }
+            })->values()->all();
+
+            // Update the specific bookmark type array
+            $user->bookmarks[$bookmarkType] = $updatedBookmarks;
+            $user->save();
 
             return response()->json([
                 'status' => 'success',
@@ -180,15 +167,19 @@ class APIBookmarkController extends Controller
                 ], 401);
             }
 
+            // Initialize empty structure if bookmarks don't exist
+            $bookmarks = $user->bookmarks ?? [
+                'chapters' => [],
+                'verses' => [],
+                'words' => [],
+                'quotes' => [],
+                'pages' => []
+            ];
+
             return response()->json([
                 'status' => 'success',
                 'user_id' => $user->_id,
-                'bookmarks' => [
-                    'chapters' => $user->surah_bookmarks ?? [],
-                    'verses' => $user->ayah_bookmarks_mobile ?? [],
-                    'words' => $user->word_bookmarks ?? [],
-                    'quotes' => $user->quote_bookmarks ?? []
-                ]
+                'bookmarks' => $bookmarks
             ], 200);
 
         } catch (\Exception $e) {
@@ -199,64 +190,107 @@ class APIBookmarkController extends Controller
         }
     }
 
+    public function migrateBookmarks()
+    {
+        try {
+            $user = auth()->user();
+            if (!$user) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Unauthenticated'
+                ], 401);
+            }
 
-    public function migrateWordBookmarks(Request $request)
-{
-    try {
-        $user = auth()->user();
-        if (!$user) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Unauthenticated'
-            ], 401);
-        }
+            // Initialize new bookmark structure
+            $newBookmarks = [
+                'chapters' => [],
+                'verses' => [],
+                'words' => [],
+                'quotes' => [],
+                'pages' => []
+            ];
 
-        $oldBookmarks = $user->word_bookmarks ?? [];
-        $newBookmarks = [];
-
-        foreach ($oldBookmarks as $bookmark) {
-            // Get first occurrence details from the Word collection
-            $word = Word::where('text', $bookmark['word_text'])->first();
-            
-            if ($word) {
-                $newBookmarks[] = [
-                    'word_text' => $bookmark['word_text'],
-                    'translation' => $bookmark['translation'],
-                    'transliteration' => $bookmark['transliteration'],
-                    'total_occurrences' => Word::where('text', $bookmark['word_text'])->count(),
-                    'first_occurrence' => [
-                        'word_key' => "{$word->surah_id}:{$word->ayah_index}:{$word->word_index}",
-                        'chapter_id' => $word->surah_id,
-                        'verse_number' => $word->ayah_index,
-                        'surah_name' => $bookmark['surah_name'],
-                        'page_id' => $word->page_id,
-                        'juz_id' => $word->juz_id,
-                        'verse_text' => Word::where('ayah_key', $word->ayah_key)
-                                          ->orderBy('word_index')
-                                          ->pluck('text')
-                                          ->join(' '),
-                        'audio_url' => $word->audio_url
+            // Migrate chapter bookmarks
+            foreach ($user->surah_bookmarks ?? [] as $surahId) {
+                $newBookmarks['chapters'][] = [
+                    'item_properties' => [
+                        'chapter_id' => $surahId
                     ],
-                    'bookmark_date' => now()->toDateTimeString()
+                    'notes' => '',
+                    'created_at' => now()->toDateTimeString()
                 ];
             }
+
+            // Migrate verse bookmarks
+            foreach ($user->ayah_bookmarks_mobile ?? [] as $ayah) {
+                $newBookmarks['verses'][] = [
+                    'item_properties' => [
+                        'verse_id' => $ayah['ayah_id'],
+                        'chapter_id' => $ayah['chapter_id']
+                    ],
+                    'notes' => $ayah['notes'] ?? '',
+                    'created_at' => $ayah['created_at']
+                ];
+            }
+
+            // Migrate word bookmarks
+            foreach ($user->word_bookmarks ?? [] as $word) {
+                $newBookmarks['words'][] = [
+                    'item_properties' => [
+                        'word_text' => $word['word_text'],
+                        'translation' => $word['translation'],
+                        'transliteration' => $word['transliteration'],
+                        'total_occurrences' => $word['total_occurrences'],
+                        'first_occurrence' => $word['first_occurrence']
+                    ],
+                    'notes' => '',
+                    'created_at' => $word['bookmark_date']
+                ];
+            }
+
+            // Migrate quote bookmarks if they exist
+            foreach ($user->quote_bookmarks ?? [] as $quote) {
+                $newBookmarks['quotes'][] = [
+                    'item_properties' => [
+                        'quote_id' => $quote['quote_id'],
+                        'title' => $quote['title'],
+                        'description' => $quote['description'],
+                        'source' => $quote['source']
+                    ],
+                    'notes' => '',
+                    'created_at' => now()->toDateTimeString()
+                ];
+            }
+
+            // Update user with new bookmark structure
+            $user->bookmarks = $newBookmarks;
+            
+            // Clear old bookmark fields
+            unset($user->surah_bookmarks);
+            unset($user->ayah_bookmarks);
+            unset($user->ayah_bookmarks_mobile);
+            unset($user->word_bookmarks);
+            unset($user->quote_bookmarks);
+            
+            $user->save();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Bookmarks migrated successfully',
+                'counts' => [
+                    'chapters' => count($newBookmarks['chapters']),
+                    'verses' => count($newBookmarks['verses']),
+                    'words' => count($newBookmarks['words']),
+                    'quotes' => count($newBookmarks['quotes']),
+                    'pages' => count($newBookmarks['pages'])
+                ]
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to migrate bookmarks: ' . $e->getMessage()
+            ], 500);
         }
-
-        // Replace old bookmarks with new structure
-        $user->word_bookmarks = $newBookmarks;
-        $user->save();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Word bookmarks migrated successfully',
-            'count' => count($newBookmarks)
-        ], 200);
-
-    } catch (\Exception $e) {
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Failed to migrate bookmarks: ' . $e->getMessage()
-        ], 500);
     }
-}
 }
