@@ -7,38 +7,30 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class AyahResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(Request $request): array
     {
-
-        // Prepare the response data
         $response = [];
 
         if ($request->query('surah') === 'true' && ($request->route()->getName() === 'api_ayah.index' || $request->route()->getName() === 'api_ayah.show')) {
+
             $this->load('surah');
         }
-
         if ($request->query('words') === 'true') {
             $this->load('words');
         }
-
         if ($request->query('tafseers') === 'true') {
             $this->load('tafseer');
         }
-
         if ($request->query('translations') === 'true') {
             $this->load('translations');
         }
-
         if ($request->query('audio_recitations') === 'true') {
             $this->load('audioRecitations');
         }
 
+        // Determine fields to return
         $ayahFields = $request->has('ayah_fields') ? explode(',', $request->input('ayah_fields')) : null;
+        // $fields = $ayahFields ?: explode(',', $request->input('fields', ''));
 
         // Get the fields parameter from the request
         if($ayahFields !== null){
@@ -49,63 +41,57 @@ class AyahResource extends JsonResource
 
         // If no fields were provided, return all fields
         if (empty($fields[0])) {
-            // Add all fields to the response
             $response = $this->getAllFields($request);
         } else {
-            // Conditionally add fields based on the user's request
-            if (in_array('Id', $fields)) {
-                $response['Id'] = $this->_id;
+            // Add fields conditionally
+            foreach ($fields as $field) {
+                switch ($field) {
+                    case 'Id':
+                        $response['Id'] = $this->_id;
+                        break;
+                    case 'Surah Id':
+                        $response['Surah Id'] = $this->surah_id;
+                        break;
+                    case 'Ayah Index':
+                        $response['Ayah Index'] = $this->ayah_index;
+                        break;
+                    case 'Ayah Key':
+                        $response['Ayah Key'] = $this->ayah_key;
+                        break;
+                    case 'Page Id':
+                        $response['Page Id'] = $this->when($request->query('page_ayahs') !== 'true', $this->page_id);
+                        break;
+                    case 'Juz Id':
+                        $response['Juz Id'] = $this->when($request->query('juz_ayahs') !== 'true', $this->juz_id);
+                        break;
+                    case 'Bismillah':
+                        $response['Bismillah'] = $this->bismillah;
+                        break;
+                    case 'Arabic Text':
+                        $response['Arabic Text'] = $this->words->pluck('text')->implode(' ');
+                        break;
+                }
             }
-
-            if (in_array('Surah Id', $fields)) {
-                $response['Surah Id'] = $this->surah_id;
-            }
-
-            if (in_array('Ayah Index', $fields)) {
-                $response['Ayah Index'] = $this->ayah_index;
-            }
-
-            if (in_array('Ayah Key', $fields)) {
-                $response['Ayah Key'] = $this->ayah_key;
-            }
-
-            if (in_array('Page Id', $fields)) {
-                $response['Page Id'] = $this->page_id;
-            }
-
-            if (in_array('Juz Id', $fields)) {
-                $response['Juz Id'] = $this->juz_id;
-            }
-
-            if (in_array('Bismillah', $fields)) {
-                $response['Bismillah'] = $this->bismillah;
-            }
-
         }
 
+        // Include related resources if loaded
         if ($this->relationLoaded('surah')) {
             $response['Surah'] = new SurahResource($this->whenLoaded('surah'));
         }
-
         if ($this->relationLoaded('words')) {
             $response['Words'] = WordResource::collection($this->whenLoaded('words'));
         }
-
         if ($this->relationLoaded('translations')) {
             $response['Translations'] = TranslationResource::collection($this->whenLoaded('translations'));
         }
-
         if ($this->relationLoaded('tafseer')) {
             $response['Tafseer'] = TafseerResource::collection($this->whenLoaded('tafseer'));
         }
-
         if ($this->relationLoaded('audioRecitations')) {
             $response['Audio Recitation'] = AudioRecitationResource::collection($this->whenLoaded('audioRecitations'));
         }
 
         return $response;
-
-        // return parent::toArray($request);
     }
 
     private function getAllFields($request)
