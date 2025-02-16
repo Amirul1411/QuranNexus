@@ -31,6 +31,11 @@
                 @click="quranAnalysisActiveOption = 'diacriticFrequency'">
                 {{ __('quran_analysis.diacritic_frequency') }}
             </x-button>
+            <x-button :class="{'text-green-400': quranAnalysisActiveOption = 'wordStatistics'}" borderColor="border-gray-300" bg="bg-gray-200" text="text-gray-800" activeBg="bg-gray-300"
+                hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800" class="transform transition-transform duration-300 hover:scale-105"
+                @click="quranAnalysisActiveOption = 'wordStatistics'">
+                {{ __('quran_analysis.word_statistics') }}
+            </x-button>
             {{-- <x-button :class="{'text-green-400': quranAnalysisActiveOption = 'chaptersInitials'}" borderColor="border-gray-300" bg="bg-gray-200" text="text-gray-800" activeBg="bg-gray-300"
                 hover="bg-white" focus="bg-white" focusRingOffset="ring-offset-gray-800" class="transform transition-transform duration-300 hover:scale-105"
                 @click="quranAnalysisActiveOption = 'irab'">
@@ -52,6 +57,9 @@
         </template>
         <template x-if=" quranAnalysisActiveOption === 'diacriticFrequency' ">
             @livewire('diacritic-frequency')
+        </template>
+        <template x-if=" quranAnalysisActiveOption === 'wordStatistics' ">
+            @livewire('word-statistics')
         </template>
         {{-- <template x-if=" quranAnalysisActiveOption === 'irab' "> --}}
             {{-- @livewire('irab') --}}

@@ -64,12 +64,12 @@ class WordStatisticsSeeder extends Seeder
             if ($this->isWaqafOrSymbol($wordData)) {
                 continue;
             }
-            
+
             $word = $wordData['text'];
 
             if (!isset($wordStatistics[$word])) {
                 $wordStatistics[$word] = [
-                    '_id' => getNextSequenceValue('word_statistics_id'),
+                    '_id' => (string) getNextSequenceValue('word_statistics_id'),
                     'word' => $word,
                     'transliteration' => $wordData['transliteration'] ?? null,
                     'translation' => $wordData['translation'] ?? null,
@@ -164,7 +164,7 @@ class WordStatisticsSeeder extends Seeder
         }
     }
 
-    private function isWaqafOrSymbol($wordData): bool 
+    private function isWaqafOrSymbol($wordData): bool
     {
         // Check for null/empty characters
         if (empty($wordData['characters'])) {

@@ -39,9 +39,10 @@ class DatabaseSeeder extends Seeder
             // AudioRecitationSeeder::class,
             // AchievementSeeder::class,
             // ChaptersInitialsSeeder::class,
-            CharacterFrequencySeeder::class,
+            // CharacterFrequencySeeder::class,
             // LongestTokenSeeder::class,
-            DiacriticFrequencySeeder::class,
+            // DiacriticFrequencySeeder::class,
+            WordStatisticsSeeder::class,
         ]);
     }
 }
