@@ -2,7 +2,7 @@
     <h1 class="font-bold my-5 text-2xl">Tafseer Info API</h1>
     <div class="my-10">
         <p class="rounded-md px-2 inline-block font-medium">Base URL</p>
-        <p>http://quran-nexus.ap-southeast-1.elasticbeanstalk.com/api/v1</p>
+        <p>https://quran.seaade2024.com/api/v1</p>
     </div>
     <div class="my-10">
         <p class="text-black inline-block rounded-md px-2 font-medium">Get</p>
@@ -79,7 +79,7 @@
             </svg>
             <p class="font-bold">Response</p>
         </div>
-        <div x-show="responseOpen" x-transition class="my-2 ml-6" x-data="{ surahOpen: false, surahInfoOpen: false, ayahOpen: false, wordOpen: false, translationInfoOpen: false, translationOpen: false, tafseerInfoOpen: false, tafseerOpen: false, audioRecitationInfoOpen: false, audioRecitationOpen: false, audioRecitationInfoTranslatedNameOpen: false, tafseerInfoTranslatedNameOpen: false, juzOpen: false }">
+        <div x-show="responseOpen" x-transition class="my-2 ml-6" x-data="{ tafseerInfoOpen: false, tafseerOpen: false, tafseerInfoTranslatedNameOpen: false }">
             <div @click="tafseerInfoOpen = !tafseerInfoOpen"
                 class="cursor-pointer rounded-md flex gap-3 items-center text-black ml-6">
                 <svg :class="{ 'rotate-90': tafseerInfoOpen, 'rotate-0': !tafseerInfoOpen }" x-transition

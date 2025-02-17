@@ -18,9 +18,9 @@ class WordStatisticsResource extends JsonResource
 
         $wordStatisticsFields = $request->has('word_statistics_fields') ? explode(',', $request->input('word_statistics_fields')) : null;
 
-        if($wordStatisticsFields !== null){
+        if ($wordStatisticsFields !== null) {
             $fields = $wordStatisticsFields;
-        }elseif($request->route()->getName() === 'api_word_statistics.show' || $request->route()->getName() === 'api_word_statistics.index'){
+        } elseif ($request->route()->getName() === 'api_word_statistics.show' || $request->route()->getName() === 'api_word_statistics.index') {
             $fields = explode(',', $request->input('fields', ''));
         }
 
@@ -54,18 +54,68 @@ class WordStatisticsResource extends JsonResource
             }
 
             if (in_array('Occurrences by Surah', $fields)) {
-                $response['Occurrences by Surah'] = $this->occurrences_by_surah;
+                $occurrencesBySurahArr = [];
+
+                foreach ($this->occurrences_by_surah as $occurrence) {
+                    $occurrencesBySurahArr[] = [
+                        'Surah Id' => $occurrence['surah_id'],
+                        'Count' => $occurrence['count'],
+                    ];
+                }
+
+                $response['Occurrences by Surah'] = $occurrencesBySurahArr;
             }
 
             if (in_array('Occurrences by Juz', $fields)) {
-                $response['Occurrences by Juz'] = $this->occurrences_by_juz;
+                $occurrencesByJuzArr = [];
+
+                foreach ($this->occurrences_by_juz as $occurrence) {
+                    $occurrencesByJuzArr[] = [
+                        'Juz Id' => $occurrence['juz_id'],
+                        'Count' => $occurrence['count'],
+                    ];
+                }
+
+                $response['Occurrences by Juz'] = $occurrencesByJuzArr;
             }
+
             if (in_array('Occurrences by Page', $fields)) {
-                $response['Occurrences by Page'] = $this->occurrences_by_page;
+                $occurrencesByPageArr = [];
+
+                foreach ($this->occurrences_by_page as $occurrence) {
+                    $occurrencesByPageArr[] = [
+                        'Page Id' => $occurrence['page_id'],
+                        'Count' => $occurrence['count'],
+                    ];
+                }
+
+                $response['Occurrences by Page'] = $occurrencesByPageArr;
             }
 
             if (in_array('Positions', $fields)) {
-                $response['Positions'] = $this->positions;
+                $positionsPagePositionsArr = [];
+
+                foreach ($this->positions['page_positions'] as $position) {
+                    $positionsPagePositionsLinesArr = [];
+
+                    foreach ($position['lines'] as $line) {
+                        $positionsPagePositionsLinesArr[] = [
+                            'Line Number' => $line['line_number'],
+                            'Count' => $line['count'],
+                        ];
+                    }
+
+                    $positionsPagePositionsArr[] = [
+                        'Page Id' => $position['page_id'],
+                        'Total Count' => $position['total_count'],
+                        'Lines' => $positionsPagePositionsLinesArr,
+                    ];
+                }
+
+                $response['Positions'] = [
+                    'Word Keys' => $this->positions['word_keys'],
+                    'Page Positions' => $positionsPagePositionsArr,
+                ];
             }
         }
 
@@ -74,6 +124,51 @@ class WordStatisticsResource extends JsonResource
 
     private function getAllFields($request)
     {
+        $occurrencesBySurahArr = [];
+
+        foreach ($this->occurrences_by_surah as $occurrence) {
+            $occurrencesBySurahArr[] = [
+                'Surah Id' => $occurrence['surah_id'],
+                'Count' => $occurrence['count'],
+            ];
+        }
+
+        $occurrencesByJuzArr = [];
+
+        foreach ($this->occurrences_by_juz as $occurrence) {
+            $occurrencesByJuzArr[] = [
+                'Juz Id' => $occurrence['juz_id'],
+                'Count' => $occurrence['count'],
+            ];
+        }
+
+        $occurrencesByPageArr = [];
+
+        foreach ($this->occurrences_by_page as $occurrence) {
+            $occurrencesByPageArr[] = [
+                'Page Id' => $occurrence['page_id'],
+                'Count' => $occurrence['count'],
+            ];
+        }
+
+        $positionsPagePositionsLinesArr = [];
+        $positionsPagePositionsArr = [];
+
+        foreach ($this->positions['page_positions'] as $position) {
+            foreach ($position['lines'] as $line) {
+                $positionsPagePositionsLinesArr[] = [
+                    'Line Number' => $line['line_number'],
+                    'Count' => $line['count'],
+                ];
+            }
+
+            $positionsPagePositionsArr[] = [
+                'Page Id' => $position['page_id'],
+                'Total Count' => $position['total_count'],
+                'Lines' => $positionsPagePositionsLinesArr,
+            ];
+        }
+
         return [
             'Id' => $this->_id,
             'Word' => $this->word,
@@ -81,10 +176,13 @@ class WordStatisticsResource extends JsonResource
             'Translation' => $this->translation,
             'Characters' => $this->characters,
             'Total Occurences' => $this->total_occurrences,
-            'Occurences by Surah' => $this->occurrences_by_surah,
-            'Occurences by Juz' => $this->occurrences_by_juz,
-            'Occurrences by Page' => $this->occurrences_by_page,
-            'Positions' => $this->positions,
+            'Occurences by Surah' => $occurrencesBySurahArr,
+            'Occurences by Juz' => $occurrencesByJuzArr,
+            'Occurrences by Page' => $occurrencesByPageArr,
+            'Positions' => [
+                'Word Keys' => $this->positions['word_keys'],
+                'Page Positions' => $positionsPagePositionsArr,
+            ],
         ];
     }
 }

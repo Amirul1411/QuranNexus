@@ -44,7 +44,16 @@ class CharacterFrequencyResource extends JsonResource
             }
 
             if (in_array('Locations', $fields)) {
-                $response['Locations'] = $this->locations;
+
+                $locationsArr = [];
+                foreach($this->locations as $location){
+                    $locationsArr[] = [
+                        'Character Key' => $location['character_key'],
+                        'Token' => $location['token'],
+                    ];
+                }
+
+                $response['Locations'] = $locationsArr;
             }
         }
 
@@ -53,11 +62,19 @@ class CharacterFrequencyResource extends JsonResource
 
     private function getAllFields($request)
     {
+        $locationsArr = [];
+        foreach($this->locations as $location){
+            $locationsArr[] = [
+                'Character Key' => $location['character_key'],
+                'Token' => $location['token'],
+            ];
+        }
+
         return [
             'Id' => $this->_id,
             'Character' => $this->character,
             'Count' => $this->count,
-            'Locations' => $this->locations,
+            'Locations' => $locationsArr,
         ];
     }
 }

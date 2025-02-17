@@ -48,5 +48,20 @@
         <template x-if="activeApiDocumentationOption === 'audio_recitation'">
             @include('audio-recitation-api')
         </template>
+        <template x-if="activeApiDocumentationOption === 'chapters_initials'">
+            @include('chapters-initials-api')
+        </template>
+        <template x-if="activeApiDocumentationOption === 'character_frequency'">
+            @include('character-frequency-api')
+        </template>
+        <template x-if="activeApiDocumentationOption === 'diacritic_frequency'">
+            @include('diacritic-frequency-api')
+        </template>
+        <template x-if="activeApiDocumentationOption === 'longest_token'">
+            @include('longest-token-api')
+        </template>
+        <template x-if="activeApiDocumentationOption === 'word_statistics'">
+            @include('word-statistics-api')
+        </template>
     </div>
 </x-app-layout>
