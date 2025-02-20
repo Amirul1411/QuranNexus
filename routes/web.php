@@ -64,6 +64,7 @@ Route::get('/surahs', [NewSurahController::class, 'index']);
 Route::get('/basic-search', [SearchController::class, 'basicSearch'])->name('basic-search');
 Route::post('/search', [SearchController::class, 'search'])->name('search.perform');
 Route::get('/advanced-search', [SearchController::class, 'advancedSearch'])->name('advanced-search');
+Route::get('/result-details/{surah_id}/{ayah_index}', [SearchController::class, 'showDetails'])->name('result.details');
 
 Route::get('/ayah/{ayahKey?}', [AyahController::class, 'index'])->name('ayah.index');
 Route::post('/ayah/{ayahKey}/verify', [AyahController::class, 'verify'])->name('ayah.verify');
@@ -83,3 +84,25 @@ Route::get('/translation/back/{ayahKey}', [TranslationController::class, 'back']
 Route::get('/upload', [UploadController::class, 'index'])->name('upload.index');
 Route::get('/upload/template', [UploadController::class, 'downloadTemplate'])->name('upload.downloadTemplate');
 Route::post('/upload/store', [UploadController::class, 'store'])->name('upload.store');
+
+use App\Http\Controllers\ExpertAssignmentController;
+
+Route::get('/manage-experts', [ExpertAssignmentController::class, 'index'])->name('experts.manage');
+Route::post('/manage-experts/assign', [ExpertAssignmentController::class, 'assign'])->name('experts.assign');
+Route::get('/manage-experts/verify/{id}', [ExpertAssignmentController::class, 'markVerified'])->name('experts.markVerified');
+Route::get('/manage-experts/delete/{id}', [ExpertAssignmentController::class, 'deleteAssignment'])->name('experts.delete');
+Route::post('/expert/assign', [ExpertAssignmentController::class, 'assignExpert'])->name('expert.assign');
+Route::delete('/expert/unassign/{id}', [ExpertAssignmentController::class, 'unassignExpert'])->name('expert.unassign');
+
+use App\Http\Controllers\LinkCheckerController;
+
+Route::get('/link-checker', [LinkCheckerController::class, 'index'])->name('link.checker');
+Route::post('/check-link', [LinkCheckerController::class, 'check'])->name('check.link');
+Route::post('/submit-link', [LinkCheckerController::class, 'submit'])->name('submit.link');
+
+use App\Http\Controllers\VerifyLinkController;
+
+Route::get('/verify-links', [VerifyLinkController::class, 'index'])->name('verify.links');
+Route::post('/verify-links/store', [VerifyLinkController::class, 'store'])->name('upload.link');
+Route::post('/verify-links/{id}/verify', [VerifyLinkController::class, 'verify'])->name('verify.link');
+Route::post('/verify-links/{id}/reject', [VerifyLinkController::class, 'reject'])->name('reject.link');

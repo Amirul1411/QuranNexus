@@ -362,6 +362,12 @@
                                 <x-dropdown-link href="{{ route('upload.index') }}">
                                     {{ __('menu.upload') }}
                                 </x-dropdown-link>
+                                <x-dropdown-link href="{{ route('link.checker') }}">
+                                    {{ __('menu.link_checker') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link href="{{ route('verify.links') }}">
+                                    {{ __('menu.verify_link') }}
+                                </x-dropdown-link>
                             </x-slot>
                         </x-dropdown>
                     @endcan

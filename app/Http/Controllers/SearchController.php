@@ -92,4 +92,43 @@ class SearchController extends Controller
             default => null,
         };
     }
+
+    /**
+     * Show details for a specific result.
+     *
+     * @param string $surah_id
+     * @param int $ayah_index
+     * @return \Illuminate\View\View
+     */
+    public function showDetails($surah_id, $ayah_index)
+    {
+        // Get Ayah Data
+        $ayah = Ayah::where('surah_id', $surah_id)
+                    ->where('ayah_index', $ayah_index)
+                    ->first();
+
+        // Get Surah Name
+        $surah = Surah::where('_id', $surah_id)->first();
+        $surah_name = $surah ? $surah->tname : 'Unknown Surah';
+
+        // Get Word Data (if applicable)
+        $word = Word::where('surah_id', $surah_id)
+                    ->where('ayah_index', $ayah_index)
+                    ->first();
+
+        return view('result-details', [
+            'surah_id' => $surah_id,
+            'surah_name' => $surah_name,
+            'ayah_index' => $ayah_index,
+            'ayah_text' => $ayah->text ?? null,
+            'juz_id' => $ayah->juz_id ?? null,
+            'page_id' => $ayah->page_id ?? null,
+            'isVerified' => $ayah->isVerified ?? false,
+            'audio_url' => $ayah->audio_url ?? null,
+            'word_text' => $word->text ?? null,
+            'word_transliteration' => $word->transliteration ?? null,
+            'word_translation' => $word->translation ?? null,
+        ]);
+    }
+
 }
