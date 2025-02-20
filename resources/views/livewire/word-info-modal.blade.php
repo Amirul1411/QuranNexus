@@ -67,10 +67,10 @@
     </x-slot>
 </x-dialog-modal>
 
-@push('scripts')
+@script
     <script>
         // Listen for the 'play-audio' event dispatched by Livewire
-        Livewire.on('play-audio', (data) => {
+        $wire.on('play-audio', (data) => {
             const audioUrl = data.audioUrl;
 
             // Create a new Audio object and play the audio
@@ -80,4 +80,4 @@
             });
         });
     </script>
-@endpush
+@endscript

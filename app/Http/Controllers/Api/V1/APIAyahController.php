@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Models\Ayah;
+use App\Models\Surah;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAyahRequest;
 use App\Http\Requests\UpdateAyahRequest;
@@ -67,4 +68,9 @@ class APIAyahController extends Controller
     // {
     //     //
     // }
+    public function getVersesByChapter($chapterId, Request $request)
+    {
+        $ayahs = Ayah::where('surah_id', $chapterId)->with(['words', 'translations'])->get();
+        return AyahResource::collection($ayahs);
+    }
 }

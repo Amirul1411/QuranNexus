@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
             // CharacterFrequencySeeder::class,
             // LongestTokenSeeder::class,
             // DiacriticFrequencySeeder::class,
+            WordStatisticsSeeder::class,
         ]);
     }
 }

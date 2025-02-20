@@ -1,3 +1,0 @@
-#!/bin/bash
-sudo systemctl restart php-fpm
-sudo systemctl restart httpd

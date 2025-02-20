@@ -21,7 +21,7 @@ use App\Models\Translation;
 use App\Models\TranslationInfo;
 use App\Models\User;
 use App\Models\Word;
-
+use App\Models\WordStatistics;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use MongoDB\Operation\FindOneAndUpdate;
@@ -78,6 +78,7 @@ if (!function_exists('resetCountersCollection')) {
             ['_id' => 'character_frequency_id', 'sequence_value' => CharacterFrequency::count()],
             ['_id' => 'diacritic_frequency_id', 'sequence_value' => DiacriticFrequency::count()],
             ['_id' => 'longest_token_id', 'sequence_value' => LongestToken::count()],
+            ['_id' => 'word_statistics_id', 'sequence_value' => WordStatistics::count()],
             // Add more collections as needed
         ]);
     }
@@ -153,8 +154,8 @@ if (!function_exists('mapTranslationId')) {
     function mapTranslationId($filePath)
     {
         $map = [
-            Storage::url('quran-data\ms.basmeih.xml') => 1,
-            Storage::url('quran-data\en.sahih.xml') => 2,
+            Storage::url('/quran-data/ms.basmeih.xml') => 1,
+            Storage::url('/quran-data/en.sahih.xml') => 2,
         ];
 
         return $map[$filePath] ?? null;

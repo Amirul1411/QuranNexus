@@ -19,6 +19,9 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/scss/app.scss'])
 
+    <!-- Import Plotly -->
+    <script src="https://cdn.plot.ly/plotly-3.0.0.min.js" charset="utf-8"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script>
 </head>
 
 <body
@@ -94,11 +97,11 @@
 
     @include('layouts.partials.footer')
 
+    @vite('resources/js/app.js')
     @stack('modals')
-    @stack('scripts')
     @livewireScripts
     @filamentScripts
-    @vite('resources/js/app.js')
+    @stack('scripts')
 </body>
 
 </html>

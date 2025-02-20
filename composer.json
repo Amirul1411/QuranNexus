@@ -6,9 +6,6 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "aws/aws-sdk-php": "^3.334",
-        "calebporzio/sushi": "^2.4",
-        "filament/actions": "^3.2",
         "filament/filament": "^3.2",
         "filament/notifications": "^3.2",
         "filament/tables": "^3.2",
@@ -18,7 +15,6 @@
         "laravel/jetstream": "^5.1",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
-        "league/flysystem-aws-s3-v3": "^3.0",
         "livewire/livewire": "^3.0",
         "maatwebsite/excel": "^1.1",
         "mailersend/laravel-driver": "^2.7",

@@ -73,7 +73,8 @@ return [
     |
     */
 
-    'connection' => env('SESSION_CONNECTION'),
+    // 'connection' => env('SESSION_CONNECTION', 'mongodb'),
+    'connection' => env('SESSION_CONNECTION', 'mongodb'),
 
     /*
     |--------------------------------------------------------------------------
@@ -214,5 +215,7 @@ return [
     */
 
     'partitioned' => env('SESSION_PARTITIONED_COOKIE', false),
+
+    'collection' => env('SESSION_COLLECTION', 'sessions'),
 
 ];

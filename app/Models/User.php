@@ -14,6 +14,9 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\PersonalAccessToken;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 {
@@ -23,6 +26,48 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
     use Notifiable;
     // use TwoFactorAuthenticatable;
 
+    protected $connection = 'mongodb';
+    protected $collection = 'users';
+    protected $primaryKey = '_id';
+    public $incrementing = false;
+    protected $keyType = 'string';
+
+    /**
+     * Get the class name for the personal access token model.
+     *
+     * @return string
+     */
+    public function newAccessToken($name, array $abilities = ['*'])
+    {
+        return new PersonalAccessToken([
+            'tokenable_type' => static::class,
+            'tokenable_id' => $this->_id,
+            'name' => $name,
+            'token' => hash('sha256', $plainTextToken = Str::random(40)),
+            'abilities' => $abilities,
+        ]);
+    }
+
+    public function currentAccessToken()
+    {
+        return $this->accessToken;
+    }
+
+    public static function findById($id)
+    {
+        Log::info('Finding user by ID', ['id' => $id]);
+        return static::where('_id', $id)->first();
+    }
+    
+    public function tokens()
+    {
+        return $this->morphMany(
+            PersonalAccessToken::class,
+            'tokenable',
+            'tokenable_type',
+            'tokenable_id'
+        );
+    }
     const ROLE_ADMIN = 'ADMIN';
     const ROLE_EDITOR = 'EDITOR';
     const ROLE_USER = 'USER';
@@ -33,7 +78,43 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         self::ROLE_EDITOR => 'Editor',
         self::ROLE_USER => 'User',
     ];
-
+    public function createToken(string $name, array $abilities = ['*'])
+    {
+        $plainTextToken = Str::random(40);
+        $hashedToken = hash('sha256', $plainTextToken);
+        
+        Log::info('Creating new token', [
+            'plain_length' => strlen($plainTextToken),
+            'hash_length' => strlen($hashedToken)
+        ]);
+    
+        $token = $this->tokens()->create([
+            'name' => $name,
+            'token' => $hashedToken,
+            'abilities' => $abilities,
+            'tokenable_type' => static::class,
+            'tokenable_id' => $this->_id
+        ]);
+    
+        Log::info('Token created', [
+            'token_id' => $token->_id,
+            'user_id' => $this->_id,
+            'stored_hash_length' => strlen($token->token)
+        ]);
+    
+        // Create the full token string
+        $fullToken = $token->_id . '|' . $plainTextToken;
+        
+        Log::info('Full token created', [
+            'full_token_length' => strlen($fullToken)
+        ]);
+    
+        return new \Laravel\Sanctum\NewAccessToken(
+            $token, 
+            $fullToken
+        );
+    }
+   
     public function canAccessPanel(Panel $panel): bool
     {
         return $this->can('view-admin', User::class);
@@ -54,7 +135,8 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
      *
      * @var array<int, string>
      */
-    protected $fillable = ['_id', 'name', 'email', 'password', 'role', 'recitation_times', 'recitation_streak', 'longest_streak', 'last_recitation_date', 'settings', 'recitation_goal', 'bookmarks', 'recently_read'];
+
+    protected $fillable = ['_id', 'name', 'email', 'password', 'role', 'recitation_times', 'recitation_streak', 'longest_streak', 'last_recitation_date', 'settings', 'recitation_goal', 'bookmarks', 'recently_read', 'quiz_progress'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -81,6 +163,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
             'email_verified_at' => 'datetime',
             'created_at' => 'datetime',
             'password' => 'hashed',
+          
         ];
     }
 
@@ -112,27 +195,77 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 
     public function addBookmark($type, $itemProperties, $notes)
     {
-        if ($type === 'surah') {
-            $this->push('bookmarks', ['type' => $type, 'item_properties' => $itemProperties, 'notes' => $notes]);
-        } elseif ($type === 'page') {
-            $this->push('bookmarks', ['type' => $type, 'item_properties' => $itemProperties, 'notes' => $notes]);
-        } elseif ($type === 'ayah') {
-            $this->push('bookmarks', ['type' => $type, 'item_properties' => $itemProperties, 'notes' => $notes]);
-        }
+        $timestamp = now()->toDateTimeString();
+
+        // Retrieve existing recently_read data
+        $bookmarks = $this->bookmarks ?? [];
+
+        $typeCast = [
+            'surah' => 'chapters',
+            'ayah' => 'verses',
+            'page' => 'pages',
+        ];
+
+        $bookmarks[$typeCast[$type]] = $bookmarks[$typeCast[$type]] ?? [];
+
+        // Push the bookmark into the specific type array
+        $bookmarks[$typeCast[$type]][] = [
+            'item_properties' => $itemProperties,
+            'notes' => $notes,
+            'created_at' => $timestamp,
+        ];
+
+        // Assign back and save
+        $this->bookmarks = $bookmarks;
+        $this->save();
     }
 
     public function removeBookmark($type, $itemProperties)
     {
-        $this->pull('bookmarks', ['type' => $type, 'item_properties' => $itemProperties]);
+        $typeCast = [
+            'surah' => 'chapters',
+            'ayah' => 'verses',
+            'page' => 'pages',
+        ];
+
+        if (!isset($typeCast[$type])) {
+            throw new \InvalidArgumentException("Invalid type: $type");
+        }
+
+        // Retrieve bookmarks array to avoid "Indirect modification" error
+        $bookmarks = $this->bookmarks ?? [];
+
+        if (isset($bookmarks[$typeCast[$type]])) {
+            // Filter out the matching item
+            $bookmarks[$typeCast[$type]] = array_values(array_filter($bookmarks[$typeCast[$type]], fn($bookmark) => $bookmark['item_properties'] != $itemProperties));
+
+            // If the array is empty, remove the key
+            if (empty($bookmarks[$typeCast[$type]])) {
+                unset($bookmarks[$typeCast[$type]]);
+            }
+
+            // Save back to the model
+            $this->bookmarks = $bookmarks;
+            $this->save();
+        }
     }
 
     public function isBookmarked($type, $itemProperties)
     {
-        $bookmarks = $this->bookmarks ?? [];
+        $typeCast = [
+            'surah' => 'chapters',
+            'ayah' => 'verses',
+            'page' => 'pages',
+        ];
 
-        foreach ($bookmarks as $bookmark) {
-            if (isset($bookmark['type'], $bookmark['item_properties']) && $bookmark['type'] === $type && $bookmark['item_properties'] == $itemProperties) {
-                return true;
+        // Check if the bookmarks array and the specific type array exist
+        if (isset($this->bookmarks[$typeCast[$type]])) {
+            // Loop through the bookmarks of the specific type
+            foreach ($this->bookmarks[$typeCast[$type]] as $bookmark) {
+                // Check if the item_properties match
+                if ($bookmark['item_properties'] == $itemProperties) {
+                    return true;
+                }
             }
         }
 
@@ -141,47 +274,69 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 
     public function markAsRecentlyRead($type, $itemId)
     {
-        $timestamp = now()->toDateTimeString(); // Use start of the day for clearing by day
+        $timestamp = now()->toDateTimeString(); // Capture the current timestamp
 
-        if ($type === 'surah') {
-            $this->pull('recently_read', ['type' => $type, 'item_id' => $itemId]);
-            $this->push('recently_read', ['type' => $type, 'item_id' => $itemId, 'read_at' => $timestamp]);
-        } elseif ($type === 'page') {
-            $this->pull('recently_read', ['type' => $type, 'item_id' => $itemId]);
-            $this->push('recently_read', ['type' => $type, 'item_id' => $itemId, 'read_at' => $timestamp]);
-        } elseif ($type === 'juz') {
-            $this->pull('recently_read', ['type' => $type, 'item_id' => $itemId]);
-            $this->push('recently_read', ['type' => $type, 'item_id' => $itemId, 'read_at' => $timestamp]);
+        // Map type to the corresponding array name
+        $typeCast = [
+            'surah' => 'chapters',
+            'page' => 'pages',
+            'juz' => 'juzs',
+        ];
+
+        // Validate the type
+        if (!isset($typeCast[$type])) {
+            throw new \InvalidArgumentException("Invalid type: $type");
         }
+
+        $arrayName = $typeCast[$type];
+
+        // Retrieve existing recently_read data
+        $recentlyRead = $this->recently_read ?? [];
+
+        // Initialize the specific type array if it doesn't exist
+        $recentlyRead[$arrayName] = $recentlyRead[$arrayName] ?? [];
+
+        // Remove existing entry for the same item (if any)
+        $recentlyRead[$arrayName] = array_values(array_filter($recentlyRead[$arrayName], fn($item) => $item['item_id'] != $itemId));
+
+        // Add the new entry
+        $recentlyRead[$arrayName][] = [
+            'item_id' => $itemId,
+            'read_at' => $timestamp,
+        ];
+
+        // Assign back and save
+        $this->recently_read = $recentlyRead;
+        $this->save();
     }
 
     public function cleanOldRecentlyReadItems($type)
     {
         $currentMinute = now();
 
-        if ($type === 'surah' && !empty(collect($this->recently_read)->where('type', 'surah'))) {
-            $this->recently_read = collect($this->recently_read)->where('type', 'surah')
-                ->filter(function ($item) use ($currentMinute) {
-                    return Carbon::parse($item['read_at'])->greaterThan($currentMinute->subHour());
-                })
-                ->values()
-                ->toArray();
-            $this->save();
-        } elseif ($type === 'page' && !empty(collect($this->recently_read)->where('type', 'page'))) {
-            $this->recently_read = collect($this->recently_read)->where('type', 'page')
-                ->filter(function ($item) use ($currentMinute) {
-                    return Carbon::parse($item['read_at'])->greaterThan($currentMinute->subHour());
-                })
-                ->values()
-                ->toArray();
-            $this->save();
-        } elseif ($type === 'juz' && !empty(collect($this->recently_read)->where('type', 'juz'))) {
-            $this->recently_read = collect($this->recently_read)->where('type', 'juz')
-                ->filter(function ($item) use ($currentMinute) {
-                    return Carbon::parse($item['read_at'])->greaterThan($currentMinute->subHour());
-                })
-                ->values()
-                ->toArray();
+        $typeCast = [
+            'surah' => 'chapters',
+            'page' => 'pages',
+            'juz' => 'juzs',
+        ];
+
+        if (!isset($typeCast[$type])) {
+            throw new \InvalidArgumentException("Invalid type: $type");
+        }
+
+        // Retrieve the recently_read attribute
+        $recentlyRead = $this->recently_read ?? [];
+
+        if (isset($recentlyRead[$typeCast[$type]])) {
+            $recentlyRead[$typeCast[$type]] = array_values(array_filter($recentlyRead[$typeCast[$type]], fn($item) => Carbon::parse($item['read_at'])->greaterThan($currentMinute->subHour())));
+
+            // If the array is empty, unset the key
+            if (empty($recentlyRead[$typeCast[$type]])) {
+                unset($recentlyRead[$typeCast[$type]]);
+            }
+
+            // Save back to the model
+            $this->recently_read = $recentlyRead;
             $this->save();
         }
     }
@@ -259,5 +414,33 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
                 'recitation_streak' => $this->attributes['recitation_streak'],
             ]);
         }
+    }
+    public function updateQuizProgress($surahId, $data)
+    {
+        $quizProgress = $this->quiz_progress ?? [];
+        
+        // Find existing quiz progress for this surah
+        $index = collect($quizProgress)->search(function ($item) use ($surahId) {
+            return $item['surah_id'] === $surahId;
+        });
+
+        // Ensure datetime fields are properly formatted
+        if (isset($data['start_time'])) {
+            $data['start_time'] = Carbon::now()->toDateTimeString();
+        }
+        if (isset($data['end_time']) && $data['end_time'] !== null) {
+            $data['end_time'] = Carbon::now()->toDateTimeString();
+        }
+        
+        if ($index !== false) {
+            $quizProgress[$index] = array_merge($quizProgress[$index], $data);
+        } else {
+            $quizProgress[] = $data;
+        }
+        
+        $this->quiz_progress = $quizProgress;
+        $this->save();
+        
+        return $this->fresh();
     }
 }

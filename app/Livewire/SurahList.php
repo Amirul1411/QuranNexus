@@ -51,8 +51,7 @@ class SurahList extends Component
     {
         $bookmarks = Auth::user()->bookmarks ?? [];
 
-        $surahIds = collect($bookmarks)
-            ->where('type', 'surah')
+        $surahIds = collect($bookmarks['chapters'] ?? [])
             ->map(function ($bookmark) {
                 return [
                     'surah_id' => $bookmark['item_properties']['surah_id'],
@@ -76,8 +75,7 @@ class SurahList extends Component
     {
         $bookmarks = Auth::user()->bookmarks ?? [];
 
-        $ayahKeys = collect($bookmarks)
-            ->where('type', 'ayah')
+        $ayahKeys = collect($bookmarks['verses'] ?? [])
             ->map(function ($bookmark) {
                 return [
                     'ayah_key' => $bookmark['item_properties']['surah_id'] . ':' . $bookmark['item_properties']['ayah_index'],
@@ -101,8 +99,7 @@ class SurahList extends Component
     {
         $bookmarks = Auth::user()->bookmarks ?? [];
 
-        $pageIds = collect($bookmarks)
-            ->where('type', 'page')
+        $pageIds = collect($bookmarks['pages'] ?? [])
             ->map(function ($bookmark) {
                 return [
                     'page_id' => $bookmark['item_properties']['page_id'],
@@ -126,7 +123,7 @@ class SurahList extends Component
     {
         $recentlyRead = Auth::user()->recently_read ?? [];
 
-        $surahIds = collect($recentlyRead)->where('type', 'surah')->pluck('item_id')->toArray();
+        $surahIds = collect($recentlyRead['chapters'] ?? [])->pluck('item_id')->toArray();
 
         $surahs = Surah::find($surahIds);
 
@@ -143,7 +140,7 @@ class SurahList extends Component
     {
         $recentlyRead = Auth::user()->recently_read ?? [];
 
-        $juzIds = collect($recentlyRead)->where('type', 'juz')->pluck('item_id')->toArray();
+        $juzIds = collect($recentlyRead['juzs'] ?? [])->pluck('item_id')->toArray();
 
         $juzs = Juz::find($juzIds);
 
@@ -160,7 +157,7 @@ class SurahList extends Component
     {
         $recentlyRead = Auth::user()->recently_read ?? [];
 
-        $pageIds = collect($recentlyRead)->where('type', 'page')->pluck('item_id')->toArray();
+        $pageIds = collect($recentlyRead['pages'] ?? [])->pluck('item_id')->toArray();
 
         $pages = Page::find($pageIds);
 
