@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Word;
 use App\Models\Surah;
 use App\Models\Ayah;
@@ -57,10 +58,21 @@ class WordController extends Controller
         $word = Word::where('word_key', $wordKey)->first();
 
         if ($word) {
+            // Prepare history entry including who verified it
+            $historyEntry = [
+                'previous_text' => $word->text,
+                'modified_at' => now()->toDateTimeString(),
+                'verified_by' => Auth::user()->name ?? 'Unknown'
+            ];
+
             // Update the word text and mark it as verified
-            $word->text = $request->input('text'); // Update the text
-            $word->isVerified = true; // Mark as verified
-            $word->save(); // Save the changes
+            $word->update([
+                'text' => $request->input('text'),
+                'isVerified' => true,
+            ]);
+
+            // Use MongoDB's push operator to append the history entry
+            $word->push('history', $historyEntry);
         }
 
         // Redirect to the same word or the next one
@@ -107,7 +119,6 @@ class WordController extends Controller
             ]);
         }
 
-        // Redirect to the next word
         return redirect()->route('word.index', [
             'surah_id' => $nextWord->surah_id,
             'ayah_index' => $nextWord->ayah_index,
@@ -151,7 +162,6 @@ class WordController extends Controller
             ]);
         }
 
-        // Redirect to the previous word
         return redirect()->route('word.index', [
             'surah_id' => $previousWord->surah_id,
             'ayah_index' => $previousWord->ayah_index,
