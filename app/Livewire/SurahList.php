@@ -6,6 +6,7 @@ use App\Models\Ayah;
 use App\Models\Juz;
 use App\Models\Page;
 use App\Models\Surah;
+use App\Models\WordStatistics;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\Attributes\Url;
@@ -119,6 +120,26 @@ class SurahList extends Component
     }
 
     #[Computed]
+    public function bookmarkedWord()
+    {
+        $bookmarks = Auth::user()->bookmarks ?? [];
+
+        $wordStatisticsIds = collect($bookmarks['words'] ?? [])
+            ->map(function ($bookmark) {
+                return [
+                    'word_statistics_id' => $bookmark['item_properties']['word_statistics_id'],
+                ];
+            });
+
+        $words = $wordStatisticsIds->map(function ($item) {
+            $word = WordStatistics::where('_id', $item['word_statistics_id'])->first();
+            return $word;
+        });
+
+        return $words;
+    }
+
+    #[Computed]
     public function recentlyReadSurah()
     {
         $recentlyRead = Auth::user()->recently_read ?? [];
@@ -167,6 +188,11 @@ class SurahList extends Component
                 return array_search($page->_id, $pageIds);
             })
             ->values();
+    }
+
+    public function displayWordInfo($wordText)
+    {
+        return $this->dispatch('openWordInfoModal', $wordText)->to('word-info-modal');
     }
 
     public function render()

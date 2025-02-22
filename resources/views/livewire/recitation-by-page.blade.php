@@ -46,10 +46,13 @@
                     <div
                         class="row-span-1 flex flex-wrap items-center flex-row-reverse gap-2 my-2 text-black justify-center">
                         @foreach ($words as $word)
-                            <div class="font-UthmanicHafs text-3xl inline-block">
-                                {{-- Check if it's not the last word of the ayah to differentiate between displaying the word text and ayah icon--}}
+                            <div class="inline-block">
+                                {{-- Check if it's not the last word of the ayah to differentiate between displaying the word text and ayah icon --}}
                                 @if ($word->word_index !== (string) $word->ayah->words->count())
-                                    {{ $word->text }}
+                                    <div wire:click="displayWordInfo('{{ $word->text }}')"
+                                        class="font-UthmanicHafs text-3xl cursor-pointer transform transition-transform duration-300 hover:scale-110">
+                                        {{ $word->text }}
+                                    </div>
                                 @else
                                     <span class="text-3xl font-UthmanicHafs text-black">
                                         {{ $word->text }}
@@ -62,10 +65,13 @@
                     <div
                         class="row-span-1 flex flex-wrap items-center flex-row-reverse gap-2 my-2 text-black justify-between w-3/4 mx-auto">
                         @foreach ($words as $word)
-                            <div class="font-UthmanicHafs text-3xl inline-block">
-                                {{-- Check if it's not the last word of the ayah to differentiate between displaying the word text and ayah icon--}}
+                            <div class="inline-block">
+                                {{-- Check if it's not the last word of the ayah to differentiate between displaying the word text and ayah icon --}}
                                 @if ($word->word_index !== (string) $word->ayah->words->count())
-                                    {{ $word->text }}
+                                    <div wire:click="displayWordInfo('{{ $word->text }}')"
+                                        class="font-UthmanicHafs text-3xl cursor-pointer transform transition-transform duration-300 hover:scale-110">
+                                        {{ $word->text }}
+                                    </div>
                                 @else
                                     <span class="text-3xl font-UthmanicHafs text-black">
                                         {{ $word->text }}
@@ -85,10 +91,9 @@
 
     <div class="flex justify-center my-10 mx-auto">
         @if ($page->_id != 1)
-            <x-button wire:click='redirectToPreviousPage({{ $page->_id }})'
-                type="button" bg="bg-[#8EE4FF]" text="text-black" activeBg=""
-                                    hover="" focus="" focusRingOffset=""
-                                        class="px-4 mx-6 py-2 w-52 text-black cursor-pointer flex items-center justify-center h-auto transform transition-transform duration-300 hover:scale-105"><span
+            <x-button wire:click='redirectToPreviousPage({{ $page->_id }})' type="button" bg="bg-[#8EE4FF]"
+                text="text-black" activeBg="" hover="" focus="" focusRingOffset=""
+                class="px-4 mx-6 py-2 w-52 text-black cursor-pointer flex items-center justify-center h-auto transform transition-transform duration-300 hover:scale-105"><span
                     class="mr-1"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         stroke-width="1.5" stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
@@ -96,10 +101,9 @@
                 </span>{{ __('recitation.previous_page') }}</x-button>
         @endif
         @if ($page->_id != 604)
-            <x-button wire:click='redirectToNextPage({{ $page->_id }})'
-                type="button" bg="bg-[#8EE4FF]" text="text-black" activeBg=""
-                                    hover="" focus="" focusRingOffset=""
-                                        class="px-4 mx-6 py-2 w-52 text-black cursor-pointer flex items-center justify-center h-auto transform transition-transform duration-300 hover:scale-105">{{ __('recitation.next_page') }}<span
+            <x-button wire:click='redirectToNextPage({{ $page->_id }})' type="button" bg="bg-[#8EE4FF]"
+                text="text-black" activeBg="" hover="" focus="" focusRingOffset=""
+                class="px-4 mx-6 py-2 w-52 text-black cursor-pointer flex items-center justify-center h-auto transform transition-transform duration-300 hover:scale-105">{{ __('recitation.next_page') }}<span
                     class="ms-1"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         stroke-width="1.5" stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
