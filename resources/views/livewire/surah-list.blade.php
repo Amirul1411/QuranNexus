@@ -7,6 +7,7 @@
     bookmarkedSurah: {{ $this->bookmarkedSurah }},
     bookmarkedAyah: {{ $this->bookmarkedAyah }},
     bookmarkedPage: {{ $this->bookmarkedPage }},
+    bookmarkedWord: {{ $this->bookmarkedWord }},
     get filteredSurahs() {
         const searchTerm = this.search.toLowerCase();
         if (searchTerm.length === 0) return this.surahs;
@@ -93,6 +94,17 @@
             return page._id.toString().match(regex);
         });
     },
+    get filteredBookmarkedWords() {
+        const searchTerm = this.search.toLowerCase();
+        if (searchTerm.length === 0) return this.bookmarkedWord;
+
+        // Create a dynamic regex pattern to mimic 'LIKE' functionality
+        const regex = new RegExp(searchTerm, 'i'); // 'i' flag for case-insensitive matching
+
+        return this.bookmarkedWord.filter(word => {
+            return word.word.toString().match(regex) || word.translation.toString().match(regex);
+        });
+    },
 }">
     <div class="flex justify-center mt-20 py-20">
         <div class="w-full max-w-md">
@@ -127,6 +139,11 @@
             <li class="nav-item">
                 <a wire:click="$set('selectedNavItem', 'bookmarks')"
                     class=" {{ $selectedNavItem == 'bookmarks' ? 'border-b-2 border-black' : '' }} text-black cursor-pointer font-serif font-semibold">{{ __('surah_list.bookmarks') }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a wire:click="$set('selectedNavItem', 'word_vocabularies')"
+                    class=" {{ $selectedNavItem == 'word_vocabularies' ? 'border-b-2 border-black' : '' }} text-black cursor-pointer font-serif font-semibold">{{ __('surah_list.word_vocabularies') }}
                 </a>
             </li>
         @endif
@@ -311,12 +328,14 @@
                                                 <path fill-rule="evenodd"
                                                     d="M6.95.435c.58-.58 1.52-.58 2.1 0l6.515 6.516c.58.58.58 1.519 0 2.098L9.05 15.565c-.58.58-1.519.58-2.098 0L.435 9.05a1.48 1.48 0 0 1 0-2.098z" />
                                             </svg>
-                                            <p class="absolute text-black text-xl font-bold" x-text="ayah.surah._id"></p>
+                                            <p class="absolute text-black text-xl font-bold" x-text="ayah.surah._id">
+                                            </p>
                                         </span>
                                     </div>
                                     <div class="text-black w-3/5">
                                         <h5 class="font-bold text-xl font-serif" x-text="ayah.surah.tname"></h5>
-                                        <p class="text-gray-500 font-bold font-serif text-xs" x-text="ayah.surah.ename">
+                                        <p class="text-gray-500 font-bold font-serif text-xs"
+                                            x-text="ayah.surah.ename">
                                         </p>
                                     </div>
                                     <div class="text-black">
@@ -364,6 +383,24 @@
                 </div>
             @endif
         </div>
+    @elseif ($selectedNavItem == 'word_vocabularies')
+        @if ($this->bookmarkedWord && count($this->bookmarkedWord) > 0)
+            <div class="flex flex-wrap justify-center">
+                <template x-for="word in filteredBookmarkedWords" :key="word._id">
+                    <div class="w-1/4 p-5">
+                        <div wire:click="displayWordInfo(word.word)"
+                            class="h-24 flex-col bg-[#BCFFCE] text-center p-5 rounded-md cursor-pointer transform transition-transform duration-300 hover:scale-105">
+                            <div class='flex items-center'>
+                                <div class="text-black w-full">
+                                    <h5 class="font-bold text-2xl font-serif" x-text="word.word"></h5>
+                                    <p class="text-gray-500 font-bold font-serif text-xs" x-text="word.translation">
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        @endif
     @endif
-
 </div>

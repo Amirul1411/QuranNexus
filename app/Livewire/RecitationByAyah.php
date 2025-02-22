@@ -53,9 +53,9 @@ class RecitationByAyah extends Component
         return redirect()->route('tafseer.show', ['tafseer' => $ayahKey]);
     }
 
-    public function displayWordInfo($wordKey)
+    public function displayWordInfo($wordText)
     {
-        return $this->dispatch('openWordInfoModal', $wordKey)->to('word-info-modal');
+        return $this->dispatch('openWordInfoModal', $wordText)->to('word-info-modal');
     }
 
     public function render()

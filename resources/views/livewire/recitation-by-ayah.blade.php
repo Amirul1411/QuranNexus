@@ -48,8 +48,8 @@
                             @foreach ($ayah->words as $word)
                                 {{-- Check if it's not the last word of the ayah to differentiate between displaying the word text and ayah icon --}}
                                 @if ($word->word_index !== (string) $word->ayah->words->count())
-                                    <div id="sat_{{ $surah->_id }}-{{ $ayah->ayah_index }}-{{ $word->word_index }}" wire:click="displayWordInfo('{{ $word->word_key }}')"
-                                        class="font-UthmanicHafs text-3xl cursor-pointer transform transition-transform duration-300 hover:scale-105">
+                                    <div id="sat_{{ $surah->_id }}-{{ $ayah->ayah_index }}-{{ $word->word_index }}" wire:click="displayWordInfo('{{ $word->text }}')"
+                                        class="font-UthmanicHafs text-3xl cursor-pointer transform transition-transform duration-300 hover:scale-110">
                                         {{ $word->text }}
                                     </div>
                                     {{-- <img src="https://static.qurancdn.com/images/w/rq-color/{{ $word->surah_id }}/{{ $word->ayah_index }}/{{ $word->word_index }}.png?v=1" alt="{{ $word->text }}"> --}}
@@ -136,7 +136,8 @@
                         @foreach ($ayah->words as $word)
                             {{-- Check if it's not the last word of the ayah to differentiate between displaying the word text and ayah icon --}}
                             @if ($word->word_index !== (string) $word->ayah->words->count())
-                                <div class="font-UthmanicHafs text-3xl">
+                                <div wire:click="displayWordInfo('{{ $word->text }}')"
+                                    class="font-UthmanicHafs text-3xl cursor-pointer transform transition-transform duration-300 hover:scale-110">
                                     {{ $word->text }}
                                 </div>
                                 {{-- <img src="https://static.qurancdn.com/images/w/rq-color/{{ $word->surah_id }}/{{ $word->ayah_index }}/{{ $word->word_index }}.png?v=1" alt="{{ $word->text }}"> --}}
@@ -226,7 +227,8 @@
                         @foreach ($ayah->words as $word)
                             {{-- Check if it's not the last word of the ayah to differentiate between displaying the word text and ayah icon --}}
                             @if ($word->word_index !== (string) $word->ayah->words->count())
-                                <div class="font-UthmanicHafs text-3xl">
+                                <div wire:click="displayWordInfo('{{ $word->text }}')"
+                                    class="font-UthmanicHafs text-3xl cursor-pointer transform transition-transform duration-300 hover:scale-110">
                                     {{ $word->text }}
                                 </div>
                                 {{-- <img src="https://static.qurancdn.com/images/w/rq-color/{{ $word->surah_id }}/{{ $word->ayah_index }}/{{ $word->word_index }}.png?v=1" alt="{{ $word->text }}"> --}}

@@ -15,6 +15,10 @@
                 @livewire('recitation-time-per-day-widget')
             </div>
 
+            <div class="mb-10 h-auto w-5/6 mx-auto">
+                @livewire('bookmarked-word-by-surah-chart')
+            </div>
+
             <x-section-border />
 
             @if (Laravel\Fortify\Features::canUpdateProfileInformation())
