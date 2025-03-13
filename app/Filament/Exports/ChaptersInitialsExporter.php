@@ -14,10 +14,12 @@ class ChaptersInitialsExporter extends Exporter
     public static function getColumns(): array
     {
         return [
-            ExportColumn::make('chapter')
+            ExportColumn::make('_id')
+            ->label('Id'),
+            ExportColumn::make('surah.name')
             ->label('Chapter'),
-            ExportColumn::make('verse')
-            ->label('Verse'),
+            ExportColumn::make('ayah_key')
+            ->label('Verse Key'),
             ExportColumn::make('initials')
             ->label('Initials'),
         ];
