@@ -1,4 +1,4 @@
-<div>
+<div wire:ignore>
     @if (Route::is('surah.show'))
         <div x-data="{
             scrollToAyah: '{{ session('scrollToAyah', '') }}',
