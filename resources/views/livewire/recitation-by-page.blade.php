@@ -1,4 +1,4 @@
-<div>
+<div wire:ignore>
     @php
         // Collect words for each row across all ayahs
         $rows = [];
