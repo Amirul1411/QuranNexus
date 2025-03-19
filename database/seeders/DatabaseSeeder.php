@@ -14,12 +14,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        
+        // Comment out the seeder class that you don't want to run
 
         $this->call([
             CounterSeeder::class,

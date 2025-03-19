@@ -6,35 +6,35 @@ $button-color: color.mix(#78C2AD, #FFFFFF, 100%);
 
 @font-face {
     font-family: BorderIslamic;
-    src: url("https://quran-nexus-bucket.s3.ap-southeast-1.amazonaws.com/quran-fonts/BordersIslamic1444-lg6g5.ttf") format('truetype');
+    src: url("https://quran.seaade2024.com/data/quran-fonts/BordersIslamic1444-lg6g5.ttf") format('truetype');
 }
 
 @font-face {
     font-family: surahnames;
-    src: url("https://quran-nexus-bucket.s3.ap-southeast-1.amazonaws.com/quran-fonts/Quran+karim+114.ttf") format('truetype');
+    src: url("https://quran.seaade2024.com/data/quran-fonts/Quran karim 114.ttf") format('truetype');
 }
 
 @font-face {
     font-family: basmalah;
-    src: url("https://quran-nexus-bucket.s3.ap-southeast-1.amazonaws.com/quran-fonts/Basmalah+Ver01.otf") format('opentype');
+    src: url("https://quran.seaade2024.com/data/quran-fonts/Basmalah Ver01.otf") format('opentype');
 }
 
 @font-face {
     font-family: UthmanicHafs;
-    src: url("https://quran-nexus-bucket.s3.ap-southeast-1.amazonaws.com/quran-fonts/UthmanicHafs1Ver18.ttf") format('truetype'),
-         url("https://quran-nexus-bucket.s3.ap-southeast-1.amazonaws.com/quran-fonts/UthmanicHafs1Ver18.woff2") format('woff2');
+    src: url("https://quran.seaade2024.com/data/quran-fonts/UthmanicHafs1Ver18.ttf") format('truetype'),
+         url("https://quran.seaade2024.com/data/quran-fonts/UthmanicHafs1Ver18.woff2") format('woff2');
 }
 
 @font-face {
     font-family: IndoPak;
-    src: url("https://quran-nexus-bucket.s3.ap-southeast-1.amazonaws.com/quran-fonts/indopak-nastaleeq-waqf-lazim-v4.2.1.ttf") format('truetype'),
-         url("https://quran-nexus-bucket.s3.ap-southeast-1.amazonaws.com/quran-fonts/indopak-nastaleeq-waqf-lazim-v4.2.1.woff") format('woff'),
-         url("https://quran-nexus-bucket.s3.ap-southeast-1.amazonaws.com/quran-fonts/indopak-nastaleeq-waqf-lazim-v4.2.1.woff2") format('woff2');
+    src: url("https://quran.seaade2024.com/data/quran-fonts/indopak-nastaleeq-waqf-lazim-v4.2.1.ttf") format('truetype'),
+         url("https://quran.seaade2024.com/data/quran-fonts/indopak-nastaleeq-waqf-lazim-v4.2.1.woff") format('woff'),
+         url("https://quran.seaade2024.com/data/quran-fonts/indopak-nastaleeq-waqf-lazim-v4.2.1.woff2") format('woff2');
 }
 
 // @font-face {
 //     font-family: ayaNo;
-//     src: url("https://quran-nexus-bucket.s3.ap-southeast-1.amazonaws.com/quran-fonts/KfgqpcHafsUthmanicScriptRegular-nARZ1.ttf") format('truetype');
+//     src: url("https://quran.seaade2024.com/data/quran-fonts/KfgqpcHafsUthmanicScriptRegular-nARZ1.ttf") format('truetype');
 // }
 
 .rotate-90 {
@@ -71,12 +71,12 @@ $button-color: color.mix(#78C2AD, #FFFFFF, 100%);
 }
 
 .background-image{
-    background-image: url("https://quran-nexus-bucket.s3.ap-southeast-1.amazonaws.com/web-images/background-image.png");
+    background-image: url("https://quran.seaade2024.com/data/web-images/background-image.png");
     background-size: cover;
 }
 
 .header-image {
-    background-image: url("https://quran-nexus-bucket.s3.ap-southeast-1.amazonaws.com/web-images/header-image.png");
+    background-image: url("https://quran.seaade2024.com/data/web-images/header-image.png");
     height: 768px;
 }
 
