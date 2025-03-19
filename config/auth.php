@@ -1,5 +1,8 @@
 <?php
 
+// In order to access admin page, you need to uncomment the commented code below and comment out the uncommented code below.
+// Please reverse this process if you done accessing admin page.
+
 // return [
 
 //     /*
@@ -113,6 +116,10 @@
 //     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
 // ];
+
+// In order to access admin page, you need to uncomment the commented code above and comment out the uncommented code below.
+// Please reverse this process if you done accessing admin page.
+
 return [
     'defaults' => [
         'guard' => env('AUTH_GUARD', 'sanctum'),  // Change this to sanctum
