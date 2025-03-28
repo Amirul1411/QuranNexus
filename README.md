@@ -243,14 +243,17 @@ Total overall: 83665
 
 ## Directory Stucture
 
-1. All of frontend files (including livewire frontend files) are stored inside resources/views directories. These are the files that will be dispayed to the user when rendering the website in the browser.   
-2. All of the livewire controller files are stored inside app/Livewire directory. These are the files to define logic implementation to implement any intended functionalities.  
-3. All of the policy files are stored inside app/Policies directory. These are the files used to define policies which are rules related to the models.  
-4. All of the model files are stored inside app/Models directory.  These are the files used to define properties or methods of the models.  
-5. All of the configuration files such as database.php, filesystems.php, auth.php, etc are stored inside config directory. These are the files used to define configuration of the system.  
-6. All of the seeder files are stored inside datbase/seeders directory. These are the file used to define methods to seed the database with data obtained from APIs or any other sources.  
-7. All of the language files are stored inside lang directory. These are the files used to render message from a specific language and can be used to implement switch language functionality. Please refer to the video in the links https://www.youtube.com/watch?v=az7m6LIEeTU&list=PLqDySLfPKRn5d7WbN9R0yJA9IRgx-XBlU&index=44 and https://www.youtube.com/watch?v=qLLNhTAuaRk&list=PLqDySLfPKRn5d7WbN9R0yJA9IRgx-XBlU&index=45 for further understanding.  
-8. All of the route files are stored inside routes directory. These are the files used to define routes to navigate between pages in the web (web.php), define public APIs (api.php), and define schedule tasks (console.php).  
+1. All of frontend files (including livewire frontend files) are located inside resources/views directories. These are the files that will be dispayed to the user when rendering the website in the browser.   
+2. All of the livewire controller files are located inside app/Livewire directory. These are the files to define logic implementation to implement any intended functionalities.  
+3. All of the policy files are located inside app/Policies directory. These are the files used to define policies which are rules related to the models.  
+4. All of the model files are located inside app/Models directory.  These are the files used to define properties or methods of the models.  
+5. All of the configuration files such as database.php, filesystems.php, auth.php, etc are located inside config directory. These are the files used to define configuration of the system.  
+6. All of the seeder files are located inside datbase/seeders directory. These are the file used to define methods to seed the database with data obtained from APIs or any other sources.  
+7. All of the language files are located inside lang directory. These are the files used to render message from a specific language and can be used to implement switch language functionality. Please refer to the video in the links https://www.youtube.com/watch?v=az7m6LIEeTU&list=PLqDySLfPKRn5d7WbN9R0yJA9IRgx-XBlU&index=44 and https://www.youtube.com/watch?v=qLLNhTAuaRk&list=PLqDySLfPKRn5d7WbN9R0yJA9IRgx-XBlU&index=45 for further understanding.  
+8. All of the route files are located inside routes directory. These are the files used to define routes to navigate between pages in the web (web.php), define public APIs (api.php), and define schedule tasks (console.php).  
+9. All of the filament resource files are located inside app/Filament/Resources directory. These files will be displayed in the admin page.  
+10. All of the API resource files are located inside app/Http/Resources/V1 directory. These files are used to return json response from the incoming API request.  
+11. All of the controller files including API controller files are located inside app/Http/Controllers (app/Http/Controllers/Api/V1 for API controller files) directory. These files are used as the intermediary between the models and views files because laravel implement MVC (Model-View-Controller) architecture.  
 
 ## Copyright from Quran Data Originators
 
