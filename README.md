@@ -234,9 +234,23 @@ Total overall: 83665
 3. web.php is the file used to define routes for the web.  
 4. api.php is the file used to define public apis.  
 5. console.php is the file used to define schedued tasks (may also known as cron jobs).  
-6. Database seeder files use old version of Quran.com APIs. You may need to refer to Quran.com API documentation to use the latest version but it requires authentication from Quran.com.  
-7. User's new account registration may encounters error related to email verification (as long as the MAIL part in the env file is not configured) but the registration itself is successful. You may proceed with login using the newly registered account while ignoring the error.  
-8. If you want to access admin page with admin account, please refer to the commented instructions inside auth.php.  
+6. app.scss is the file used to define the web styling.  
+7. helpers.php is the file contains public method that is accessible accross any other files.  
+8. Database seeder files use old version of Quran.com APIs. You may need to refer to Quran.com API documentation to use the latest version but it requires authentication from Quran.com.  
+9. User's new account registration may encounters error related to email verification (as long as the MAIL part in the env file is not configured) but the registration itself is successful. You may proceed with login using the newly registered account while ignoring the error.  
+10. If you want to access admin page with admin account, please refer to the commented instructions inside auth.php.  
+11. Only .env file will be used by laravel to render the website. The other .env files such as .env.backup (local environment) and .env.production (production environment) served as template to be copied to .env file to get the specific configurations for that particular environment.  
+
+## Directory Stucture
+
+1. All of frontend files (including livewire frontend files) are stored inside resources/views directories. These are the files that will be dispayed to the user when rendering the website in the browser.   
+2. All of the livewire controller files are stored inside app/Livewire directory. These are the files to define logic implementation to implement any intended functionalities.  
+3. All of the policy files are stored inside app/Policies directory. These are the files used to define policies which are rules related to the models.  
+4. All of the model files are stored inside app/Models directory.  These are the files used to define properties or methods of the models.  
+5. All of the configuration files such as database.php, filesystems.php, auth.php, etc are stored inside config directory. These are the files used to define configuration of the system.  
+6. All of the seeder files are stored inside datbase/seeders directory. These are the file used to define methods to seed the database with data obtained from APIs or any other sources.  
+7. All of the language files are stored inside lang directory. These are the files used to render message from a specific language and can be used to implement switch language functionality. Please refer to the video in the links https://www.youtube.com/watch?v=az7m6LIEeTU&list=PLqDySLfPKRn5d7WbN9R0yJA9IRgx-XBlU&index=44 and https://www.youtube.com/watch?v=qLLNhTAuaRk&list=PLqDySLfPKRn5d7WbN9R0yJA9IRgx-XBlU&index=45 for further understanding.  
+8. All of the route files are stored inside routes directory. These are the files used to define routes to navigate between pages in the web (web.php), define public APIs (api.php), and define schedule tasks (console.php).  
 
 ## Copyright from Quran Data Originators
 
