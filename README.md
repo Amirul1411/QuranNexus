@@ -80,9 +80,9 @@ PHP Java Bridge Client API - https://php-java-bridge.sourceforge.net/pjb/docs/ph
 
 ## To Access Deployed Version of the Web on EC2
 
-Browse http://<<ipaddress>>/Home in a browser.  
+Browse http://'ec2-ip-address'/Home in a browser.  
 
-The ipaddress is not static. This means that the ipaddress will be changed everytime the EC2 instance is restarted. Please get the latest ipaddress from Zulfathi Hanafi to accesss the deployed web.  
+The 'ec2-ip-address' is not static. This means that the ec2-ip-address will be changed everytime the EC2 instance is restarted. Please get the latest ec2-ip-address from Zulfathi Hanafi to accesss the deployed web. 
 
 ## To use Quran Corpus JAVA API on Localhost:
 
