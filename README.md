@@ -78,9 +78,11 @@ Laravel Filament - https://filamentphp.com/docs/3.x/panels/installation
 VS Code Shortcut - https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf    
 PHP Java Bridge Client API - https://php-java-bridge.sourceforge.net/pjb/docs/php-api-old/  
 
-## To Access Deployed Version of the Web on VPS
+## To Access Deployed Version of the Web on EC2
 
-Browse https://quran.seaade2024.com/Home in a browser.
+Browse http://<<ipaddress>>/Home in a browser.  
+
+The ipaddress is not static. This means that the ipaddress will be changed everytime the EC2 instance is restarted. Please get the latest ipaddress from Zulfathi Hanafi to accesss the deployed web.  
 
 ## To use Quran Corpus JAVA API on Localhost:
 
