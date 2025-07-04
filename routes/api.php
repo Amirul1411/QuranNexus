@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\APIAchievementController;
 use App\Http\Controllers\Api\V1\APIAyahController;
 use App\Http\Controllers\Api\V1\APIPageController;
+use App\Http\Controllers\Api\V1\APIRecitationStreakController;
 use App\Http\Controllers\Api\V1\APISurahController;
 use App\Http\Controllers\Api\V1\APIWordController;
 use App\Http\Controllers\Api\V1\APIJuzController;
@@ -22,6 +23,8 @@ use App\Http\Controllers\Api\V1\APIAuthController;
 use App\Http\Controllers\Api\V1\APIBookmarkController;
 use App\Http\Controllers\Api\V1\QuizProgressController;
 use App\Http\Controllers\Api\V1\APIUserAchievementController;
+use App\Http\Controllers\Api\V1\APIRecentlyReadController;
+use App\Http\Controllers\Api\V1\APIRecitationTimesController;
 
 use App\Http\Middleware\ForceJsonResponse;
 use App\Http\Middleware\LoggingAuthMiddleware;
@@ -43,7 +46,12 @@ Route::prefix('v1')->group(function () {
     Route::get('words/search', [APIWordController::class, 'search']);
     Route::get('words/distribution', [APIWordController::class, 'getWordJuzDistribution']);
     Route::get('words/chapters-distribution', [APIWordController::class, 'getWordsChaptersDistribution']);
-
+    Route::get('words/details', [APIWordController::class, 'getWordDetails']);
+    // First Occurrence API
+    Route::post('/word/first-occurrence', [APIWordController::class, 'getWordFirstOccurrence']);
+    // Alternative GET route for convenience
+    Route::get('/word/first-occurrence/{wordText}', [APIWordController::class, 'getWordFirstOccurrence']);
+    Route::get('chapters/word-counts', [APIWordController::class, 'getChapterWordCounts']);
     
     Route::apiResource('surahs', APISurahController::class)->name('index','api_surah.index')->name('show', 'api_surah.show');
     Route::apiResource('ayahs', APIAyahController::class)->name('index','api_ayah.index')->name('show', 'api_ayah.show');
@@ -87,6 +95,16 @@ Route::prefix('v1')->group(function () {
 
         Route::post('/bookmarks/migrate', [APIBookmarkController::class, 'migrateBookmarks']);
 
+        Route::get('/recently-read', [APIRecentlyReadController::class, 'getRecentlyRead']);
+        Route::post('/recently-read', [APIRecentlyReadController::class, 'addRecentlyRead']);
+        Route::delete('/recently-read/{type}/{itemId}', [APIRecentlyReadController::class, 'removeRecentlyRead']);
+    
+        Route::post('/recitation-times', [APIRecitationTimesController::class, 'updateRecitationTimes']);
+        Route::get('/recitation-times', [APIRecitationTimesController::class, 'getRecitationTimes']);
+    
+        Route::post('/recitation-streak', [APIRecitationStreakController::class, 'updateRecitationStreak']);
+        Route::get('/recitation-streak', [APIRecitationStreakController::class, 'getRecitationStreak']);
+        Route::post('/mock-recitation', [APIRecitationStreakController::class, 'migrateRecitationData']);
         });
     });
 });

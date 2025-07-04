@@ -16,7 +16,16 @@ class APIDailyQuotesController extends Controller
     {
         return DailyQuotesResource::collection(DailyQuotes::all());
     }
-
+    // public function index(Request $request)
+    // {
+    //     // Get limit parameter, default to 5 quotes
+    //     $limit = $request->input('limit', 5);
+        
+    //     // Get random quotes instead of all quotes
+    //     $quotes = DailyQuotes::inRandomOrder()->take($limit)->get();
+        
+    //     return DailyQuotesResource::collection($quotes);
+    // }
     /**
      * Show the form for creating a new resource.
      */

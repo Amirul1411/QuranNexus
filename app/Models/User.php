@@ -137,7 +137,13 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
      */
 
     protected $fillable = ['_id', 'name', 'email', 'password', 'role', 'recitation_times', 'recitation_streak', 'longest_streak', 'last_recitation_date', 'settings', 'recitation_goal', 'bookmarks', 'recently_read', 'quiz_progress'];
-
+    protected $attributes = [
+        'recently_read' => [
+            'chapters' => [],
+            'pages' => [],
+            'juzs' => []
+        ]
+    ];
     /**
      * The attributes that should be hidden for serialization.
      *
