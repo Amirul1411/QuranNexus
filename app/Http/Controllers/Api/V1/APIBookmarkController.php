@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Word;
 use MongoDB\BSON\ObjectId;
-
+use App\Models\WordStatistic;
+use Illuminate\Support\Facades\Log;
 class APIBookmarkController extends Controller
 {
     public function addBookmark(Request $request)
@@ -53,9 +54,42 @@ class APIBookmarkController extends Controller
                     });
                     break;
                 case 'word':
-                    $isDuplicate = collect($user->bookmarks['words'])->contains(function ($item) use ($request) {
-                        return $item['item_properties']['word_text'] === $request->item_properties['word_text'];
+                  // Duplicate check remains based on word_text
+                    $isDuplicate = collect($user->bookmarks['words'] ?? [])->contains(function ($item) use ($request) {
+                        return isset($item['item_properties']['word_text']) && $item['item_properties']['word_text'] === $request->item_properties['word_text'];
                     });
+
+                    if (!$isDuplicate) {
+                        // Find word_statistics_id based on word_text
+                        // Assuming you have a WordStatistic model mapped to your 'word_statistics' MongoDB collection
+                        $wordStatistic = WordStatistic::where('word', $request->item_properties['word_text'])->first();
+                        
+                        if ($wordStatistic) {
+                            // Reconstruct item_properties to match the new desired structure
+                            $newItemProperties = [
+                                'word_statistics_id' => (string) $wordStatistic->_id, // Cast ObjectId to string
+                                'word_text' => $request->item_properties['word_text'],
+                                'translation' => $request->item_properties['translation'] ?? ($wordStatistic->translation ?? 'N/A'),
+                                'transliteration' => $request->item_properties['transliteration'] ?? ($wordStatistic->transliteration ?? 'N/A'),
+                                'total_occurrences' => $request->item_properties['total_occurrences'] ?? ($wordStatistic->total_occurrences ?? 0),
+                            ];
+                        } else {
+                            // Word not found in statistics, handle this case
+                            // Option 1: Don't add the bookmark and return an error
+                            // Option 2: Add bookmark with null/default word_statistics_id and data sent by client
+                            Log::warning("WordStatistic not found for word_text: " . $request->item_properties['word_text']);
+                            // For now, let's proceed with client data if stat not found, but without ID
+                            //  $newItemProperties = [
+                            //     'word_statistics_id' => null, // Or some placeholder
+                            //     'word_text' => $request->item_properties['word_text'],
+                            //     'translation' => $request->item_properties['translation'] ?? 'N/A',
+                            //     'transliteration' => $request->item_properties['transliteration'] ?? 'N/A',
+                            //     'total_occurrences' => $request->item_properties['total_occurrences'] ?? 0,
+                            // ];
+                            // Or you might choose to return an error:
+                            return response()->json(['status' => 'error', 'message' => 'Word details not found in statistics for: ' . $request->item_properties['word_text']], 404);
+                        }
+                    }
                     break;
                 case 'quote':
                     $isDuplicate = collect($user->bookmarks['quotes'])->contains(function ($item) use ($request) {
@@ -110,7 +144,7 @@ class APIBookmarkController extends Controller
                     'message' => 'Unauthenticated'
                 ], 401);
             }
-
+    
             $bookmarkType = $type . 's'; // Convert to plural
             if (!isset($user->bookmarks[$bookmarkType])) {
                 return response()->json([
@@ -118,43 +152,46 @@ class APIBookmarkController extends Controller
                     'message' => 'Invalid bookmark type'
                 ], 400);
             }
-
+    
             $bookmarks = collect($user->bookmarks[$bookmarkType]);
-            
-            // Filter out the bookmark to remove based on type
+    
+            // Filter bookmarks and cast IDs to string
             $updatedBookmarks = $bookmarks->filter(function ($bookmark) use ($type, $itemId) {
+                $itemId = (string) $itemId; // Ensure string comparison
                 switch ($type) {
                     case 'chapter':
-                        return $bookmark['item_properties']['chapter_id'] !== $itemId;
+                        return (string) $bookmark['item_properties']['chapter_id'] !== $itemId;
                     case 'verse':
-                        return $bookmark['item_properties']['verse_id'] !== $itemId;
+                        return (string) $bookmark['item_properties']['verse_id'] !== $itemId;
                     case 'word':
-                        return $bookmark['item_properties']['word_text'] !== $itemId;
+                        return (string) $bookmark['item_properties']['word_text'] !== $itemId;
                     case 'quote':
-                        return $bookmark['item_properties']['quote_id'] !== $itemId;
+                        return (string) $bookmark['item_properties']['quote_id'] !== $itemId;
                     case 'page':
-                        return $bookmark['item_properties']['page_id'] !== $itemId;
+                        return (string) $bookmark['item_properties']['page_id'] !== $itemId;
                     default:
                         return true;
                 }
             })->values()->all();
-
-            // Update the specific bookmark type array
-            $user->bookmarks[$bookmarkType] = $updatedBookmarks;
+    
+            // Ensure bookmarks are updated correctly
+            $user->bookmarks = array_merge($user->bookmarks, [$bookmarkType => $updatedBookmarks]);
             $user->save();
-
+    
             return response()->json([
                 'status' => 'success',
                 'message' => 'Bookmark removed successfully'
             ], 200);
-
+    
         } catch (\Exception $e) {
+            \Log::error('Remove Bookmark Error: ' . $e->getMessage());
             return response()->json([
                 'status' => 'error',
                 'message' => 'Failed to remove bookmark: ' . $e->getMessage()
             ], 500);
         }
     }
+    
 
     public function getBookmarks()
     {
