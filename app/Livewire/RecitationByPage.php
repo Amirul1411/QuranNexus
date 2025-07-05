@@ -27,6 +27,11 @@ class RecitationByPage extends Component
         return redirect()->route('page.show', ['page' => (int) $pageId + 1]);
     }
 
+    public function displayWordInfo($wordText)
+    {
+        return $this->dispatch('openWordInfoModal', $wordText)->to('word-info-modal');
+    }
+
     public function render()
     {
         return view('livewire.recitation-by-page', [

@@ -90,6 +90,24 @@
                         </a>
                     </div>
                 </form>
+
+                <!-- Word History Section -->
+                <div class="mt-6 bg-white p-4 rounded shadow-lg">
+                    <h2 class="text-lg font-bold text-[#2D6360]">Verification History</h2>
+                    @if (!empty($word->history))
+                        <ul class="mt-3 space-y-2">
+                            @foreach ($word->history as $entry)
+                                <li class="border border-gray-300 p-3 rounded">
+                                    <p><strong>Previous Text:</strong> {{ $entry['previous_text'] }}</p>
+                                    <p class="text-gray-600 text-sm"><strong>Modified At:</strong> {{ $entry['modified_at'] }}</p>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <p class="text-gray-500 mt-2">No previous modifications found.</p>
+                    @endif
+                </div>
+
             @else
                 <!-- No Word Found -->
                 <div class="text-center text-red-500 font-bold">
@@ -99,6 +117,7 @@
         </div>
     </div>
 </x-app-layout>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {

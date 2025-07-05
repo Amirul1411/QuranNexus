@@ -17,16 +17,9 @@ class SearchController extends Controller
         return view('basic-search'); // Load the basic search Blade file
     }
 
-    // Show the Advanced Search page
-    public function advancedSearch()
-    {
-        return view('advanced-search'); // Load the advanced search Blade file
-    }
-
     // Handle the search request from the Basic Search page
     public function search(Request $request)
     {
-        // Get the target collection from the "Search in" dropdown
         $searchIn = $request->input('search_in'); // The collection to search
         $conditions = $request->input('conditions', []); // Array of search conditions
 
@@ -42,22 +35,30 @@ class SearchController extends Controller
         // Apply search conditions to the query
         foreach ($conditions as $condition) {
             if (!empty($condition['value'])) { // Check if the condition value is not empty
-                $logic = strtolower($condition['logic'] ?? 'and'); // Default to "and" logic
                 $value = $condition['value']; // Value to search for
 
-                // Apply conditions based on the logic
-                if ($logic === 'or') {
-                    $query->orWhere(function ($subQuery) use ($value) {
-                        // Check all fields for a match
-                        $subQuery->orWhereRaw(['$text' => ['$search' => $value]]);
-                    });
-                } elseif ($logic === 'not') {
+                if ($searchIn === 'surahs') {
+                    // Partial match for Surahs
                     $query->where(function ($subQuery) use ($value) {
-                        // Exclude records matching the value
-                        $subQuery->whereRaw(['$text' => ['$search' => $value]]);
+                        $subQuery->where('tname', 'LIKE', "%$value%")
+                                    ->orWhere('ename', 'LIKE', "%$value%")
+                                    ->orWhere('name', 'LIKE', "%$value%");
                     });
+                } elseif ($searchIn === 'ayahs') {
+                    // Match Ayahs based on text or Surah relationship
+                    $matchingSurahs = Surah::where('tname', 'LIKE', "%$value%")
+                                            ->orWhere('ename', 'LIKE', "%$value%")
+                                            ->orWhere('name', 'LIKE', "%$value%")
+                                            ->pluck('_id');
+                    $query->where('text', 'LIKE', "%$value%")
+                            ->orWhereIn('surah_id', $matchingSurahs);
+                } elseif ($searchIn === 'words') {
+                    // Partial match for Words
+                    $query->where('text', 'LIKE', "%$value%")
+                            ->orWhere('transliteration', 'LIKE', "%$value%")
+                            ->orWhere('translation', 'LIKE', "%$value%");
                 } else {
-                    // Default: "and" condition
+                    // Default case for other collections
                     $query->whereRaw(['$text' => ['$search' => $value]]);
                 }
             }
@@ -70,6 +71,7 @@ class SearchController extends Controller
         return view('search-results', [
             'results' => $results,
             'searchIn' => ucfirst($searchIn), // Capitalize the collection name for display
+            'searchTerm' => $conditions[0]['value'] ?? '', // For displaying the term in the view
         ]);
     }
 
@@ -90,4 +92,43 @@ class SearchController extends Controller
             default => null,
         };
     }
+
+    /**
+     * Show details for a specific result.
+     *
+     * @param string $surah_id
+     * @param int $ayah_index
+     * @return \Illuminate\View\View
+     */
+    public function showDetails($surah_id, $ayah_index)
+    {
+        // Get Ayah Data
+        $ayah = Ayah::where('surah_id', $surah_id)
+                    ->where('ayah_index', $ayah_index)
+                    ->first();
+
+        // Get Surah Name
+        $surah = Surah::where('_id', $surah_id)->first();
+        $surah_name = $surah ? $surah->tname : 'Unknown Surah';
+
+        // Get Word Data (if applicable)
+        $word = Word::where('surah_id', $surah_id)
+                    ->where('ayah_index', $ayah_index)
+                    ->first();
+
+        return view('result-details', [
+            'surah_id' => $surah_id,
+            'surah_name' => $surah_name,
+            'ayah_index' => $ayah_index,
+            'ayah_text' => $ayah->text ?? null,
+            'juz_id' => $ayah->juz_id ?? null,
+            'page_id' => $ayah->page_id ?? null,
+            'isVerified' => $ayah->isVerified ?? false,
+            'audio_url' => $ayah->audio_url ?? null,
+            'word_text' => $word->text ?? null,
+            'word_transliteration' => $word->transliteration ?? null,
+            'word_translation' => $word->translation ?? null,
+        ]);
+    }
+
 }

@@ -49,7 +49,10 @@ class AudioRecitationInfoResource extends JsonResource
             }
 
             if (in_array('Translated Name', $fields)) {
-                $response['Translated Name'] = $this->translated_name;
+                $response['Translated Name'] = [
+                    'Name' => $this->translated_name['name'],
+                    'Language Name' => $this->translated_name['language_name'],
+                ];
             }
 
         }
@@ -69,7 +72,10 @@ class AudioRecitationInfoResource extends JsonResource
             'Id' => $this->_id,
             'Reciter Name' => $this->reciter_name,
             'Style' => $this->style,
-            'Translated Name' => $this->translated_name,
+            'Translated Name' => [
+                'Name' => $this->translated_name['name'],
+                'Language Name' => $this->translated_name['language_name'],
+            ],
         ];
     }
 }

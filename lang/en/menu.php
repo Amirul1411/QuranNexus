@@ -25,4 +25,7 @@ return [
     'word' => 'Word',
     'search' => 'Search',
     'translation' => 'Translation',
+    'upload' => 'Upload',
+    'link_checker' => 'Link Checker',
+    'verify_link' => 'Verify Link',
 ];

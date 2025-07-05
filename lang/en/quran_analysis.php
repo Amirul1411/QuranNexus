@@ -7,5 +7,6 @@ return [
     'longest_token' => 'Longest Token',
     'surah_analysis' => 'Surah Analysis',
     'diacritic_frequency' => 'Diacritic Frequency',
+    'word_statistics' => 'Word Statistics',
     'irab' => 'I\'rab',
 ];

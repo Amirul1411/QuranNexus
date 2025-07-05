@@ -2,7 +2,7 @@
     <h1 class="font-bold my-5 text-2xl">Page API</h1>
     <div class="my-10">
         <p class="rounded-md px-2 inline-block font-medium">Base URL</p>
-        <p>http://quran-nexus.ap-southeast-1.elasticbeanstalk.com/api/v1</p>
+        <p>https://quran.seaade2024.com/api/v1</p>
     </div>
     <div class="my-10">
         <p class="text-black inline-block rounded-md px-2 font-medium">Get</p>
@@ -62,7 +62,7 @@
                     the surah fields that are required by the user if the user only want to retrieve some of the surah
                     fields. (e.g. Id,Name,Arabic Name, ...)</p>
                 <p class="ml-6"><span class="font-medium text-black">Possible values: </span>[Id, Arabic Name,
-                    Name, Name Meaning, Type, Number of Ayahs]</p>
+                    Name, Name Meaning, Type, Number of Ayahs, Number of Words]</p>
                 <p class="ml-6"><span class="font-medium text-black">Notes: </span>You must set the surah query
                     parameter to true in order for this parameter to work.</p>
             </div>
@@ -116,7 +116,7 @@
                     the word fields that are required by the user if the user only want to retrieve some of the word
                     fields. (e.g. Id,Surah Id,Ayah Index, ...)</p>
                 <p class="ml-6"><span class="font-medium text-black">Possible values: </span>[Id, Surah Id ,Ayah
-                    Index, Word Index, Ayah Key, Word Key, Audio Url, Page Id, Line Number, Text, Characters,
+                    Index, Word Index, Ayah Key, Word Key, Audio Url, Juz Id, Page Id, Line Number, Text, Characters,
                     Translation, Transliteration]</p>
                 <p class="ml-6"><span class="font-medium text-black">Notes: </span>You must set the ayahs and
                     words query parameters to true in order for this parameter to work.</p>
@@ -242,8 +242,7 @@
             <p class="font-bold">Response</p>
         </div>
         <div x-show="responseOpen" x-transition class="my-2 ml-6" x-data="{ surahOpen: false, surahInfoOpen: false, ayahOpen: false, wordOpen: false, translationInfoOpen: false, translationOpen: false, tafseerInfoOpen: false, tafseerOpen: false, audioRecitationInfoOpen: false, audioRecitationOpen: false, audioRecitationInfoTranslatedNameOpen: false, tafseerInfoTranslatedNameOpen: false, pageOpen: false }">
-            <div @click="pageOpen = !pageOpen"
-                class="cursor-pointer rounded-md flex gap-3 items-center text-black">
+            <div @click="pageOpen = !pageOpen" class="cursor-pointer rounded-md flex gap-3 items-center text-black">
                 <svg :class="{ 'rotate-90': pageOpen, 'rotate-0': !pageOpen }" x-transition
                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3.5"
                     stroke="currentColor" class="size-4 transition-transform duration-300">
@@ -283,6 +282,8 @@
                     <p class="rounded-md px-2 font-medium text-black ml-6">Type <span
                             class="font-normal text-gray-500">string</span></p>
                     <p class="rounded-md px-2 font-medium text-black ml-6">Number of Ayahs <span
+                            class="font-normal text-gray-500">integer</span></p>
+                    <p class="rounded-md px-2 font-medium text-black ml-6">Number of Words <span
                             class="font-normal text-gray-500">integer</span></p>
                     <div @click="surahInfoOpen = !surahInfoOpen"
                         class="cursor-pointer rounded-md flex gap-3 items-center text-black ml-6">
@@ -350,6 +351,8 @@
                         <p class="rounded-md px-2 font-medium text-black ml-6">Word Key <span
                                 class="font-normal text-gray-500">string</span></p>
                         <p class="rounded-md px-2 font-medium text-black ml-6">Audio Url <span
+                                class="font-normal text-gray-500">string</span></p>
+                        <p class="rounded-md px-2 font-medium text-black ml-6">Juz Id <span
                                 class="font-normal text-gray-500">string</span></p>
                         <p class="rounded-md px-2 font-medium text-black ml-6">Page Id <span
                                 class="font-normal text-gray-500">string</span></p>

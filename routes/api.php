@@ -23,8 +23,12 @@ use App\Http\Controllers\Api\V1\APIAuthController;
 use App\Http\Controllers\Api\V1\APIBookmarkController;
 use App\Http\Controllers\Api\V1\QuizProgressController;
 use App\Http\Controllers\Api\V1\APIUserAchievementController;
+
 use App\Http\Controllers\Api\V1\APIRecentlyReadController;
 use App\Http\Controllers\Api\V1\APIRecitationTimesController;
+
+
+use App\Http\Controllers\Api\V1\APIWordStatisticsController;
 
 use App\Http\Middleware\ForceJsonResponse;
 use App\Http\Middleware\LoggingAuthMiddleware;
@@ -35,6 +39,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+// Mobile Apis
 Route::prefix('v1')->group(function () {
 
     Route::prefix('mobile')->group(function () {
@@ -46,6 +51,7 @@ Route::prefix('v1')->group(function () {
     Route::get('words/search', [APIWordController::class, 'search']);
     Route::get('words/distribution', [APIWordController::class, 'getWordJuzDistribution']);
     Route::get('words/chapters-distribution', [APIWordController::class, 'getWordsChaptersDistribution']);
+
     Route::get('words/details', [APIWordController::class, 'getWordDetails']);
     // First Occurrence API
     Route::post('/word/first-occurrence', [APIWordController::class, 'getWordFirstOccurrence']);
@@ -71,6 +77,8 @@ Route::prefix('v1')->group(function () {
     Route::apiResource('character_frequency', APICharacterFrequencyController::class)->name('index','api_character_frequency.index')->name('show', 'api_character_frequency.show');
     Route::apiResource('diacritic_frequency', APIDiacriticFrequencyController::class)->name('index','api_diacritic_frequency.index')->name('show', 'api_diacritic_frequency.show');
     Route::apiResource('longest_token', APILongestTokenController::class)->name('index','api_longest_token.index')->name('show', 'api_longest_token.show');
+    Route::apiResource('word_statistics', APIWordStatisticsController::class)->name('index','api_word_statistics.index')->name('show', 'api_word_statistics.show');
+
 
     // Temporary route
     Route::get('chapters/{id}/verses', [APIAyahController::class, 'getVersesByChapter']);
@@ -110,9 +118,10 @@ Route::prefix('v1')->group(function () {
 });
 
 
-
+// Web Apis
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], function(){
 
+    // Quranic data public Apis
     Route::apiResource('surahs', APISurahController::class)->name('index','api_surah.index')->name('show', 'api_surah.show');
     Route::apiResource('ayahs', APIAyahController::class)->name('index','api_ayah.index')->name('show', 'api_ayah.show');
     Route::apiResource('pages', APIPageController::class)->name('index','api_page.index')->name('show', 'api_page.show');
@@ -125,12 +134,14 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], f
     Route::apiResource('audio_recitation_info', APIAudioRecitationInfoController::class)->name('index','api_audio_recitation_info.index')->name('show', 'api_audio_recitation_info.show');
     Route::apiResource('tafseer_info', APITafseerInfoController::class)->name('index','api_tafseer_info.index')->name('show', 'api_tafseer_info.show');
     Route::apiResource('translation_info', APITranslationInfoController::class)->name('index','api_translation_info.index')->name('show', 'api_translation_info.show');
-    Route::apiResource('achievements', APIAchievementController::class)->name('index','api_achievement.index')->name('show', 'api_achievement.show');
-    Route::apiResource('daily_quotes', APIDailyQuotesController::class)->name('index','api_daily_quotes.index')->name('show', 'api_daily_quotes.show');
     Route::apiResource('chapters_initials', APIChaptersInitialsController::class)->name('index','api_chapters_initials.index')->name('show', 'api_chapters_initials.show');
     Route::apiResource('character_frequency', APICharacterFrequencyController::class)->name('index','api_character_frequency.index')->name('show', 'api_character_frequency.show');
     Route::apiResource('diacritic_frequency', APIDiacriticFrequencyController::class)->name('index','api_diacritic_frequency.index')->name('show', 'api_diacritic_frequency.show');
     Route::apiResource('longest_token', APILongestTokenController::class)->name('index','api_longest_token.index')->name('show', 'api_longest_token.show');
+    Route::apiResource('word_statistics', APIWordStatisticsController::class)->name('index','api_word_statistics.index')->name('show', 'api_word_statistics.show');
 
+    // Other non-public Apis
+    Route::apiResource('achievements', APIAchievementController::class)->name('index','api_achievement.index')->name('show', 'api_achievement.show');
+    Route::apiResource('daily_quotes', APIDailyQuotesController::class)->name('index','api_daily_quotes.index')->name('show', 'api_daily_quotes.show');
 });
 

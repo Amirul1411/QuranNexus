@@ -2,7 +2,7 @@
     <h1 class="font-bold my-5 text-2xl">Translation Info API</h1>
     <div class="my-10">
         <p class="rounded-md px-2 inline-block font-medium">Base URL</p>
-        <p>http://quran-nexus.ap-southeast-1.elasticbeanstalk.com/api/v1</p>
+        <p>https://quran.seaade2024.com/api/v1</p>
     </div>
     <div class="my-10">
         <p class="text-black inline-block rounded-md px-2 font-medium">Get</p>
@@ -69,60 +69,61 @@
                     translations query parameter to true in order for this parameter to work.</p>
             </div>
         </div>
-        <div class="my-10">
-            <div @click="responseOpen = !responseOpen" class="cursor-pointer p-2 rounded-md flex gap-3 items-center">
-                <svg :class="{ 'rotate-90': responseOpen, 'rotate-0': !responseOpen }" x-transition
+    </div>
+    <div class="my-10">
+        <div @click="responseOpen = !responseOpen" class="cursor-pointer p-2 rounded-md flex gap-3 items-center">
+            <svg :class="{ 'rotate-90': responseOpen, 'rotate-0': !responseOpen }" x-transition
+                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3.5"
+                stroke="currentColor" class="size-4 transition-transform duration-300">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            </svg>
+            <p class="font-bold">Response</p>
+        </div>
+        <div x-show="responseOpen" x-transition class="my-2 ml-6" x-data="{ translationInfoOpen: false, translationOpen: false }">
+            <div @click="translationInfoOpen = !translationInfoOpen"
+                class="cursor-pointer rounded-md flex gap-3 items-center text-black ml-6">
+                <svg :class="{ 'rotate-90': translationInfoOpen, 'rotate-0': !translationInfoOpen }" x-transition
                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3.5"
                     stroke="currentColor" class="size-4 transition-transform duration-300">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                 </svg>
-                <p class="font-bold">Response</p>
+                <p class="rounded-md px-2 inline-block font-medium">Translation Info <span
+                        class="font-normal text-gray-500">object</span></p>
             </div>
-            <div x-show="responseOpen" x-transition class="my-2 ml-6" x-data="{ surahOpen: false, surahInfoOpen: false, ayahOpen: false, wordOpen: false, translationInfoOpen: false, translationOpen: false, tafseerInfoOpen: false, tafseerOpen: false, audioRecitationInfoOpen: false, audioRecitationOpen: false, audioRecitationInfoTranslatedNameOpen: false, tafseerInfoTranslatedNameOpen: false, juzOpen: false }">
-                <div @click="translationInfoOpen = !translationInfoOpen"
+            <div x-show="translationInfoOpen" x-transition class="ml-6">
+                <p class="rounded-md px-2 font-medium text-black ml-6">Id <span
+                        class="font-normal text-gray-500">string</span></p>
+                <p class="rounded-md px-2 font-medium text-black ml-6">Name <span
+                        class="font-normal text-gray-500">string</span></p>
+                <p class="rounded-md px-2 font-medium text-black ml-6">Translator <span
+                        class="font-normal text-gray-500">string</span></p>
+                <p class="rounded-md px-2 font-medium text-black ml-6">Language <span
+                        class="font-normal text-gray-500">string</span></p>
+                <div @click="translationOpen = !translationOpen"
                     class="cursor-pointer rounded-md flex gap-3 items-center text-black ml-6">
-                    <svg :class="{ 'rotate-90': translationInfoOpen, 'rotate-0': !translationInfoOpen }" x-transition
+                    <svg :class="{ 'rotate-90': translationOpen, 'rotate-0': !translationOpen }" x-transition
                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3.5"
                         stroke="currentColor" class="size-4 transition-transform duration-300">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                     </svg>
-                    <p class="rounded-md px-2 inline-block font-medium">Translation Info <span
+                    <p class="rounded-md px-2 inline-block font-medium">Translation <span
                             class="font-normal text-gray-500">object</span></p>
                 </div>
-                <div x-show="translationInfoOpen" x-transition class="ml-6">
+                <div x-show="translationOpen" x-transition class="ml-6">
                     <p class="rounded-md px-2 font-medium text-black ml-6">Id <span
                             class="font-normal text-gray-500">string</span></p>
-                    <p class="rounded-md px-2 font-medium text-black ml-6">Name <span
+                    <p class="rounded-md px-2 font-medium text-black ml-6">Translation Info Id <span
                             class="font-normal text-gray-500">string</span></p>
-                    <p class="rounded-md px-2 font-medium text-black ml-6">Translator <span
+                    <p class="rounded-md px-2 font-medium text-black ml-6">Surah Id <span
                             class="font-normal text-gray-500">string</span></p>
-                    <p class="rounded-md px-2 font-medium text-black ml-6">Language <span
+                    <p class="rounded-md px-2 font-medium text-black ml-6">Ayah Index <span
                             class="font-normal text-gray-500">string</span></p>
-                    <div @click="translationOpen = !translationOpen"
-                        class="cursor-pointer rounded-md flex gap-3 items-center text-black ml-6">
-                        <svg :class="{ 'rotate-90': translationOpen, 'rotate-0': !translationOpen }" x-transition
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3.5"
-                            stroke="currentColor" class="size-4 transition-transform duration-300">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                        </svg>
-                        <p class="rounded-md px-2 inline-block font-medium">Translation <span
-                                class="font-normal text-gray-500">object</span></p>
-                    </div>
-                    <div x-show="translationOpen" x-transition class="ml-6">
-                        <p class="rounded-md px-2 font-medium text-black ml-6">Id <span
-                                class="font-normal text-gray-500">string</span></p>
-                        <p class="rounded-md px-2 font-medium text-black ml-6">Translation Info Id <span
-                                class="font-normal text-gray-500">string</span></p>
-                        <p class="rounded-md px-2 font-medium text-black ml-6">Surah Id <span
-                                class="font-normal text-gray-500">string</span></p>
-                        <p class="rounded-md px-2 font-medium text-black ml-6">Ayah Index <span
-                                class="font-normal text-gray-500">string</span></p>
-                        <p class="rounded-md px-2 font-medium text-black ml-6">Ayah Key <span
-                                class="font-normal text-gray-500">string</span></p>
-                        <p class="rounded-md px-2 font-medium text-black ml-6">Text <span
-                                class="font-normal text-gray-500">string</span></p>
-                    </div>
+                    <p class="rounded-md px-2 font-medium text-black ml-6">Ayah Key <span
+                            class="font-normal text-gray-500">string</span></p>
+                    <p class="rounded-md px-2 font-medium text-black ml-6">Text <span
+                            class="font-normal text-gray-500">string</span></p>
                 </div>
             </div>
         </div>
     </div>
+</div>

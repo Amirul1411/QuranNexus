@@ -57,7 +57,10 @@ class TafseerInfoResource extends JsonResource
             }
 
             if (in_array('Translated Name', $fields)) {
-                $response['Translated Name'] = $this->translated_name;
+                $response['Translated Name'] = [
+                    'Name' => $this->translated_name['name'],
+                    'Language Name' => $this->translated_name['language_name'],
+                ];
             }
 
         }
@@ -79,7 +82,10 @@ class TafseerInfoResource extends JsonResource
             'Author Name' => $this->author_name,
             'Slug' => $this->slug,
             'Language Name' => $this->language_name,
-            'Translated Name' => $this->translated_name,
+            'Translated Name' => [
+                'Name' => $this->translated_name['name'],
+                'Language Name' => $this->translated_name['language_name'],
+            ],
         ];
     }
 }

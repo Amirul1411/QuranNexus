@@ -72,6 +72,8 @@
         </div> --}}
 
     @livewire('notifications')
+    @livewire('bookmark-notes-modal')
+    @livewire('word-info-modal')
 
     <!-- Page Heading -->
     @if (isset($header))

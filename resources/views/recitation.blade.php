@@ -16,9 +16,6 @@
         @livewire('recitation-side-menu')
     </x-slot>
 
-    @livewire('bookmark-notes-modal')
-    @livewire('word-info-modal')
-
     <div class="w-full mx-32">
         <div class="flex justify-center my-3 mt-32">
             <div x-data="{ activeOption: 'byAyat' }" class="bg-[#29737B] rounded-full flex my-5">

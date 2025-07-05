@@ -14,14 +14,13 @@ class DiacriticFrequencyResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-
         $response = [];
 
         $diacriticFrequencyFields = $request->has('diacritic_frequency_fields') ? explode(',', $request->input('diacritic_frequency_fields')) : null;
 
-        if($diacriticFrequencyFields !== null){
+        if ($diacriticFrequencyFields !== null) {
             $fields = $diacriticFrequencyFields;
-        }elseif($request->route()->getName() === 'api_diacritic_frequency.show' || $request->route()->getName() === 'api_diacritic_frequency.index'){
+        } elseif ($request->route()->getName() === 'api_diacritic_frequency.show' || $request->route()->getName() === 'api_diacritic_frequency.index') {
             $fields = explode(',', $request->input('fields', ''));
         }
 
@@ -44,7 +43,17 @@ class DiacriticFrequencyResource extends JsonResource
             }
 
             if (in_array('Locations', $fields)) {
-                $response['Locations'] = $this->locations;
+
+                $locationsArr = [];
+
+                foreach ($this->locations as $location) {
+                    $locationsArr[] = [
+                        'Character Key' => $location['character_key'],
+                        'Token' => $location['token'],
+                    ];
+                }
+
+                $response['Locations'] = $locationsArr;
             }
         }
 
@@ -53,11 +62,20 @@ class DiacriticFrequencyResource extends JsonResource
 
     private function getAllFields($request)
     {
+        $locationsArr = [];
+
+        foreach ($this->locations as $location) {
+            $locationsArr[] = [
+                'Character Key' => $location['character_key'],
+                'Token' => $location['token'],
+            ];
+        }
+
         return [
             'Id' => $this->_id,
             'Diacritic' => $this->diacritic,
             'Count' => $this->count,
-            'Locations' => $this->locations,
+            'Locations' => $locationsArr,
         ];
     }
 }

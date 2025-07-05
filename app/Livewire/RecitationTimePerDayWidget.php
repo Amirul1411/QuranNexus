@@ -15,6 +15,8 @@ class RecitationTimePerDayWidget extends ChartWidget
 
     protected int|string|array $columnSpan = 'full';
 
+    protected static string $color = 'success';
+
     protected function getData(): array
     {
 
