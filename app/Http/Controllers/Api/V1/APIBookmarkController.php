@@ -43,14 +43,17 @@ class APIBookmarkController extends Controller
             $isDuplicate = false;
             switch ($request->type) {
                 case 'chapter':
-                    $isDuplicate = collect($user->bookmarks['chapters'])->contains(function ($item) use ($request) {
+                    $isDuplicate = collect($user->bookmarks['chapters'] ?? [])->contains(function ($item) use ($request) {
                         return $item['item_properties']['chapter_id'] === $request->item_properties['chapter_id'];
                     });
                     break;
                 case 'verse':
-                    $isDuplicate = collect($user->bookmarks['verses'])->contains(function ($item) use ($request) {
-                        return $item['item_properties']['chapter_id'] === $request->item_properties['chapter_id'] 
-                            && $item['item_properties']['verse_number'] === $request->item_properties['verse_number'];
+                    $isDuplicate = collect($user->bookmarks['verses'] ?? [])->contains(function ($item) use ($request) {
+                        // Check against the global ayah_index
+                        if (!isset($item['item_properties']['ayah_index'])) {
+                            return false;
+                        }
+                        return $item['item_properties']['ayah_index'] === $request->item_properties['ayah_index'];
                     });
                     break;
                 case 'word':
@@ -92,12 +95,12 @@ class APIBookmarkController extends Controller
                     }
                     break;
                 case 'quote':
-                    $isDuplicate = collect($user->bookmarks['quotes'])->contains(function ($item) use ($request) {
+                    $isDuplicate = collect($user->bookmarks['quotes'] ?? [])->contains(function ($item) use ($request) {
                         return $item['item_properties']['quote_id'] === $request->item_properties['quote_id'];
                     });
                     break;
                 case 'page':
-                    $isDuplicate = collect($user->bookmarks['pages'])->contains(function ($item) use ($request) {
+                    $isDuplicate = collect($user->bookmarks['pages'] ?? [])->contains(function ($item) use ($request) {
                         return $item['item_properties']['page_id'] === $request->item_properties['page_id'];
                     });
                     break;
@@ -162,7 +165,10 @@ class APIBookmarkController extends Controller
                     case 'chapter':
                         return (string) $bookmark['item_properties']['chapter_id'] !== $itemId;
                     case 'verse':
-                        return (string) $bookmark['item_properties']['verse_id'] !== $itemId;
+                        if (!isset($bookmark['item_properties']['ayah_index'])) {
+                            return true; // Keep malformed bookmarks
+                        }
+                        return (string) $bookmark['item_properties']['ayah_index'] !== $itemId;
                     case 'word':
                         return (string) $bookmark['item_properties']['word_text'] !== $itemId;
                     case 'quote':
@@ -193,7 +199,7 @@ class APIBookmarkController extends Controller
     }
     
 
-    public function getBookmarks()
+   public function getBookmarks()
     {
         try {
             $user = auth()->user();
@@ -204,8 +210,8 @@ class APIBookmarkController extends Controller
                 ], 401);
             }
 
-            // Initialize empty structure if bookmarks don't exist
-            $bookmarks = $user->bookmarks ?? [
+            // 1. Define the complete, ideal structure with empty arrays.
+            $defaultBookmarks = [
                 'chapters' => [],
                 'verses' => [],
                 'words' => [],
@@ -213,10 +219,18 @@ class APIBookmarkController extends Controller
                 'pages' => []
             ];
 
+            // 2. Get the user's bookmarks, or an empty array if they have none at all.
+            $userBookmarks = $user->bookmarks ?? [];
+
+            // 3. Merge the user's bookmarks over the defaults.
+            // This guarantees that if a key like 'verses' is missing from the user's data,
+            // it will be present in the final result as an empty array.
+            $bookmarks = array_merge($defaultBookmarks, $userBookmarks);
+
             return response()->json([
                 'status' => 'success',
                 'user_id' => $user->_id,
-                'bookmarks' => $bookmarks
+                'bookmarks' => $bookmarks // This is now guaranteed to be a complete object
             ], 200);
 
         } catch (\Exception $e) {
