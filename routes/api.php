@@ -3,7 +3,6 @@
 use App\Http\Controllers\Api\V1\APIAchievementController;
 use App\Http\Controllers\Api\V1\APIAyahController;
 use App\Http\Controllers\Api\V1\APIPageController;
-use App\Http\Controllers\Api\V1\APIRecitationStreakController;
 use App\Http\Controllers\Api\V1\APISurahController;
 use App\Http\Controllers\Api\V1\APIWordController;
 use App\Http\Controllers\Api\V1\APIJuzController;
@@ -25,7 +24,7 @@ use App\Http\Controllers\Api\V1\QuizProgressController;
 use App\Http\Controllers\Api\V1\APIUserAchievementController;
 
 use App\Http\Controllers\Api\V1\APIRecentlyReadController;
-use App\Http\Controllers\Api\V1\APIRecitationTimesController;
+use App\Http\Controllers\Api\V1\APIRecitationStatsController;
 
 
 use App\Http\Controllers\Api\V1\APIWordStatisticsController;
@@ -107,12 +106,8 @@ Route::prefix('v1')->group(function () {
         Route::post('/recently-read', [APIRecentlyReadController::class, 'addRecentlyRead']);
         Route::delete('/recently-read/{type}/{itemId}', [APIRecentlyReadController::class, 'removeRecentlyRead']);
     
-        Route::post('/recitation-times', [APIRecitationTimesController::class, 'updateRecitationTimes']);
-        Route::get('/recitation-times', [APIRecitationTimesController::class, 'getRecitationTimes']);
-    
-        Route::post('/recitation-streak', [APIRecitationStreakController::class, 'updateRecitationStreak']);
-        Route::get('/recitation-streak', [APIRecitationStreakController::class, 'getRecitationStreak']);
-        Route::post('/mock-recitation', [APIRecitationStreakController::class, 'migrateRecitationData']);
+        Route::post('/recitation-stats', [APIRecitationStatsController::class, 'updateRecitation']);
+        Route::get('/recitation-stats', [APIRecitationStatsController::class, 'getRecitationStats']);
         });
     });
 });
