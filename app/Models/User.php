@@ -427,28 +427,28 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
     
     public function updateQuizProgress($surahId, $data)
     {
-        $quizProgress = $this->quiz_progress ?? [];
+        $allQuizProgress = $this->quiz_progress ?? [];
 
-        // Find existing quiz progress for this surah
-        $index = collect($quizProgress)->search(function ($item) use ($surahId) {
-            return $item['surah_id'] === $surahId;
+        $index = collect($allQuizProgress)->search(function ($item) use ($surahId) {
+            return isset($item['surah_id']) && $item['surah_id'] === $surahId;
         });
 
-        // Ensure datetime fields are properly formatted
-        if (isset($data['start_time'])) {
-            $data['start_time'] = Carbon::now()->toDateTimeString();
+        // BEFORE saving, ensure the nested fields are explicitly cast to objects.
+        // This forces the JSON serializer to treat them as objects.
+        if (isset($data['answers'])) {
+            $data['answers'] = (object)$data['answers'];
         }
-        if (isset($data['end_time']) && $data['end_time'] !== null) {
-            $data['end_time'] = Carbon::now()->toDateTimeString();
+        if (isset($data['batch_scores'])) {
+            $data['batch_scores'] = (object)$data['batch_scores'];
         }
 
         if ($index !== false) {
-            $quizProgress[$index] = array_merge($quizProgress[$index], $data);
+            $allQuizProgress[$index] = $data;
         } else {
-            $quizProgress[] = $data;
+            $allQuizProgress[] = $data;
         }
 
-        $this->quiz_progress = $quizProgress;
+        $this->quiz_progress = $allQuizProgress;
         $this->save();
 
         return $this->fresh();
