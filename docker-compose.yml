@@ -10,8 +10,14 @@ services:
       - APP_ENV=production
       - APP_DEBUG=false
     env_file:
-      - .env  
+      - .env
+    networks:
+      - default  
     expose:
       - "9000"
     restart: unless-stopped
- 
+
+networks:
+  default:
+    external:
+      name: quranic-hub-network
