@@ -57,11 +57,11 @@ RUN pecl install mongodb \
 
 WORKDIR /var/www/html
 
-# Copy composer dependencies (vendor)
-COPY --from=composer_builder /app/vendor ./vendor
-
 # Copy application code
 COPY . .
+
+# Copy composer dependencies (vendor)
+COPY --from=composer_builder /app/vendor ./vendor
 
 # Copy built frontend assets
 COPY --from=node_builder /app/public/build ./public/build
