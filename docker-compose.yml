@@ -5,7 +5,8 @@ services:
     build: .
     container_name: laravel-app
     volumes:
-      - .:/var/www/html
+      - ./public/data:/var/www/html/public/data
+      - ./storage:/var/www/html/storage
     environment:
       - APP_ENV=production
       - APP_DEBUG=false
@@ -14,7 +15,7 @@ services:
     networks:
       - default  
     ports:
-      - "9000:9000"
+      - "8000:8000"
     restart: unless-stopped
 
 networks:
