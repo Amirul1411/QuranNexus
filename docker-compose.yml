@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  laravel-app:
+    build: .
+    container_name: laravel-app
+    volumes:
+      - ./public/css:/var/www/html/public/css
+      - ./public/js:/var/www/html/public/js
+      - ./public/data:/var/www/html/public/data
+      - ./storage:/var/www/html/storage
+      - ./.env:/var/www/html/.env:ro
+    environment:
+      - APP_ENV=production
+      - APP_DEBUG=false
+    env_file:
+      - .env
+    networks:
+      - default  
+    expose:
+      - "9000"
+    restart: unless-stopped
+
+networks:
+  default:
+    external:
+      name: quranic-hub-network
